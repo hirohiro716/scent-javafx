@@ -1,0 +1,268 @@
+package com.hirohiro716.javafx.dialog.text;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
+
+import com.hirohiro716.StringConverter;
+import com.hirohiro716.javafx.FXMLLoader;
+import com.hirohiro716.javafx.LayoutHelper;
+import com.hirohiro716.javafx.control.EnterFireButton;
+import com.hirohiro716.javafx.control.LimitTextArea;
+import com.hirohiro716.javafx.dialog.AbstractDialog;
+
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+
+/**
+ * TextArea入力ダイアログを表示するクラス.
+ * @author hiro
+ */
+public class LimitTextAreaDialog extends AbstractDialog<String> {
+
+    @FXML
+    private Label labelTitle;
+
+    @FXML
+    private AnchorPane paneMessage;
+
+    @FXML
+    private LimitTextArea limitTextArea;
+
+    @FXML
+    private EnterFireButton buttonOk;
+
+    @FXML
+    private EnterFireButton buttonCancel;
+
+    /**
+     * コンストラクタ
+     */
+    public LimitTextAreaDialog() {
+        super();
+    }
+
+    /**
+     * コンストラクタ
+     * @param parentStage
+     */
+    public LimitTextAreaDialog(Stage parentStage) {
+        super(parentStage);
+    }
+
+    @Override
+    protected void preparationCallback() {
+        // タイトルのセット
+        this.getStage().setTitle(this.title);
+        this.labelTitle.setText(this.title);
+        // メッセージのセット
+        if (this.message != null) {
+            Label label = new Label(this.message);
+            label.setWrapText(true);
+            this.paneMessage.getChildren().add(label);
+            LayoutHelper.setAnchor(label, 0, 0, 0, 0);
+        }
+        // メッセージNodeのセット
+        if (this.messageNode != null) {
+            this.paneMessage.getChildren().add(this.messageNode);
+        }
+        // テキストの入力制限を追加する
+        for (int index = 0; index < this.permitRegexPattern.size(); index++) {
+            this.limitTextArea.addPermitRegex(this.permitRegexPattern.get(index), this.permitRegexReverse.get(index));
+        }
+        this.limitTextArea.setPermitTab(this.buttonOk);
+        // 初期値を入力
+        this.limitTextArea.setText(this.defaultValue);
+        // ボタンのイベント定義
+        this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                LimitTextAreaDialog.this.setResult(StringConverter.nullReplace(LimitTextAreaDialog.this.limitTextArea.getText(), ""));
+                LimitTextAreaDialog.this.close();
+                event.consume();
+            }
+        });
+        if (this.isCancelable) {
+            this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    LimitTextAreaDialog.this.setResult(null);
+                    LimitTextAreaDialog.this.close();
+                    event.consume();
+                }
+            });
+        } else {
+            this.buttonCancel.setVisible(false);
+            LayoutHelper.setAnchor(this.buttonOk, null, 20d, 20d, null);
+        }
+        // キーボードイベント定義
+        this.getDialogPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.isAltDown() == false) {
+                    return;
+                }
+                switch (event.getCode()) {
+                case O:
+                    LimitTextAreaDialog.this.buttonOk.fire();
+                    event.consume();
+                    break;
+                case C:
+                    LimitTextAreaDialog.this.buttonCancel.fire();
+                    event.consume();
+                    break;
+                default:
+                    break;
+                }
+            }
+        });
+        // FIXME バグなのか開いた瞬間はフォーカスを一度外さないとIMEが効かない
+        LimitTextAreaDialog dialog = LimitTextAreaDialog.this;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                dialog.buttonCancel.requestFocus();
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.limitTextArea.requestFocus();
+                        dialog.limitTextArea.selectEnd();
+                    }
+                });
+            }
+        });
+    }
+
+    @Override
+    public void show() {
+        try {
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("LimitTextAreaDialog.fxml"), this);
+            this.show(fxmlHelper.getPaneRoot());
+        } catch (IOException exception) {
+        }
+    }
+
+    @Override
+    public String showAndWait() {
+        try {
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("LimitTextAreaDialog.fxml"), this);
+            return this.showAndWait(fxmlHelper.getPaneRoot());
+        } catch (IOException exception) {
+            return null;
+        }
+    }
+
+    private String title;
+
+    /**
+     * タイトルをセットする.
+     * @param title
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    private String message;
+
+    /**
+     * メッセージ内容をセットする.
+     * @param message
+     */
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    private Node messageNode;
+
+    /**
+     * メッセージに代わるNodeをセットする.
+     * @param node
+     */
+    public void setMessageNode(Node node) {
+        this.messageNode = node;
+    }
+
+    private ArrayList<Pattern> permitRegexPattern = new ArrayList<>();
+    private ArrayList<Boolean> permitRegexReverse = new ArrayList<>();
+
+    /**
+     * テキストの入力制限定義を追加する.
+     * @param permitRegex 正規表現パターン
+     * @param isReverse 条件を逆転するか
+     */
+    public void addPermitRegex(Pattern permitRegex, boolean isReverse) {
+        this.permitRegexPattern.add(permitRegex);
+        this.permitRegexReverse.add(isReverse);
+    }
+
+    private String defaultValue;
+
+    /**
+     * コンボボックスの初期値をセットする.
+     * @param defaultValue
+     */
+    public void setDefaultValue(String defaultValue) {
+        this.defaultValue = defaultValue;
+    }
+
+    private boolean isCancelable = true;
+
+    /**
+     * キャンセル可能かを設定する.
+     * @param isCancelable
+     */
+    public void setCancelable(boolean isCancelable) {
+        this.isCancelable = isCancelable;
+    }
+
+    /**
+     * キャンセル可能かを取得する.
+     * @return キャンセル可能か
+     */
+    public boolean isCancelable() {
+        return this.isCancelable;
+    }
+    
+    /**
+     * ダイアログを表示
+     * @param title タイトル
+     * @param message メッセージ
+     * @return 結果
+     */
+    public static String showAndWait(String title, String message) {
+        LimitTextAreaDialog dialog = new LimitTextAreaDialog();
+        dialog.setTitle(title);
+        dialog.setMessage(message);
+        return dialog.showAndWait();
+    }
+
+    /**
+     * ダイアログを表示
+     * @param title タイトル
+     * @param message メッセージ
+     * @param parentStage 親Stage
+     * @return 結果
+     */
+    public static String showAndWait(String title, String message, Stage parentStage) {
+        LimitTextAreaDialog dialog = new LimitTextAreaDialog(parentStage);
+        dialog.setTitle(title);
+        dialog.setMessage(message);
+        return dialog.showAndWait();
+    }
+
+    @Override @Deprecated
+    public void setWidth(double width) {
+    }
+
+    @Override @Deprecated
+    public void setHeight(double height) {
+    }
+
+}
