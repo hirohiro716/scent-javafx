@@ -2,9 +2,11 @@ package com.hirohiro716.javafx.web;
 
 import java.util.ArrayList;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.html.HTMLFrameElement;
 
 import javafx.scene.web.WebEngine;
 
@@ -37,6 +39,25 @@ public class WebEngineController {
     private ArrayList<Element> selectedElementsList = new ArrayList<>();
     
     /**
+     * 指定のElementを選択状態にする.
+     * @param element
+     */
+    public void addSelectedElement(Element element) {
+        if (element instanceof HTMLFrameElement) {
+            HTMLFrameElement frame = (HTMLFrameElement) element;
+            this.selectedElementsList.add(frame.getContentDocument().getDocumentElement());
+        }
+        this.selectedElementsList.add(element);
+    }
+    
+    /**
+     * Elementsの選択状態をクリアする.
+     */
+    public void clearSelectedElements() {
+        this.selectedElementsList.clear();
+    }
+    
+    /**
      * Elementが選択されているかを確認する.
      * @return boolean
      */
@@ -49,7 +70,10 @@ public class WebEngineController {
      * @return Element[]
      */
     public Element[] getSelectedElements() {
-        return this.selectedElementsList.toArray(new Element[] {});
+        if (this.isSelectedElement()) {
+            return this.selectedElementsList.toArray(new Element[] {});
+        }
+        return new Element[] {this.webEngine.getDocument().getDocumentElement()};
     }
     
     /**
@@ -64,64 +88,80 @@ public class WebEngineController {
     }
     
     /**
-     * ElementをID属性を元に検索して選択する.
+     * ElementをID属性を元に検索して選択する. すでに選択済みのElementがある場合はその内部から検索する.
      * @param id
      */
     public void selectElementById(String id) {
-        this.selectedElementsList.clear();
-        Element element = this.webEngine.getDocument().getElementById(id);
-        if (element != null) {
-            this.selectedElementsList.add(element);
-        }
-    }
-    
-    /**
-     * Elementをタグ名を元に検索して選択する.
-     * @param tagName
-     */
-    public void selectElementsByTagName(String tagName) {
-        this.selectedElementsList.clear();
-        NodeList nodeList = this.webEngine.getDocument().getElementsByTagName(tagName);
-        for (int i = 0; i < nodeList.getLength(); i++) {
-            this.selectedElementsList.add((Element) nodeList.item(i));
-        }
-    }
-
-    /**
-     * Elementのタグ名とテキストを元に正規表現で検索して選択する.
-     * @param tagName
-     * @param textCompareRegex テキストと比較する正規表現
-     */
-    public void selectElementsByTagName(String tagName, String textCompareRegex) {
-        this.selectedElementsList.clear();
-        NodeList nodeList = this.webEngine.getDocument().getElementsByTagName(tagName);
-        for (int i = 0; i < nodeList.getLength(); i++) {
-            Element element = (Element) nodeList.item(i);
-            String elementText = element.getTextContent();
-            if (elementText != null && elementText.matches(textCompareRegex)) {
-                this.selectedElementsList.add(element);
-            }
-        }
-    }
-    
-    /**
-     * Elementを属性値を元に正規表現で検索して選択する.
-     * @param attributeName 属性名
-     * @param valueCompareRegex 属性値と比較する正規表現
-     */
-    public void selectElementsByAttribute(String attributeName, String valueCompareRegex) {
-        this.selectedElementsList.clear();
-        for (Node node: this.getChildNodeList(this.webEngine.getDocument())) {
-            if (node instanceof Element) {
-                Element element = (Element) node;
-                String value = element.getAttribute(attributeName);
-                if (value != null && value.matches(valueCompareRegex)) {
-                    this.selectedElementsList.add(element);
+        Element[] elements = this.getSelectedElements();
+        this.clearSelectedElements();
+        for (Element element: elements) {
+            if (element instanceof Document) {
+                Document document = (Document) element;
+                Element findedElement = document.getElementById(id);
+                if (findedElement != null) {
+                    this.addSelectedElement(findedElement);
                 }
             }
         }
     }
-
+    
+    /**
+     * Elementをタグ名を元に検索して選択する. すでに選択済みのElementがある場合はその内部から検索する.
+     * @param tagName
+     */
+    public void selectElementsByTagName(String tagName) {
+        Element[] elements = this.getSelectedElements();
+        this.clearSelectedElements();
+        for (Element element: elements) {
+            NodeList nodeList = element.getElementsByTagName(tagName);
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                this.addSelectedElement((Element) nodeList.item(i));
+            }
+        }
+    }
+    
+    /**
+     * Elementのタグ名とテキストを元に正規表現で検索して選択する. すでに選択済みのElementがある場合はその内部から検索する.
+     * @param tagName
+     * @param textCompareRegex テキストと比較する正規表現
+     */
+    public void selectElementsByTagName(String tagName, String textCompareRegex) {
+        Element[] elements = this.getSelectedElements();
+        this.clearSelectedElements();
+        for (Element element: elements) {
+            NodeList nodeList = element.getElementsByTagName(tagName);
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Element findedElement = (Element) nodeList.item(i);
+                String elementText = findedElement.getTextContent();
+                if (elementText != null && elementText.matches(textCompareRegex)) {
+                    this.addSelectedElement(findedElement);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Elementを属性値を元に正規表現で検索して選択する. すでに選択済みのElementがある場合はその内部から検索する.
+     * @param attributeName 属性名
+     * @param valueCompareRegex 属性値と比較する正規表現
+     */
+    public void selectElementsByAttribute(String attributeName, String valueCompareRegex) {
+        Element[] elements = this.getSelectedElements();
+        this.clearSelectedElements();
+        for (Element element: elements) {
+            for (Node node: this.getChildNodeList(element)) {
+                if (node instanceof Element) {
+                    Element findedElement = (Element) node;
+                    String value = findedElement.getAttribute(attributeName);
+                    if (value != null && value.matches(valueCompareRegex)) {
+                        System.out.println(node.getNodeName());
+                        this.addSelectedElement(findedElement);
+                    }
+                }
+            }
+        }
+    }
+    
     /**
      * 再帰的に子要素を取得する.
      * @param targetNode
@@ -165,7 +205,7 @@ public class WebEngineController {
         }
         String originalClass = nullReplace(element.getAttribute("class"), "");
         element.setAttribute("class", join(originalClass, " ", TARGET_CLASS_NAME));
-        webEngine.executeScript(join("document.getElementsByClassName('", TARGET_CLASS_NAME, "')[0].click();"));
+        webEngine.executeScript(join("for (var i = 0; i < frames.length; i++) { var elements = frames[i].document.getElementsByClassName('", TARGET_CLASS_NAME, "'); if (elements.length > 0) { elements[0].click(); } }"));
         element.setAttribute("class", originalClass);
     }
     
