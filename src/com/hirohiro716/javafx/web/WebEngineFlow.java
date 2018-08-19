@@ -2,6 +2,7 @@ package com.hirohiro716.javafx.web;
 
 import java.util.ArrayList;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
@@ -42,6 +43,16 @@ public class WebEngineFlow {
     public WebEngine getWebEngine() {
         return this.engine;
     }
+
+    private int sleepMillisecond = 200;
+    
+    /**
+     * 処理後の待機時間をセットする. 初期値は200ミリ秒.
+     * @param millisecond
+     */
+    public void setSleepMillisecond(int millisecond) {
+        this.sleepMillisecond = millisecond;
+    }
     
     private ArrayList<Task> tasks = new ArrayList<>();
     
@@ -66,14 +77,78 @@ public class WebEngineFlow {
         });
     }
     
-    private int sleepMillisecond = 200;
+    /**
+     * 指定のElementが読み込まれるまで待機する.
+     * @param id
+     */
+    public void addTaskWaitForLoadElementById(String id) {
+        WebEngineFlow flow = this;
+        this.tasks.add(new Task() {
+            @Override
+            public void execute(WebEngineController controller) {
+                controller.clearSelectedElements();
+                controller.selectElementById(id);
+                if (controller.isSelectedElement() == false) {
+                    flow.currentIndex--;
+                }
+            }
+        });
+    }
     
     /**
-     * 処理後の待機時間をセットする. 初期値は200ミリ秒.
-     * @param millisecond
+     * 指定のElementが読み込まれるまで待機する.
+     * @param tagName
      */
-    public void setSleepMillisecond(int millisecond) {
-        this.sleepMillisecond = millisecond;
+    public void addTaskWaitForLoadElementByTagName(String tagName) {
+        WebEngineFlow flow = this;
+        this.tasks.add(new Task() {
+            @Override
+            public void execute(WebEngineController controller) {
+                controller.clearSelectedElements();
+                controller.selectElementsByTagName(tagName);
+                if (controller.isSelectedElement() == false) {
+                    flow.currentIndex--;
+                }
+            }
+        });
+    }
+    
+    /**
+     * 指定のElementが読み込まれるまで待機する.
+     * @param tagName
+     * @param textCompareRegex テキストと比較する正規表現
+     */
+    public void addTaskWaitForLoadElementByTagName(String tagName, String textCompareRegex) {
+        WebEngineFlow flow = this;
+        this.tasks.add(new Task() {
+            @Override
+            public void execute(WebEngineController controller) {
+                controller.clearSelectedElements();
+                controller.selectElementsByTagName(tagName, textCompareRegex);
+                if (controller.isSelectedElement() == false) {
+                    flow.currentIndex--;
+                }
+            }
+        });
+    }
+    
+    /**
+     * 指定のElementが読み込まれるまで待機する.
+     * @param attributeName 属性名
+     * @param valueCompareRegex 属性値と比較する正規表現
+     */
+    public void addTaskWaitForLoadElementByAttribute(String attributeName, String valueCompareRegex) {
+        WebEngineFlow flow = this;
+        this.tasks.add(new Task() {
+            @Override
+            public void execute(WebEngineController controller) {
+                controller.clearSelectedElements();
+                controller.selectElementsByAttribute(attributeName, valueCompareRegex);
+                if (controller.isSelectedElement() == false) {
+                    flow.currentIndex--;
+                }
+            }
+        });
     }
     
     private int currentIndex = -1;
@@ -82,7 +157,6 @@ public class WebEngineFlow {
      * 処理を順番に実行する.
      */
     public void execute() {
-        executeTaskToUntilReachTheAsyncTask();
         WebEngineFlow flow = this;
         this.engine.getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
             @Override
@@ -92,26 +166,78 @@ public class WebEngineFlow {
                 }
             }
         });
+        executeTaskToUntilReachTheAsyncTask();
     }
     
     /**
      * 非同期タスクに到達するまでタスクを実行し続ける.
      */
     private void executeTaskToUntilReachTheAsyncTask() {
-        do {
-            try {
-                Thread.sleep(this.sleepMillisecond);
-            } catch (InterruptedException exception) {
+        WebEngineFlow flow = this;
+        try {
+            Thread.sleep(flow.sleepMillisecond);
+        } catch (InterruptedException exception) {
+        }
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                flow.currentIndex++;
+                if (flow.currentIndex < flow.tasks.size()) {
+                    try {
+                        flow.tasks.get(flow.currentIndex).execute(flow.controller);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                        flow.currentIndex = flow.tasks.size();
+                        return;
+                    }
+                    flow.controller.clearSelectedElements();
+                    State state = flow.getWebEngine().getLoadWorker().getState();
+                    switch (state) {
+                    case SUCCEEDED:
+                    case READY:
+                    case CANCELLED:
+                    case FAILED:
+                        flow.executeTaskToUntilReachTheAsyncTask();
+                        break;
+                    case RUNNING:
+                    case SCHEDULED:
+                        break;
+                    }
+                }
             }
-            this.currentIndex++;
-            if (this.currentIndex < this.tasks.size()) {
-                this.tasks.get(this.currentIndex).execute(this.controller);
-            } else {
-                break;
-            }
-        } while (this.engine.getLoadWorker().getState() == State.SUCCEEDED);
+        });
     }
     
+    /**
+     * 実行するタスクを１つ前に戻す.
+     */
+    public void turnBack() {
+        this.currentIndex--;
+    }
+    
+    /**
+     * 実行するタスクを指定数前に戻す.
+     * @param numberOfTurnBack 戻す回数
+     */
+    public void turnBack(int numberOfTurnBack) {
+        this.currentIndex -= numberOfTurnBack;
+    }
+
+    /**
+     * 実行するタスクを１つスキップする.
+     */
+    public void skip() {
+        this.currentIndex++;
+    }
+    
+    /**
+     * 実行するタスクを指定数スキップする.
+     * @param numberOfSkip スキップする回数
+     */
+    public void skip(int numberOfSkip) {
+        this.currentIndex += numberOfSkip;
+    }
+
     /**
      * WebEngineFlowの処理タスククラス.
      * @author hiro
@@ -121,8 +247,9 @@ public class WebEngineFlow {
         /**
          * 処理タスクを実行する.
          * @param controller WebEngineのコントロールを補助するWebEngineControllerインスタンス
+         * @throws Exception 
          */
-        public abstract void execute(WebEngineController controller);
+        public abstract void execute(WebEngineController controller) throws Exception;
         
     }
     

@@ -1,6 +1,7 @@
 package com.hirohiro716.javafx.web;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -8,9 +9,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.html.HTMLFrameElement;
 
-import javafx.scene.web.WebEngine;
+import com.sun.webkit.dom.HTMLElementImpl;
 
-import static com.hirohiro716.StringConverter.*;
+import javafx.scene.web.WebEngine;
 
 /**
  * WebEngineの操作を補助するクラス.
@@ -70,10 +71,7 @@ public class WebEngineController {
      * @return Element[]
      */
     public Element[] getSelectedElements() {
-        if (this.isSelectedElement()) {
-            return this.selectedElementsList.toArray(new Element[] {});
-        }
-        return new Element[] {this.webEngine.getDocument().getDocumentElement()};
+        return this.selectedElementsList.toArray(new Element[] {});
     }
     
     /**
@@ -88,11 +86,22 @@ public class WebEngineController {
     }
     
     /**
+     * 選択済みのElementsがあればそれを なければRootDocumentのElementを取得する.
+     * @return Element[]
+     */
+    private Element[] getSelectedElementOrRoot() {
+        if (this.isSelectedElement()) {
+            return this.getSelectedElements();
+        }
+        return new Element[] {this.webEngine.getDocument().getDocumentElement()};
+    }
+    
+    /**
      * ElementをID属性を元に検索して選択する. すでに選択済みのElementがある場合はその内部から検索する.
      * @param id
      */
     public void selectElementById(String id) {
-        Element[] elements = this.getSelectedElements();
+        Element[] elements = this.getSelectedElementOrRoot();
         this.clearSelectedElements();
         for (Element element: elements) {
             if (element instanceof Document) {
@@ -110,7 +119,7 @@ public class WebEngineController {
      * @param tagName
      */
     public void selectElementsByTagName(String tagName) {
-        Element[] elements = this.getSelectedElements();
+        Element[] elements = this.getSelectedElementOrRoot();
         this.clearSelectedElements();
         for (Element element: elements) {
             NodeList nodeList = element.getElementsByTagName(tagName);
@@ -126,14 +135,15 @@ public class WebEngineController {
      * @param textCompareRegex テキストと比較する正規表現
      */
     public void selectElementsByTagName(String tagName, String textCompareRegex) {
-        Element[] elements = this.getSelectedElements();
+        Element[] elements = this.getSelectedElementOrRoot();
         this.clearSelectedElements();
         for (Element element: elements) {
             NodeList nodeList = element.getElementsByTagName(tagName);
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Element findedElement = (Element) nodeList.item(i);
                 String elementText = findedElement.getTextContent();
-                if (elementText != null && elementText.matches(textCompareRegex)) {
+                Pattern pattern = Pattern.compile(textCompareRegex, Pattern.DOTALL);
+                if (elementText != null && pattern.matcher(elementText).find()) {
                     this.addSelectedElement(findedElement);
                 }
             }
@@ -146,15 +156,15 @@ public class WebEngineController {
      * @param valueCompareRegex 属性値と比較する正規表現
      */
     public void selectElementsByAttribute(String attributeName, String valueCompareRegex) {
-        Element[] elements = this.getSelectedElements();
+        Element[] elements = this.getSelectedElementOrRoot();
         this.clearSelectedElements();
         for (Element element: elements) {
             for (Node node: this.getChildNodeList(element)) {
                 if (node instanceof Element) {
                     Element findedElement = (Element) node;
                     String value = findedElement.getAttribute(attributeName);
-                    if (value != null && value.matches(valueCompareRegex)) {
-                        System.out.println(node.getNodeName());
+                    Pattern pattern = Pattern.compile(valueCompareRegex, Pattern.DOTALL);
+                    if (value != null && pattern.matcher(value).find()) {
                         this.addSelectedElement(findedElement);
                     }
                 }
@@ -188,25 +198,20 @@ public class WebEngineController {
      */
     public void click() {
         if (this.isSelectedElement()) {
-            clickElement(this.webEngine, this.selectedElementsList.get(0));
+            clickElement(this.selectedElementsList.get(0));
         }
     }
-    
-    private final static String TARGET_CLASS_NAME = "com-hirohiro716-javafx-web-webenginecontroller-target";
     
     /**
      * JavaScriptを利用してElementをクリックする.
      * @param webEngine
      * @param element
      */
-    public static void clickElement(WebEngine webEngine, Element element) {
-        if (element == null) {
-            return;
+    public static void clickElement(Element element) {
+        if (element instanceof HTMLElementImpl) {
+            HTMLElementImpl elementImpl = (HTMLElementImpl) element;
+            elementImpl.click();
         }
-        String originalClass = nullReplace(element.getAttribute("class"), "");
-        element.setAttribute("class", join(originalClass, " ", TARGET_CLASS_NAME));
-        webEngine.executeScript(join("for (var i = 0; i < frames.length; i++) { var elements = frames[i].document.getElementsByClassName('", TARGET_CLASS_NAME, "'); if (elements.length > 0) { elements[0].click(); } }"));
-        element.setAttribute("class", originalClass);
     }
     
 }
