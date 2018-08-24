@@ -82,9 +82,9 @@ public class StageBuilder {
      */
     public StageBuilder(URL fxmlURL, Object controller) throws IOException {
         this.stage = new Stage();
-        FXMLLoader fxmlHelper = new FXMLLoader(fxmlURL, controller);
-        this.paneRoot = fxmlHelper.getPaneRoot();
-        this.controller = fxmlHelper.getController();
+        FXMLLoader fxmlLoader = new FXMLLoader(fxmlURL, controller);
+        this.paneRoot = fxmlLoader.getPaneRoot();
+        this.controller = fxmlLoader.getController();
         this.scene = new Scene(this.paneRoot);
         this.scene.setFill(null);
         this.stage.setScene(this.scene);
@@ -99,9 +99,9 @@ public class StageBuilder {
      */
     public StageBuilder(Stage stage, URL fxmlURL, Object controller) throws IOException {
         this.stage = stage;
-        FXMLLoader fxmlHelper = new FXMLLoader(fxmlURL, controller);
-        this.paneRoot = fxmlHelper.getPaneRoot();
-        this.controller = fxmlHelper.getController();
+        FXMLLoader fxmlLoader = new FXMLLoader(fxmlURL, controller);
+        this.paneRoot = fxmlLoader.getPaneRoot();
+        this.controller = fxmlLoader.getController();
         this.scene = new Scene(this.paneRoot);
         this.scene.setFill(null);
         this.stage.setScene(this.scene);
@@ -109,13 +109,13 @@ public class StageBuilder {
 
     /**
      * コンストラクタでFxmlHelperインスタンスからStageレイアウトを構成する.
-     * @param fxmlHelper
+     * @param fxmlLoader
      * @throws IOException
      */
-    public StageBuilder(FXMLLoader fxmlHelper) throws IOException {
+    public StageBuilder(FXMLLoader fxmlLoader) throws IOException {
         this.stage = new Stage();
-        this.paneRoot = fxmlHelper.getPaneRoot();
-        this.controller = fxmlHelper.getController();
+        this.paneRoot = fxmlLoader.getPaneRoot();
+        this.controller = fxmlLoader.getController();
         this.scene = new Scene(this.paneRoot);
         this.scene.setFill(null);
         this.stage.setScene(this.scene);
@@ -124,13 +124,13 @@ public class StageBuilder {
     /**
      * コンストラクタでFxmlHelperインスタンスからStageレイアウトを構成する.
      * @param stage
-     * @param fxmlHelper
+     * @param fxmlLoader
      * @throws IOException
      */
-    public StageBuilder(Stage stage, FXMLLoader fxmlHelper) throws IOException {
+    public StageBuilder(Stage stage, FXMLLoader fxmlLoader) throws IOException {
         this.stage = stage;
-        this.paneRoot = fxmlHelper.getPaneRoot();
-        this.controller = fxmlHelper.getController();
+        this.paneRoot = fxmlLoader.getPaneRoot();
+        this.controller = fxmlLoader.getController();
         this.scene = new Scene(this.paneRoot);
         this.scene.setFill(null);
         this.stage.setScene(this.scene);
