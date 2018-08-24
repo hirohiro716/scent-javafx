@@ -24,7 +24,7 @@
             </padding>
         </Label>
         <AnchorPane fx:id="paneMessage" prefHeight="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="70.0" />
-        <EnterFireButton fx:id="buttonAddWhere" mnemonicParsing="false" text="追加" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="130.0">
+        <EnterFireButton fx:id="buttonAddWhere" text="追加" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="130.0">
             <padding>
                 <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
             </padding></EnterFireButton>
@@ -37,7 +37,7 @@
                  </VBox>
             </content>
         </ScrollPane>
-        <EnterFireButton fx:id="buttonAddWhereSet" mnemonicParsing="false" text="追加" AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="130.0">
+        <EnterFireButton fx:id="buttonAddWhereSet" text="追加" AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="130.0">
             <padding>
                 <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
             </padding></EnterFireButton>
@@ -50,7 +50,7 @@
                  </VBox>
             </content>
         </ScrollPane>
-        <EnterFireButton fx:id="buttonOk" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" text="OK" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="110.0" />
-        <EnterFireButton fx:id="buttonCancel" cancelButton="true" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" text="キャンセル" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+        <EnterFireButton fx:id="buttonOk" prefHeight="40.0" prefWidth="80.0" text="OK" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="110.0" />
+        <EnterFireButton fx:id="buttonCancel" cancelButton="true" prefHeight="40.0" prefWidth="80.0" text="キャンセル" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
     </children>
 </AnchorPane>

@@ -17,7 +17,7 @@
         <DropShadow height="60.0" radius="30.0" width="60.0" />
     </effect>
     <children>
-        <EnterFireButton fx:id="buttonOk" defaultButton="true" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" text="OK" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+        <EnterFireButton fx:id="buttonOk" defaultButton="true" prefHeight="40.0" prefWidth="80.0" text="OK" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
         <Label fx:id="labelTitle" text="タイトル" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" style="-fx-font-size:12;">
             <padding>
                 <Insets bottom="10.0" right="10.0" top="10.0" />
