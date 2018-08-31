@@ -40,8 +40,10 @@ public class ScrollToNodePane extends ScrollPane {
      * @param y
      */
     public void scroll(double x, double y) {
-        this.setHvalue(x / this.getContent().getBoundsInParent().getWidth());
-        this.setVvalue(y / this.getContent().getBoundsInParent().getHeight());
+        double hValue = x / this.getContent().getBoundsInParent().getWidth();
+        this.setHvalue(hValue);
+        double vValue = y / this.getContent().getBoundsInParent().getHeight();
+        this.setVvalue(vValue);
     }
 
     /**
@@ -61,7 +63,18 @@ public class ScrollToNodePane extends ScrollPane {
             parent = parent.getParent();
         }
         if (this.isSeen(contentLayoutX, contentLayoutY, node.getLayoutBounds().getWidth(), node.getLayoutBounds().getHeight()) == false) {
-            this.scroll(contentLayoutX, contentLayoutY);
+            double parentWidth = this.getContent().getBoundsInParent().getWidth();
+            double parentHeight = this.getContent().getBoundsInParent().getHeight();
+            double hValue = contentLayoutX / parentWidth;
+            if (hValue > 0.5) {
+                hValue += node.getLayoutBounds().getWidth() / parentWidth;
+            }
+            this.setHvalue(hValue);
+            double vValue = contentLayoutY / parentHeight;
+            if (vValue > 0.5) {
+                vValue += node.getLayoutBounds().getHeight() / parentHeight;
+            }
+            this.setVvalue(vValue);
         }
     }
     
