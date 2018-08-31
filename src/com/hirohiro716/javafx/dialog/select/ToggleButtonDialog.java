@@ -78,6 +78,7 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
             this.paneMessage.getChildren().add(this.messageNode);
         }
         // 選択用のToggleButtonを作成
+        HashMap<E, ToggleButton> buttonsHashMap = new HashMap<>();
         Iterator<E> iterator = this.items.keySet().iterator();
         while (iterator.hasNext()) {
             E key = iterator.next();
@@ -97,6 +98,13 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
                 }
             });
             this.flowPane.getChildren().add(button);
+            buttonsHashMap.put(key, button);
+        }
+        // 初期値のセット
+        iterator = this.defaultValue.keySet().iterator();
+        while (iterator.hasNext()) {
+            E key = iterator.next();
+            buttonsHashMap.get(key).setSelected(true);
         }
         // ボタンのイベント定義
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
@@ -213,6 +221,16 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
      */
     public HashMap<E, String> getItems() {
         return this.items;
+    }
+
+    private HashMap<E, String> defaultValue;
+
+    /**
+     * 選択状態の初期値をセットする.
+     * @param defaultValue
+     */
+    public void setDefaultValue(HashMap<E, String> defaultValue) {
+        this.defaultValue = defaultValue;
     }
 
     private boolean isCancelable = true;
