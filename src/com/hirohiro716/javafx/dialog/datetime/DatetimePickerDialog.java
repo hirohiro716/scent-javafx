@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.Date;
 
 import com.hirohiro716.StringConverter;
-import com.hirohiro716.Datetime;
 import com.hirohiro716.RegexHelper.RegexPattern;
 import com.hirohiro716.awt.RobotJapanese.ImeMode;
+import com.hirohiro716.datetime.Datetime;
 import com.hirohiro716.javafx.FXMLLoader;
 import com.hirohiro716.javafx.IMEHelper;
 import com.hirohiro716.javafx.LayoutHelper;
