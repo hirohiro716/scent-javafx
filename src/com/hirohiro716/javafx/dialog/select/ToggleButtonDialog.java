@@ -101,10 +101,12 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
             buttonsHashMap.put(key, button);
         }
         // 初期値のセット
-        iterator = this.defaultValue.keySet().iterator();
-        while (iterator.hasNext()) {
-            E key = iterator.next();
-            buttonsHashMap.get(key).setSelected(true);
+        if (this.defaultValue != null) {
+            iterator = this.defaultValue.keySet().iterator();
+            while (iterator.hasNext()) {
+                E key = iterator.next();
+                buttonsHashMap.get(key).setSelected(true);
+            }
         }
         // ボタンのイベント定義
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
