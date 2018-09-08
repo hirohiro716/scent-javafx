@@ -10,6 +10,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.control.Control;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -17,7 +19,7 @@ import javafx.scene.input.MouseEvent;
  * @author hiro
  */
 public class IMEHelper {
-
+    
     /**
      * TextInputControlを継承したコントロールにIME制御用のListenerを付与する.
      * @param <T> javafx.scene.control.Controlを継承したクラスオブジェクト
@@ -29,12 +31,48 @@ public class IMEHelper {
         if (ROBOT == null) {
             return;
         }
-        control.focusedProperty().addListener(new ImeFocusChangeListener(imeMode));
-        control.addEventHandler(MouseEvent.MOUSE_CLICKED, new ImeClickEventHandler(imeMode));
+        ImeChangeRunnable runnable = new ImeChangeRunnable(imeMode);
+        control.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue && isShiftKeyDown == false) {
+                    Platform.runLater(runnable);
+                }
+            }
+        });
+        control.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Platform.runLater(runnable);
+            }
+        });
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                control.getParent().setOnKeyPressed(new EventHandler<KeyEvent>() {
+                    @Override
+                    public void handle(KeyEvent event) {
+                        if (event.getCode() == KeyCode.SHIFT) {
+                            isShiftKeyDown = true;
+                        }
+                    }
+                });
+                control.getParent().setOnKeyReleased(new EventHandler<KeyEvent>() {
+                    @Override
+                    public void handle(KeyEvent event) {
+                        if (isShiftKeyDown && event.getCode() == KeyCode.SHIFT) {
+                            isShiftKeyDown = false;
+                        }
+                    }
+                });
+            }
+        });
     }
-
+    
     private static RobotJapanese ROBOT;
-
+    
+    private static boolean isShiftKeyDown = false;
+    
     /**
      * RobotJapaneseインスタンスを生成する.
      */
@@ -83,95 +121,44 @@ public class IMEHelper {
     public static void changeImeKatakanaNarrow() {
         ROBOT.changeImeKatakanaNarrow();
     }
-
+    
     /**
-     * コントロールがフォーカスを得た際にIMEモードの変更を試みるクラス.
+     * IMEの変更を試みる実行Runnableクラス.
      * @author hiro
      */
-    private static class ImeFocusChangeListener implements ChangeListener<Boolean> {
+    private static class ImeChangeRunnable implements Runnable {
 
-        private ImeMode mode;
-
+        private ImeMode imeMode;
+        
         /**
-         * コンストラクタ
-         * @param mode
+         * コンストラクタ.
+         * @param imeMode
          */
-        public ImeFocusChangeListener(ImeMode mode) {
-            this.mode = mode;
+        public ImeChangeRunnable(ImeMode imeMode) {
+            this.imeMode = imeMode;
         }
-
+        
         @Override
-        public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-            if (newValue) {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (ImeFocusChangeListener.this.mode == null) {
-                            return;
-                        }
-                        switch (ImeFocusChangeListener.this.mode) {
-                        case OFF:
-                            ROBOT.changeImeOff();
-                            break;
-                        case HIRAGANA:
-                            ROBOT.changeImeHiragana();
-                            break;
-                        case KATAKANA_WIDE:
-                            ROBOT.changeImeKatakanaWide();
-                            break;
-                        case KATAKANA_NARROW:
-                            ROBOT.changeImeKatakanaNarrow();
-                            break;
-                        }
-                    }
-                });
+        public void run() {
+            if (this.imeMode == null) {
+                return;
+            }
+            switch (this.imeMode) {
+            case OFF:
+                ROBOT.changeImeOff();
+                break;
+            case HIRAGANA:
+                ROBOT.changeImeHiragana();
+                break;
+            case KATAKANA_WIDE:
+                ROBOT.changeImeKatakanaWide();
+                break;
+            case KATAKANA_NARROW:
+                ROBOT.changeImeKatakanaNarrow();
+                break;
             }
         }
-
+        
     }
-
-    /**
-     * コントロールをクリックした際にIMEモードの変更を試みるクラス.
-     * @author hiro
-     */
-    public static class ImeClickEventHandler implements EventHandler<MouseEvent> {
-
-        private ImeMode mode;
-
-        /**
-         * コンストラクタ
-         * @param mode
-         */
-        public ImeClickEventHandler(ImeMode mode) {
-            this.mode = mode;
-        }
-
-        @Override
-        public void handle(MouseEvent event) {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    if (ImeClickEventHandler.this.mode == null) {
-                        return;
-                    }
-                    switch (ImeClickEventHandler.this.mode) {
-                    case OFF:
-                        ROBOT.changeImeOff();
-                        break;
-                    case HIRAGANA:
-                        ROBOT.changeImeHiragana();
-                        break;
-                    case KATAKANA_WIDE:
-                        ROBOT.changeImeKatakanaWide();
-                        break;
-                    case KATAKANA_NARROW:
-                        ROBOT.changeImeKatakanaNarrow();
-                        break;
-                    }
-                }
-            });
-        }
-
-    }
-
+    
 }
