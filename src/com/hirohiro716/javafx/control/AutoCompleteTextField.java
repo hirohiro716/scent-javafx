@@ -318,7 +318,9 @@ public class AutoCompleteTextField extends LimitTextField {
                 field.popup.setY(field.popup.getY() + newValue.doubleValue() - oldValue.doubleValue());
             }
         });
-        // Pspupを作成して表示
+        // 幅をコントロールに同期
+        this.listView.prefWidthProperty().bind(this.widthProperty());
+        // Popupを作成して表示
         this.popup = new Popup();
         this.popup.getContent().add(this.listView);
     }
