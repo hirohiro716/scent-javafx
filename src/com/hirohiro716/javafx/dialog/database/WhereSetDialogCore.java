@@ -273,6 +273,7 @@ class WhereSetDialogCore {
      * @param columnType
      * @return 検索値
      */
+    @SuppressWarnings("incomplete-switch")
     protected static Object getRowValue(Control control, ColumnType columnType) {
         // テキストフィールドの場合はかなり特殊
         if (control instanceof TextField) {
@@ -284,10 +285,15 @@ class WhereSetDialogCore {
             case NUMBER:
                 return StringConverter.stringToDouble(textField.getText()); // 数値は変換
             case DATE:
-            case TIMESTAMP:
-                return new java.sql.Date(((Date) textField.getUserData()).getTime()); // 日付はUserDataにDateが入ってるのでjava.sql.Dateに
-            default:
-                return null; // それ以外はありえない
+                if (textField.getUserData() != null) {
+                    return Datetime.dateToString(((Date) textField.getUserData()), "yyyy-MM-dd");
+                }
+                break;
+            case DATETIME:
+                if (textField.getUserData() != null) {
+                    return Datetime.dateToString((Date) textField.getUserData());
+                }
+                break;
             }
         }
         if (control instanceof HashMapComboBox<?, ?>) {
@@ -317,10 +323,10 @@ class WhereSetDialogCore {
                 textField.setText((String) value); // 文字列はそのまま
                 break;
             case DATE:
-                textField.setText(Datetime.dateToString((Date) value, "yyyy/MM/dd")); // 日付文字列に変換してセット
+                textField.setText(Datetime.dateToString((Date) value, "yyyy-MM-dd")); // 日付文字列に変換してセット
                 textField.setUserData(value); // 本物はUserDataにセット
                 break;
-            case TIMESTAMP:
+            case DATETIME:
                 textField.setText(Datetime.dateToString((Date) value)); // 日時文字列に変換してセット
                 textField.setUserData(value); // 本物はUserDataにセット
                 break;
@@ -423,7 +429,7 @@ class WhereSetDialogCore {
             hashMap.put(Comparison.EQUAL, "検索値と等しい");
             hashMap.put(Comparison.BETWEEN, "検索値１～検索値２の間");
             break;
-        case TIMESTAMP:
+        case DATETIME:
             hashMap.put(Comparison.BETWEEN, "検索値１～検索値２の間");
             break;
         case BOOLEAN:
@@ -551,7 +557,7 @@ class WhereSetDialogCore {
                         if (DatetimeInputEventHander.this.isTimeInput) {
                             field.setText(Datetime.dateToString(resultValue));
                         } else {
-                            field.setText(Datetime.dateToString(resultValue, "yyyy/MM/dd"));
+                            field.setText(Datetime.dateToString(resultValue, "yyyy-MM-dd"));
                         }
                     }
                 });
@@ -582,12 +588,12 @@ class WhereSetDialogCore {
                 switch (comparison) {
                 case BETWEEN:
                     textField = new TextField();
-                    textField.setPrefWidth(80);
+                    textField.setPrefWidth(100);
                     IMEHelper.apply(textField, ImeMode.HIRAGANA);
                     controls.add(textField);
                     controls.add(new Label("～"));
                     textField = new TextField();
-                    textField.setPrefWidth(80);
+                    textField.setPrefWidth(100);
                     IMEHelper.apply(textField, ImeMode.HIRAGANA);
                     controls.add(textField);
                     break;
@@ -595,7 +601,7 @@ class WhereSetDialogCore {
                 case LIKE:
                 default:
                     textField = new TextField();
-                    textField.setPrefWidth(80);
+                    textField.setPrefWidth(100);
                     IMEHelper.apply(textField, ImeMode.HIRAGANA);
                     controls.add(textField);
                     break;
@@ -605,20 +611,20 @@ class WhereSetDialogCore {
                 switch (comparison) {
                 case EQUAL:
                     limitTextField = new LimitTextField();
-                    limitTextField.setPrefWidth(80);
+                    limitTextField.setPrefWidth(100);
                     limitTextField.addPermitRegex(RegexPattern.INTEGER_NARROW_ONLY.getPattern(), false);
                     IMEHelper.apply(limitTextField, ImeMode.OFF);
                     controls.add(limitTextField);
                     break;
                 case BETWEEN:
                     limitTextField = new LimitTextField();
-                    limitTextField.setPrefWidth(80);
+                    limitTextField.setPrefWidth(100);
                     limitTextField.addPermitRegex(RegexPattern.INTEGER_NARROW_ONLY.getPattern(), false);
                     IMEHelper.apply(limitTextField, ImeMode.OFF);
                     controls.add(limitTextField);
                     controls.add(new Label("～"));
                     limitTextField = new LimitTextField();
-                    limitTextField.setPrefWidth(80);
+                    limitTextField.setPrefWidth(100);
                     limitTextField.addPermitRegex(RegexPattern.INTEGER_NARROW_ONLY.getPattern(), false);
                     IMEHelper.apply(limitTextField, ImeMode.OFF);
                     controls.add(limitTextField);
@@ -626,7 +632,7 @@ class WhereSetDialogCore {
                 case LIKE:
                 default:
                     textField = new TextField();
-                    textField.setPrefWidth(80);
+                    textField.setPrefWidth(100);
                     IMEHelper.apply(textField, ImeMode.OFF);
                     controls.add(textField);
                     break;
@@ -636,27 +642,27 @@ class WhereSetDialogCore {
                 switch (comparison) {
                 case EQUAL:
                     limitTextField = new LimitTextField();
-                    limitTextField.setPrefWidth(60);
+                    limitTextField.setPrefWidth(75);
                     limitTextField.addPermitRegex(RegexPattern.DECIMAL_NEGATIVE.getPattern(), false);
                     IMEHelper.apply(limitTextField, ImeMode.OFF);
                     controls.add(limitTextField);
                     break;
                 case BETWEEN:
                     limitTextField = new LimitTextField();
-                    limitTextField.setPrefWidth(60);
+                    limitTextField.setPrefWidth(75);
                     limitTextField.addPermitRegex(RegexPattern.DECIMAL_NEGATIVE.getPattern(), false);
                     IMEHelper.apply(limitTextField, ImeMode.OFF);
                     controls.add(limitTextField);
                     controls.add(new Label("～"));
                     limitTextField = new LimitTextField();
-                    limitTextField.setPrefWidth(60);
+                    limitTextField.setPrefWidth(75);
                     limitTextField.addPermitRegex(RegexPattern.DECIMAL_NEGATIVE.getPattern(), false);
                     IMEHelper.apply(limitTextField, ImeMode.OFF);
                     controls.add(limitTextField);
                     break;
                 default:
                     textField = new TextField();
-                    textField.setPrefWidth(80);
+                    textField.setPrefWidth(100);
                     IMEHelper.apply(textField, ImeMode.OFF);
                     controls.add(textField);
                     break;
@@ -666,7 +672,7 @@ class WhereSetDialogCore {
                 switch (comparison) {
                 case EQUAL:
                     textField = new TextField();
-                    textField.setPrefWidth(80);
+                    textField.setPrefWidth(100);
                     textField.setEditable(false);
                     textField.setOnMouseClicked(new DatetimeInputEventHander(false));
                     controls.add(textField);
@@ -674,24 +680,24 @@ class WhereSetDialogCore {
                 case BETWEEN:
                     textField = new TextField();
                     textField.setEditable(false);
-                    textField.setPrefWidth(80);
+                    textField.setPrefWidth(100);
                     textField.setOnMouseClicked(new DatetimeInputEventHander(false));
                     controls.add(textField);
                     controls.add(new Label("～"));
                     textField = new TextField();
                     textField.setEditable(false);
-                    textField.setPrefWidth(80);
+                    textField.setPrefWidth(100);
                     textField.setOnMouseClicked(new DatetimeInputEventHander(false));
                     controls.add(textField);
                     break;
                 default:
                 }
                 break;
-            case TIMESTAMP:
+            case DATETIME:
                 switch (comparison) {
                 case EQUAL:
                     textField = new TextField();
-                    textField.setPrefWidth(130);
+                    textField.setPrefWidth(160);
                     textField.setEditable(false);
                     textField.setOnMouseClicked(new DatetimeInputEventHander(true));
                     controls.add(textField);
@@ -699,13 +705,13 @@ class WhereSetDialogCore {
                 case BETWEEN:
                     textField = new TextField();
                     textField.setEditable(false);
-                    textField.setPrefWidth(130);
+                    textField.setPrefWidth(160);
                     textField.setOnMouseClicked(new DatetimeInputEventHander(true));
                     controls.add(textField);
                     controls.add(new Label("～"));
                     textField = new TextField();
                     textField.setEditable(false);
-                    textField.setPrefWidth(130);
+                    textField.setPrefWidth(160);
                     textField.setOnMouseClicked(new DatetimeInputEventHander(true));
                     controls.add(textField);
                     break;

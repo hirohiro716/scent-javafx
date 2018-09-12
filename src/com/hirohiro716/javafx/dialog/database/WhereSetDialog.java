@@ -56,7 +56,7 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
         /**
          * 日付と時刻
          */
-        TIMESTAMP,
+        DATETIME,
         /**
          * 真偽
          */
