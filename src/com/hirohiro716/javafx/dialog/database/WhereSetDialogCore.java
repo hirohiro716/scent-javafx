@@ -281,19 +281,11 @@ class WhereSetDialogCore {
             switch (columnType) {
             case STRING:
             case NUMBER_STRING:
+            case DATE:
+            case DATETIME:
                 return textField.getText(); // 文字列はそのまま
             case NUMBER:
                 return StringConverter.stringToDouble(textField.getText()); // 数値は変換
-            case DATE:
-                if (textField.getUserData() != null) {
-                    return Datetime.dateToString(((Date) textField.getUserData()), "yyyy-MM-dd");
-                }
-                break;
-            case DATETIME:
-                if (textField.getUserData() != null) {
-                    return Datetime.dateToString((Date) textField.getUserData());
-                }
-                break;
             }
         }
         if (control instanceof HashMapComboBox<?, ?>) {
@@ -320,15 +312,9 @@ class WhereSetDialogCore {
             switch (columnType) {
             case STRING:
             case NUMBER_STRING:
-                textField.setText((String) value); // 文字列はそのまま
-                break;
             case DATE:
-                textField.setText(Datetime.dateToString((Date) value, "yyyy-MM-dd")); // 日付文字列に変換してセット
-                textField.setUserData(value); // 本物はUserDataにセット
-                break;
             case DATETIME:
-                textField.setText(Datetime.dateToString((Date) value)); // 日時文字列に変換してセット
-                textField.setUserData(value); // 本物はUserDataにセット
+                textField.setText((String) value);
                 break;
             case NUMBER:
                 textField.setText(StringConverter.tryNonFraction(String.valueOf(value))); // 数値は丸めて文字列へ
@@ -547,17 +533,17 @@ class WhereSetDialogCore {
                 } else {
                     dialog.setMessage("検索に使用する日付を入力してください。");
                 }
-                if (field.getUserData() != null) {
-                    dialog.setDefaultValue((Date) field.getUserData());
-                }
+                String text = StringConverter.nullReplace(field.getText(), "");
+                dialog.setDefaultValue(Datetime.stringToDate(text));
                 dialog.setCloseEvent(new CloseEventHandler<Date>() {
                     @Override
                     public void handle(Date resultValue) {
-                        field.setUserData(resultValue);
-                        if (DatetimeInputEventHander.this.isTimeInput) {
-                            field.setText(Datetime.dateToString(resultValue));
-                        } else {
-                            field.setText(Datetime.dateToString(resultValue, "yyyy-MM-dd"));
+                        if (resultValue != null) {
+                            if (DatetimeInputEventHander.this.isTimeInput) {
+                                field.setText(Datetime.dateToString(resultValue));
+                            } else {
+                                field.setText(Datetime.dateToString(resultValue, "yyyy-MM-dd"));
+                            }
                         }
                     }
                 });
