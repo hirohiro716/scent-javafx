@@ -27,7 +27,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 /**
- * Pnae内のコントロールを検索するclass.
+ * Pnae内のコントロールを検索して取得するクラス.
  * @author hiro
  */
 public class PaneNodeFinder {
@@ -35,7 +35,7 @@ public class PaneNodeFinder {
     private Pane pane;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param <T> javafx.scene.layout.Paneを継承したクラスオブジェクト
      * @param pane
      */

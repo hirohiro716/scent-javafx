@@ -34,14 +34,14 @@ public class Alert extends AbstractDialog<DialogResult> {
     private EnterFireButton buttonOk;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      */
     public Alert() {
         super();
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param parentStage
      */
     public Alert(Stage parentStage) {
@@ -71,7 +71,6 @@ public class Alert extends AbstractDialog<DialogResult> {
             public void handle(ActionEvent event) {
                 Alert.this.setResult(DialogResult.OK);
                 Alert.this.close();
-                event.consume();
             }
         });
         // キーボードイベント定義
@@ -81,7 +80,6 @@ public class Alert extends AbstractDialog<DialogResult> {
                 switch (event.getCode()) {
                 case O:
                     Alert.this.buttonOk.fire();
-                    event.consume();
                     break;
                 default:
                     break;
@@ -93,7 +91,7 @@ public class Alert extends AbstractDialog<DialogResult> {
     @Override
     public void show() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("Alert.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
         }
@@ -102,7 +100,7 @@ public class Alert extends AbstractDialog<DialogResult> {
     @Override
     public DialogResult showAndWait() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("Alert.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             return this.showAndWait(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return null;
@@ -140,7 +138,7 @@ public class Alert extends AbstractDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示
+     * ダイアログを表示する.
      * @param title タイトル
      * @param message メッセージ
      * @param closeEvent 閉じる際の処理
@@ -154,7 +152,7 @@ public class Alert extends AbstractDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示
+     * ダイアログを表示する.
      * @param title タイトル
      * @param message メッセージ
      * @param parentStage 親Stage
@@ -169,7 +167,7 @@ public class Alert extends AbstractDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示
+     * ダイアログを表示する.
      * @param title タイトル
      * @param message メッセージ
      */
@@ -181,7 +179,7 @@ public class Alert extends AbstractDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示
+     * ダイアログを表示する.
      * @param title タイトル
      * @param message メッセージ
      * @param parentStage 親Stage
@@ -194,7 +192,7 @@ public class Alert extends AbstractDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示
+     * ダイアログを表示する.
      * @param title タイトル
      * @param message メッセージ
      * @return 結果
@@ -207,7 +205,7 @@ public class Alert extends AbstractDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示
+     * ダイアログを表示する.
      * @param title タイトル
      * @param message メッセージ
      * @param parentStage 親Stage

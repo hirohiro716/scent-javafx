@@ -25,14 +25,14 @@ public class RudeDatePicker extends DatePicker {
     private String lastInputText;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      */
     public RudeDatePicker() {
         this(null);
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param localDate
      */
     public RudeDatePicker(LocalDate localDate) {

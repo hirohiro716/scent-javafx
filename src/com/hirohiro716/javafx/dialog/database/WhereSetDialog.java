@@ -33,7 +33,7 @@ import javafx.stage.Stage;
 public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
 
     /**
-     * カラムのデータ型
+     * カラムのデータ型.
      * @author hiro
      */
     public enum ColumnType {
@@ -91,7 +91,7 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     /**
      * 共通の処理が膨大なので別インスタンスへ
      */
-    private WhereSetDialogCore common = new WhereSetDialogCore();
+    private WhereSetDialogCore core = new WhereSetDialogCore();
 
     /**
      * 検索できるカラムを追加する.
@@ -100,7 +100,7 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
      * @param columnType 種類
      */
     public void addSearchableColumn(String columnName, String description, ColumnType columnType) {
-        this.common.addSearchableColumn(columnName, description, columnType);
+        this.core.addSearchableColumn(columnName, description, columnType);
     }
 
     /**
@@ -111,7 +111,7 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
      * @param hashMap 連想配列
      */
     public void addSearchableColumn(String columnName, String description, ColumnType columnType, HashMap<?, ?> hashMap) {
-        this.common.addSearchableColumn(columnName, description, columnType, hashMap);
+        this.core.addSearchableColumn(columnName, description, columnType, hashMap);
     }
 
     /**
@@ -121,11 +121,11 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
      * @param description 説明
      */
     public void addStringComparison(ColumnType columnType, Comparison comparison, String description) {
-        this.common.addStringComparison(columnType, comparison, description);
+        this.core.addStringComparison(columnType, comparison, description);
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param parentStage
      */
     public WhereSetDialog(Stage parentStage) {
@@ -149,19 +149,19 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
             this.paneMessage.getChildren().add(this.messageNode);
         }
         // Commonにコントロールを渡す
-        this.common.setDialogPane(this.getDialogPane());
-        this.common.setVBoxWhereSet(this.vboxWhereSet);
-        this.common.setVBoxWhereSetGroup(this.vboxWhereSetGroup);
+        this.core.setDialogPane(this.getDialogPane());
+        this.core.setVBoxWhereSet(this.vboxWhereSet);
+        this.core.setVBoxWhereSetGroup(this.vboxWhereSetGroup);
         // 初期値のセット
         if (this.defaultValue == null) {
-            this.common.addWhereSet(false);
+            this.core.addWhereSet(false);
         } else {
             for (WhereSet whereSet: this.defaultValue) {
-                this.common.whereSetGroup.add(whereSet);
-                RadioButton radioButton = this.common.addWhereSetRadioButton(whereSet);
-                if (this.common.focusWhereSet == null) {
-                    this.common.focusWhereSet = whereSet;
-                    this.common.updateVBoxFromWhereSet();
+                this.core.whereSetGroup.add(whereSet);
+                RadioButton radioButton = this.core.addWhereSetRadioButton(whereSet);
+                if (this.core.focusWhereSet == null) {
+                    this.core.focusWhereSet = whereSet;
+                    this.core.updateVBoxFromWhereSet();
                     radioButton.setSelected(true);
                 }
             }
@@ -171,19 +171,19 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
             @Override
             public void handle(ActionEvent event) {
                 WhereSetDialog whereSetDialog = WhereSetDialog.this;
-                HashMapComboBoxPaneDialog<String> dialog = new HashMapComboBoxPaneDialog<>(whereSetDialog.getDialogPane());
+                HashMapComboBoxPaneDialog<String, String> dialog = new HashMapComboBoxPaneDialog<>(whereSetDialog.getDialogPane());
                 dialog.setTitle("検索項目の追加");
                 dialog.setMessage("追加する検索項目を選択してください。");
-                dialog.setHashMap(whereSetDialog.common.searchTableRowsableColumnDescriptions);
-                Iterator<String> iterator = whereSetDialog.common.searchTableRowsableColumnDescriptions.keySet().iterator();
+                dialog.setHashMap(whereSetDialog.core.searchTableRowsableColumnDescriptions);
+                Iterator<String> iterator = whereSetDialog.core.searchTableRowsableColumnDescriptions.keySet().iterator();
                 if (iterator.hasNext()) {
                     dialog.setDefaultValue(iterator.next());
                 }
                 dialog.setCloseEvent(new CloseEventHandler<String>() {
                     @Override
                     public void handle(String resultValue) {
-                        if (whereSetDialog.common.searchTableRowsableColumnDescriptions.containsKey(resultValue)) {
-                            whereSetDialog.common.addWhere(resultValue);
+                        if (whereSetDialog.core.searchTableRowsableColumnDescriptions.containsKey(resultValue)) {
+                            whereSetDialog.core.addWhere(resultValue);
                         }
                     }
                 });
@@ -191,12 +191,12 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
             }
         });
         // 検索セット追加ボタン
+        WhereSetDialog dialog = WhereSetDialog.this;
         this.buttonAddWhereSet.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                WhereSetDialog dialog = WhereSetDialog.this;
-                dialog.common.updateWhereSetFromVBox();
-                for (WhereSet whereSet: dialog.common.whereSetGroup) {
+                dialog.core.updateWhereSetFromVBox();
+                for (WhereSet whereSet: dialog.core.whereSetGroup) {
                     if (whereSet.size() == 0) {
                         return;
                     }
@@ -206,9 +206,9 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
                     @Override
                     public void handle(DialogResult resultValue) {
                         if (resultValue == DialogResult.YES) {
-                            dialog.common.addWhereSet(true);
+                            dialog.core.addWhereSet(true);
                         } else {
-                            dialog.common.addWhereSet(false);
+                            dialog.core.addWhereSet(false);
                         }
                     }
                 });
@@ -218,17 +218,15 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                WhereSetDialog dialog = WhereSetDialog.this;
-                dialog.common.updateWhereSetFromVBox();
+                dialog.core.updateWhereSetFromVBox();
                 ArrayList<WhereSet> result = new ArrayList<>();
-                for (WhereSet whereSet: dialog.common.whereSetGroup) {
+                for (WhereSet whereSet: dialog.core.whereSetGroup) {
                     if (whereSet.size() > 0) {
                         result.add(whereSet);
                     }
                 }
                 dialog.setResult(result.toArray(new WhereSet[]{}));
                 dialog.close();
-                event.consume();
             }
         });
         if (this.isCancelable) {
@@ -237,7 +235,6 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
                 public void handle(ActionEvent event) {
                     WhereSetDialog.this.setResult(null);
                     WhereSetDialog.this.close();
-                    event.consume();
                 }
             });
         } else {
@@ -249,7 +246,7 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     @Override
     public void show() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("WhereSetDialog.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
         }
@@ -258,7 +255,7 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     @Override
     public WhereSet[] showAndWait() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("WhereSetDialog.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             return this.showAndWait(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return null;
@@ -321,14 +318,6 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
      */
     public void setDefaultValue(WhereSet[] whereSets) {
         this.defaultValue = whereSets;
-    }
-
-    @Override @Deprecated
-    public void setWidth(double width) {
-    }
-
-    @Override @Deprecated
-    public void setHeight(double height) {
     }
 
 }

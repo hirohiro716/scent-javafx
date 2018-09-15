@@ -27,7 +27,7 @@ import javafx.scene.input.KeyEvent;
 public class HashMapComboBox<K, V> extends ComboBox<V> {
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      */
     public HashMapComboBox() {
         this(null);

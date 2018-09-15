@@ -13,7 +13,6 @@ import com.hirohiro716.javafx.LayoutHelper;
 import com.hirohiro716.javafx.control.EnterFireButton;
 import com.hirohiro716.javafx.control.LimitTextField;
 import com.hirohiro716.javafx.control.RudeDatePicker;
-import com.hirohiro716.javafx.dialog.AbstractDialog.CloseEventHandler;
 import com.hirohiro716.javafx.dialog.AbstractPaneDialog;
 
 import javafx.application.Platform;
@@ -58,7 +57,7 @@ public class DatetimePickerPaneDialog extends AbstractPaneDialog<Date> {
     private EnterFireButton buttonCancel;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param parentPane
      */
     public DatetimePickerPaneDialog(Pane parentPane) {
@@ -67,9 +66,10 @@ public class DatetimePickerPaneDialog extends AbstractPaneDialog<Date> {
 
     @Override
     public void show() {
+        DatetimePickerPaneDialog dialog = DatetimePickerPaneDialog.this;
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("DatetimePickerDialog.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(DatetimePickerDialog.class.getResource(DatetimePickerDialog.class.getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return;
@@ -122,7 +122,6 @@ public class DatetimePickerPaneDialog extends AbstractPaneDialog<Date> {
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DatetimePickerPaneDialog dialog = DatetimePickerPaneDialog.this;
                 if (dialog.datePicker.getValue() != null) {
                     Datetime helper = new Datetime(dialog.datePicker.getDate());
                     helper.modifyHour(StringConverter.stringToInteger(dialog.limitTextFieldHour.getText()));
@@ -131,17 +130,14 @@ public class DatetimePickerPaneDialog extends AbstractPaneDialog<Date> {
                     dialog.setResult(helper.getDate());
                     dialog.close();
                 }
-                event.consume();
             }
         });
         if (this.isCancelable) {
             this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    DatetimePickerPaneDialog dialog = DatetimePickerPaneDialog.this;
                     dialog.setResult(null);
                     dialog.close();
-                    event.consume();
                 }
             });
         } else {
@@ -157,20 +153,17 @@ public class DatetimePickerPaneDialog extends AbstractPaneDialog<Date> {
                 }
                 switch (event.getCode()) {
                 case O:
-                    DatetimePickerPaneDialog.this.buttonOk.fire();
-                    event.consume();
+                    dialog.buttonOk.fire();
                     break;
                 case C:
-                    DatetimePickerPaneDialog.this.buttonCancel.fire();
-                    event.consume();
+                    dialog.buttonCancel.fire();
                     break;
                 default:
                     break;
                 }
             }
         });
-       // FIXME バグなのか開いた瞬間はフォーカスを一度外さないと選択されない
-        DatetimePickerPaneDialog dialog = DatetimePickerPaneDialog.this;
+        // FIXME DatePickerはバグなのか開いた瞬間はフォーカスを一度外さないと選択されない
         dialog.limitTextFieldHour.requestFocus();
         Platform.runLater(new Runnable() {
             @Override
@@ -257,30 +250,6 @@ public class DatetimePickerPaneDialog extends AbstractPaneDialog<Date> {
      */
     public boolean isTimeInput() {
         return this.isTimeInput;
-    }
-
-    /**
-     * ダイアログを表示
-     * @param <T> javafx.scene.layout.Paneを継承したクラスオブジェクト
-     * @param title タイトル
-     * @param message メッセージ
-     * @param parentPane 表示対象Pane
-     * @param closeEvent 閉じる際の処理
-     */
-    public static <T extends Pane> void show(String title, String message, T parentPane, CloseEventHandler<Date> closeEvent) {
-        DatetimePickerPaneDialog dialog = new DatetimePickerPaneDialog(parentPane);
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        dialog.setCloseEvent(closeEvent);
-        dialog.show();
-    }
-
-    @Override @Deprecated
-    public void setWidth(double width) {
-    }
-
-    @Override @Deprecated
-    public void setHeight(double height) {
     }
 
 }

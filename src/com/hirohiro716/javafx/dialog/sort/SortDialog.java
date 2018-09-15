@@ -1,7 +1,6 @@
 package com.hirohiro716.javafx.dialog.sort;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 import com.hirohiro716.StringConverter;
@@ -54,19 +53,25 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
     private EnterFireButton buttonCancel;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
+     * @param sortableItems 並び替えるItem
      */
-    public SortDialog() {
+    public SortDialog(LinkedHashMap<E, String> sortableItems) {
         super();
+        this.sortableItems = sortableItems;
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
+     * @param sortableItems 並び替えるItems
      * @param parentStage
      */
-    public SortDialog(Stage parentStage) {
+    public SortDialog(LinkedHashMap<E, String> sortableItems, Stage parentStage) {
         super(parentStage);
+        this.sortableItems = sortableItems;
     }
+
+    private LinkedHashMap<E, String> sortableItems;
 
     @Override
     protected void preparationCallback() {
@@ -86,20 +91,19 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
             this.paneMessage.getChildren().add(this.messageNode);
         }
         // 並べ替え用のVBoxを作成
-        createItems(this.scrollPane, this.vbox, this.items);
+        createItems(this.scrollPane, this.vbox, this.sortableItems);
         // ボタンのイベント定義
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @SuppressWarnings("unchecked")
             @Override
             public void handle(ActionEvent event) {
-                dialog.items.clear();
+                dialog.sortableItems.clear();
                 for (Node node: dialog.vbox.getChildren()) {
                     Label label = (Label) node;
-                    dialog.items.put((E) label.getUserData(), label.getText());
+                    dialog.sortableItems.put((E) label.getUserData(), label.getText());
                 }
-                dialog.setResult(dialog.items);
+                dialog.setResult(dialog.sortableItems);
                 dialog.close();
-                event.consume();
             }
         });
         if (this.isCancelable) {
@@ -108,7 +112,6 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
                 public void handle(ActionEvent event) {
                     dialog.setResult(null);
                     dialog.close();
-                    event.consume();
                 }
             });
         } else {
@@ -122,11 +125,9 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
                 switch (event.getCode()) {
                 case O:
                     dialog.buttonOk.fire();
-                    event.consume();
                     break;
                 case C:
                     dialog.buttonCancel.fire();
-                    event.consume();
                     break;
                 default:
                     break;
@@ -142,9 +143,7 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
      * @param items
      */
     protected static <E> void createItems(ScrollPane scrollPane, VBox vbox, LinkedHashMap<E, String> items) {
-        Iterator<E> iterator = items.keySet().iterator();
-        while (iterator.hasNext()) {
-            E key = iterator.next();
+        for (E key: items.keySet()) {
             final Label label = new Label(items.get(key));
             label.setUserData(key);
             vbox.getChildren().add(label);
@@ -262,7 +261,7 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
     @Override
     public void show() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("SortDialog.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
         }
@@ -271,7 +270,7 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
     @Override
     public LinkedHashMap<E, String> showAndWait() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("SortDialog.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             return this.showAndWait(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return null;
@@ -308,24 +307,6 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
         this.messageNode = node;
     }
 
-    private LinkedHashMap<E, String> items;
-
-    /**
-     * 並び替えるアイテムを指定する.
-     * @param items
-     */
-    public void setItems(LinkedHashMap<E, String> items) {
-        this.items = items;
-    }
-
-    /**
-     * 並び替えるアイテムを取得する.
-     * @return items
-     */
-    public LinkedHashMap<E, String> getItems() {
-        return this.items;
-    }
-
     private boolean isCancelable = true;
 
     /**
@@ -342,47 +323,6 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
      */
     public boolean isCancelable() {
         return this.isCancelable;
-    }
-
-    /**
-     * ダイアログを表示
-     * @param <E> 並び替えるデータの型
-     * @param title タイトル
-     * @param message メッセージ
-     * @param items 並び替えを行うItems
-     * @return 結果
-     */
-    public static <E> LinkedHashMap<E, String> showAndWait(String title, String message, LinkedHashMap<E, String> items) {
-        SortDialog<E> dialog = new SortDialog<>();
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        dialog.setItems(items);
-        return dialog.showAndWait();
-    }
-
-    /**
-     * ダイアログを表示
-     * @param <E> 並び替えるデータの型
-     * @param title タイトル
-     * @param message メッセージ
-     * @param items 並び替えを行うItems
-     * @param parentStage 親Stage
-     * @return 結果
-     */
-    public static <E> LinkedHashMap<E, String> showAndWait(String title, String message, LinkedHashMap<E, String> items, Stage parentStage) {
-        SortDialog<E> dialog = new SortDialog<>(parentStage);
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        dialog.setItems(items);
-        return dialog.showAndWait();
-    }
-
-    @Override @Deprecated
-    public void setWidth(double width) {
-    }
-
-    @Override @Deprecated
-    public void setHeight(double height) {
     }
 
 }

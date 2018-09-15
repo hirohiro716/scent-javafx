@@ -1,36 +1,34 @@
 package com.hirohiro716.javafx.dialog.datetime;
 
 import java.io.IOException;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.hirohiro716.StringConverter;
-import com.hirohiro716.RegexHelper.RegexPattern;
-import com.hirohiro716.awt.RobotJapanese.ImeMode;
 import com.hirohiro716.datetime.Datetime;
+import com.hirohiro716.datetime.FiscalMonth;
 import com.hirohiro716.javafx.FXMLLoader;
-import com.hirohiro716.javafx.IMEHelper;
 import com.hirohiro716.javafx.LayoutHelper;
 import com.hirohiro716.javafx.control.EnterFireButton;
-import com.hirohiro716.javafx.control.LimitTextField;
-import com.hirohiro716.javafx.control.RudeDatePicker;
 import com.hirohiro716.javafx.dialog.AbstractDialog;
+import com.hirohiro716.javafx.dialog.alert.InstantAlert;
 
-import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
- * 日時の入力ダイアログを表示するクラス.
+ * 月の入力ダイアログを表示するクラス.
  * @author hiro
  */
-public class DatetimePickerDialog extends AbstractDialog<Date> {
+public class MonthSelectDialog extends AbstractDialog<MonthResult> {
 
     @FXML
     private Label labelTitle;
@@ -39,16 +37,10 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
     private AnchorPane paneMessage;
 
     @FXML
-    private RudeDatePicker datePicker;
+    private ComboBox<Integer> comboBoxYear;
 
     @FXML
-    private LimitTextField limitTextFieldHour;
-
-    @FXML
-    private LimitTextField limitTextFieldMinute;
-
-    @FXML
-    private LimitTextField limitTextFieldSecond;
+    private ComboBox<Integer> comboBoxMonth;
 
     @FXML
     private EnterFireButton buttonOk;
@@ -59,21 +51,55 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
     /**
      * コンストラクタ.
      */
-    public DatetimePickerDialog() {
+    public MonthSelectDialog() {
         super();
+    }
+
+    /**
+     * コンストラクタ.
+     * @param selectableYears 選択可能な年
+     */
+    public MonthSelectDialog(List<Integer> selectableYears) {
+        super();
+        this.selectableYears = selectableYears;
     }
 
     /**
      * コンストラクタ.
      * @param parentStage
      */
-    public DatetimePickerDialog(Stage parentStage) {
+    public MonthSelectDialog(Stage parentStage) {
         super(parentStage);
     }
 
+    /**
+     * コンストラクタ.
+     * @param parentStage
+     * @param selectableYears 選択可能な年
+     */
+    public MonthSelectDialog(Stage parentStage, List<Integer> selectableYears) {
+        super(parentStage);
+        this.selectableYears = selectableYears;
+    }
+
+    /**
+     * コンストラクタ.
+     * @param parentStage
+     * @param selectableYears 選択可能な年
+     */
+    public MonthSelectDialog(Stage parentStage, int... selectableYears) {
+        super(parentStage);
+        this.selectableYears = new ArrayList<>();
+        for (int year: selectableYears) {
+            this.selectableYears.add(year);
+        }
+    }
+
+    private List<Integer> selectableYears = null;
+    
     @Override
     protected void preparationCallback() {
-        DatetimePickerDialog dialog = DatetimePickerDialog.this;
+        MonthSelectDialog dialog = MonthSelectDialog.this;
         // タイトルのセット
         this.getStage().setTitle(this.title);
         this.labelTitle.setText(this.title);
@@ -88,51 +114,31 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
         if (this.messageNode != null) {
             this.paneMessage.getChildren().add(this.messageNode);
         }
-        // 日付の初期値をセット
-        this.datePicker.setValue(this.defaultValue);
-        this.datePicker.getEditor().setAlignment(Pos.CENTER);
-        // 時刻
-        if (this.isTimeInput == false) {
-            this.limitTextFieldHour.setVisible(false);
-            this.limitTextFieldHour.setText("0");;
-            this.limitTextFieldMinute.setVisible(false);
-            this.limitTextFieldMinute.setText("0");;
-            this.limitTextFieldSecond.setVisible(false);
-            this.limitTextFieldSecond.setText("0");;
-            for (Node node: this.getDialogPane().lookupAll("#colon")) {
-                node.setVisible(false);
-            }
-        } else {
-            Datetime datetime = new Datetime(this.defaultValue);
-            StringConverter converter = new StringConverter();
-            converter.appendIntegerString();
-            this.limitTextFieldHour.setMaxLength(2);
-            this.limitTextFieldHour.addPermitRegex(RegexPattern.INTEGER_NARROW_ONLY.getPattern(), false);
-            this.limitTextFieldHour.setText(String.valueOf(datetime.toHour()));
-            IMEHelper.apply(this.limitTextFieldHour, ImeMode.OFF);
-            this.limitTextFieldMinute.setMaxLength(2);
-            this.limitTextFieldMinute.addPermitRegex(RegexPattern.INTEGER_NARROW_ONLY.getPattern(), false);
-            this.limitTextFieldMinute.setText(String.valueOf(datetime.toMinute()));
-            IMEHelper.apply(this.limitTextFieldMinute, ImeMode.OFF);
-            this.limitTextFieldSecond.setMaxLength(2);
-            this.limitTextFieldSecond.addPermitRegex(RegexPattern.INTEGER_NARROW_ONLY.getPattern(), false);
-            this.limitTextFieldSecond.setText(String.valueOf(datetime.toSecond()));
-            IMEHelper.apply(this.limitTextFieldSecond, ImeMode.OFF);
+        // コンボボックスのアイテムをセット
+        Datetime datetime = new Datetime();
+        if (this.selectableYears == null) {
+            this.selectableYears = new ArrayList<>();
+            this.selectableYears.add(datetime.toYear());
+        }
+        this.comboBoxYear.setItems(FXCollections.observableArrayList(this.selectableYears));
+        this.comboBoxMonth.setItems(FXCollections.observableArrayList(FiscalMonth.createLinkedHashMap().keySet()));
+        // 初期値をセット
+        if (this.defaultYear != null) {
+            this.comboBoxYear.setValue(this.defaultYear);
+        }
+        if (this.defaultMonth != null) {
+            this.comboBoxMonth.setValue(this.defaultMonth);
         }
         // ボタンのイベント定義
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (dialog.datePicker.getValue() != null) {
-                    Datetime datetime = new Datetime(dialog.datePicker.getDate());
-                    try {
-                        datetime.modifyHour(StringConverter.stringToInteger(dialog.limitTextFieldHour.getText()));
-                        datetime.modifyMinute(StringConverter.stringToInteger(dialog.limitTextFieldMinute.getText()));
-                        datetime.modifySecond(StringConverter.stringToInteger(dialog.limitTextFieldSecond.getText()));
-                    } catch (Exception exception) {
-                    }
-                    dialog.setResult(datetime.getDate());
+                try {
+                    MonthResult result = new MonthResult(dialog.comboBoxYear.getValue(), dialog.comboBoxMonth.getValue());
+                    dialog.setResult(result);
                     dialog.close();
+                } catch (Exception exception) {
+                    InstantAlert.show(dialog.getDialogPane(), "正しく入力されていません。", Pos.CENTER, 3000);
                 }
             }
         });
@@ -167,15 +173,6 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
                 }
             }
         });
-        // FIXME DatePickerはバグなのか開いた瞬間はフォーカスを一度外さないと選択されない
-        dialog.limitTextFieldHour.requestFocus();
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                dialog.datePicker.requestFocus();
-                dialog.datePicker.getEditor().selectAll();
-            }
-        });
     }
 
     @Override
@@ -188,7 +185,7 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
     }
 
     @Override
-    public Date showAndWait() {
+    public MonthResult showAndWait() {
         try {
             FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             return this.showAndWait(fxmlHelper.getPaneRoot());
@@ -227,18 +224,26 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
         this.messageNode = node;
     }
 
-    private Date defaultValue = new Date();
-
+    private Integer defaultYear = null;
+    
     /**
-     * 日時の初期値をセットする.
-     * @param defaultValue
+     * 初期でセットする年をセットする.
+     * @param year
      */
-    public void setDefaultValue(Date defaultValue) {
-        if (defaultValue != null) {
-            this.defaultValue = defaultValue;
-        }
+    public void setDefaultYear(int year) {
+        this.defaultYear = year;
     }
-
+    
+    private Integer defaultMonth = null;
+    
+    /**
+     * 初期でセットする月をセットする.
+     * @param month
+     */
+    public void setDefaultMonth(int month) {
+        this.defaultMonth = month;
+    }
+    
     private boolean isCancelable = true;
 
     /**
@@ -255,24 +260,6 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
      */
     public boolean isCancelable() {
         return this.isCancelable;
-    }
-
-    private boolean isTimeInput = true;
-
-    /**
-     * 時刻も入力させるかどうか.
-     * @param isTimeInput
-     */
-    public void setTimeInput(boolean isTimeInput) {
-        this.isTimeInput = isTimeInput;
-    }
-
-    /**
-     * 時刻も入力させるかどうかを取得する.
-     * @return isTimeInput
-     */
-    public boolean isTimeInput() {
-        return this.isTimeInput;
     }
 
 }

@@ -15,14 +15,14 @@ import javafx.scene.input.MouseEvent;
 public class ReadonlyCheckBox extends ImeOffCheckBox {
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      */
     public ReadonlyCheckBox() {
         this("");
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param text ラベルテキスト
      */
     public ReadonlyCheckBox(String text) {

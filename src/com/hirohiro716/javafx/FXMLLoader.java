@@ -11,6 +11,42 @@ import javafx.scene.layout.Pane;
  */
 public class FXMLLoader {
 
+    /**
+     * コンストラクタ.
+     * @param fxmlURL FXMLのURL
+     * @throws IOException
+     */
+    public FXMLLoader(URL fxmlURL) throws IOException {
+        javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(fxmlURL);
+        try {
+            this.paneRoot = loader.load();
+        } catch (IOException exception) {
+            this.paneRoot = null;
+            this.controller = null;
+            throw exception;
+        }
+        this.controller = loader.getController();
+    }
+
+    /**
+     * コンストラクタ.（予めコントローラーを指定）
+     * @param fxmlURL FXMLのURL
+     * @param controller コントローラー
+     * @throws IOException
+     */
+    public FXMLLoader(URL fxmlURL, Object controller) throws IOException {
+        javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(fxmlURL);
+        try {
+            this.controller = controller;
+            loader.setController(controller);
+            this.paneRoot = loader.load();
+        } catch (IOException exception) {
+            this.paneRoot = null;
+            this.controller = null;
+            throw exception;
+        }
+    }
+
     private Pane paneRoot;
 
     /**
@@ -29,42 +65,6 @@ public class FXMLLoader {
      */
     public Object getController() {
         return this.controller;
-    }
-
-    /**
-     * コンストラクタ
-     * @param fxmlURL FXMLのURL
-     * @throws IOException
-     */
-    public FXMLLoader(URL fxmlURL) throws IOException {
-        javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(fxmlURL);
-        try {
-            this.paneRoot = loader.load();
-        } catch (IOException exception) {
-            this.paneRoot = null;
-            this.controller = null;
-            throw exception;
-        }
-        this.controller = loader.getController();
-    }
-
-    /**
-     * コンストラクタ（予めコントローラーを指定）
-     * @param fxmlURL FXMLのURL
-     * @param controller コントローラー
-     * @throws IOException
-     */
-    public FXMLLoader(URL fxmlURL, Object controller) throws IOException {
-        javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(fxmlURL);
-        try {
-            this.controller = controller;
-            loader.setController(controller);
-            this.paneRoot = loader.load();
-        } catch (IOException exception) {
-            this.paneRoot = null;
-            this.controller = null;
-            throw exception;
-        }
     }
 
     /**

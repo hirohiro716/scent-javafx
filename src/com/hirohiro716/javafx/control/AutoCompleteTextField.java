@@ -23,14 +23,14 @@ import javafx.stage.Screen;
 public class AutoCompleteTextField extends LimitTextField {
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      */
     public AutoCompleteTextField() {
         this("", FXCollections.observableArrayList());
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param text
      */
     public AutoCompleteTextField(String text) {
@@ -38,7 +38,7 @@ public class AutoCompleteTextField extends LimitTextField {
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param items 自動補完候補リスト
      */
     public AutoCompleteTextField(ObservableList<String> items) {
@@ -46,7 +46,7 @@ public class AutoCompleteTextField extends LimitTextField {
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param text
      * @param items 自動補完候補リスト
      */

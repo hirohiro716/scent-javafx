@@ -37,14 +37,14 @@ public class Question extends AbstractDialog<DialogResult> {
     private EnterFireButton buttonNo;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      */
     public Question() {
         super();
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param parentStage
      */
     public Question(Stage parentStage) {
@@ -53,6 +53,7 @@ public class Question extends AbstractDialog<DialogResult> {
 
     @Override
     protected void preparationCallback() {
+        Question dialog = Question.this;
         // タイトルのセット
         this.getStage().setTitle(this.title);
         this.labelTitle.setText(this.title);
@@ -72,17 +73,15 @@ public class Question extends AbstractDialog<DialogResult> {
         this.buttonYes.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Question.this.setResult(DialogResult.YES);
-                Question.this.close();
-                event.consume();
+                dialog.setResult(DialogResult.YES);
+                dialog.close();
             }
         });
         this.buttonNo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Question.this.setResult(DialogResult.NO);
-                Question.this.close();
-                event.consume();
+                dialog.setResult(DialogResult.NO);
+                dialog.close();
             }
         });
         // キーボードイベント定義
@@ -91,12 +90,10 @@ public class Question extends AbstractDialog<DialogResult> {
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
                 case Y:
-                    Question.this.buttonYes.fire();
-                    event.consume();
+                    dialog.buttonYes.fire();
                     break;
                 case N:
-                    Question.this.buttonNo.fire();
-                    event.consume();
+                    dialog.buttonNo.fire();
                     break;
                 default:
                     break;
@@ -120,7 +117,7 @@ public class Question extends AbstractDialog<DialogResult> {
     @Override
     public void show() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("Question.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
         }
@@ -129,7 +126,7 @@ public class Question extends AbstractDialog<DialogResult> {
     @Override
     public DialogResult showAndWait() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("Question.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             return this.showAndWait(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return null;
@@ -177,7 +174,7 @@ public class Question extends AbstractDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示
+     * ダイアログを表示する.
      * @param title タイトル
      * @param message メッセージ
      * @param closeEvent 閉じる際の処理
@@ -191,7 +188,7 @@ public class Question extends AbstractDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示
+     * ダイアログを表示する.
      * @param title タイトル
      * @param message メッセージ
      * @param parentStage 親Stage
@@ -206,7 +203,7 @@ public class Question extends AbstractDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示
+     * ダイアログを表示する.
      * @param title タイトル
      * @param message メッセージ
      * @return 結果
@@ -219,7 +216,7 @@ public class Question extends AbstractDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示
+     * ダイアログを表示する.
      * @param title タイトル
      * @param message メッセージ
      * @param parentStage 親Stage

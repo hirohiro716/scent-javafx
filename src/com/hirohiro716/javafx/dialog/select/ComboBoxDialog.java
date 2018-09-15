@@ -2,7 +2,6 @@ package com.hirohiro716.javafx.dialog.select;
 
 import java.io.IOException;
 
-import com.hirohiro716.StringConverter;
 import com.hirohiro716.javafx.FXMLLoader;
 import com.hirohiro716.javafx.LayoutHelper;
 import com.hirohiro716.javafx.control.EnterFireButton;
@@ -22,8 +21,9 @@ import javafx.stage.Stage;
 /**
  * コンボボックス入力ダイアログを表示するクラス.
  * @author hiro
+ * @param <T> コンボボックスの値型
  */
-public class ComboBoxDialog extends AbstractDialog<String> {
+public class ComboBoxDialog<T> extends AbstractDialog<T> {
 
     @FXML
     private Label labelTitle;
@@ -32,7 +32,7 @@ public class ComboBoxDialog extends AbstractDialog<String> {
     private AnchorPane paneMessage;
 
     @FXML
-    private ComboBox<String> comboBox;
+    private ComboBox<T> comboBox;
 
     @FXML
     private EnterFireButton buttonOk;
@@ -41,14 +41,14 @@ public class ComboBoxDialog extends AbstractDialog<String> {
     private EnterFireButton buttonCancel;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      */
     public ComboBoxDialog() {
         super();
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param parentStage
      */
     public ComboBoxDialog(Stage parentStage) {
@@ -57,6 +57,7 @@ public class ComboBoxDialog extends AbstractDialog<String> {
 
     @Override
     protected void preparationCallback() {
+        ComboBoxDialog<T> dialog = ComboBoxDialog.this;
         // タイトルのセット
         this.getStage().setTitle(this.title);
         this.labelTitle.setText(this.title);
@@ -81,18 +82,18 @@ public class ComboBoxDialog extends AbstractDialog<String> {
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                ComboBoxDialog.this.setResult(StringConverter.nullReplace(ComboBoxDialog.this.comboBox.getValue(), ""));
-                ComboBoxDialog.this.close();
-                event.consume();
+                if (dialog.comboBox.getValue() != null) {
+                    dialog.setResult(dialog.comboBox.getValue());
+                    dialog.close();
+                }
             }
         });
         if (this.isCancelable) {
             this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    ComboBoxDialog.this.setResult(null);
-                    ComboBoxDialog.this.close();
-                    event.consume();
+                    dialog.setResult(null);
+                    dialog.close();
                 }
             });
         } else {
@@ -108,12 +109,10 @@ public class ComboBoxDialog extends AbstractDialog<String> {
                 }
                 switch (event.getCode()) {
                 case O:
-                    ComboBoxDialog.this.buttonOk.fire();
-                    event.consume();
+                    dialog.buttonOk.fire();
                     break;
                 case C:
-                    ComboBoxDialog.this.buttonCancel.fire();
-                    event.consume();
+                    dialog.buttonCancel.fire();
                     break;
                 default:
                     break;
@@ -125,16 +124,16 @@ public class ComboBoxDialog extends AbstractDialog<String> {
     @Override
     public void show() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("ComboBoxDialog.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
         }
     }
 
     @Override
-    public String showAndWait() {
+    public T showAndWait() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("ComboBoxDialog.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             return this.showAndWait(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return null;
@@ -171,13 +170,13 @@ public class ComboBoxDialog extends AbstractDialog<String> {
         this.messageNode = node;
     }
 
-    private ObservableList<String> items;
+    private ObservableList<T> items;
 
     /**
      * コンボボックスのアイテムを指定する.
      * @param items
      */
-    public void setItems(ObservableList<String> items) {
+    public void setItems(ObservableList<T> items) {
         this.items = items;
     }
 
@@ -185,17 +184,17 @@ public class ComboBoxDialog extends AbstractDialog<String> {
      * コンボボックスのアイテムを取得する.
      * @return items
      */
-    public ObservableList<String> getItems() {
+    public ObservableList<T> getItems() {
         return this.items;
     }
 
-    private String defaultValue;
+    private T defaultValue;
 
     /**
      * コンボボックスの初期値をセットする.
      * @param defaultValue
      */
-    public void setDefaultValue(String defaultValue) {
+    public void setDefaultValue(T defaultValue) {
         this.defaultValue = defaultValue;
     }
 
@@ -215,45 +214,6 @@ public class ComboBoxDialog extends AbstractDialog<String> {
      */
     public boolean isCancelable() {
         return this.isCancelable;
-    }
-
-    /**
-     * ダイアログを表示
-     * @param title タイトル
-     * @param message メッセージ
-     * @param items コンボボックスのアイテム
-     * @return 結果
-     */
-    public static String showAndWait(String title, String message, ObservableList<String> items) {
-        ComboBoxDialog dialog = new ComboBoxDialog();
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        dialog.setItems(items);
-        return dialog.showAndWait();
-    }
-
-    /**
-     * ダイアログを表示
-     * @param title タイトル
-     * @param message メッセージ
-     * @param items コンボボックスのアイテム
-     * @param parentStage 親Stage
-     * @return 結果
-     */
-    public static String showAndWait(String title, String message, ObservableList<String> items, Stage parentStage) {
-        ComboBoxDialog dialog = new ComboBoxDialog(parentStage);
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        dialog.setItems(items);
-        return dialog.showAndWait();
-    }
-
-    @Override @Deprecated
-    public void setWidth(double width) {
-    }
-
-    @Override @Deprecated
-    public void setHeight(double height) {
     }
 
 }

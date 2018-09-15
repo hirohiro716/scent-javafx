@@ -38,7 +38,7 @@ public class ConfirmPane extends AbstractPaneDialog<DialogResult> {
     private EnterFireButton buttonCancel;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param parentPane
      */
     public ConfirmPane(Pane parentPane) {
@@ -47,9 +47,10 @@ public class ConfirmPane extends AbstractPaneDialog<DialogResult> {
 
     @Override
     public void show() {
+        ConfirmPane dialog = ConfirmPane.this;
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("Confirm.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(Confirm.class.getResource(Confirm.class.getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return;
@@ -72,17 +73,15 @@ public class ConfirmPane extends AbstractPaneDialog<DialogResult> {
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                ConfirmPane.this.setResult(DialogResult.OK);
-                ConfirmPane.this.close();
-                event.consume();
+                dialog.setResult(DialogResult.OK);
+                dialog.close();
             }
         });
         this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                ConfirmPane.this.setResult(DialogResult.CANCEL);
-                ConfirmPane.this.close();
-                event.consume();
+                dialog.setResult(DialogResult.CANCEL);
+                dialog.close();
             }
         });
         // キーボードイベント定義
@@ -91,12 +90,10 @@ public class ConfirmPane extends AbstractPaneDialog<DialogResult> {
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
                 case O:
-                    ConfirmPane.this.buttonOk.fire();
-                    event.consume();
+                    dialog.buttonOk.fire();
                     break;
                 case C:
-                    ConfirmPane.this.buttonCancel.fire();
-                    event.consume();
+                    dialog.buttonCancel.fire();
                     break;
                 default:
                     break;
@@ -158,7 +155,7 @@ public class ConfirmPane extends AbstractPaneDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示
+     * ダイアログを表示する.
      * @param <T> javafx.scene.layout.Paneを継承したクラスオブジェクト
      * @param title タイトル
      * @param message メッセージ

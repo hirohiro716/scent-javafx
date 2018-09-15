@@ -33,14 +33,14 @@ import javafx.util.Callback;
 public class DynamicTableView extends TableView<RudeArray> {
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      */
     public DynamicTableView() {
         super();
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param items リストItems
      */
     public DynamicTableView(ObservableList<RudeArray> items) {

@@ -6,7 +6,6 @@ import java.util.LinkedHashMap;
 import com.hirohiro716.javafx.FXMLLoader;
 import com.hirohiro716.javafx.LayoutHelper;
 import com.hirohiro716.javafx.control.EnterFireButton;
-import com.hirohiro716.javafx.dialog.AbstractDialog.CloseEventHandler;
 import com.hirohiro716.javafx.dialog.AbstractPaneDialog;
 
 import javafx.event.ActionEvent;
@@ -46,23 +45,27 @@ public class SortPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<E, Strin
     private EnterFireButton buttonCancel;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
+     * @param sortableItems 並び替えるItems
      * @param parentPane
      */
-    public SortPaneDialog(Pane parentPane) {
+    public SortPaneDialog(LinkedHashMap<E, String> sortableItems, Pane parentPane) {
         super(parentPane);
+        this.sortableItems = sortableItems;
     }
+
+    private LinkedHashMap<E, String> sortableItems;
 
     @Override
     public void show() {
+        SortPaneDialog<E> dialog = SortPaneDialog.this;
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("SortDialog.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(SortDialog.class.getResource(SortDialog.class.getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return;
         }
-        SortPaneDialog<E> dialog = SortPaneDialog.this;
         // タイトルのセット
         this.labelTitle.setText(this.title);
         // メッセージのセット
@@ -77,20 +80,19 @@ public class SortPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<E, Strin
             this.paneMessage.getChildren().add(this.messageNode);
         }
         // 並べ替え用のVBoxを作成
-        SortDialog.createItems(this.scrollPane, this.vbox, this.items);
+        SortDialog.createItems(this.scrollPane, this.vbox, this.sortableItems);
         // ボタンのイベント定義
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @SuppressWarnings("unchecked")
             @Override
             public void handle(ActionEvent event) {
-                dialog.items.clear();
+                dialog.sortableItems.clear();
                 for (Node node: dialog.vbox.getChildren()) {
                     Label label = (Label) node;
-                    dialog.items.put((E) label.getUserData(), label.getText());
+                    dialog.sortableItems.put((E) label.getUserData(), label.getText());
                 }
-                dialog.setResult(dialog.items);
+                dialog.setResult(dialog.sortableItems);
                 dialog.close();
-                event.consume();
             }
         });
         if (this.isCancelable) {
@@ -99,7 +101,6 @@ public class SortPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<E, Strin
                 public void handle(ActionEvent event) {
                     dialog.setResult(null);
                     dialog.close();
-                    event.consume();
                 }
             });
         } else {
@@ -113,11 +114,9 @@ public class SortPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<E, Strin
                 switch (event.getCode()) {
                 case O:
                     dialog.buttonOk.fire();
-                    event.consume();
                     break;
                 case C:
                     dialog.buttonCancel.fire();
-                    event.consume();
                     break;
                 default:
                     break;
@@ -156,24 +155,6 @@ public class SortPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<E, Strin
         this.messageNode = node;
     }
 
-    private LinkedHashMap<E, String> items;
-
-    /**
-     * 並び替えるアイテムを指定する.
-     * @param items
-     */
-    public void setItems(LinkedHashMap<E, String> items) {
-        this.items = items;
-    }
-
-    /**
-     * 並び替えるアイテムを取得する.
-     * @return items
-     */
-    public LinkedHashMap<E, String> getItems() {
-        return this.items;
-    }
-
     private boolean isCancelable = true;
 
     /**
@@ -190,33 +171,6 @@ public class SortPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<E, Strin
      */
     public boolean isCancelable() {
         return this.isCancelable;
-    }
-
-    /**
-     * ダイアログを表示
-     * @param <E> 並び替えるデータの型
-     * @param <T> javafx.scene.layout.Paneを継承したクラスオブジェクト
-     * @param title タイトル
-     * @param message メッセージ
-     * @param items コンボボックスのアイテム
-     * @param parentPane 表示対象Pane
-     * @param closeEvent 閉じる際の処理
-     */
-    public static <E, T extends Pane> void show(String title, String message, LinkedHashMap<E, String> items, T parentPane, CloseEventHandler<LinkedHashMap<E, String>> closeEvent) {
-        SortPaneDialog<E> dialog = new SortPaneDialog<>(parentPane);
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        dialog.setItems(items);
-        dialog.setCloseEvent(closeEvent);
-        dialog.show();
-    }
-
-    @Override @Deprecated
-    public void setWidth(double width) {
-    }
-
-    @Override @Deprecated
-    public void setHeight(double height) {
     }
 
 }

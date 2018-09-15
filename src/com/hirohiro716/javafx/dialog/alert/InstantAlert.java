@@ -18,7 +18,7 @@ public class InstantAlert {
     private final Pane parent;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param parent
      */
     public InstantAlert(Parent parent) {

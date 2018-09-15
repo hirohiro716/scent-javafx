@@ -2,12 +2,9 @@ package com.hirohiro716.javafx.dialog.select;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
-
 import com.hirohiro716.javafx.FXMLLoader;
 import com.hirohiro716.javafx.LayoutHelper;
 import com.hirohiro716.javafx.control.EnterFireButton;
-import com.hirohiro716.javafx.dialog.AbstractDialog.CloseEventHandler;
 import com.hirohiro716.javafx.dialog.AbstractPaneDialog;
 
 import javafx.event.ActionEvent;
@@ -45,7 +42,7 @@ public class ListViewPaneDialog<E> extends AbstractPaneDialog<E> {
     private EnterFireButton buttonCancel;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param parentPane
      */
     public ListViewPaneDialog(Pane parentPane) {
@@ -54,14 +51,14 @@ public class ListViewPaneDialog<E> extends AbstractPaneDialog<E> {
 
     @Override
     public void show() {
+        ListViewPaneDialog<E> dialog = ListViewPaneDialog.this;
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("ListViewDialog.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(ListViewDialog.class.getResource(ListViewDialog.class.getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return;
         }
-        ListViewPaneDialog<E> dialog = ListViewPaneDialog.this;
         // タイトルのセット
         this.labelTitle.setText(this.title);
         // メッセージのセット
@@ -88,9 +85,7 @@ public class ListViewPaneDialog<E> extends AbstractPaneDialog<E> {
                 };
             }
         });
-        Iterator<E> iterator = this.items.keySet().iterator();
-        while (iterator.hasNext()) {
-            E key = iterator.next();
+        for (E key: this.items.keySet()) {
             this.listView.getItems().add(key);
         }
         this.listView.setPlaceholder(new Label("選択できるアイテムがありません"));
@@ -98,9 +93,10 @@ public class ListViewPaneDialog<E> extends AbstractPaneDialog<E> {
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                dialog.setResult(dialog.listView.getSelectionModel().getSelectedItem());
-                dialog.close();
-                event.consume();
+                if (dialog.listView.getSelectionModel().getSelectedItem() != null) {
+                    dialog.setResult(dialog.listView.getSelectionModel().getSelectedItem());
+                    dialog.close();
+                }
             }
         });
         if (this.isCancelable) {
@@ -109,7 +105,6 @@ public class ListViewPaneDialog<E> extends AbstractPaneDialog<E> {
                 public void handle(ActionEvent event) {
                     dialog.setResult(null);
                     dialog.close();
-                    event.consume();
                 }
             });
         } else {
@@ -123,11 +118,9 @@ public class ListViewPaneDialog<E> extends AbstractPaneDialog<E> {
                 switch (event.getCode()) {
                 case O:
                     dialog.buttonOk.fire();
-                    event.consume();
                     break;
                 case C:
                     dialog.buttonCancel.fire();
-                    event.consume();
                     break;
                 default:
                     break;
@@ -200,33 +193,6 @@ public class ListViewPaneDialog<E> extends AbstractPaneDialog<E> {
      */
     public boolean isCancelable() {
         return this.isCancelable;
-    }
-
-    /**
-     * ダイアログを表示
-     * @param <E> ListViewのItem型
-     * @param <T> javafx.scene.layout.Paneを継承したクラスオブジェクト
-     * @param title タイトル
-     * @param message メッセージ
-     * @param items コンボボックスのアイテム
-     * @param parentPane 表示対象Pane
-     * @param closeEvent 閉じる際の処理
-     */
-    public static <E, T extends Pane> void show(String title, String message, HashMap<E, String> items, T parentPane, CloseEventHandler<E> closeEvent) {
-        ListViewPaneDialog<E> dialog = new ListViewPaneDialog<>(parentPane);
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        dialog.setItems(items);
-        dialog.setCloseEvent(closeEvent);
-        dialog.show();
-    }
-
-    @Override @Deprecated
-    public void setWidth(double width) {
-    }
-
-    @Override @Deprecated
-    public void setHeight(double height) {
     }
 
 }

@@ -38,7 +38,7 @@ public class QuestionPane extends AbstractPaneDialog<DialogResult> {
     private EnterFireButton buttonNo;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param parentPane
      */
     public QuestionPane(Pane parentPane) {
@@ -47,9 +47,10 @@ public class QuestionPane extends AbstractPaneDialog<DialogResult> {
 
     @Override
     public void show() {
+        QuestionPane dialog = QuestionPane.this;
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("Question.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(Question.class.getResource(Question.class.getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return;
@@ -72,17 +73,15 @@ public class QuestionPane extends AbstractPaneDialog<DialogResult> {
         this.buttonYes.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                QuestionPane.this.setResult(DialogResult.YES);
-                QuestionPane.this.close();
-                event.consume();
+                dialog.setResult(DialogResult.YES);
+                dialog.close();
             }
         });
         this.buttonNo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                QuestionPane.this.setResult(DialogResult.NO);
-                QuestionPane.this.close();
-                event.consume();
+                dialog.setResult(DialogResult.NO);
+                dialog.close();
             }
         });
         // キーボードイベント定義
@@ -91,12 +90,10 @@ public class QuestionPane extends AbstractPaneDialog<DialogResult> {
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
                 case Y:
-                    QuestionPane.this.buttonYes.fire();
-                    event.consume();
+                    dialog.buttonYes.fire();
                     break;
                 case N:
-                    QuestionPane.this.buttonNo.fire();
-                    event.consume();
+                    dialog.buttonNo.fire();
                     break;
                 default:
                     break;
@@ -158,7 +155,7 @@ public class QuestionPane extends AbstractPaneDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示
+     * ダイアログを表示する.
      * @param <T> javafx.scene.layout.Paneを継承したクラスオブジェクト
      * @param title タイトル
      * @param message メッセージ

@@ -40,14 +40,14 @@ public class FullQuestion extends AbstractDialog<DialogResult> {
     private EnterFireButton buttonCancel;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      */
     public FullQuestion() {
         super();
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param parentStage
      */
     public FullQuestion(Stage parentStage) {
@@ -56,6 +56,7 @@ public class FullQuestion extends AbstractDialog<DialogResult> {
 
     @Override
     protected void preparationCallback() {
+        FullQuestion dialog = FullQuestion.this;
         // タイトルのセット
         this.getStage().setTitle(this.title);
         this.labelTitle.setText(this.title);
@@ -75,25 +76,22 @@ public class FullQuestion extends AbstractDialog<DialogResult> {
         this.buttonYes.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                FullQuestion.this.setResult(DialogResult.YES);
-                FullQuestion.this.close();
-                event.consume();
+                dialog.setResult(DialogResult.YES);
+                dialog.close();
             }
         });
         this.buttonNo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                FullQuestion.this.setResult(DialogResult.NO);
-                FullQuestion.this.close();
-                event.consume();
+                dialog.setResult(DialogResult.NO);
+                dialog.close();
             }
         });
         this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                FullQuestion.this.setResult(DialogResult.CANCEL);
-                FullQuestion.this.close();
-                event.consume();
+                dialog.setResult(DialogResult.CANCEL);
+                dialog.close();
             }
         });
         // キーボードイベント定義
@@ -102,16 +100,13 @@ public class FullQuestion extends AbstractDialog<DialogResult> {
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
                 case Y:
-                    FullQuestion.this.buttonYes.fire();
-                    event.consume();
+                    dialog.buttonYes.fire();
                     break;
                 case N:
-                    FullQuestion.this.buttonNo.fire();
-                    event.consume();
+                    dialog.buttonNo.fire();
                     break;
                 case C:
-                    FullQuestion.this.buttonCancel.fire();
-                    event.consume();
+                    dialog.buttonCancel.fire();
                     break;
                 default:
                     break;
@@ -138,7 +133,7 @@ public class FullQuestion extends AbstractDialog<DialogResult> {
     @Override
     public void show() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("FullQuestion.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
         }
@@ -147,7 +142,7 @@ public class FullQuestion extends AbstractDialog<DialogResult> {
     @Override
     public DialogResult showAndWait() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("FullQuestion.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             return this.showAndWait(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return null;
@@ -195,7 +190,7 @@ public class FullQuestion extends AbstractDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示
+     * ダイアログを表示する.
      * @param title タイトル
      * @param message メッセージ
      * @param closeEvent 閉じる際の処理
@@ -209,7 +204,7 @@ public class FullQuestion extends AbstractDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示
+     * ダイアログを表示する.
      * @param title タイトル
      * @param message メッセージ
      * @param parentStage 親Stage
@@ -224,7 +219,7 @@ public class FullQuestion extends AbstractDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示
+     * ダイアログを表示する.
      * @param title タイトル
      * @param message メッセージ
      * @return 結果
@@ -237,7 +232,7 @@ public class FullQuestion extends AbstractDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示
+     * ダイアログを表示する.
      * @param title タイトル
      * @param message メッセージ
      * @param parentStage 親Stage

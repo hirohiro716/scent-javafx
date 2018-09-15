@@ -23,14 +23,14 @@ public class LimitTextField extends TextField {
     private StringConverter converter = null;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      */
     public LimitTextField() {
         this("");
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param text
      */
     public LimitTextField(String text) {

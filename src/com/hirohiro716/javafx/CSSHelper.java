@@ -16,7 +16,7 @@ import javafx.scene.paint.Color;
 public class CSSHelper {
 
     /**
-     * 定義されたスタイルから値を取得
+     * 定義されたスタイルから値を取得する.
      * @param originalStyle スタイル全体の文字列
      * @param propertyName プロパティ
      * @return プロパティ設定値
@@ -33,7 +33,7 @@ public class CSSHelper {
     }
 
     /**
-     * 定義されたスタイルの値を再設定
+     * 定義されたスタイルの値を再設定する.
      * @param originalStyle スタイル全体の文字列
      * @param propertyName プロパティ
      * @param value プロパティ変更値

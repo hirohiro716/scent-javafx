@@ -42,14 +42,14 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
     private EnterFireButton buttonCancel;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      */
     public LimitTextFieldDialog() {
         super();
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param parentStage
      */
     public LimitTextFieldDialog(Stage parentStage) {
@@ -58,6 +58,7 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
 
     @Override
     protected void preparationCallback() {
+        LimitTextFieldDialog dialog = LimitTextFieldDialog.this;
         // タイトルのセット
         this.getStage().setTitle(this.title);
         this.labelTitle.setText(this.title);
@@ -84,8 +85,7 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
             public void handle(KeyEvent event) {
                 String character = event.getCharacter();
                 if (character.equals("\n") || character.equals("\r")) {
-                    LimitTextFieldDialog.this.buttonOk.fire();
-                    event.consume();
+                    dialog.buttonOk.fire();
                 }
             }
         });
@@ -93,18 +93,16 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                LimitTextFieldDialog.this.setResult(StringConverter.nullReplace(LimitTextFieldDialog.this.limitTextField.getText(), ""));
-                LimitTextFieldDialog.this.close();
-                event.consume();
+                dialog.setResult(StringConverter.nullReplace(dialog.limitTextField.getText(), ""));
+                dialog.close();
             }
         });
         if (this.isCancelable) {
             this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    LimitTextFieldDialog.this.setResult(null);
-                    LimitTextFieldDialog.this.close();
-                    event.consume();
+                    dialog.setResult(null);
+                    dialog.close();
                 }
             });
         } else {
@@ -120,12 +118,10 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
                 }
                 switch (event.getCode()) {
                 case O:
-                    LimitTextFieldDialog.this.buttonOk.fire();
-                    event.consume();
+                    dialog.buttonOk.fire();
                     break;
                 case C:
-                    LimitTextFieldDialog.this.buttonCancel.fire();
-                    event.consume();
+                    dialog.buttonCancel.fire();
                     break;
                 default:
                     break;
@@ -137,7 +133,7 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
     @Override
     public void show() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("LimitTextFieldDialog.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
         }
@@ -146,7 +142,7 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
     @Override
     public String showAndWait() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("LimitTextFieldDialog.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             return this.showAndWait(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return null;
@@ -222,41 +218,6 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
      */
     public boolean isCancelable() {
         return this.isCancelable;
-    }
-
-    /**
-     * ダイアログを表示
-     * @param title タイトル
-     * @param message メッセージ
-     * @return 結果
-     */
-    public static String showAndWait(String title, String message) {
-        LimitTextFieldDialog dialog = new LimitTextFieldDialog();
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        return dialog.showAndWait();
-    }
-
-    /**
-     * ダイアログを表示
-     * @param title タイトル
-     * @param message メッセージ
-     * @param parentStage 親Stage
-     * @return 結果
-     */
-    public static String showAndWait(String title, String message, Stage parentStage) {
-        LimitTextFieldDialog dialog = new LimitTextFieldDialog(parentStage);
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        return dialog.showAndWait();
-    }
-
-    @Override @Deprecated
-    public void setWidth(double width) {
-    }
-
-    @Override @Deprecated
-    public void setHeight(double height) {
     }
 
 }

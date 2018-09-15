@@ -1,30 +1,34 @@
-package com.hirohiro716.javafx.dialog.select;
+package com.hirohiro716.javafx.dialog.datetime;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.hirohiro716.datetime.Datetime;
+import com.hirohiro716.datetime.FiscalMonth;
 import com.hirohiro716.javafx.FXMLLoader;
 import com.hirohiro716.javafx.LayoutHelper;
 import com.hirohiro716.javafx.control.EnterFireButton;
-import com.hirohiro716.javafx.control.HashMapComboBox;
-import com.hirohiro716.javafx.dialog.AbstractDialog;
+import com.hirohiro716.javafx.dialog.alert.InstantAlert;
+import com.hirohiro716.javafx.dialog.AbstractPaneDialog;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
 
 /**
- * コンボボックス入力ダイアログを表示するクラス.
+ * 月の入力ダイアログを表示するクラス.
  * @author hiro
- * @param <K> 連想配列のキー型
- * @param <V> 連想配列の値型
  */
-public class HashMapComboBoxDialog<K, V> extends AbstractDialog<K> {
+public class MonthSelectPaneDialog extends AbstractPaneDialog<MonthResult> {
 
     @FXML
     private Label labelTitle;
@@ -33,7 +37,10 @@ public class HashMapComboBoxDialog<K, V> extends AbstractDialog<K> {
     private AnchorPane paneMessage;
 
     @FXML
-    private HashMapComboBox<K, V> comboBox;
+    private ComboBox<Integer> comboBoxYear;
+
+    @FXML
+    private ComboBox<Integer> comboBoxMonth;
 
     @FXML
     private EnterFireButton buttonOk;
@@ -43,24 +50,48 @@ public class HashMapComboBoxDialog<K, V> extends AbstractDialog<K> {
 
     /**
      * コンストラクタ.
+     * @param parentPane
      */
-    public HashMapComboBoxDialog() {
-        super();
+    public MonthSelectPaneDialog(Pane parentPane) {
+        super(parentPane);
     }
 
     /**
      * コンストラクタ.
-     * @param parentStage
+     * @param parentPane
+     * @param selectableYears 選択可能な年
      */
-    public HashMapComboBoxDialog(Stage parentStage) {
-        super(parentStage);
+    public MonthSelectPaneDialog(Pane parentPane, List<Integer> selectableYears) {
+        super(parentPane);
+        this.selectableYears = selectableYears;
     }
 
+    /**
+     * コンストラクタ.
+     * @param parentPane
+     * @param selectableYears 選択可能な年
+     */
+    public MonthSelectPaneDialog(Pane parentPane, int... selectableYears) {
+        super(parentPane);
+        this.selectableYears = new ArrayList<>();
+        for (int year: selectableYears) {
+            this.selectableYears.add(year);
+        }
+    }
+
+    private List<Integer> selectableYears = null;
+    
     @Override
-    protected void preparationCallback() {
-        HashMapComboBoxDialog<K, V> dialog = HashMapComboBoxDialog.this;
+    public void show() {
+        MonthSelectPaneDialog dialog = MonthSelectPaneDialog.this;
+        // ダイアログ表示
+        try {
+            FXMLLoader fxmlHelper = new FXMLLoader(MonthSelectDialog.class.getResource(MonthSelectDialog.class.getSimpleName() + ".fxml"), this);
+            this.show(fxmlHelper.getPaneRoot());
+        } catch (IOException exception) {
+            return;
+        }
         // タイトルのセット
-        this.getStage().setTitle(this.title);
         this.labelTitle.setText(this.title);
         // メッセージのセット
         if (this.message != null) {
@@ -73,19 +104,31 @@ public class HashMapComboBoxDialog<K, V> extends AbstractDialog<K> {
         if (this.messageNode != null) {
             this.paneMessage.getChildren().add(this.messageNode);
         }
-        // コンボボックスアイテムのセット
-        this.comboBox.setHashMap(this.hashMap);
-        // コンボボックスの初期値をセット
-        if (this.defaultValue != null) {
-            this.comboBox.setKey(this.defaultValue);
+        // コンボボックスのアイテムをセット
+        Datetime datetime = new Datetime();
+        if (this.selectableYears == null) {
+            this.selectableYears = new ArrayList<>();
+            this.selectableYears.add(datetime.toYear());
+        }
+        this.comboBoxYear.setItems(FXCollections.observableArrayList(this.selectableYears));
+        this.comboBoxMonth.setItems(FXCollections.observableArrayList(FiscalMonth.createLinkedHashMap().keySet()));
+        // 初期値をセット
+        if (this.defaultYear != null) {
+            this.comboBoxYear.setValue(this.defaultYear);
+        }
+        if (this.defaultMonth != null) {
+            this.comboBoxMonth.setValue(this.defaultMonth);
         }
         // ボタンのイベント定義
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (dialog.comboBox.getKey() != null) {
-                    dialog.setResult(dialog.comboBox.getKey());
+                try {
+                    MonthResult result = new MonthResult(dialog.comboBoxYear.getValue(), dialog.comboBoxMonth.getValue());
+                    dialog.setResult(result);
                     dialog.close();
+                } catch (Exception exception) {
+                    InstantAlert.show(dialog.getDialogPane(), "正しく入力されていません。", Pos.CENTER, 3000);
                 }
             }
         });
@@ -122,25 +165,6 @@ public class HashMapComboBoxDialog<K, V> extends AbstractDialog<K> {
         });
     }
 
-    @Override
-    public void show() {
-        try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            this.show(fxmlHelper.getPaneRoot());
-        } catch (IOException exception) {
-        }
-    }
-
-    @Override
-    public K showAndWait() {
-        try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            return this.showAndWait(fxmlHelper.getPaneRoot());
-        } catch (IOException exception) {
-            return null;
-        }
-    }
-
     private String title;
 
     /**
@@ -171,34 +195,26 @@ public class HashMapComboBoxDialog<K, V> extends AbstractDialog<K> {
         this.messageNode = node;
     }
 
-    private HashMap<K, V> hashMap;
-
+    private Integer defaultYear = null;
+    
     /**
-     * コンボボックスのアイテムを指定する.
-     * @param hashMap
+     * 初期でセットする年をセットする.
+     * @param year
      */
-    public void setHashMap(HashMap<K, V> hashMap) {
-        this.hashMap = hashMap;
+    public void setDefaultYear(int year) {
+        this.defaultYear = year;
     }
-
+    
+    private Integer defaultMonth = null;
+    
     /**
-     * コンボボックスのアイテムを取得する.
-     * @return items
+     * 初期でセットする月をセットする.
+     * @param month
      */
-    public HashMap<K, V> getItems() {
-        return this.hashMap;
+    public void setDefaultMonth(int month) {
+        this.defaultMonth = month;
     }
-
-    private K defaultValue;
-
-    /**
-     * コンボボックスの初期値をセットする.
-     * @param defaultValue
-     */
-    public void setDefaultValue(K defaultValue) {
-        this.defaultValue = defaultValue;
-    }
-
+    
     private boolean isCancelable = true;
 
     /**

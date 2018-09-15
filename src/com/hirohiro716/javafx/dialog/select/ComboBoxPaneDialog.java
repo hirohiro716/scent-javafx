@@ -2,11 +2,9 @@ package com.hirohiro716.javafx.dialog.select;
 
 import java.io.IOException;
 
-import com.hirohiro716.StringConverter;
 import com.hirohiro716.javafx.FXMLLoader;
 import com.hirohiro716.javafx.LayoutHelper;
 import com.hirohiro716.javafx.control.EnterFireButton;
-import com.hirohiro716.javafx.dialog.AbstractDialog.CloseEventHandler;
 import com.hirohiro716.javafx.dialog.AbstractPaneDialog;
 
 import javafx.collections.ObservableList;
@@ -23,8 +21,9 @@ import javafx.scene.layout.Pane;
 /**
  * コンボボックス入力ダイアログを表示するクラス.
  * @author hiro
+ * @param <T> コンボボックスの値型
  */
-public class ComboBoxPaneDialog extends AbstractPaneDialog<String> {
+public class ComboBoxPaneDialog<T> extends AbstractPaneDialog<T> {
 
     @FXML
     private Label labelTitle;
@@ -33,7 +32,7 @@ public class ComboBoxPaneDialog extends AbstractPaneDialog<String> {
     private AnchorPane paneMessage;
 
     @FXML
-    private ComboBox<String> comboBox;
+    private ComboBox<T> comboBox;
 
     @FXML
     private EnterFireButton buttonOk;
@@ -42,7 +41,7 @@ public class ComboBoxPaneDialog extends AbstractPaneDialog<String> {
     private EnterFireButton buttonCancel;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param parentPane
      */
     public ComboBoxPaneDialog(Pane parentPane) {
@@ -51,9 +50,10 @@ public class ComboBoxPaneDialog extends AbstractPaneDialog<String> {
 
     @Override
     public void show() {
+        ComboBoxPaneDialog<T> dialog = ComboBoxPaneDialog.this;
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("ComboBoxDialog.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(ComboBoxDialog.class.getResource(ComboBoxDialog.class.getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return;
@@ -81,18 +81,18 @@ public class ComboBoxPaneDialog extends AbstractPaneDialog<String> {
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                ComboBoxPaneDialog.this.setResult(StringConverter.nullReplace(ComboBoxPaneDialog.this.comboBox.getValue(), ""));
-                ComboBoxPaneDialog.this.close();
-                event.consume();
+                if (dialog.comboBox.getValue() != null) {
+                    dialog.setResult(dialog.comboBox.getValue());
+                    dialog.close();
+                }
             }
         });
         if (this.isCancelable) {
             this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    ComboBoxPaneDialog.this.setResult(null);
-                    ComboBoxPaneDialog.this.close();
-                    event.consume();
+                    dialog.setResult(null);
+                    dialog.close();
                 }
             });
         } else {
@@ -108,12 +108,10 @@ public class ComboBoxPaneDialog extends AbstractPaneDialog<String> {
                 }
                 switch (event.getCode()) {
                 case O:
-                    ComboBoxPaneDialog.this.buttonOk.fire();
-                    event.consume();
+                    dialog.buttonOk.fire();
                     break;
                 case C:
-                    ComboBoxPaneDialog.this.buttonCancel.fire();
-                    event.consume();
+                    dialog.buttonCancel.fire();
                     break;
                 default:
                     break;
@@ -152,13 +150,13 @@ public class ComboBoxPaneDialog extends AbstractPaneDialog<String> {
         this.messageNode = node;
     }
 
-    private ObservableList<String> items;
+    private ObservableList<T> items;
 
     /**
      * コンボボックスのアイテムを指定する.
      * @param items
      */
-    public void setItems(ObservableList<String> items) {
+    public void setItems(ObservableList<T> items) {
         this.items = items;
     }
 
@@ -166,17 +164,17 @@ public class ComboBoxPaneDialog extends AbstractPaneDialog<String> {
      * コンボボックスのアイテムを取得する.
      * @return items
      */
-    public ObservableList<String> getItems() {
+    public ObservableList<T> getItems() {
         return this.items;
     }
 
-    private String defaultValue;
+    private T defaultValue;
 
     /**
      * コンボボックスの初期値をセットする.
      * @param defaultValue
      */
-    public void setDefaultValue(String defaultValue) {
+    public void setDefaultValue(T defaultValue) {
         this.defaultValue = defaultValue;
     }
 
@@ -196,32 +194,6 @@ public class ComboBoxPaneDialog extends AbstractPaneDialog<String> {
      */
     public boolean isCancelable() {
         return this.isCancelable;
-    }
-
-    /**
-     * ダイアログを表示
-     * @param <T> javafx.scene.layout.Paneを継承したクラスオブジェクト
-     * @param title タイトル
-     * @param message メッセージ
-     * @param items コンボボックスのアイテム
-     * @param parentPane 表示対象Pane
-     * @param closeEvent 閉じる際の処理
-     */
-    public static <T extends Pane> void show(String title, String message, ObservableList<String> items, T parentPane, CloseEventHandler<String> closeEvent) {
-        ComboBoxPaneDialog dialog = new ComboBoxPaneDialog(parentPane);
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        dialog.setItems(items);
-        dialog.setCloseEvent(closeEvent);
-        dialog.show();
-    }
-
-    @Override @Deprecated
-    public void setWidth(double width) {
-    }
-
-    @Override @Deprecated
-    public void setHeight(double height) {
     }
 
 }

@@ -2,13 +2,11 @@ package com.hirohiro716.javafx.dialog.select;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 import com.hirohiro716.javafx.FXMLLoader;
 import com.hirohiro716.javafx.LayoutHelper;
 import com.hirohiro716.javafx.control.EnterFireButton;
-import com.hirohiro716.javafx.dialog.AbstractDialog.CloseEventHandler;
 import com.hirohiro716.javafx.dialog.AbstractPaneDialog;
 
 import javafx.beans.value.ChangeListener;
@@ -27,7 +25,7 @@ import javafx.scene.layout.Pane;
 /**
  * HashMapの値をそれぞれToggleButtonで表示しユーザーにON/OFFを切り替えさせるダイアログを表示するクラス.
  * @author hiro
- * @param <E> 選択するItemの型
+ * @param <E> 選択できるItemの型
  */
 public class ToggleButtonPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<E, String>> {
 
@@ -47,23 +45,27 @@ public class ToggleButtonPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<
     private EnterFireButton buttonCancel;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
+     * @param selectableItems 選択できるItem
      * @param parentPane
      */
-    public ToggleButtonPaneDialog(Pane parentPane) {
+    public ToggleButtonPaneDialog(HashMap<E, String> selectableItems, Pane parentPane) {
         super(parentPane);
+        this.selectableItems = selectableItems;
     }
+
+    private HashMap<E, String> selectableItems;
 
     @Override
     public void show() {
+        ToggleButtonPaneDialog<E> dialog = ToggleButtonPaneDialog.this;
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("ToggleButtonDialog.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(ToggleButtonDialog.class.getResource(ToggleButtonDialog.class.getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return;
         }
-        ToggleButtonPaneDialog<E> dialog = ToggleButtonPaneDialog.this;
         // タイトルのセット
         this.labelTitle.setText(this.title);
         // メッセージのセット
@@ -79,10 +81,8 @@ public class ToggleButtonPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<
         }
         // 選択用のToggleButtonを作成
         HashMap<E, ToggleButton> buttonsHashMap = new HashMap<>();
-        Iterator<E> iterator = this.items.keySet().iterator();
-        while (iterator.hasNext()) {
-            E key = iterator.next();
-            String value = this.items.get(key);
+        for (E key: this.selectableItems.keySet()) {
+            String value = this.selectableItems.get(key);
             ToggleButton button = new ToggleButton();
             button.setText(value);
             button.setUserData(key);
@@ -102,9 +102,7 @@ public class ToggleButtonPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<
         }
         // 初期値のセット
         if (this.defaultValue != null) {
-            iterator = this.defaultValue.keySet().iterator();
-            while (iterator.hasNext()) {
-                E key = iterator.next();
+            for (E key: this.defaultValue.keySet()) {
                 buttonsHashMap.get(key).setSelected(true);
             }
         }
@@ -122,7 +120,6 @@ public class ToggleButtonPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<
                 }
                 dialog.setResult(hashMap);
                 dialog.close();
-                event.consume();
             }
         });
         if (this.isCancelable) {
@@ -131,7 +128,6 @@ public class ToggleButtonPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<
                 public void handle(ActionEvent event) {
                     dialog.setResult(null);
                     dialog.close();
-                    event.consume();
                 }
             });
         } else {
@@ -145,11 +141,9 @@ public class ToggleButtonPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<
                 switch (event.getCode()) {
                 case O:
                     dialog.buttonOk.fire();
-                    event.consume();
                     break;
                 case C:
                     dialog.buttonCancel.fire();
-                    event.consume();
                     break;
                 default:
                     break;
@@ -188,24 +182,6 @@ public class ToggleButtonPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<
         this.messageNode = node;
     }
 
-    private HashMap<E, String> items;
-
-    /**
-     * 並び替えるアイテムを指定する.
-     * @param items
-     */
-    public void setItems(HashMap<E, String> items) {
-        this.items = items;
-    }
-
-    /**
-     * 並び替えるアイテムを取得する.
-     * @return items
-     */
-    public HashMap<E, String> getItems() {
-        return this.items;
-    }
-
     private HashMap<E, String> defaultValue;
 
     /**
@@ -232,33 +208,6 @@ public class ToggleButtonPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<
      */
     public boolean isCancelable() {
         return this.isCancelable;
-    }
-
-    /**
-     * ダイアログを表示
-     * @param <E> ListViewのItem型
-     * @param <T> javafx.scene.layout.Paneを継承したクラスオブジェクト
-     * @param title タイトル
-     * @param message メッセージ
-     * @param items コンボボックスのアイテム
-     * @param parentPane 表示対象Pane
-     * @param closeEvent 閉じる際の処理
-     */
-    public static <E, T extends Pane> void show(String title, String message, HashMap<E, String> items, T parentPane, CloseEventHandler<LinkedHashMap<E, String>> closeEvent) {
-        ToggleButtonPaneDialog<E> dialog = new ToggleButtonPaneDialog<>(parentPane);
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        dialog.setItems(items);
-        dialog.setCloseEvent(closeEvent);
-        dialog.show();
-    }
-
-    @Override @Deprecated
-    public void setWidth(double width) {
-    }
-
-    @Override @Deprecated
-    public void setHeight(double height) {
     }
 
 }

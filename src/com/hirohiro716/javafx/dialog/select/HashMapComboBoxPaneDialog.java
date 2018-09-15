@@ -7,7 +7,6 @@ import com.hirohiro716.javafx.FXMLLoader;
 import com.hirohiro716.javafx.LayoutHelper;
 import com.hirohiro716.javafx.control.EnterFireButton;
 import com.hirohiro716.javafx.control.HashMapComboBox;
-import com.hirohiro716.javafx.dialog.AbstractDialog.CloseEventHandler;
 import com.hirohiro716.javafx.dialog.AbstractPaneDialog;
 
 import javafx.event.ActionEvent;
@@ -23,8 +22,9 @@ import javafx.scene.layout.Pane;
  * コンボボックス入力ダイアログを表示するクラス.
  * @author hiro
  * @param <K> 連想配列のキー型
+ * @param <V> 連想配列の値型
  */
-public class HashMapComboBoxPaneDialog<K> extends AbstractPaneDialog<K> {
+public class HashMapComboBoxPaneDialog<K, V> extends AbstractPaneDialog<K> {
 
     @FXML
     private Label labelTitle;
@@ -33,7 +33,7 @@ public class HashMapComboBoxPaneDialog<K> extends AbstractPaneDialog<K> {
     private AnchorPane paneMessage;
 
     @FXML
-    private HashMapComboBox<K, String> comboBox;
+    private HashMapComboBox<K, V> comboBox;
 
     @FXML
     private EnterFireButton buttonOk;
@@ -42,7 +42,7 @@ public class HashMapComboBoxPaneDialog<K> extends AbstractPaneDialog<K> {
     private EnterFireButton buttonCancel;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param parentPane
      */
     public HashMapComboBoxPaneDialog(Pane parentPane) {
@@ -51,9 +51,10 @@ public class HashMapComboBoxPaneDialog<K> extends AbstractPaneDialog<K> {
 
     @Override
     public void show() {
+        HashMapComboBoxPaneDialog<K, V> dialog = HashMapComboBoxPaneDialog.this;
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("HashMapComboBoxDialog.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(HashMapComboBoxDialog.class.getResource(HashMapComboBoxDialog.class.getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return;
@@ -81,18 +82,16 @@ public class HashMapComboBoxPaneDialog<K> extends AbstractPaneDialog<K> {
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                HashMapComboBoxPaneDialog.this.setResult(HashMapComboBoxPaneDialog.this.comboBox.getKey());
-                HashMapComboBoxPaneDialog.this.close();
-                event.consume();
+                dialog.setResult(dialog.comboBox.getKey());
+                dialog.close();
             }
         });
         if (this.isCancelable) {
             this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    HashMapComboBoxPaneDialog.this.setResult(null);
-                    HashMapComboBoxPaneDialog.this.close();
-                    event.consume();
+                    dialog.setResult(null);
+                    dialog.close();
                 }
             });
         } else {
@@ -108,12 +107,10 @@ public class HashMapComboBoxPaneDialog<K> extends AbstractPaneDialog<K> {
                 }
                 switch (event.getCode()) {
                 case O:
-                    HashMapComboBoxPaneDialog.this.buttonOk.fire();
-                    event.consume();
+                    dialog.buttonOk.fire();
                     break;
                 case C:
-                    HashMapComboBoxPaneDialog.this.buttonCancel.fire();
-                    event.consume();
+                    dialog.buttonCancel.fire();
                     break;
                 default:
                     break;
@@ -152,13 +149,13 @@ public class HashMapComboBoxPaneDialog<K> extends AbstractPaneDialog<K> {
         this.messageNode = node;
     }
 
-    private HashMap<K, String> hashMap;
+    private HashMap<K, V> hashMap;
 
     /**
      * コンボボックスのアイテムを指定する.
      * @param hashMap
      */
-    public void setHashMap(HashMap<K, String> hashMap) {
+    public void setHashMap(HashMap<K, V> hashMap) {
         this.hashMap = hashMap;
     }
 
@@ -166,7 +163,7 @@ public class HashMapComboBoxPaneDialog<K> extends AbstractPaneDialog<K> {
      * コンボボックスのアイテムを取得する.
      * @return items
      */
-    public HashMap<K, String> getItems() {
+    public HashMap<K, V> getItems() {
         return this.hashMap;
     }
 
@@ -196,33 +193,6 @@ public class HashMapComboBoxPaneDialog<K> extends AbstractPaneDialog<K> {
      */
     public boolean isCancelable() {
         return this.isCancelable;
-    }
-
-    /**
-     * ダイアログを表示
-     * @param <K> 連想配列のキー型
-     * @param <T> javafx.scene.layout.Paneを継承したクラスオブジェクト
-     * @param title タイトル
-     * @param message メッセージ
-     * @param hashMap コンボボックスのアイテム
-     * @param parentPane 表示対象Pane
-     * @param closeEvent 閉じる際の処理
-     */
-    public static <K, T extends Pane> void show(String title, String message, HashMap<K, String> hashMap, T parentPane, CloseEventHandler<K> closeEvent) {
-        HashMapComboBoxPaneDialog<K> dialog = new HashMapComboBoxPaneDialog<>(parentPane);
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        dialog.setHashMap(hashMap);
-        dialog.setCloseEvent(closeEvent);
-        dialog.show();
-    }
-
-    @Override @Deprecated
-    public void setWidth(double width) {
-    }
-
-    @Override @Deprecated
-    public void setHeight(double height) {
     }
 
 }

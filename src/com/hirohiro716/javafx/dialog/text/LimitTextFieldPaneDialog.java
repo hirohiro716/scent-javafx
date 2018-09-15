@@ -9,7 +9,6 @@ import com.hirohiro716.javafx.FXMLLoader;
 import com.hirohiro716.javafx.LayoutHelper;
 import com.hirohiro716.javafx.control.EnterFireButton;
 import com.hirohiro716.javafx.control.LimitTextField;
-import com.hirohiro716.javafx.dialog.AbstractDialog.CloseEventHandler;
 import com.hirohiro716.javafx.dialog.AbstractPaneDialog;
 
 import javafx.event.ActionEvent;
@@ -43,7 +42,7 @@ public class LimitTextFieldPaneDialog extends AbstractPaneDialog<String> {
     private EnterFireButton buttonCancel;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param parentPane
      */
     public LimitTextFieldPaneDialog(Pane parentPane) {
@@ -52,9 +51,10 @@ public class LimitTextFieldPaneDialog extends AbstractPaneDialog<String> {
 
     @Override
     public void show() {
+        LimitTextFieldPaneDialog dialog = LimitTextFieldPaneDialog.this;
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("LimitTextFieldDialog.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(LimitTextFieldDialog.class.getResource(LimitTextFieldDialog.class.getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return;
@@ -84,8 +84,7 @@ public class LimitTextFieldPaneDialog extends AbstractPaneDialog<String> {
             public void handle(KeyEvent event) {
                 String character = event.getCharacter();
                 if (character.equals("\n") || character.equals("\r")) {
-                    LimitTextFieldPaneDialog.this.buttonOk.fire();
-                    event.consume();
+                    dialog.buttonOk.fire();
                 }
             }
         });
@@ -93,18 +92,16 @@ public class LimitTextFieldPaneDialog extends AbstractPaneDialog<String> {
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                LimitTextFieldPaneDialog.this.setResult(StringConverter.nullReplace(LimitTextFieldPaneDialog.this.limitTextField.getText(), ""));
-                LimitTextFieldPaneDialog.this.close();
-                event.consume();
+                dialog.setResult(StringConverter.nullReplace(dialog.limitTextField.getText(), ""));
+                dialog.close();
             }
         });
         if (this.isCancelable) {
             this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    LimitTextFieldPaneDialog.this.setResult(null);
-                    LimitTextFieldPaneDialog.this.close();
-                    event.consume();
+                    dialog.setResult(null);
+                    dialog.close();
                 }
             });
         } else {
@@ -120,12 +117,10 @@ public class LimitTextFieldPaneDialog extends AbstractPaneDialog<String> {
                 }
                 switch (event.getCode()) {
                 case O:
-                    LimitTextFieldPaneDialog.this.buttonOk.fire();
-                    event.consume();
+                    dialog.buttonOk.fire();
                     break;
                 case C:
-                    LimitTextFieldPaneDialog.this.buttonCancel.fire();
-                    event.consume();
+                    dialog.buttonCancel.fire();
                     break;
                 default:
                     break;
@@ -203,30 +198,6 @@ public class LimitTextFieldPaneDialog extends AbstractPaneDialog<String> {
      */
     public boolean isCancelable() {
         return this.isCancelable;
-    }
-
-    /**
-     * ダイアログを表示
-     * @param <T> javafx.scene.layout.Paneを継承したクラスオブジェクト
-     * @param title タイトル
-     * @param message メッセージ
-     * @param parentPane 表示対象Pane
-     * @param closeEvent 閉じる際の処理
-     */
-    public static <T extends Pane> void show(String title, String message, T parentPane, CloseEventHandler<String> closeEvent) {
-        LimitTextFieldPaneDialog dialog = new LimitTextFieldPaneDialog(parentPane);
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        dialog.setCloseEvent(closeEvent);
-        dialog.show();
-    }
-
-    @Override @Deprecated
-    public void setWidth(double width) {
-    }
-
-    @Override @Deprecated
-    public void setHeight(double height) {
     }
 
 }

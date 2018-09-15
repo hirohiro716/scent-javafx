@@ -13,14 +13,14 @@ import javafx.scene.control.CheckBox;
 public class ImeOffCheckBox extends CheckBox {
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      */
     public ImeOffCheckBox() {
         this("");
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param text ラベルテキスト
      */
     public ImeOffCheckBox(String text) {

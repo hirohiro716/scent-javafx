@@ -41,7 +41,7 @@ public class FullQuestionPane extends AbstractPaneDialog<DialogResult> {
     private EnterFireButton buttonCancel;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param parentPane
      */
     public FullQuestionPane(Pane parentPane) {
@@ -50,9 +50,10 @@ public class FullQuestionPane extends AbstractPaneDialog<DialogResult> {
 
     @Override
     public void show() {
+        FullQuestionPane dialog = FullQuestionPane.this;
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("FullQuestion.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(FullQuestion.class.getResource(FullQuestion.class.getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return;
@@ -75,25 +76,22 @@ public class FullQuestionPane extends AbstractPaneDialog<DialogResult> {
         this.buttonYes.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                FullQuestionPane.this.setResult(DialogResult.YES);
-                FullQuestionPane.this.close();
-                event.consume();
+                dialog.setResult(DialogResult.YES);
+                dialog.close();
             }
         });
         this.buttonNo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                FullQuestionPane.this.setResult(DialogResult.NO);
-                FullQuestionPane.this.close();
-                event.consume();
+                dialog.setResult(DialogResult.NO);
+                dialog.close();
             }
         });
         this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                FullQuestionPane.this.setResult(DialogResult.CANCEL);
-                FullQuestionPane.this.close();
-                event.consume();
+                dialog.setResult(DialogResult.CANCEL);
+                dialog.close();
             }
         });
         // キーボードイベント定義
@@ -102,16 +100,13 @@ public class FullQuestionPane extends AbstractPaneDialog<DialogResult> {
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
                 case Y:
-                    FullQuestionPane.this.buttonYes.fire();
-                    event.consume();
+                    dialog.buttonYes.fire();
                     break;
                 case N:
-                    FullQuestionPane.this.buttonNo.fire();
-                    event.consume();
+                    dialog.buttonNo.fire();
                     break;
                 case C:
-                    FullQuestionPane.this.buttonCancel.fire();
-                    event.consume();
+                    dialog.buttonCancel.fire();
                     break;
                 default:
                     break;
@@ -176,7 +171,7 @@ public class FullQuestionPane extends AbstractPaneDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示
+     * ダイアログを表示する.
      * @param <T> javafx.scene.layout.Paneを継承したクラスオブジェクト
      * @param title タイトル
      * @param message メッセージ

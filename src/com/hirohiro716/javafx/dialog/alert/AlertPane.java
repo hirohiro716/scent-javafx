@@ -35,7 +35,7 @@ public class AlertPane extends AbstractPaneDialog<DialogResult> {
     private EnterFireButton buttonOk;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param parentPane
      */
     public AlertPane(Pane parentPane) {
@@ -44,9 +44,10 @@ public class AlertPane extends AbstractPaneDialog<DialogResult> {
 
     @Override
     public void show() {
+        AlertPane dialog = AlertPane.this;
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("Alert.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(Alert.class.getResource(Alert.class.getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return;
@@ -69,9 +70,8 @@ public class AlertPane extends AbstractPaneDialog<DialogResult> {
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                AlertPane.this.setResult(DialogResult.OK);
-                AlertPane.this.close();
-                event.consume();
+                dialog.setResult(DialogResult.OK);
+                dialog.close();
             }
         });
         // キーボードイベント定義
@@ -80,8 +80,7 @@ public class AlertPane extends AbstractPaneDialog<DialogResult> {
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
                 case O:
-                    AlertPane.this.buttonOk.fire();
-                    event.consume();
+                    dialog.buttonOk.fire();
                     break;
                 default:
                     break;
@@ -121,7 +120,7 @@ public class AlertPane extends AbstractPaneDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示
+     * ダイアログを表示する.
      * @param <T> javafx.scene.layout.Paneを継承したクラスオブジェクト
      * @param title タイトル
      * @param message メッセージ
@@ -135,7 +134,7 @@ public class AlertPane extends AbstractPaneDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示
+     * ダイアログを表示する.
      * @param <T> javafx.scene.layout.Paneを継承したクラスオブジェクト
      * @param title タイトル
      * @param message メッセージ

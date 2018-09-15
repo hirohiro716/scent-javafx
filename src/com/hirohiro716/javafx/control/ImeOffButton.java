@@ -15,14 +15,14 @@ import javafx.scene.control.Button;
 public class ImeOffButton extends Button {
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      */
     public ImeOffButton() {
         this("", null);
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param text
      */
     public ImeOffButton(String text) {
@@ -30,7 +30,7 @@ public class ImeOffButton extends Button {
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param text
      * @param graphic
      */

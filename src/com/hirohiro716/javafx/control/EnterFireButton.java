@@ -12,14 +12,14 @@ import javafx.scene.input.KeyEvent;
 public class EnterFireButton extends ImeOffButton {
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      */
     public EnterFireButton() {
         this("", null);
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param text
      */
     public EnterFireButton(String text) {
@@ -27,7 +27,7 @@ public class EnterFireButton extends ImeOffButton {
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param text
      * @param graphic
      */

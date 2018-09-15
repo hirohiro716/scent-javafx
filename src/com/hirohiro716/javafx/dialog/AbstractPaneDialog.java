@@ -57,6 +57,7 @@ public abstract class AbstractPaneDialog<T> {
      * @param dialogContentPane ダイアログ内容
      */
     protected void show(Pane dialogContentPane) {
+        AbstractPaneDialog<T> dialog = AbstractPaneDialog.this;
         // 親Pane内の子をすべて使用不可にする
         for (Node node: this.disableChangeNodes) {
             node.setDisable(true);
@@ -69,32 +70,22 @@ public abstract class AbstractPaneDialog<T> {
         dialogContentPane.setScaleX(this.scale);
         dialogContentPane.setScaleY(this.scale);
         // ダイアログのサイズを設定する
-        if (this.width == -1) {
-            dialogContentPane.setMinWidth(dialogContentPane.getPrefWidth());
-            dialogContentPane.setMaxWidth(dialogContentPane.getPrefWidth());
-        } else {
-            dialogContentPane.setMinWidth(this.width);
-            dialogContentPane.setMaxWidth(this.width);
-        }
-        if (this.height == -1) {
-            dialogContentPane.setMinHeight(dialogContentPane.getPrefHeight());
-            dialogContentPane.setMaxHeight(dialogContentPane.getPrefHeight());
-        } else {
-            dialogContentPane.setMinHeight(this.height);
-            dialogContentPane.setMaxHeight(this.height);
-        }
+        dialogContentPane.setMinWidth(dialogContentPane.getPrefWidth());
+        dialogContentPane.setMaxWidth(dialogContentPane.getPrefWidth());
+        dialogContentPane.setMinHeight(dialogContentPane.getPrefHeight());
+        dialogContentPane.setMaxHeight(dialogContentPane.getPrefHeight());
         this.dialogPane.getChildren().add(dialogContentPane);
         // 親Paneリサイズ時にダイアログも同期
         this.parentPane.widthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                AbstractPaneDialog.this.dialogPane.setPrefWidth(newValue.doubleValue());
+                dialog.dialogPane.setPrefWidth(newValue.doubleValue());
             }
         });
         this.parentPane.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                AbstractPaneDialog.this.dialogPane.setPrefHeight(newValue.doubleValue());
+                dialog.dialogPane.setPrefHeight(newValue.doubleValue());
             }
         });
         this.parentPane.getChildren().add(this.dialogPane);
@@ -154,26 +145,6 @@ public abstract class AbstractPaneDialog<T> {
      */
     public void setScale(double scale) {
         this.scale = scale;
-    }
-
-    private double width = -1;
-
-    /**
-     * ダイアログの幅を変更する.
-     * @param width
-     */
-    public void setWidth(double width) {
-        this.width = width;
-    }
-
-    private double height = -1;
-
-    /**
-     * ダイアログの高さを変更する.
-     * @param height
-     */
-    public void setHeight(double height) {
-        this.height = height;
     }
 
 }

@@ -43,14 +43,14 @@ public class LimitTextAreaDialog extends AbstractDialog<String> {
     private EnterFireButton buttonCancel;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      */
     public LimitTextAreaDialog() {
         super();
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param parentStage
      */
     public LimitTextAreaDialog(Stage parentStage) {
@@ -59,6 +59,7 @@ public class LimitTextAreaDialog extends AbstractDialog<String> {
 
     @Override
     protected void preparationCallback() {
+        LimitTextAreaDialog dialog = LimitTextAreaDialog.this;
         // タイトルのセット
         this.getStage().setTitle(this.title);
         this.labelTitle.setText(this.title);
@@ -84,18 +85,16 @@ public class LimitTextAreaDialog extends AbstractDialog<String> {
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                LimitTextAreaDialog.this.setResult(StringConverter.nullReplace(LimitTextAreaDialog.this.limitTextArea.getText(), ""));
-                LimitTextAreaDialog.this.close();
-                event.consume();
+                dialog.setResult(StringConverter.nullReplace(dialog.limitTextArea.getText(), ""));
+                dialog.close();
             }
         });
         if (this.isCancelable) {
             this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    LimitTextAreaDialog.this.setResult(null);
-                    LimitTextAreaDialog.this.close();
-                    event.consume();
+                    dialog.setResult(null);
+                    dialog.close();
                 }
             });
         } else {
@@ -111,20 +110,16 @@ public class LimitTextAreaDialog extends AbstractDialog<String> {
                 }
                 switch (event.getCode()) {
                 case O:
-                    LimitTextAreaDialog.this.buttonOk.fire();
-                    event.consume();
+                    dialog.buttonOk.fire();
                     break;
                 case C:
-                    LimitTextAreaDialog.this.buttonCancel.fire();
-                    event.consume();
+                    dialog.buttonCancel.fire();
                     break;
                 default:
                     break;
                 }
             }
         });
-        // FIXME バグなのか開いた瞬間はフォーカスを一度外さないとIMEが効かない
-        LimitTextAreaDialog dialog = LimitTextAreaDialog.this;
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -143,7 +138,7 @@ public class LimitTextAreaDialog extends AbstractDialog<String> {
     @Override
     public void show() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("LimitTextAreaDialog.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
         }
@@ -152,7 +147,7 @@ public class LimitTextAreaDialog extends AbstractDialog<String> {
     @Override
     public String showAndWait() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("LimitTextAreaDialog.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             return this.showAndWait(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return null;
@@ -230,39 +225,4 @@ public class LimitTextAreaDialog extends AbstractDialog<String> {
         return this.isCancelable;
     }
     
-    /**
-     * ダイアログを表示
-     * @param title タイトル
-     * @param message メッセージ
-     * @return 結果
-     */
-    public static String showAndWait(String title, String message) {
-        LimitTextAreaDialog dialog = new LimitTextAreaDialog();
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        return dialog.showAndWait();
-    }
-
-    /**
-     * ダイアログを表示
-     * @param title タイトル
-     * @param message メッセージ
-     * @param parentStage 親Stage
-     * @return 結果
-     */
-    public static String showAndWait(String title, String message, Stage parentStage) {
-        LimitTextAreaDialog dialog = new LimitTextAreaDialog(parentStage);
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        return dialog.showAndWait();
-    }
-
-    @Override @Deprecated
-    public void setWidth(double width) {
-    }
-
-    @Override @Deprecated
-    public void setHeight(double height) {
-    }
-
 }

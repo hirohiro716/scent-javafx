@@ -30,14 +30,14 @@ public class WaitDialog<T> extends AbstractDialog<T> {
     private AnchorPane paneMessage;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      */
     public WaitDialog() {
         super();
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param parentStage
      */
     public WaitDialog(Stage parentStage) {
@@ -77,7 +77,7 @@ public class WaitDialog<T> extends AbstractDialog<T> {
     @Override
     public void show() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("Wait.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
         }
@@ -86,7 +86,7 @@ public class WaitDialog<T> extends AbstractDialog<T> {
     @Override
     public T showAndWait() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("Wait.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             return this.showAndWait(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return null;
@@ -160,23 +160,6 @@ public class WaitDialog<T> extends AbstractDialog<T> {
      */
     public Exception getException() {
         return this.exception;
-    }
-
-    /**
-     * ダイアログを表示
-     * @param <T> Taskで処理された戻り値型
-     * @param title タイトル
-     * @param message メッセージ
-     * @param parentStage 親Stage
-     * @param callable 処理内容
-     * @return 結果
-     */
-    public static <T> T showAndWait(String title, String message, Stage parentStage, Callable<T> callable) {
-        WaitDialog<T> dialog = new WaitDialog<>(parentStage);
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        dialog.setCallable(callable);
-        return dialog.showAndWait();
     }
 
 }

@@ -2,8 +2,6 @@ package com.hirohiro716.javafx.dialog.select;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
-
 import com.hirohiro716.javafx.FXMLLoader;
 import com.hirohiro716.javafx.LayoutHelper;
 import com.hirohiro716.javafx.control.EnterFireButton;
@@ -44,14 +42,14 @@ public class ListViewDialog<E> extends AbstractDialog<E> {
     private EnterFireButton buttonCancel;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      */
     public ListViewDialog() {
         super();
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param parentStage
      */
     public ListViewDialog(Stage parentStage) {
@@ -88,9 +86,7 @@ public class ListViewDialog<E> extends AbstractDialog<E> {
                 };
             }
         });
-        Iterator<E> iterator = this.items.keySet().iterator();
-        while (iterator.hasNext()) {
-            E key = iterator.next();
+        for (E key: this.items.keySet()) {
             this.listView.getItems().add(key);
         }
         this.listView.setPlaceholder(new Label("選択できるアイテムがありません"));
@@ -98,9 +94,10 @@ public class ListViewDialog<E> extends AbstractDialog<E> {
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                dialog.setResult(dialog.listView.getSelectionModel().getSelectedItem());
-                dialog.close();
-                event.consume();
+                if (dialog.listView.getSelectionModel().getSelectedItem() != null) {
+                    dialog.setResult(dialog.listView.getSelectionModel().getSelectedItem());
+                    dialog.close();
+                }
             }
         });
         if (this.isCancelable) {
@@ -109,7 +106,6 @@ public class ListViewDialog<E> extends AbstractDialog<E> {
                 public void handle(ActionEvent event) {
                     dialog.setResult(null);
                     dialog.close();
-                    event.consume();
                 }
             });
         } else {
@@ -123,11 +119,9 @@ public class ListViewDialog<E> extends AbstractDialog<E> {
                 switch (event.getCode()) {
                 case O:
                     dialog.buttonOk.fire();
-                    event.consume();
                     break;
                 case C:
                     dialog.buttonCancel.fire();
-                    event.consume();
                     break;
                 default:
                     break;
@@ -139,7 +133,7 @@ public class ListViewDialog<E> extends AbstractDialog<E> {
     @Override
     public void show() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("ListViewDialog.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
         }
@@ -148,7 +142,7 @@ public class ListViewDialog<E> extends AbstractDialog<E> {
     @Override
     public E showAndWait() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("ListViewDialog.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             return this.showAndWait(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return null;
@@ -219,47 +213,6 @@ public class ListViewDialog<E> extends AbstractDialog<E> {
      */
     public boolean isCancelable() {
         return this.isCancelable;
-    }
-
-    /**
-     * ダイアログを表示
-     * @param <E> ListViewのitem型
-     * @param title タイトル
-     * @param message メッセージ
-     * @param items 並び替えを行うItems
-     * @return 結果
-     */
-    public static <E> E showAndWait(String title, String message, HashMap<E, String> items) {
-        ListViewDialog<E> dialog = new ListViewDialog<>();
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        dialog.setItems(items);
-        return dialog.showAndWait();
-    }
-
-    /**
-     * ダイアログを表示
-     * @param <E> ListViewのItem型
-     * @param title タイトル
-     * @param message メッセージ
-     * @param items 並び替えを行うItems
-     * @param parentStage 親Stage
-     * @return 結果
-     */
-    public static <E> E showAndWait(String title, String message, HashMap<E, String> items, Stage parentStage) {
-        ListViewDialog<E> dialog = new ListViewDialog<>(parentStage);
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        dialog.setItems(items);
-        return dialog.showAndWait();
-    }
-
-    @Override @Deprecated
-    public void setWidth(double width) {
-    }
-
-    @Override @Deprecated
-    public void setHeight(double height) {
     }
 
 }

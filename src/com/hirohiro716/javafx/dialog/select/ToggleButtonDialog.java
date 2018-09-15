@@ -2,7 +2,6 @@ package com.hirohiro716.javafx.dialog.select;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 import com.hirohiro716.javafx.FXMLLoader;
@@ -26,7 +25,7 @@ import javafx.stage.Stage;
 /**
  * HashMapの値をそれぞれToggleButtonで表示しユーザーにON/OFFを切り替えさせるダイアログを表示するクラス.
  * @author hiro
- * @param <E> 選択するItemの型
+ * @param <E> 選択できるItemの型
  */
 public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
     
@@ -46,19 +45,25 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
     private EnterFireButton buttonCancel;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
+     * @param selectableItems 選択できるItem
      */
-    public ToggleButtonDialog() {
+    public ToggleButtonDialog(HashMap<E, String> selectableItems) {
         super();
+        this.selectableItems = selectableItems;
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
+     * @param selectableItems 選択できるItem
      * @param parentStage
      */
-    public ToggleButtonDialog(Stage parentStage) {
+    public ToggleButtonDialog(HashMap<E, String> selectableItems, Stage parentStage) {
         super(parentStage);
+        this.selectableItems = selectableItems;
     }
+
+    private HashMap<E, String> selectableItems;
 
     @Override
     protected void preparationCallback() {
@@ -79,10 +84,8 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
         }
         // 選択用のToggleButtonを作成
         HashMap<E, ToggleButton> buttonsHashMap = new HashMap<>();
-        Iterator<E> iterator = this.items.keySet().iterator();
-        while (iterator.hasNext()) {
-            E key = iterator.next();
-            String value = this.items.get(key);
+        for (E key: this.selectableItems.keySet()) {
+            String value = this.selectableItems.get(key);
             ToggleButton button = new ToggleButton();
             button.setText(value);
             button.setUserData(key);
@@ -102,9 +105,7 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
         }
         // 初期値のセット
         if (this.defaultValue != null) {
-            iterator = this.defaultValue.keySet().iterator();
-            while (iterator.hasNext()) {
-                E key = iterator.next();
+            for (E key: this.defaultValue.keySet()) {
                 buttonsHashMap.get(key).setSelected(true);
             }
         }
@@ -121,8 +122,6 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
                     }
                 }
                 dialog.setResult(hashMap);
-                dialog.close();
-                event.consume();
             }
         });
         if (this.isCancelable) {
@@ -131,7 +130,6 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
                 public void handle(ActionEvent event) {
                     dialog.setResult(null);
                     dialog.close();
-                    event.consume();
                 }
             });
         } else {
@@ -145,11 +143,9 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
                 switch (event.getCode()) {
                 case O:
                     dialog.buttonOk.fire();
-                    event.consume();
                     break;
                 case C:
                     dialog.buttonCancel.fire();
-                    event.consume();
                     break;
                 default:
                     break;
@@ -161,7 +157,7 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
     @Override
     public void show() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("ToggleButtonDialog.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
         }
@@ -170,7 +166,7 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
     @Override
     public LinkedHashMap<E, String> showAndWait() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("ToggleButtonDialog.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             return this.showAndWait(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return null;
@@ -207,24 +203,6 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
         this.messageNode = node;
     }
 
-    private HashMap<E, String> items;
-
-    /**
-     * 並び替えるアイテムを指定する.
-     * @param items
-     */
-    public void setItems(HashMap<E, String> items) {
-        this.items = items;
-    }
-
-    /**
-     * 並び替えるアイテムを取得する.
-     * @return items
-     */
-    public HashMap<E, String> getItems() {
-        return this.items;
-    }
-
     private HashMap<E, String> defaultValue;
 
     /**
@@ -251,47 +229,6 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
      */
     public boolean isCancelable() {
         return this.isCancelable;
-    }
-
-    /**
-     * ダイアログを表示
-     * @param <E> ListViewのitem型
-     * @param title タイトル
-     * @param message メッセージ
-     * @param items 並び替えを行うItems
-     * @return 結果
-     */
-    public static <E> LinkedHashMap<E, String> showAndWait(String title, String message, HashMap<E, String> items) {
-        ToggleButtonDialog<E> dialog = new ToggleButtonDialog<>();
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        dialog.setItems(items);
-        return dialog.showAndWait();
-    }
-
-    /**
-     * ダイアログを表示
-     * @param <E> ListViewのItem型
-     * @param title タイトル
-     * @param message メッセージ
-     * @param items 並び替えを行うItems
-     * @param parentStage 親Stage
-     * @return 結果
-     */
-    public static <E> LinkedHashMap<E, String> showAndWait(String title, String message, HashMap<E, String> items, Stage parentStage) {
-        ToggleButtonDialog<E> dialog = new ToggleButtonDialog<>(parentStage);
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        dialog.setItems(items);
-        return dialog.showAndWait();
-    }
-
-    @Override @Deprecated
-    public void setWidth(double width) {
-    }
-
-    @Override @Deprecated
-    public void setHeight(double height) {
     }
 
 }

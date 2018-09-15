@@ -28,14 +28,14 @@ public class LimitTextArea extends TextArea {
     private StringConverter converter = null;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      */
     public LimitTextArea() {
         this("");
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param text
      */
     public LimitTextArea(String text) {

@@ -11,30 +11,10 @@ import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
 /**
- * JavaFXのStage構成を補助するclass.
+ * JavaFXのStage構成を補助するクラス.
  * @author hiro
  */
 public class StageBuilder {
-
-    private Stage stage;
-
-    /**
-     * Stageを取得する.
-     * @return Stage
-     */
-    public Stage getStage() {
-        return this.stage;
-    }
-
-    private Scene scene;
-
-    /**
-     * Sceneを取得する.
-     * @return Scene
-     */
-    public Scene getScene() {
-        return this.scene;
-    }
 
     /**
      * コンストラクタで新規Stageを構築する.
@@ -134,6 +114,26 @@ public class StageBuilder {
         this.scene = new Scene(this.paneRoot);
         this.scene.setFill(null);
         this.stage.setScene(this.scene);
+    }
+
+    private Stage stage;
+
+    /**
+     * Stageを取得する.
+     * @return Stage
+     */
+    public Stage getStage() {
+        return this.stage;
+    }
+
+    private Scene scene;
+
+    /**
+     * Sceneを取得する.
+     * @return Scene
+     */
+    public Scene getScene() {
+        return this.scene;
     }
 
     Pane paneRoot;

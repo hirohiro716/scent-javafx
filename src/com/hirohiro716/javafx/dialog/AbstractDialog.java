@@ -44,7 +44,7 @@ public abstract class AbstractDialog<T> {
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      */
     public AbstractDialog() {
         super();
@@ -88,20 +88,10 @@ public abstract class AbstractDialog<T> {
         dialogContentPane.setScaleX(this.scale);
         dialogContentPane.setScaleY(this.scale);
         // ダイアログのサイズを設定する
-        if (this.width == -1) {
-            dialogContentPane.setMinWidth(dialogContentPane.getPrefWidth());
-            dialogContentPane.setMaxWidth(dialogContentPane.getPrefWidth());
-        } else {
-            dialogContentPane.setMinWidth(this.width);
-            dialogContentPane.setMaxWidth(this.width);
-        }
-        if (this.height == -1) {
-            dialogContentPane.setMinHeight(dialogContentPane.getPrefHeight());
-            dialogContentPane.setMaxHeight(dialogContentPane.getPrefHeight());
-        } else {
-            dialogContentPane.setMinHeight(this.height);
-            dialogContentPane.setMaxHeight(this.height);
-        }
+        dialogContentPane.setMinWidth(dialogContentPane.getPrefWidth());
+        dialogContentPane.setMaxWidth(dialogContentPane.getPrefWidth());
+        dialogContentPane.setMinHeight(dialogContentPane.getPrefHeight());
+        dialogContentPane.setMaxHeight(dialogContentPane.getPrefHeight());
         this.dialogPane.getChildren().add(dialogContentPane);
         // sceneをセット
         Scene scene = new Scene(this.dialogPane);
@@ -232,28 +222,8 @@ public abstract class AbstractDialog<T> {
         this.scale = scale;
     }
 
-    private double width = -1;
-
     /**
-     * ダイアログの幅を変更する.
-     * @param width
-     */
-    public void setWidth(double width) {
-        this.width = width;
-    }
-
-    private double height = -1;
-
-    /**
-     * ダイアログの高さを変更する.
-     * @param height
-     */
-    public void setHeight(double height) {
-        this.height = height;
-    }
-    
-    /**
-     * 閉じる際の処理
+     * 閉じる際の処理インターフェース.
      * @author hiro
      * @param <T> ダイアログのResultタイプ
      */

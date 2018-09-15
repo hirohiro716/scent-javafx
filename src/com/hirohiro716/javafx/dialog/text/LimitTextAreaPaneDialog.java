@@ -9,7 +9,6 @@ import com.hirohiro716.javafx.FXMLLoader;
 import com.hirohiro716.javafx.LayoutHelper;
 import com.hirohiro716.javafx.control.EnterFireButton;
 import com.hirohiro716.javafx.control.LimitTextArea;
-import com.hirohiro716.javafx.dialog.AbstractDialog.CloseEventHandler;
 import com.hirohiro716.javafx.dialog.AbstractPaneDialog;
 
 import javafx.application.Platform;
@@ -44,7 +43,7 @@ public class LimitTextAreaPaneDialog extends AbstractPaneDialog<String> {
     private EnterFireButton buttonCancel;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param parentPane
      */
     public LimitTextAreaPaneDialog(Pane parentPane) {
@@ -53,9 +52,10 @@ public class LimitTextAreaPaneDialog extends AbstractPaneDialog<String> {
 
     @Override
     public void show() {
+        LimitTextAreaPaneDialog dialog = LimitTextAreaPaneDialog.this;
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("LimitTextAreaDialog.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(LimitTextAreaDialog.class.getResource(LimitTextAreaDialog.class.getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return;
@@ -84,18 +84,16 @@ public class LimitTextAreaPaneDialog extends AbstractPaneDialog<String> {
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                LimitTextAreaPaneDialog.this.setResult(StringConverter.nullReplace(LimitTextAreaPaneDialog.this.limitTextArea.getText(), ""));
-                LimitTextAreaPaneDialog.this.close();
-                event.consume();
+                dialog.setResult(StringConverter.nullReplace(dialog.limitTextArea.getText(), ""));
+                dialog.close();
             }
         });
         if (this.isCancelable) {
             this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    LimitTextAreaPaneDialog.this.setResult(null);
-                    LimitTextAreaPaneDialog.this.close();
-                    event.consume();
+                    dialog.setResult(null);
+                    dialog.close();
                 }
             });
         } else {
@@ -111,20 +109,16 @@ public class LimitTextAreaPaneDialog extends AbstractPaneDialog<String> {
                 }
                 switch (event.getCode()) {
                 case O:
-                    LimitTextAreaPaneDialog.this.buttonOk.fire();
-                    event.consume();
+                    dialog.buttonOk.fire();
                     break;
                 case C:
-                    LimitTextAreaPaneDialog.this.buttonCancel.fire();
-                    event.consume();
+                    dialog.buttonCancel.fire();
                     break;
                 default:
                     break;
                 }
             }
         });
-        // FIXME バグなのか開いた瞬間はフォーカスを一度外さないとIMEが効かない
-        LimitTextAreaPaneDialog dialog = LimitTextAreaPaneDialog.this;
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -209,30 +203,6 @@ public class LimitTextAreaPaneDialog extends AbstractPaneDialog<String> {
      */
     public boolean isCancelable() {
         return this.isCancelable;
-    }
-
-    /**
-     * ダイアログを表示
-     * @param <T> javafx.scene.layout.Paneを継承したクラスオブジェクト
-     * @param title タイトル
-     * @param message メッセージ
-     * @param parentPane 表示対象Pane
-     * @param closeEvent 閉じる際の処理
-     */
-    public static <T extends Pane> void show(String title, String message, T parentPane, CloseEventHandler<String> closeEvent) {
-        LimitTextAreaPaneDialog dialog = new LimitTextAreaPaneDialog(parentPane);
-        dialog.setTitle(title);
-        dialog.setMessage(message);
-        dialog.setCloseEvent(closeEvent);
-        dialog.show();
-    }
-
-    @Override @Deprecated
-    public void setWidth(double width) {
-    }
-
-    @Override @Deprecated
-    public void setHeight(double height) {
     }
 
 }

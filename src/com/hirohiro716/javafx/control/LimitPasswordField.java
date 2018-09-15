@@ -23,7 +23,7 @@ public class LimitPasswordField extends PasswordField {
     private StringConverter converter = null;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      */
     public LimitPasswordField() {
         this.focusedProperty().addListener(this.convertTextListener);

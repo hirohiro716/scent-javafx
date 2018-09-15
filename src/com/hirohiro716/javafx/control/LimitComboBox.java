@@ -30,14 +30,14 @@ public class LimitComboBox<T> extends ComboBox<T> {
     private StringConverter converter = null;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      */
     public LimitComboBox() {
         this(FXCollections.observableArrayList());
     }
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param items
      */
     public LimitComboBox(ObservableList<T> items) {

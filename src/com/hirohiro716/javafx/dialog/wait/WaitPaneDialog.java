@@ -30,7 +30,7 @@ public class WaitPaneDialog<T> extends AbstractPaneDialog<T> {
     private AnchorPane paneMessage;
 
     /**
-     * コンストラクタ
+     * コンストラクタ.
      * @param parentPane
      */
     public WaitPaneDialog(Pane parentPane) {
@@ -41,7 +41,7 @@ public class WaitPaneDialog<T> extends AbstractPaneDialog<T> {
     public void show() {
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource("Wait.fxml"), this);
+            FXMLLoader fxmlHelper = new FXMLLoader(WaitDialog.class.getResource(WaitDialog.class.getSimpleName() + ".fxml"), this);
             this.show(fxmlHelper.getPaneRoot());
         } catch (IOException exception) {
             return;

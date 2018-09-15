@@ -42,6 +42,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+/**
+ * WhereSetDialogのコントロール生成やデータ処理を行うクラス.
+ * @author hiro
+ */
 class WhereSetDialogCore {
 
     private VBox vboxWhereSetGroup;
@@ -476,7 +480,7 @@ class WhereSetDialogCore {
         private HashMapComboBox<?, ?> hashMapComboBox;
 
         /**
-         * コンストラクタ
+         * コンストラクタ.
          * @param columnName
          * @param hashMapComboBox
          */
@@ -513,7 +517,7 @@ class WhereSetDialogCore {
         protected boolean isTimeInput = true;
 
         /**
-         * コンストラクタ
+         * コンストラクタ.
          * @param isTimeInput
          */
         public DatetimeInputEventHander(boolean isTimeInput) {
