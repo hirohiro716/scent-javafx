@@ -283,7 +283,7 @@ public class AutoCompleteTextField extends LimitTextField {
      */
     private void createOnlyFirstItems() {
         AutoCompleteTextField field = AutoCompleteTextField.this;
-        if (field.popup != null || field.getParent() == null) {
+        if (field.popup != null || field.getParent() == null || this.getParent().getScene() == null) {
             return;
         }
         // リストビューを作成して設定
