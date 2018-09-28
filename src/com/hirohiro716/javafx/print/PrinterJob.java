@@ -7,6 +7,8 @@ import javax.print.PrintException;
 
 import com.hirohiro716.PrintHelper;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
 import javafx.print.JobSettings;
 import javafx.print.PageOrientation;
@@ -31,6 +33,18 @@ public class PrinterJob {
      */
     public static ObservableSet<Printer> fetchAllPrinters() {
         return Printer.getAllPrinters();
+    }
+    
+    /**
+     * すべてのプリンタ名を取得する.
+     * @return すべてのプリンタの名前
+     */
+    public static ObservableList<String> fetchAllPrinterNames() {
+        ObservableList<String> list = FXCollections.observableArrayList();
+        for (Printer printer: fetchAllPrinters()) {
+            list.add(printer.getName());
+        }
+        return list;
     }
 
     private Printer printer;
@@ -120,6 +134,18 @@ public class PrinterJob {
         return this.printer.getPrinterAttributes().getSupportedPaperSources();
     }
 
+    /**
+     * プリンタでサポートしている用紙トレイ名を取得する.
+     * @return サポートされている用紙トレイ名
+     */
+    public ObservableList<String> fetchSupportedPaperSourceNames() {
+        ObservableList<String> list = FXCollections.observableArrayList();
+        for (PaperSource paperSource: this.fetchSupportedPaperSources()) {
+            list.add(paperSource.getName());
+        }
+        return list;
+    }
+
     private PaperSource paperSource = null;
 
     /**
@@ -148,6 +174,18 @@ public class PrinterJob {
      */
     public Set<Paper> fetchSupportedPapers() {
         return this.printer.getPrinterAttributes().getSupportedPapers();
+    }
+
+    /**
+     * プリンタでサポートしている用紙名を取得する.
+     * @return サポートされている用紙名
+     */
+    public ObservableList<String> fetchSupportedPaperNames() {
+        ObservableList<String> list = FXCollections.observableArrayList();
+        for (Paper paper: this.fetchSupportedPapers()) {
+            list.add(paper.getName());
+        }
+        return list;
     }
 
     private Paper paper = null;
