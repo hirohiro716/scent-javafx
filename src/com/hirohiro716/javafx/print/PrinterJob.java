@@ -339,7 +339,17 @@ public class PrinterJob {
                 jobSettings.setPageLayout(this.printer.createPageLayout(this.paper, this.pageOrientation, this.marginType));
             }
             if (this.leftMargin != null) {
-                jobSettings.setPageLayout(this.printer.createPageLayout(this.paper, this.pageOrientation, this.leftMargin, this.rightMargin, this.topMargin, this.bottomMargin));
+                // FIXME 用紙を回転すると余白指定が変になるので入れ替える。本来JavaFX側で処理するべきでは。
+                switch (this.pageOrientation) {
+                case PORTRAIT:
+                    jobSettings.setPageLayout(this.printer.createPageLayout(this.paper, this.pageOrientation, this.leftMargin, this.rightMargin, this.topMargin, this.bottomMargin));
+                    break;
+                case REVERSE_PORTRAIT:
+                case LANDSCAPE:
+                case REVERSE_LANDSCAPE:
+                    jobSettings.setPageLayout(this.printer.createPageLayout(this.paper, this.pageOrientation, this.rightMargin, this.leftMargin, this.bottomMargin, this.topMargin));
+                    break;
+                }
             }
             // トレイ
             if (this.paperSource != null) {
