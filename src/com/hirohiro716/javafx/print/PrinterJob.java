@@ -64,7 +64,7 @@ public class PrinterJob {
     public PrinterJob() throws NullPointerException {
         this.printer = Printer.getDefaultPrinter();
         if (this.printer == null) {
-            throw new NullPointerException();
+            throw new NullPointerException("Default printer is not found.");
         }
     }
 
@@ -76,7 +76,7 @@ public class PrinterJob {
     public PrinterJob(Printer printer) {
         this.printer = printer;
         if (this.printer == null) {
-            throw new NullPointerException();
+            throw new NullPointerException("Printer is not found.");
         }
     }
 
@@ -92,7 +92,7 @@ public class PrinterJob {
             }
         }
         if (this.printer == null) {
-            throw new NullPointerException();
+            throw new NullPointerException("Printer is not found.");
         }
     }
 
