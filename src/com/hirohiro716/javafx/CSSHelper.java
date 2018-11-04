@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
  * @author hiro
  */
 public class CSSHelper {
-
+    
     /**
      * 定義されたスタイルから値を取得する.
      * @param originalStyle スタイル全体の文字列
