@@ -345,22 +345,22 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     private EventHandler<KeyEvent> shortcutKeyEventHandler = new EventHandler<KeyEvent>() {
         @Override
         public void handle(KeyEvent event) {
-            AbstractDatabaseSearcher<?> searchTableRowser = AbstractDatabaseSearcher.this;
+            AbstractDatabaseSearcher<?> searcher = AbstractDatabaseSearcher.this;
             switch (event.getCode()) {
             case ESCAPE:
-                searchTableRowser.clear();
+                searcher.clear();
                 event.consume();
                 break;
             case F1:
-                searchTableRowser.add();
+                searcher.add();
                 event.consume();
                 break;
             case F2:
-                searchTableRowser.edit();
+                searcher.edit();
                 event.consume();
                 break;
             case F3:
-                searchTableRowser.selectRow();
+                searcher.selectRow();
                 event.consume();
                 break;
             case F12:
@@ -400,9 +400,9 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
             @Override
             public void run() {
                 for (RudeArray row: rows) {
-                    AbstractDatabaseSearcher<?> searchTableRowser = AbstractDatabaseSearcher.this;
-                    searchTableRowser.getTableView().getItems().add(row);
-                    searchTableRowser.getTableView().refresh();
+                    AbstractDatabaseSearcher<?> searcher = AbstractDatabaseSearcher.this;
+                    searcher.getTableView().getItems().add(row);
+                    searcher.getTableView().refresh();
                 }
             }
         });

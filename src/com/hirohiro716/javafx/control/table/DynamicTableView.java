@@ -20,6 +20,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -37,6 +38,7 @@ public class DynamicTableView extends TableView<RudeArray> {
      */
     public DynamicTableView() {
         super();
+        this.setPlaceholder(new Label("データがありません"));
     }
 
     /**
@@ -45,6 +47,7 @@ public class DynamicTableView extends TableView<RudeArray> {
      */
     public DynamicTableView(ObservableList<RudeArray> items) {
         super(items);
+        this.setPlaceholder(new Label("データがありません"));
     }
 
     /**
