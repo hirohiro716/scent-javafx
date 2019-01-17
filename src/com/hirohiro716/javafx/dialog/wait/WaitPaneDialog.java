@@ -61,16 +61,18 @@ public class WaitPaneDialog<T> extends AbstractPaneDialog<T> {
             this.paneMessage.getChildren().add(this.messageNode);
         }
         // タスクの実行
-        if (this.task == null) {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    WaitPaneDialog.this.close();
-                }
-            });
-            return;
+        if (this.task != null) {
+            this.task.start();
+        } else {
+            if (this.isAutoClose) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        WaitPaneDialog.this.close();
+                    }
+                });
+            }
         }
-        this.task.start();
     }
 
     private String title;
@@ -103,6 +105,16 @@ public class WaitPaneDialog<T> extends AbstractPaneDialog<T> {
         this.messageNode = node;
     }
 
+    private boolean isAutoClose = true;
+    
+    /**
+     * タスク終了後に自動的にダイアログを閉じるかどうかを指定する.
+     * @param isAutoClose
+     */
+    public void setAutoClose(boolean isAutoClose) {
+        this.isAutoClose = isAutoClose;
+    }
+
     private Task<T> task;
 
     /**
@@ -121,12 +133,14 @@ public class WaitPaneDialog<T> extends AbstractPaneDialog<T> {
                     dialog.exception = exception;
                     throw exception;
                 } finally {
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            dialog.close();
-                        }
-                    });
+                    if (dialog.isAutoClose) {
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.close();
+                            }
+                        });
+                    }
                 }
             }
         });
