@@ -675,8 +675,8 @@ public class EditableTable<S> extends AnchorPane {
                 for (Node node: nodes) {
                     if (this.isDisabledRowControlFocusTraversables.get(item) == null || this.isDisabledRowControlFocusTraversables.get(item) == false) {
                         hashMap.put(id, node.isFocusTraversable());
+                        node.setFocusTraversable(false);
                     }
-                    node.setFocusTraversable(false);
                     break;
                 }
             }
@@ -695,7 +695,9 @@ public class EditableTable<S> extends AnchorPane {
             for (String id: this.columnIds) {
                 Set<Node> nodes = hBox.lookupAll("#" + id);
                 for (Node node: nodes) {
-                    node.setFocusTraversable(hashMap.get(id));
+                    if (hashMap.containsKey(id)) {
+                        node.setFocusTraversable(hashMap.get(id));
+                    }
                     break;
                 }
             }
