@@ -116,6 +116,14 @@ public class HashMapComboBox<K, V> extends ComboBox<V> {
         this.values = hashMap;
     }
     
+    /**
+     * 連想配列を取得する.
+     * @return HashMap
+     */
+    public HashMap<K, V> getHashMap() {
+        return this.values;
+    }
+    
     private final ObjectProperty<K> keyProperty = new SimpleObjectProperty<>();
     
     /**
