@@ -142,12 +142,23 @@ public class EditableTable<S> extends AnchorPane {
                 HBox oldHBox = table.rowHBoxes.get(oldValue);
                 if (oldHBox != null) {
                     oldHBox.pseudoClassStateChanged(EditableTable.this.selectedPseudoClass, false);
-                    table.disableRowControlFocusTraversable(oldValue);
+                    if (table.isDisabled() == false) {
+                        table.disableRowControlFocusTraversable(oldValue);
+                    }
                 }
                 HBox newHBox = table.rowHBoxes.get(newValue);
                 if (newHBox != null) {
                     newHBox.pseudoClassStateChanged(EditableTable.this.selectedPseudoClass, true);
                     table.rollbackRowControlFocusTraversable(newValue);
+                }
+            }
+        });
+        // コントロール自体が無効にされる場合は次にフォーカスした場合にFocusTraversableが戻らない
+        this.disabledProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue == false) {
+                    table.rollbackRowControlFocusTraversable(table.getSelectedItem());
                 }
             }
         });
@@ -646,8 +657,10 @@ public class EditableTable<S> extends AnchorPane {
         T control = (T) hBox.lookup("#" + id);
         return control;
     }
-
+    
     private HashMap<S, HashMap<String, Boolean>> rowControlFocusTraversables = new HashMap<>();
+    
+    private HashMap<S, Boolean> isDisabledRowControlFocusTraversables = new HashMap<>();
     
     /**
      * 指定された行のFocusTraversableを保存しておく.
@@ -660,11 +673,14 @@ public class EditableTable<S> extends AnchorPane {
             for (String id: this.columnIds) {
                 Set<Node> nodes = hBox.lookupAll("#" + id);
                 for (Node node: nodes) {
-                    hashMap.put(id, node.isFocusTraversable());
+                    if (this.isDisabledRowControlFocusTraversables.get(item) == null || this.isDisabledRowControlFocusTraversables.get(item) == false) {
+                        hashMap.put(id, node.isFocusTraversable());
+                    }
                     node.setFocusTraversable(false);
                     break;
                 }
             }
+            this.isDisabledRowControlFocusTraversables.put(item, true);
         }
     }
     
@@ -683,6 +699,7 @@ public class EditableTable<S> extends AnchorPane {
                     break;
                 }
             }
+            this.isDisabledRowControlFocusTraversables.put(item, false);
         }
     }
     
