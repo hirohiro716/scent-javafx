@@ -237,7 +237,7 @@ public class DatetimePickerPaneDialog extends AbstractPaneDialog<Date> {
     private boolean isTimeInput = true;
 
     /**
-     * 時刻も入力させるかどうか.
+     * 時刻も入力させるかどうか. 初期値はtrue.
      * @param isTimeInput
      */
     public void setTimeInput(boolean isTimeInput) {
