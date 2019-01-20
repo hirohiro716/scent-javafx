@@ -363,6 +363,10 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
                 searcher.selectRow();
                 event.consume();
                 break;
+            case F5:
+                searcher.search();
+                event.consume();
+                break;
             case F12:
                 Node node = (Node) event.getSource();
                 ConfirmPane confirm = new ConfirmPane((Pane) node.getScene().getRoot());
