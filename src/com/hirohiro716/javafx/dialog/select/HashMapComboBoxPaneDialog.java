@@ -54,8 +54,8 @@ public class HashMapComboBoxPaneDialog<K, V> extends AbstractPaneDialog<K> {
         HashMapComboBoxPaneDialog<K, V> dialog = HashMapComboBoxPaneDialog.this;
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(HashMapComboBoxDialog.class.getResource(HashMapComboBoxDialog.class.getSimpleName() + ".fxml"), this);
-            this.show(fxmlHelper.getPaneRoot());
+            FXMLLoader fxmlLoader = new FXMLLoader(HashMapComboBoxDialog.class.getResource(HashMapComboBoxDialog.class.getSimpleName() + ".fxml"), this);
+            this.show(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
             return;
         }

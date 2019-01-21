@@ -178,8 +178,8 @@ public class MonthSelectDialog extends AbstractDialog<MonthResult> {
     @Override
     public void show() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            this.show(fxmlHelper.getPaneRoot());
+            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
+            this.show(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
         }
     }
@@ -187,8 +187,8 @@ public class MonthSelectDialog extends AbstractDialog<MonthResult> {
     @Override
     public MonthResult showAndWait() {
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            return this.showAndWait(fxmlHelper.getPaneRoot());
+            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
+            return this.showAndWait(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
             return null;
         }

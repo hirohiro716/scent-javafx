@@ -50,8 +50,8 @@ public class QuestionPane extends AbstractPaneDialog<DialogResult> {
         QuestionPane dialog = QuestionPane.this;
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(Question.class.getResource(Question.class.getSimpleName() + ".fxml"), this);
-            this.show(fxmlHelper.getPaneRoot());
+            FXMLLoader fxmlLoader = new FXMLLoader(Question.class.getResource(Question.class.getSimpleName() + ".fxml"), this);
+            this.show(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
             return;
         }

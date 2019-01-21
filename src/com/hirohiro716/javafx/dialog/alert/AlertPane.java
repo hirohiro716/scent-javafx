@@ -47,8 +47,8 @@ public class AlertPane extends AbstractPaneDialog<DialogResult> {
         AlertPane dialog = AlertPane.this;
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(Alert.class.getResource(Alert.class.getSimpleName() + ".fxml"), this);
-            this.show(fxmlHelper.getPaneRoot());
+            FXMLLoader fxmlLoader = new FXMLLoader(Alert.class.getResource(Alert.class.getSimpleName() + ".fxml"), this);
+            this.show(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
             return;
         }

@@ -50,8 +50,8 @@ public class ConfirmPane extends AbstractPaneDialog<DialogResult> {
         ConfirmPane dialog = ConfirmPane.this;
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(Confirm.class.getResource(Confirm.class.getSimpleName() + ".fxml"), this);
-            this.show(fxmlHelper.getPaneRoot());
+            FXMLLoader fxmlLoader = new FXMLLoader(Confirm.class.getResource(Confirm.class.getSimpleName() + ".fxml"), this);
+            this.show(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
             return;
         }

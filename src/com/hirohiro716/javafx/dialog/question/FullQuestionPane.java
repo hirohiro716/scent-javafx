@@ -53,8 +53,8 @@ public class FullQuestionPane extends AbstractPaneDialog<DialogResult> {
         FullQuestionPane dialog = FullQuestionPane.this;
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(FullQuestion.class.getResource(FullQuestion.class.getSimpleName() + ".fxml"), this);
-            this.show(fxmlHelper.getPaneRoot());
+            FXMLLoader fxmlLoader = new FXMLLoader(FullQuestion.class.getResource(FullQuestion.class.getSimpleName() + ".fxml"), this);
+            this.show(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
             return;
         }

@@ -69,8 +69,8 @@ public class DatetimePickerPaneDialog extends AbstractPaneDialog<Date> {
         DatetimePickerPaneDialog dialog = DatetimePickerPaneDialog.this;
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(DatetimePickerDialog.class.getResource(DatetimePickerDialog.class.getSimpleName() + ".fxml"), this);
-            this.show(fxmlHelper.getPaneRoot());
+            FXMLLoader fxmlLoader = new FXMLLoader(DatetimePickerDialog.class.getResource(DatetimePickerDialog.class.getSimpleName() + ".fxml"), this);
+            this.show(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
             return;
         }

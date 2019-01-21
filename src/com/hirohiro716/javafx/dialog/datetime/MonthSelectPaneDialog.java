@@ -86,8 +86,8 @@ public class MonthSelectPaneDialog extends AbstractPaneDialog<MonthResult> {
         MonthSelectPaneDialog dialog = MonthSelectPaneDialog.this;
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(MonthSelectDialog.class.getResource(MonthSelectDialog.class.getSimpleName() + ".fxml"), this);
-            this.show(fxmlHelper.getPaneRoot());
+            FXMLLoader fxmlLoader = new FXMLLoader(MonthSelectDialog.class.getResource(MonthSelectDialog.class.getSimpleName() + ".fxml"), this);
+            this.show(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
             return;
         }

@@ -106,8 +106,8 @@ public class WhereSetPaneDialog extends AbstractPaneDialog<WhereSet[]> {
     public void show() {
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(WhereSetDialog.class.getResource(WhereSetDialog.class.getSimpleName() + ".fxml"), this);
-            this.show(fxmlHelper.getPaneRoot());
+            FXMLLoader fxmlLoader = new FXMLLoader(WhereSetDialog.class.getResource(WhereSetDialog.class.getSimpleName() + ".fxml"), this);
+            this.show(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
             return;
         }

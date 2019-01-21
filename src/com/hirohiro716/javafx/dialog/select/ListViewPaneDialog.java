@@ -54,8 +54,8 @@ public class ListViewPaneDialog<E> extends AbstractPaneDialog<E> {
         ListViewPaneDialog<E> dialog = ListViewPaneDialog.this;
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(ListViewDialog.class.getResource(ListViewDialog.class.getSimpleName() + ".fxml"), this);
-            this.show(fxmlHelper.getPaneRoot());
+            FXMLLoader fxmlLoader = new FXMLLoader(ListViewDialog.class.getResource(ListViewDialog.class.getSimpleName() + ".fxml"), this);
+            this.show(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
             return;
         }

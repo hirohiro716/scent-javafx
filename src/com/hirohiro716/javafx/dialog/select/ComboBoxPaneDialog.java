@@ -53,8 +53,8 @@ public class ComboBoxPaneDialog<T> extends AbstractPaneDialog<T> {
         ComboBoxPaneDialog<T> dialog = ComboBoxPaneDialog.this;
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(ComboBoxDialog.class.getResource(ComboBoxDialog.class.getSimpleName() + ".fxml"), this);
-            this.show(fxmlHelper.getPaneRoot());
+            FXMLLoader fxmlLoader = new FXMLLoader(ComboBoxDialog.class.getResource(ComboBoxDialog.class.getSimpleName() + ".fxml"), this);
+            this.show(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
             return;
         }

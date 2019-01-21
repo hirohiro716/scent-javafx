@@ -41,8 +41,8 @@ public class WaitPaneDialog<T> extends AbstractPaneDialog<T> {
     public void show() {
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(WaitDialog.class.getResource(WaitDialog.class.getSimpleName() + ".fxml"), this);
-            this.show(fxmlHelper.getPaneRoot());
+            FXMLLoader fxmlLoader = new FXMLLoader(WaitDialog.class.getResource(WaitDialog.class.getSimpleName() + ".fxml"), this);
+            this.show(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
             return;
         }

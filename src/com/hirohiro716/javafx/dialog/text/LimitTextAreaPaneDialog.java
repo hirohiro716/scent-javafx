@@ -55,8 +55,8 @@ public class LimitTextAreaPaneDialog extends AbstractPaneDialog<String> {
         LimitTextAreaPaneDialog dialog = LimitTextAreaPaneDialog.this;
         // ダイアログ表示
         try {
-            FXMLLoader fxmlHelper = new FXMLLoader(LimitTextAreaDialog.class.getResource(LimitTextAreaDialog.class.getSimpleName() + ".fxml"), this);
-            this.show(fxmlHelper.getPaneRoot());
+            FXMLLoader fxmlLoader = new FXMLLoader(LimitTextAreaDialog.class.getResource(LimitTextAreaDialog.class.getSimpleName() + ".fxml"), this);
+            this.show(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
             return;
         }
