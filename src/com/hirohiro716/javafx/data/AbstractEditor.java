@@ -186,9 +186,23 @@ public abstract class AbstractEditor<T> {
             InstantAlert.show(this.getStage().getScene().getRoot(), exception.getMessage(), Pos.CENTER, 1000);
         }
     }
-
+    
     private boolean isCloseDialogShown = false;
 
+    /**
+     * 閉じる確認を行う直前の処理. closeメソッドを呼び出した際に自動実行される.
+     */
+    protected void beforeCloseConfirmDoPreparation() {
+        this.isCloseDialogShown = true;
+    }
+    
+    /**
+     * 閉じる確認後の処理. 自動実行される.
+     */
+    protected void processAfterCloseConfirm() {
+        this.isCloseDialogShown = false;
+    }
+    
     /**
      * 画面を閉じる際の確認
      */
@@ -196,15 +210,16 @@ public abstract class AbstractEditor<T> {
         @Override
         public void handle(WindowEvent event) {
             event.consume();
-            if (AbstractEditor.this.isCloseAgree == false && AbstractEditor.this.isCloseDialogShown == false) {
-                AbstractEditor.this.isCloseDialogShown = true;
-                ConfirmPane.show(CONFIRM_DIALOG_TITLE_CLOSE, "この画面を閉じます。", AbstractEditor.this.stageBuilder.getPaneRoot(), new CloseEventHandler<DialogResult>() {
+            AbstractEditor<T> editor = AbstractEditor.this;
+            if (editor.isCloseAgree == false && editor.isCloseDialogShown == false) {
+                editor.beforeCloseConfirmDoPreparation();
+                ConfirmPane.show(CONFIRM_DIALOG_TITLE_CLOSE, "この画面を閉じます。", editor.stageBuilder.getPaneRoot(), new CloseEventHandler<DialogResult>() {
                     @Override
                     public void handle(DialogResult resultValue) {
                         if (resultValue == DialogResult.OK) {
-                            AbstractEditor.this.close();
+                            editor.close();
                         }
-                        AbstractEditor.this.isCloseDialogShown = false;
+                        editor.processAfterCloseConfirm();
                     }
                 });
             }
