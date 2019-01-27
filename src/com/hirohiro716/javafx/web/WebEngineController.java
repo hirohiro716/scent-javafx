@@ -3,14 +3,12 @@ package com.hirohiro716.javafx.web;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.html.HTMLFrameElement;
 
-import com.sun.webkit.dom.HTMLElementImpl;
-
+import com.hirohiro716.StringConverter;
 import javafx.scene.web.WebEngine;
 
 /**
@@ -98,20 +96,10 @@ public class WebEngineController {
     
     /**
      * ElementをID属性を元に検索して選択する. すでに選択済みのElementがある場合はその内部から検索する.
-     * @param id
+     * @param idCompareRegex IDと比較する正規表現
      */
-    public void selectElementById(String id) {
-        Element[] elements = this.getSelectedElementOrRoot();
-        this.clearSelectedElements();
-        for (Element element: elements) {
-            if (element instanceof Document) {
-                Document document = (Document) element;
-                Element findedElement = document.getElementById(id);
-                if (findedElement != null) {
-                    this.addSelectedElement(findedElement);
-                }
-            }
-        }
+    public void selectElementById(String idCompareRegex) {
+        this.selectElementsByAttribute("id", idCompareRegex);
     }
     
     /**
@@ -124,7 +112,9 @@ public class WebEngineController {
         for (Element element: elements) {
             NodeList nodeList = element.getElementsByTagName(tagName);
             for (int i = 0; i < nodeList.getLength(); i++) {
-                this.addSelectedElement((Element) nodeList.item(i));
+                if (nodeList.item(i) instanceof Element) {
+                    this.addSelectedElement((Element) nodeList.item(i));
+                }
             }
         }
     }
@@ -140,11 +130,38 @@ public class WebEngineController {
         for (Element element: elements) {
             NodeList nodeList = element.getElementsByTagName(tagName);
             for (int i = 0; i < nodeList.getLength(); i++) {
-                Element findedElement = (Element) nodeList.item(i);
-                String elementText = findedElement.getTextContent();
-                Pattern pattern = Pattern.compile(textCompareRegex, Pattern.DOTALL);
-                if (elementText != null && pattern.matcher(elementText).find()) {
-                    this.addSelectedElement(findedElement);
+                if (nodeList.item(i) instanceof Element) {
+                    Element findedElement = (Element) nodeList.item(i);
+                    String elementText = findedElement.getTextContent();
+                    Pattern pattern = Pattern.compile(textCompareRegex, Pattern.DOTALL);
+                    if (elementText != null && pattern.matcher(elementText).find()) {
+                        this.addSelectedElement(findedElement);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Elementをタグ名と属性値を元に正規表現で検索して選択する. すでに選択済みのElementがある場合はその内部から検索する.
+     * @param tagName
+     * @param valueCompareRegex 属性値と比較する正規表現
+     */
+    public void selectElementsByTagNameAndAttributeValue(String tagName, String valueCompareRegex) {
+        Element[] elements = this.getSelectedElementOrRoot();
+        this.clearSelectedElements();
+        for (Element element: elements) {
+            NodeList nodeList = element.getElementsByTagName(tagName);
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                if (nodeList.item(i) instanceof Element) {
+                    Element findedElement = (Element) nodeList.item(i);
+                    for (int attributeIndex = 0; attributeIndex < findedElement.getAttributes().getLength(); attributeIndex++) {
+                        String value = findedElement.getAttributes().item(attributeIndex).getNodeValue();
+                        Pattern pattern = Pattern.compile(valueCompareRegex, Pattern.DOTALL);
+                        if (value != null && pattern.matcher(value).find()) {
+                            this.addSelectedElement(findedElement);
+                        }
+                    }
                 }
             }
         }
@@ -192,26 +209,49 @@ public class WebEngineController {
         }
         return result;
     }
+
+    /**
+     * すべての子要素を取得する.
+     * @return Element[]
+     */
+    public Element[] getAllChildElements() {
+        ArrayList<Element> result = new ArrayList<>();
+        ArrayList<Node> nodeList = this.getChildNodeList(this.webEngine.getDocument().getDocumentElement());
+        for (Node node: nodeList) {
+            if (node instanceof Element) {
+                result.add((Element) node);
+            }
+        }
+        return result.toArray(new Element[] {});
+    }
     
     /**
      * JavaScriptを利用して選択されている最初のElementをクリックする.
      */
     public void click() {
         if (this.isSelectedElement()) {
-            clickElement(this.selectedElementsList.get(0));
+            clickElement(this.webEngine, this.selectedElementsList.get(0));
         }
     }
     
     /**
      * JavaScriptを利用してElementをクリックする.
-     * @param webEngine
-     * @param element
+     * @param webEngine WebEngineオブジェクト
+     * @param element クリック対象
      */
-    public static void clickElement(Element element) {
-        if (element instanceof HTMLElementImpl) {
-            HTMLElementImpl elementImpl = (HTMLElementImpl) element;
-            elementImpl.click();
+    public static void clickElement(WebEngine webEngine, Element element) {
+        if (element == null) {
+            return;
         }
+        String backupClass = element.getAttribute("class");
+        String flagClass = WebEngineController.class.getName().replaceAll("\\.", "_").toUpperCase() + "_FLAG_FOR_CLICK";
+        String newClass = StringConverter.join(backupClass, " ", flagClass);
+        element.setAttribute("class", newClass);
+        StringBuilder script = new StringBuilder("document.getElementsByClassName('");
+        script.append(flagClass);
+        script.append("')[0].click();");
+        webEngine.executeScript(script.toString());
+        element.setAttribute("class", backupClass);
     }
     
 }
