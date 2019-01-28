@@ -149,7 +149,7 @@ public abstract class AbstractEditor<T> {
      * データ処理を行うインスタンスをセットする.
      * @param dataController
      */
-    public void setDataController(T dataController) {
+    protected void setDataController(T dataController) {
         this.dataController = dataController;
     }
     
