@@ -127,6 +127,7 @@ public class ComboBoxDialog<T> extends AbstractDialog<T> {
             FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             this.show(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 
@@ -136,6 +137,7 @@ public class ComboBoxDialog<T> extends AbstractDialog<T> {
             FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             return this.showAndWait(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
+            exception.printStackTrace();
             return null;
         }
     }

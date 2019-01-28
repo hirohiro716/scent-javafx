@@ -6,12 +6,10 @@ import java.sql.SQLException;
 
 import com.hirohiro716.javafx.StageBuilder;
 import com.hirohiro716.javafx.dialog.AbstractDialog.CloseEventHandler;
-import com.hirohiro716.javafx.dialog.alert.InstantAlert;
 import com.hirohiro716.javafx.dialog.DialogResult;
 import com.hirohiro716.javafx.dialog.confirm.ConfirmPane;
 
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
@@ -167,6 +165,14 @@ public abstract class AbstractEditor<T> {
      */
     protected abstract void importDataFromForm();
     
+    /**
+     * 例外を処理する.
+     * @param exception 発生例外
+     */
+    protected void handleException(Exception exception) {
+        exception.printStackTrace();
+    }
+    
     private boolean isCloseAgree = false;
     
     /**
@@ -183,7 +189,7 @@ public abstract class AbstractEditor<T> {
             this.isCloseAgree = true;
             this.stageBuilder.close();
         } catch (Exception exception) {
-            InstantAlert.show(this.getStage().getScene().getRoot(), exception.getMessage(), Pos.CENTER, 1000);
+            this.handleException(exception);
         }
     }
     

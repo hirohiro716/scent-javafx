@@ -57,6 +57,7 @@ public class HashMapComboBoxPaneDialog<K, V> extends AbstractPaneDialog<K> {
             FXMLLoader fxmlLoader = new FXMLLoader(HashMapComboBoxDialog.class.getResource(HashMapComboBoxDialog.class.getSimpleName() + ".fxml"), this);
             this.show(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
+            exception.printStackTrace();
             return;
         }
         // タイトルのセット

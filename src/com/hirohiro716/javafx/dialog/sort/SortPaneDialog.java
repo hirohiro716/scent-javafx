@@ -64,6 +64,7 @@ public class SortPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<E, Strin
             FXMLLoader fxmlLoader = new FXMLLoader(SortDialog.class.getResource(SortDialog.class.getSimpleName() + ".fxml"), this);
             this.show(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
+            exception.printStackTrace();
             return;
         }
         // タイトルのセット

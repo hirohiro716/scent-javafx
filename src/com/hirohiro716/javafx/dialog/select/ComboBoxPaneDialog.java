@@ -56,6 +56,7 @@ public class ComboBoxPaneDialog<T> extends AbstractPaneDialog<T> {
             FXMLLoader fxmlLoader = new FXMLLoader(ComboBoxDialog.class.getResource(ComboBoxDialog.class.getSimpleName() + ".fxml"), this);
             this.show(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
+            exception.printStackTrace();
             return;
         }
         // タイトルのセット

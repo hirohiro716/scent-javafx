@@ -51,6 +51,7 @@ public class SubMenu extends AbstractPaneDialog<Void> {
             pane = fxmlLoader.getPaneRoot();
             this.show(pane);
         } catch (IOException exception) {
+            exception.printStackTrace();
             return;
         }
         // タイトルのセット

@@ -57,6 +57,7 @@ public class ListViewPaneDialog<E> extends AbstractPaneDialog<E> {
             FXMLLoader fxmlLoader = new FXMLLoader(ListViewDialog.class.getResource(ListViewDialog.class.getSimpleName() + ".fxml"), this);
             this.show(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
+            exception.printStackTrace();
             return;
         }
         // タイトルのセット

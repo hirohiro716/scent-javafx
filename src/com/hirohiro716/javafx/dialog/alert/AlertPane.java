@@ -50,6 +50,7 @@ public class AlertPane extends AbstractPaneDialog<DialogResult> {
             FXMLLoader fxmlLoader = new FXMLLoader(Alert.class.getResource(Alert.class.getSimpleName() + ".fxml"), this);
             this.show(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
+            exception.printStackTrace();
             return;
         }
         // タイトルのセット

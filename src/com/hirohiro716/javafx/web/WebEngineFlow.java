@@ -186,7 +186,7 @@ public class WebEngineFlow {
                     try {
                         flow.tasks.get(flow.currentIndex).execute(flow.controller);
                     } catch (Exception exception) {
-                        exception.printStackTrace();
+                        flow.handleException(exception);
                         flow.currentIndex = flow.tasks.size();
                         return;
                     }
@@ -206,6 +206,14 @@ public class WebEngineFlow {
                 }
             }
         });
+    }
+
+    /**
+     * 例外を処理する.
+     * @param exception 発生例外
+     */
+    protected void handleException(Exception exception) {
+        exception.printStackTrace();
     }
     
     /**

@@ -64,6 +64,7 @@ public class ToggleButtonPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<
             FXMLLoader fxmlLoader = new FXMLLoader(ToggleButtonDialog.class.getResource(ToggleButtonDialog.class.getSimpleName() + ".fxml"), this);
             this.show(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
+            exception.printStackTrace();
             return;
         }
         // タイトルのセット

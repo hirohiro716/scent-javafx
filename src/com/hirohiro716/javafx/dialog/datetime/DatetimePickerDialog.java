@@ -184,6 +184,7 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
             FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             this.show(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 
@@ -193,6 +194,7 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
             FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
             return this.showAndWait(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
+            exception.printStackTrace();
             return null;
         }
     }

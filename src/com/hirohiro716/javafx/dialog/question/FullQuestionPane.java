@@ -56,6 +56,7 @@ public class FullQuestionPane extends AbstractPaneDialog<DialogResult> {
             FXMLLoader fxmlLoader = new FXMLLoader(FullQuestion.class.getResource(FullQuestion.class.getSimpleName() + ".fxml"), this);
             this.show(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
+            exception.printStackTrace();
             return;
         }
         // タイトルのセット

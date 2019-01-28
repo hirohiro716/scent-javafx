@@ -53,6 +53,7 @@ public class ConfirmPane extends AbstractPaneDialog<DialogResult> {
             FXMLLoader fxmlLoader = new FXMLLoader(Confirm.class.getResource(Confirm.class.getSimpleName() + ".fxml"), this);
             this.show(fxmlLoader.getPaneRoot());
         } catch (IOException exception) {
+            exception.printStackTrace();
             return;
         }
         // タイトルのセット
