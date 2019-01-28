@@ -2,6 +2,7 @@ package com.hirohiro716.javafx.dialog;
 
 import java.util.ArrayList;
 
+import com.hirohiro716.javafx.CSSHelper;
 import com.hirohiro716.javafx.dialog.AbstractDialog.CloseEventHandler;
 
 import javafx.beans.value.ChangeListener;
@@ -27,7 +28,7 @@ public abstract class AbstractPaneDialog<T> {
         return this.parentPane;
     }
 
-    private StackPane dialogPane;
+    private StackPane dialogPane = new StackPane();
 
     /**
      * ダイアログPaneを取得する.
@@ -62,10 +63,9 @@ public abstract class AbstractPaneDialog<T> {
         for (Node node: this.disableChangeNodes) {
             node.setDisable(true);
         }
-        // StackPaneを固定
-        this.dialogPane = new StackPane();
+        // StackPaneを設定
         this.dialogPane.setPrefSize(this.parentPane.getWidth(), this.parentPane.getHeight());
-        this.dialogPane.setStyle("-fx-background-color: rgba(180,180,180,0.5);");
+        this.dialogPane.setStyle(CSSHelper.updateStyleValue(this.dialogPane.getStyle(), "-fx-background-color", "rgba(180,180,180,0.5)"));
         // ダイアログの拡大縮小
         dialogContentPane.setScaleX(this.scale);
         dialogContentPane.setScaleY(this.scale);

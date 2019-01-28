@@ -1,5 +1,7 @@
 package com.hirohiro716.javafx.dialog;
 
+import com.hirohiro716.javafx.CSSHelper;
+
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -33,7 +35,7 @@ public abstract class AbstractDialog<T> {
         return this.stage;
     }
 
-    private StackPane dialogPane;
+    private StackPane dialogPane = new StackPane();
 
     /**
      * ダイアログPaneを取得する.
@@ -61,9 +63,8 @@ public abstract class AbstractDialog<T> {
     private void preparation(Pane dialogContentPane) {
         // Stageを生成
         this.stage = new Stage();
-        // StackPaneを生成
-        this.dialogPane = new StackPane();
-        this.dialogPane.setStyle("-fx-background-color: rgba(180,180,180,0.5);");
+        // StackPaneを設定
+        this.dialogPane.setStyle(CSSHelper.updateStyleValue(this.dialogPane.getStyle(), "-fx-background-color", "rgba(180,180,180,0.5)"));
         // 表示するScreenを計算
         Screen screen = Screen.getPrimary();
         if (this.parentStage != null) {
