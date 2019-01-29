@@ -17,40 +17,35 @@
     <effect>
         <DropShadow height="60.0" radius="30.0" width="60.0" />
     </effect>
-    <children>
-        <Label fx:id="labelTitle" text="タイトル" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" style="-fx-font-size:120%; -fx-font-weight:bold;">
+    <Label fx:id="labelTitle" text="タイトル" AnchorPane.topAnchor="30.0" AnchorPane.rightAnchor="0.0" AnchorPane.leftAnchor="30.0" style="-fx-font-size:120%; -fx-font-weight:bold;">
+        <padding>
+            <Insets top="10.0" right="10.0" bottom="10.0" />
+        </padding>
+    </Label>
+    <AnchorPane fx:id="paneMessage" prefHeight="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="70.0" />
+    <EnterFireButton fx:id="buttonAddWhere" text="追加" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="130.0">
+        <padding>
+            <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+        </padding></EnterFireButton>
+    <ScrollPane AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="165.0">
+        <VBox fx:id="vboxWhereSet" spacing="5.0">
             <padding>
-                <Insets bottom="10.0" right="10.0" top="10.0" />
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding>
-        </Label>
-        <AnchorPane fx:id="paneMessage" prefHeight="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="70.0" />
-        <EnterFireButton fx:id="buttonAddWhere" text="追加" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="130.0">
+        </VBox>
+    </ScrollPane>
+    <EnterFireButton fx:id="buttonAddWhereSet" text="追加" AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="130.0">
+        <padding>
+            <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+        </padding>
+    </EnterFireButton>
+    <ScrollPane AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="165.0">
+        <VBox fx:id="vboxWhereSetGroup" spacing="5.0">
             <padding>
-                <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
-            </padding></EnterFireButton>
-        <ScrollPane AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="165.0">
-            <content>
-                 <VBox fx:id="vboxWhereSet" spacing="5.0">
-                    <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </padding>
-                 </VBox>
-            </content>
-        </ScrollPane>
-        <EnterFireButton fx:id="buttonAddWhereSet" text="追加" AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="130.0">
-            <padding>
-                <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
-            </padding></EnterFireButton>
-        <ScrollPane AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="165.0">
-            <content>
-                 <VBox fx:id="vboxWhereSetGroup" spacing="5.0">
-                    <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </padding>
-                 </VBox>
-            </content>
-        </ScrollPane>
-        <EnterFireButton fx:id="buttonOk" prefHeight="40.0" prefWidth="80.0" text="OK" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="130.0" />
-        <EnterFireButton fx:id="buttonCancel" cancelButton="true" prefHeight="40.0" prefWidth="100.0" text="キャンセル" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
-    </children>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding>
+        </VBox>
+    </ScrollPane>
+    <EnterFireButton fx:id="buttonOk" prefHeight="40.0" prefWidth="80.0" text="OK" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="130.0" />
+    <EnterFireButton fx:id="buttonCancel" cancelButton="true" prefHeight="40.0" prefWidth="100.0" text="キャンセル" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
 </AnchorPane>
