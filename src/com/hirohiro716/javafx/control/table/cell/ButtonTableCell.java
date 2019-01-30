@@ -29,8 +29,7 @@ public class ButtonTableCell<S> extends AbstractLiveControlTableCell<S, Void> {
     }
 
     @Override
-    public void updateItem(Void item, boolean isEmpty) {
-        super.updateItem(item, isEmpty);
+    public void updateLiveItem(Void item, boolean isEmpty) {
         if (isEmpty) {
             this.setGraphic(null);
         } else {
@@ -54,6 +53,10 @@ public class ButtonTableCell<S> extends AbstractLiveControlTableCell<S, Void> {
     @Override
     public Control getControl() {
         return this.button;
+    }
+
+    @Override
+    public void processOfSetEditable(boolean isEditable) {
     }
 
     @Override

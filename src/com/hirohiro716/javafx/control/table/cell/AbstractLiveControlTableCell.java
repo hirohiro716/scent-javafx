@@ -6,8 +6,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Control;
-import javafx.scene.control.Labeled;
 import javafx.scene.control.TableCell;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -24,6 +25,7 @@ public abstract class AbstractLiveControlTableCell<S, T> extends TableCell<S, T>
     /**
      * AbstractLiveControlTableCell
      */
+    @SuppressWarnings("rawtypes")
     public AbstractLiveControlTableCell() {
         AbstractLiveControlTableCell<S, T> cell = AbstractLiveControlTableCell.this;
         cell.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
@@ -65,6 +67,30 @@ public abstract class AbstractLiveControlTableCell<S, T> extends TableCell<S, T>
         });
         // コントロールを直接クリックすると行やセルが選択されないので実装
         cell.getControl().setOnMousePressed(this.mousePressedEventAtControl);
+        // 編集可能かどうかによってコントロールも変更させる
+        ChangeListener<Boolean> editableChangeListener = new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                cell.processOfSetEditable(cell.isEditableAll());
+            }
+        };
+        cell.editableProperty().addListener(editableChangeListener);
+        cell.tableViewProperty().addListener(new ChangeListener<TableView<S>>() {
+            @Override
+            public void changed(ObservableValue<? extends TableView<S>> observable, TableView<S> oldValue, TableView<S> newValue) {
+                if (newValue != null) {
+                    newValue.editableProperty().addListener(editableChangeListener);
+                }
+            }
+        });
+        cell.tableRowProperty().addListener(new ChangeListener<TableRow>() {
+            @Override
+            public void changed(ObservableValue<? extends TableRow> observable, TableRow oldValue, TableRow newValue) {
+                if (newValue != null) {
+                    newValue.editableProperty().addListener(editableChangeListener);
+                }
+            }
+        });
         // フォーカスコントロール
         Platform.runLater(new Runnable() {
             @Override
@@ -74,15 +100,36 @@ public abstract class AbstractLiveControlTableCell<S, T> extends TableCell<S, T>
                     cell.getControl().setFocusTraversable(false);
                 }
                 // テーブルビューが編集できない場合はフォーカスさせない
-                if (cell.getTableView().isEditable() == false) {
+                if (cell.getTableView().isEditable() && cell.getTableRow().isEditable() && cell.isEditable()) {
                     cell.getControl().setFocusTraversable(false);
-                    if (cell.getControl() instanceof Labeled == false) {
-                        cell.getControl().setDisable(true);
-                    }
                 }
             }
         });
     }
+    
+    /**
+     * TableViewとTableRowとTableCellがすべて編集可能かどうかを取得する.
+     * @return 結果
+     */
+    public boolean isEditableAll() {
+        boolean result = true;
+        if (this.getTableView() != null && this.getTableView().isEditable() == false) {
+            result = false;
+        }
+        if (this.getTableRow() != null && this.getTableRow().isEditable() == false) {
+            result = false;
+        }
+        if (this.isEditable() == false) {
+            result = false;
+        }
+        return result;
+    }
+    
+    /**
+     * セルが編集可能かどうかの設定値が変更された際の処理.
+     * @param isEditable 
+     */
+    public abstract void processOfSetEditable(boolean isEditable);
 
     /**
      * 内部のコントロールでTabかEnterが押された場合にセルを更新する処理とフォーカス移動を行うKeyEventを取得する.
@@ -96,7 +143,7 @@ public abstract class AbstractLiveControlTableCell<S, T> extends TableCell<S, T>
         @Override
         public void handle(KeyEvent event) {
             AbstractLiveControlTableCell<S, T> cell = AbstractLiveControlTableCell.this;
-            if (cell.getTableView().isEditable() == false) {
+            if (cell.getTableView().isEditable() == false || cell.getTableRow().isEditable() == false) {
                 return;
             }
             switch (event.getCode()) {
@@ -170,6 +217,20 @@ public abstract class AbstractLiveControlTableCell<S, T> extends TableCell<S, T>
         });
     }
 
+    @Override
+    protected final void updateItem(T item, boolean isEmpty) {
+        super.updateItem(item, isEmpty);
+        this.updateLiveItem(item, isEmpty);
+        this.processOfSetEditable(this.isEditableAll());
+    }
+    
+    /**
+     * 内部にコントロールを表示する.
+     * @param item
+     * @param isEmpty
+     */
+    protected abstract void updateLiveItem(T item, boolean isEmpty);
+    
     @Override
     public void updateSelected(boolean selected ) {
         super.updateSelected(selected);

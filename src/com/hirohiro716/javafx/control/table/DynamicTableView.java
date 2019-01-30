@@ -8,7 +8,9 @@ import com.hirohiro716.datetime.Datetime;
 import com.hirohiro716.RudeArray;
 import com.hirohiro716.javafx.control.EnterFireButton;
 import com.hirohiro716.javafx.control.table.cell.ButtonTableCell;
+import com.hirohiro716.javafx.control.table.cell.CheckBoxTableCell;
 import com.hirohiro716.javafx.control.table.cell.EnterFireButtonTableCell;
+import com.hirohiro716.javafx.control.table.cell.ImeOffCheckBoxTableCell;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -585,6 +587,60 @@ public class DynamicTableView extends TableView<RudeArray> {
                             if (isEnabled != null && isEnabled) {
                                 this.setText("●");
                             }
+                        }
+                    }
+                };
+                cell.setAlignment(Pos.CENTER);
+                return cell;
+            }
+        });
+        this.getColumns().add(column);
+    }
+
+    /**
+     * CheckBoxカラムを追加する.
+     * @param columnName カラム名
+     * @param columnHeaderText ヘッダーテキスト
+     * @param prefWidth カラム幅
+     */
+    public void addColumnCheckBox(String columnName, String columnHeaderText, double prefWidth) {
+        TableColumn<RudeArray, Boolean> column = createColumnBoolean(columnName, columnHeaderText, prefWidth);
+        column.setCellFactory(new Callback<TableColumn<RudeArray, Boolean>, TableCell<RudeArray, Boolean>>() {
+            @Override
+            public TableCell<RudeArray, Boolean> call(TableColumn<RudeArray, Boolean> param) {
+                CheckBoxTableCell<RudeArray> cell = new CheckBoxTableCell<RudeArray>() {
+                    @Override
+                    public void commitEdit() {
+                        RudeArray row = (RudeArray) this.getTableRow().getItem();
+                        if (row != null) {
+                            row.put(columnName, this.getCheckBox().isSelected());
+                        }
+                    }
+                };
+                cell.setAlignment(Pos.CENTER);
+                return cell;
+            }
+        });
+        this.getColumns().add(column);
+    }
+
+    /**
+     * ImeOffCheckBoxカラムを追加する.
+     * @param columnName カラム名
+     * @param columnHeaderText ヘッダーテキスト
+     * @param prefWidth カラム幅
+     */
+    public void addColumnImeOffCheckBox(String columnName, String columnHeaderText, double prefWidth) {
+        TableColumn<RudeArray, Boolean> column = createColumnBoolean(columnName, columnHeaderText, prefWidth);
+        column.setCellFactory(new Callback<TableColumn<RudeArray, Boolean>, TableCell<RudeArray, Boolean>>() {
+            @Override
+            public TableCell<RudeArray, Boolean> call(TableColumn<RudeArray, Boolean> param) {
+                ImeOffCheckBoxTableCell<RudeArray> cell = new ImeOffCheckBoxTableCell<RudeArray>() {
+                    @Override
+                    public void commitEdit() {
+                        RudeArray row = (RudeArray) this.getTableRow().getItem();
+                        if (row != null) {
+                            row.put(columnName, this.getImeOffCheckBox().isSelected());
                         }
                     }
                 };
