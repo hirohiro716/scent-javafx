@@ -216,6 +216,7 @@ public class EditableTable<S> extends AnchorPane {
                         event.consume();
                         break;
                     default:
+                        break;
                     }
                 }
             }

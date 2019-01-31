@@ -160,6 +160,7 @@ public abstract class AbstractLiveControlTableCell<S, T> extends TableCell<S, T>
                 }
                 break;
             default:
+                break;
             }
         }
     };

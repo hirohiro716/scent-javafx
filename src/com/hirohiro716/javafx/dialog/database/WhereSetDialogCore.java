@@ -324,6 +324,7 @@ class WhereSetDialogCore {
                 textField.setText(StringConverter.tryNonFraction(String.valueOf(value))); // 数値は丸めて文字列へ
                 break;
             default:
+                break;
             }
         }
         if (control instanceof HashMapComboBox<?, ?>) {
@@ -391,6 +392,7 @@ class WhereSetDialogCore {
             this.userComparisons.put(description, comparison);
             break;
         default:
+            break;
         }
     }
 
@@ -681,6 +683,7 @@ class WhereSetDialogCore {
                     controls.add(textField);
                     break;
                 default:
+                    break;
                 }
                 break;
             case DATETIME:
@@ -706,6 +709,7 @@ class WhereSetDialogCore {
                     controls.add(textField);
                     break;
                 default:
+                    break;
                 }
                 break;
             case BOOLEAN:
@@ -715,6 +719,7 @@ class WhereSetDialogCore {
                     controls.add(checkBox);
                     break;
                 default:
+                    break;
                 }
                 break;
             }
@@ -733,6 +738,7 @@ class WhereSetDialogCore {
                 controls.add(hashMapComboBox);
                 break;
             default:
+                break;
             }
         }
         // すべてのコントロールにVALUEをつける

@@ -111,6 +111,7 @@ public class QuestionPane extends AbstractPaneDialog<DialogResult> {
                 this.buttonNo.requestFocus();
                 break;
             default:
+                break;
             }
         }
     }

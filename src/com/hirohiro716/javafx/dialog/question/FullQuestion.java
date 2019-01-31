@@ -126,6 +126,7 @@ public class FullQuestion extends AbstractDialog<DialogResult> {
                 this.buttonCancel.requestFocus();
                 break;
             default:
+                break;
             }
         }
     }

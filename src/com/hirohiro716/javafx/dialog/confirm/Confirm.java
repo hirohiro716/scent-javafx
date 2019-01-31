@@ -110,6 +110,7 @@ public class Confirm extends AbstractDialog<DialogResult> {
                 this.buttonCancel.requestFocus();
                 break;
             default:
+                break;
             }
         }
     }

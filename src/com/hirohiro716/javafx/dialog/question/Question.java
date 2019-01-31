@@ -110,6 +110,7 @@ public class Question extends AbstractDialog<DialogResult> {
                 this.buttonNo.requestFocus();
                 break;
             default:
+                break;
             }
         }
     }

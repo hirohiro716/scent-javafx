@@ -182,6 +182,7 @@ public class HashMapComboBox<K, V> extends ComboBox<V> {
                     comboBox.setValue(null);
                     break;
                 default:
+                    break;
                 }
             }
         }

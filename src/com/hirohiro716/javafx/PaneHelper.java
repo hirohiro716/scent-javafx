@@ -106,6 +106,7 @@ public class PaneHelper {
                         event.consume();
                         break;
                     default:
+                        break;
                     }
                 }
             };

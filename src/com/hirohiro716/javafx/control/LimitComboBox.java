@@ -236,6 +236,7 @@ public class LimitComboBox<T> extends ComboBox<T> {
                     comboBox.setValue(null);
                     break;
                 default:
+                    break;
                 }
             }
         }

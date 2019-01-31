@@ -111,6 +111,7 @@ public class ConfirmPane extends AbstractPaneDialog<DialogResult> {
                 this.buttonCancel.requestFocus();
                 break;
             default:
+                break;
             }
         }
     }

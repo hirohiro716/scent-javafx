@@ -127,6 +127,7 @@ public class FullQuestionPane extends AbstractPaneDialog<DialogResult> {
                 this.buttonCancel.requestFocus();
                 break;
             default:
+                break;
             }
         }
     }
