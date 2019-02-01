@@ -180,13 +180,13 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * 検索結果内の行を選択する処理クラス.
+     * 検索結果内の行を選択するインターフェース.
      * @author hiro
      */
     public static interface SelectCallback {
 
         /**
-         * 実際に検索結果内の行が選択された場合の処理
+         * 実際に検索結果内の行が選択された場合の処理.
          * @param selectedRow
          */
         public void select(RudeArray selectedRow);

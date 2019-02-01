@@ -231,5 +231,21 @@ public abstract class AbstractEditor<T> {
             }
         }
     };
+    
+
+    /**
+     * 内部の情報に対しての処理インターフェース.
+     * @author hiro
+     * @param <T> 情報の型
+     */
+    public static interface Callback<T> {
+
+        /**
+         * 内部の情報に対しての処理.
+         * @param instance
+         */
+        public void call(T instance);
+
+    }
 
 }
