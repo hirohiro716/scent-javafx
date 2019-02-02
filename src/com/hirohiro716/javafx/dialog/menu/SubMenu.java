@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 
@@ -22,7 +23,10 @@ import javafx.scene.layout.Pane;
  * @author hiro
  */
 public class SubMenu extends AbstractPaneDialog<Void> {
-    
+
+    @FXML
+    private AnchorPane paneRoot;
+
     @FXML
     private Label labelTitle;
 
@@ -39,6 +43,11 @@ public class SubMenu extends AbstractPaneDialog<Void> {
         this.flowPaneNodes.setVgap(10);
         this.flowPaneNodes.setHgap(10);
         LayoutHelper.setAnchor(this.flowPaneNodes, 90, 30, 30, 30);
+    }
+
+    @Override
+    public AnchorPane getContentPane() {
+        return this.paneRoot;
     }
 
     @Override
@@ -109,7 +118,7 @@ public class SubMenu extends AbstractPaneDialog<Void> {
             }
         });
         // StackPaneをクリックで閉じるようにしてダイアログのPaneをクリックしても閉じないようにする
-        this.getDialogPane().setOnMouseClicked(closeEvent);
+        this.getStackPane().setOnMouseClicked(closeEvent);
         pane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {

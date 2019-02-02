@@ -15,7 +15,7 @@ import com.hirohiro716.javafx.dialog.AbstractDialog;
 import com.hirohiro716.javafx.dialog.DialogResult;
 import com.hirohiro716.javafx.dialog.question.QuestionPane;
 import com.hirohiro716.javafx.dialog.select.HashMapComboBoxPaneDialog;
-
+import com.hirohiro716.javafx.dialog.database.InterfaceWhereSetDialog;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -30,39 +30,10 @@ import javafx.stage.Stage;
  * WhereSet配列を作成するダイアログを表示するクラス.
  * @author hiro
  */
-public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
+public class WhereSetDialog extends AbstractDialog<WhereSet[]> implements InterfaceWhereSetDialog {
 
-    /**
-     * カラムのデータ型.
-     * @author hiro
-     */
-    public enum ColumnType {
-        /**
-         * 文字列
-         */
-        STRING,
-        /**
-         * 文字列（数字だけ）
-         */
-        NUMBER_STRING,
-        /**
-         * 数値
-         */
-        NUMBER,
-        /**
-         * 日付
-         */
-        DATE,
-        /**
-         * 日付と時刻
-         */
-        DATETIME,
-        /**
-         * 真偽
-         */
-        BOOLEAN,
-        ;
-    }
+    @FXML
+    private AnchorPane paneRoot;
 
     @FXML
     private Label labelTitle;
@@ -83,15 +54,34 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     private EnterFireButton buttonAddWhereSet;
 
     @FXML
-    private VBox vboxWhereSetGroup;
-
-    @FXML
     private VBox vboxWhereSet;
 
-    /**
+    @Override
+    public VBox getVBoxWhereSet() {
+        return this.vboxWhereSet;
+    }
+
+    @FXML
+    private VBox vboxWhereSetGroup;
+
+    @Override
+    public VBox getVBoxWhereSetGroup() {
+        return this.vboxWhereSetGroup;
+    }
+
+    /*
      * 共通の処理が膨大なので別インスタンスへ
      */
-    private WhereSetDialogCore core = new WhereSetDialogCore();
+    private WhereSetDialogCore core;
+
+    /**
+     * コンストラクタ.
+     * @param parentStage
+     */
+    public WhereSetDialog(Stage parentStage) {
+        super(parentStage);
+        this.core = new WhereSetDialogCore(this);
+    }
 
     /**
      * 検索できるカラムを追加する.
@@ -124,16 +114,14 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
         this.core.addStringComparison(columnType, comparison, description);
     }
 
-    /**
-     * コンストラクタ.
-     * @param parentStage
-     */
-    public WhereSetDialog(Stage parentStage) {
-        super(parentStage);
+    @Override
+    public AnchorPane getContentPane() {
+        return this.paneRoot;
     }
 
     @Override
     protected void preparationCallback() {
+        WhereSetDialog whereSetDialog = WhereSetDialog.this;
         // タイトルのセット
         this.getStage().setTitle(this.title);
         this.labelTitle.setText(this.title);
@@ -148,19 +136,15 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
         if (this.messageNode != null) {
             this.paneMessage.getChildren().add(this.messageNode);
         }
-        // Commonにコントロールを渡す
-        this.core.setDialogPane(this.getDialogPane());
-        this.core.setVBoxWhereSet(this.vboxWhereSet);
-        this.core.setVBoxWhereSetGroup(this.vboxWhereSetGroup);
         // 初期値のセット
         if (this.defaultValue == null) {
             this.core.addWhereSet(false);
         } else {
             for (WhereSet whereSet: this.defaultValue) {
-                this.core.whereSetGroup.add(whereSet);
+                this.core.getWhereSetGroup().add(whereSet);
                 RadioButton radioButton = this.core.addWhereSetRadioButton(whereSet);
-                if (this.core.focusWhereSet == null) {
-                    this.core.focusWhereSet = whereSet;
+                if (this.core.getDisplayedWhereSet() == null) {
+                    this.core.setDisplayWhereSet(whereSet);
                     this.core.updateVBoxFromWhereSet();
                     radioButton.setSelected(true);
                 }
@@ -170,8 +154,7 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
         this.buttonAddWhere.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                WhereSetDialog whereSetDialog = WhereSetDialog.this;
-                HashMapComboBoxPaneDialog<String, String> dialog = new HashMapComboBoxPaneDialog<>(whereSetDialog.getDialogPane());
+                HashMapComboBoxPaneDialog<String, String> dialog = new HashMapComboBoxPaneDialog<>(whereSetDialog.getStackPane());
                 dialog.setTitle("検索項目の追加");
                 dialog.setMessage("追加する検索項目を選択してください。");
                 dialog.setHashMap(whereSetDialog.core.searchTableRowsableColumnDescriptions);
@@ -191,24 +174,23 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
             }
         });
         // 検索セット追加ボタン
-        WhereSetDialog dialog = WhereSetDialog.this;
         this.buttonAddWhereSet.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                dialog.core.updateWhereSetFromVBox();
-                for (WhereSet whereSet: dialog.core.whereSetGroup) {
+                whereSetDialog.core.updateWhereSetFromVBox();
+                for (WhereSet whereSet: whereSetDialog.core.getWhereSetGroup()) {
                     if (whereSet.size() == 0) {
                         return;
                     }
                 }
                 QuestionPane.show("コピーの確認", StringConverter.join("現在の検索条件セットをコピーして条件セットを追加することができます。コピーしますか？",
-                        StringConverter.LINE_SEPARATOR, "空の条件セットを追加する場合は「いいえ」を選択してください。"), dialog.getDialogPane(), new CloseEventHandler<DialogResult>() {
+                        StringConverter.LINE_SEPARATOR, "空の条件セットを追加する場合は「いいえ」を選択してください。"), whereSetDialog.getStackPane(), new CloseEventHandler<DialogResult>() {
                     @Override
                     public void handle(DialogResult resultValue) {
                         if (resultValue == DialogResult.YES) {
-                            dialog.core.addWhereSet(true);
+                            whereSetDialog.core.addWhereSet(true);
                         } else {
-                            dialog.core.addWhereSet(false);
+                            whereSetDialog.core.addWhereSet(false);
                         }
                     }
                 });
@@ -218,15 +200,15 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                dialog.core.updateWhereSetFromVBox();
+                whereSetDialog.core.updateWhereSetFromVBox();
                 ArrayList<WhereSet> result = new ArrayList<>();
-                for (WhereSet whereSet: dialog.core.whereSetGroup) {
+                for (WhereSet whereSet: whereSetDialog.core.getWhereSetGroup()) {
                     if (whereSet.size() > 0) {
                         result.add(whereSet);
                     }
                 }
-                dialog.setResult(result.toArray(new WhereSet[]{}));
-                dialog.close();
+                whereSetDialog.setResult(result.toArray(new WhereSet[]{}));
+                whereSetDialog.close();
             }
         });
         if (this.isCancelable) {

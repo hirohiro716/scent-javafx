@@ -3,8 +3,6 @@ package com.hirohiro716.javafx.dialog;
 import java.util.ArrayList;
 
 import com.hirohiro716.javafx.CSSHelper;
-import com.hirohiro716.javafx.dialog.AbstractDialog.CloseEventHandler;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
@@ -12,11 +10,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 /**
- * ダイアログを表示するための抽象クラス.
+ * Paneに対してダイアログを表示するための抽象クラス.
  * @author hiro
  * @param <T> ダイアログのResultタイプ
  */
-public abstract class AbstractPaneDialog<T> {
+public abstract class AbstractPaneDialog<T> implements InterfaceDialog<T> {
 
     private Pane parentPane;
 
@@ -30,11 +28,8 @@ public abstract class AbstractPaneDialog<T> {
 
     private StackPane dialogPane = new StackPane();
 
-    /**
-     * ダイアログPaneを取得する.
-     * @return StackPane
-     */
-    public StackPane getDialogPane() {
+    @Override
+    public StackPane getStackPane() {
         return this.dialogPane;
     }
 
@@ -91,14 +86,10 @@ public abstract class AbstractPaneDialog<T> {
         this.parentPane.getChildren().add(this.dialogPane);
     }
 
-    /**
-     * ダイアログを表示する.
-     */
+    @Override
     public abstract void show();
 
-    /**
-     * ダイアログを閉じる.
-     */
+    @Override
     public void close() {
         this.parentPane.getChildren().remove(this.dialogPane);
         for (Node node: this.disableChangeNodes) {
@@ -111,38 +102,26 @@ public abstract class AbstractPaneDialog<T> {
 
     private CloseEventHandler<T> closeEvent;
 
-    /**
-     * ダイアログを閉じた時のイベントをセットする.
-     * @param closeEvent
-     */
+    @Override
     public void setCloseEvent(CloseEventHandler<T> closeEvent) {
         this.closeEvent = closeEvent;
     }
 
     private T result;
 
-    /**
-     * ダイアログの結果をセットする.
-     * @param resultValue
-     */
+    @Override
     public void setResult(T resultValue) {
         this.result = resultValue;
     }
 
-    /**
-     * ダイアログの結果を取得する.
-     * @return 結果
-     */
+    @Override
     public T getResult() {
         return this.result;
     }
 
     private double scale = 1;
 
-    /**
-     * ダイアログを拡大・縮小する.
-     * @param scale 比率
-     */
+    @Override
     public void setScale(double scale) {
         this.scale = scale;
     }

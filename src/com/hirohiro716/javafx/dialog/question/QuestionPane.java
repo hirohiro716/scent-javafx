@@ -5,7 +5,6 @@ import java.io.IOException;
 import com.hirohiro716.javafx.FXMLLoader;
 import com.hirohiro716.javafx.LayoutHelper;
 import com.hirohiro716.javafx.control.EnterFireButton;
-import com.hirohiro716.javafx.dialog.AbstractDialog.CloseEventHandler;
 import com.hirohiro716.javafx.dialog.AbstractPaneDialog;
 import com.hirohiro716.javafx.dialog.DialogResult;
 
@@ -26,6 +25,9 @@ import javafx.scene.layout.Pane;
 public class QuestionPane extends AbstractPaneDialog<DialogResult> {
 
     @FXML
+    private AnchorPane paneRoot;
+
+    @FXML
     private Label labelTitle;
 
     @FXML
@@ -43,6 +45,11 @@ public class QuestionPane extends AbstractPaneDialog<DialogResult> {
      */
     public QuestionPane(Pane parentPane) {
         super(parentPane);
+    }
+
+    @Override
+    public AnchorPane getContentPane() {
+        return this.paneRoot;
     }
 
     @Override
@@ -86,7 +93,7 @@ public class QuestionPane extends AbstractPaneDialog<DialogResult> {
             }
         });
         // キーボードイベント定義
-        this.getDialogPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+        this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {

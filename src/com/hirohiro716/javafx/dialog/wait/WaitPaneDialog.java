@@ -24,6 +24,9 @@ import javafx.scene.layout.Pane;
 public class WaitPaneDialog<T> extends AbstractPaneDialog<T> {
 
     @FXML
+    private AnchorPane paneRoot;
+
+    @FXML
     private Label labelTitle;
 
     @FXML
@@ -35,6 +38,11 @@ public class WaitPaneDialog<T> extends AbstractPaneDialog<T> {
      */
     public WaitPaneDialog(Pane parentPane) {
         super(parentPane);
+    }
+
+    @Override
+    public AnchorPane getContentPane() {
+        return this.paneRoot;
     }
 
     @Override

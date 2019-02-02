@@ -5,7 +5,7 @@ import java.net.URL;
 import java.sql.SQLException;
 
 import com.hirohiro716.javafx.StageBuilder;
-import com.hirohiro716.javafx.dialog.AbstractDialog.CloseEventHandler;
+import com.hirohiro716.javafx.dialog.InterfaceDialog.CloseEventHandler;
 import com.hirohiro716.javafx.dialog.DialogResult;
 import com.hirohiro716.javafx.dialog.confirm.ConfirmPane;
 
@@ -242,9 +242,9 @@ public abstract class AbstractEditor<T> {
 
         /**
          * 内部の情報に対しての処理.
-         * @param instance
+         * @param data
          */
-        public void call(T instance);
+        public void call(T data);
 
     }
 

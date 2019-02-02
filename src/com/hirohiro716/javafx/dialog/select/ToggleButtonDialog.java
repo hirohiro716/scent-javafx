@@ -28,7 +28,10 @@ import javafx.stage.Stage;
  * @param <E> 選択できるItemの型
  */
 public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
-    
+
+    @FXML
+    private AnchorPane paneRoot;
+
     @FXML
     private Label labelTitle;
 
@@ -64,6 +67,11 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
     }
 
     private HashMap<E, String> selectableItems;
+
+    @Override
+    public AnchorPane getContentPane() {
+        return this.paneRoot;
+    }
 
     @Override
     protected void preparationCallback() {
@@ -137,7 +145,7 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
             LayoutHelper.setAnchor(this.buttonOk, null, 20d, 20d, null);
         }
         // キーボードイベント定義
-        this.getDialogPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+        this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {

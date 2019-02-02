@@ -27,6 +27,9 @@ import javafx.scene.layout.Pane;
 public class HashMapComboBoxPaneDialog<K, V> extends AbstractPaneDialog<K> {
 
     @FXML
+    private AnchorPane paneRoot;
+
+    @FXML
     private Label labelTitle;
 
     @FXML
@@ -47,6 +50,11 @@ public class HashMapComboBoxPaneDialog<K, V> extends AbstractPaneDialog<K> {
      */
     public HashMapComboBoxPaneDialog(Pane parentPane) {
         super(parentPane);
+    }
+
+    @Override
+    public AnchorPane getContentPane() {
+        return this.paneRoot;
     }
 
     @Override
@@ -100,7 +108,7 @@ public class HashMapComboBoxPaneDialog<K, V> extends AbstractPaneDialog<K> {
             LayoutHelper.setAnchor(this.buttonOk, null, 20d, 20d, null);
         }
         // キーボードイベント定義
-        this.getDialogPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+        this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 if (event.isAltDown() == false) {

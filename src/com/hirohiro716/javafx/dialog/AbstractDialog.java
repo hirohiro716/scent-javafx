@@ -21,7 +21,7 @@ import javafx.stage.WindowEvent;
  * @author hiro
  * @param <T> ダイアログのResultタイプ
  */
-public abstract class AbstractDialog<T> {
+public abstract class AbstractDialog<T> implements InterfaceDialog<T> {
 
     private Stage parentStage;
 
@@ -37,11 +37,8 @@ public abstract class AbstractDialog<T> {
 
     private StackPane dialogPane = new StackPane();
 
-    /**
-     * ダイアログPaneを取得する.
-     * @return StackPane
-     */
-    public StackPane getDialogPane() {
+    @Override
+    public StackPane getStackPane() {
         return this.dialogPane;
     }
 
@@ -153,9 +150,7 @@ public abstract class AbstractDialog<T> {
         }
     };
 
-    /**
-     * ダイアログを表示する.
-     */
+    @Override
     public abstract void show();
 
     /**
@@ -164,9 +159,7 @@ public abstract class AbstractDialog<T> {
      */
     public abstract T showAndWait();
 
-    /**
-     * ダイアログを閉じる.
-     */
+    @Override
     public void close() {
         if (this.parentStage != null) {
             this.parentStage.getScene().getRoot().setDisable(false);
@@ -187,55 +180,28 @@ public abstract class AbstractDialog<T> {
 
     private CloseEventHandler<T> closeEvent;
 
-    /**
-     * ダイアログを閉じた時のイベントをセットする.
-     * @param closeEvent
-     */
+    @Override
     public void setCloseEvent(CloseEventHandler<T> closeEvent) {
         this.closeEvent = closeEvent;
     }
 
     private T result;
 
-    /**
-     * ダイアログの結果をセットする.
-     * @param resultValue
-     */
+    @Override
     public void setResult(T resultValue) {
         this.result = resultValue;
     }
 
-    /**
-     * ダイアログの結果を取得する.
-     * @return 結果
-     */
+    @Override
     public T getResult() {
         return this.result;
     }
 
     private double scale = 1;
 
-    /**
-     * ダイアログを拡大・縮小する.
-     * @param scale 比率
-     */
+    @Override
     public void setScale(double scale) {
         this.scale = scale;
     }
 
-    /**
-     * 閉じる際の処理インターフェース.
-     * @author hiro
-     * @param <T> ダイアログのResultタイプ
-     */
-    public interface CloseEventHandler<T> {
-
-        /**
-         * ダイアログを閉じる際の処理
-         * @param resultValue
-         */
-        public void handle(T resultValue);
-
-    }
-    
 }

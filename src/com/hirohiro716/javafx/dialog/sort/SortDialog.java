@@ -35,6 +35,9 @@ import javafx.stage.Stage;
 public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
 
     @FXML
+    private AnchorPane paneRoot;
+
+    @FXML
     private Label labelTitle;
 
     @FXML
@@ -72,6 +75,11 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
     }
 
     private LinkedHashMap<E, String> sortableItems;
+
+    @Override
+    public AnchorPane getContentPane() {
+        return this.paneRoot;
+    }
 
     @Override
     protected void preparationCallback() {
@@ -119,7 +127,7 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
             LayoutHelper.setAnchor(this.buttonOk, null, 20d, 20d, null);
         }
         // キーボードイベント定義
-        this.getDialogPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+        this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {

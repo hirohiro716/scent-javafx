@@ -25,6 +25,9 @@ import javafx.stage.Stage;
 public class FullQuestion extends AbstractDialog<DialogResult> {
 
     @FXML
+    private AnchorPane paneRoot;
+
+    @FXML
     private Label labelTitle;
 
     @FXML
@@ -52,6 +55,11 @@ public class FullQuestion extends AbstractDialog<DialogResult> {
      */
     public FullQuestion(Stage parentStage) {
         super(parentStage);
+    }
+
+    @Override
+    public AnchorPane getContentPane() {
+        return this.paneRoot;
     }
 
     @Override
@@ -95,7 +103,7 @@ public class FullQuestion extends AbstractDialog<DialogResult> {
             }
         });
         // キーボードイベント定義
-        this.getDialogPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+        this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {

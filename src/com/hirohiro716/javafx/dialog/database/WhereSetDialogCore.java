@@ -19,9 +19,9 @@ import com.hirohiro716.javafx.control.EnterFireButton;
 import com.hirohiro716.javafx.control.HashMapComboBox;
 import com.hirohiro716.javafx.control.LimitTextField;
 import com.hirohiro716.javafx.dialog.DialogResult;
-import com.hirohiro716.javafx.dialog.AbstractDialog.CloseEventHandler;
+import com.hirohiro716.javafx.dialog.InterfaceDialog.CloseEventHandler;
 import com.hirohiro716.javafx.dialog.confirm.ConfirmPane;
-import com.hirohiro716.javafx.dialog.database.WhereSetDialog.ColumnType;
+import com.hirohiro716.javafx.dialog.database.InterfaceWhereSetDialog.ColumnType;
 import com.hirohiro716.javafx.dialog.datetime.DatetimePickerPaneDialog;
 
 import javafx.beans.value.ChangeListener;
@@ -39,8 +39,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 
 /**
  * WhereSetDialogのコントロール生成やデータ処理を行うクラス.
@@ -48,47 +46,57 @@ import javafx.scene.layout.VBox;
  */
 class WhereSetDialogCore {
 
-    private VBox vboxWhereSetGroup;
+    /**
+     * コンストラクタで本クラスを使用するWhereSetDialogのインスタンスをセットする.
+     * @param dialog InterfaceWhereSetDialog
+     */
+    public WhereSetDialogCore(InterfaceWhereSetDialog dialog) {
+        this.dialog = dialog;
+    }
+    
+    private InterfaceWhereSetDialog dialog;
 
     private ToggleGroup toggleGroup = new ToggleGroup();
 
-    protected void setVBoxWhereSetGroup(VBox vboxWhereSetGroup) {
-        this.vboxWhereSetGroup = vboxWhereSetGroup;
-    }
-
-    private VBox vboxWhereSet;
-
-    protected void setVBoxWhereSet(VBox vboxWhereSet) {
-        this.vboxWhereSet = vboxWhereSet;
-    }
-
-    private StackPane dialogPane;
-
-    protected void setDialogPane(StackPane dialogPane) {
-        this.dialogPane = dialogPane;
-    }
+    private ArrayList<WhereSet> whereSetGroup = new ArrayList<>();
 
     /**
-     * すべてのWhereSetをここに保存
+     * すべてのWhereSetを取得する.
+     * @return すべてのWhereSet
      */
-    protected ArrayList<WhereSet> whereSetGroup = new ArrayList<>();
+    protected ArrayList<WhereSet> getWhereSetGroup() {
+        return this.whereSetGroup;
+    }
+
+    private WhereSet displayedWhereSet;
 
     /**
-     * 現在VBoxに表示されているWhereSet
+     * 現在VBoxに表示されているWhereSetを取得する.
+     * @return WhereSet
      */
-    protected WhereSet focusWhereSet;
+    protected WhereSet getDisplayedWhereSet() {
+        return this.displayedWhereSet;
+    }
+    
+    /**
+     * VBoxにWhereSetを表示する.
+     * @param whereSet
+     */
+    protected void setDisplayWhereSet(WhereSet whereSet) {
+        this.displayedWhereSet = whereSet;
+    }
 
     /**
      * HBoxからカラム名を取得するための関連付け
      */
-    protected HashMap<HBox, String> hboxToColumnNames = new HashMap<>();
+    private HashMap<HBox, String> hboxToColumnNames = new HashMap<>();
 
     // HBox内のコントロールにつけるID
-    protected static final String NAME = "name";
-    protected static final String COMPARISON = "comparison";
-    protected static final String VALUE = "value";
-    protected static final String VALUE_LABEL = "value_label";
-    protected static final String NOT = "not";
+    private static final String NAME = "name";
+    private static final String COMPARISON = "comparison";
+    private static final String VALUE = "value";
+    private static final String VALUE_LABEL = "value_label";
+    private static final String NOT = "not";
 
     /**
      * 新しいWhereSetを追加する.
@@ -96,7 +104,7 @@ class WhereSetDialogCore {
     protected void addWhereSet(boolean isCopy) {
         // 現在のWhereSetを保存して初期化
         this.updateWhereSetFromVBox();
-        if (this.focusWhereSet != null && this.focusWhereSet.size() == 0) {
+        if (this.displayedWhereSet != null && this.displayedWhereSet.size() == 0) {
             return;
         }
         // コピーを作成する場合は削除しない
@@ -105,7 +113,7 @@ class WhereSetDialogCore {
         }
         // 新しくWhereSetを作成する
         WhereSet whereSet = new WhereSet();
-        this.focusWhereSet = whereSet;
+        this.displayedWhereSet = whereSet;
         this.whereSetGroup.add(whereSet);
         // コピーを作成する場合はこの段階でVBoxから値を取り込む
         if (isCopy) {
@@ -129,30 +137,30 @@ class WhereSetDialogCore {
         radioButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                WhereSetDialogCore dialog = WhereSetDialogCore.this;
+                WhereSetDialogCore core = WhereSetDialogCore.this;
                 RadioButton radioButton = (RadioButton) event.getSource();
                 if (event.getButton() == MouseButton.PRIMARY) {
                     // 現在のWhereSetを保存
-                    dialog.updateWhereSetFromVBox();
+                    core.updateWhereSetFromVBox();
                     // 新しいWhereSetをVBoxに表示
-                    dialog.focusWhereSet = (WhereSet) radioButton.getUserData();
-                    dialog.updateVBoxFromWhereSet();
+                    core.displayedWhereSet = (WhereSet) radioButton.getUserData();
+                    core.updateVBoxFromWhereSet();
                 } else {
-                    if (dialog.whereSetGroup.size() == 1) {
+                    if (core.whereSetGroup.size() == 1) {
                         return;
                     }
-                    ConfirmPane.show("削除の確認", "この検索条件セットを削除します。", dialog.dialogPane, new CloseEventHandler<DialogResult>() {
+                    ConfirmPane.show("削除の確認", "この検索条件セットを削除します。", core.dialog.getStackPane(), new CloseEventHandler<DialogResult>() {
                         @Override
                         public void handle(DialogResult resultValue) {
                             if (resultValue == DialogResult.OK) {
-                                dialog.whereSetGroup.remove(radioButton.getUserData());
-                                dialog.vboxWhereSetGroup.getChildren().remove(radioButton);
-                                for (Node node: dialog.vboxWhereSetGroup.getChildren()) {
+                                core.whereSetGroup.remove(radioButton.getUserData());
+                                core.dialog.getVBoxWhereSetGroup().getChildren().remove(radioButton);
+                                for (Node node: core.dialog.getVBoxWhereSetGroup().getChildren()) {
                                     RadioButton tempButton = (RadioButton) node;
                                     // 新しいWhereSetをVBoxに表示
-                                    dialog.focusWhereSet = (WhereSet) tempButton.getUserData();
+                                    core.displayedWhereSet = (WhereSet) tempButton.getUserData();
                                     tempButton.setSelected(true);
-                                    dialog.updateVBoxFromWhereSet();
+                                    core.updateVBoxFromWhereSet();
                                     break;
                                 }
                             }
@@ -161,7 +169,7 @@ class WhereSetDialogCore {
                 }
             }
         });
-        this.vboxWhereSetGroup.getChildren().add(radioButton);
+        this.dialog.getVBoxWhereSetGroup().getChildren().add(radioButton);
         return radioButton;
     }
 
@@ -169,11 +177,11 @@ class WhereSetDialogCore {
      * VBoxの内容を取得してWhereSetを再構成する.
      */
     protected void updateWhereSetFromVBox() {
-        if (this.focusWhereSet == null) {
+        if (this.displayedWhereSet == null) {
             return;
         }
-        this.focusWhereSet.clear();
-        for (Node node: this.vboxWhereSet.getChildren()) {
+        this.displayedWhereSet.clear();
+        for (Node node: this.dialog.getVBoxWhereSet().getChildren()) {
             HBox hbox = (HBox) node;
             // カラム名
             String columnName = this.hboxToColumnNames.get(hbox);
@@ -200,20 +208,20 @@ class WhereSetDialogCore {
                     value1 = getRowValue(nodes[0], columnType);
                     value2 = getRowValue(nodes[1], columnType);
                     if (value1 != null && value2 != null) {
-                        this.focusWhereSet.addBetween(columnName, isNot, value1, value2);
+                        this.displayedWhereSet.addBetween(columnName, isNot, value1, value2);
                     }
                     break;
                 case LIKE:
                     value1 = getRowValue(nodes[0], columnType);
                     if (value1 != null) {
-                        this.focusWhereSet.add(columnName, comparison, isNot, StringConverter.join("%", value1, "%"));
+                        this.displayedWhereSet.add(columnName, comparison, isNot, StringConverter.join("%", value1, "%"));
                     }
                     break;
                 case EQUAL:
                 default:
                     value1 = getRowValue(nodes[0], columnType);
                     if (value1 != null) {
-                        this.focusWhereSet.add(columnName, comparison, isNot, value1);
+                        this.displayedWhereSet.add(columnName, comparison, isNot, value1);
                     }
                     break;
                 }
@@ -225,11 +233,11 @@ class WhereSetDialogCore {
      * WhereSetの内容をVBoxに表示する.
      */
     protected void updateVBoxFromWhereSet() {
-        if (this.focusWhereSet == null) {
+        if (this.displayedWhereSet == null) {
             return;
         }
         this.removeVBoxRowAll();
-        for (Where where: this.focusWhereSet.getWheres()) {
+        for (Where where: this.displayedWhereSet.getWheres()) {
             if (this.searchTableRowsableColumnDescriptions.get(where.getColumn()) == null) {
                 break;
             }
@@ -342,7 +350,7 @@ class WhereSetDialogCore {
      * WhereSetVBoxを空にする.
      */
     protected void removeVBoxRowAll() {
-        this.vboxWhereSet.getChildren().clear();
+        this.dialog.getVBoxWhereSet().getChildren().clear();
         this.hboxToColumnNames.clear();
     }
 
@@ -454,7 +462,7 @@ class WhereSetDialogCore {
             public void handle(ActionEvent event) {
                 EnterFireButton button = (EnterFireButton) event.getSource();
                 HBox hbox = (HBox) button.getParent();
-                WhereSetDialogCore.this.vboxWhereSet.getChildren().remove(hbox);
+                WhereSetDialogCore.this.dialog.getVBoxWhereSet().getChildren().remove(hbox);
             }
         });
         hbox.getChildren().add(button);
@@ -471,7 +479,7 @@ class WhereSetDialogCore {
         comparisonComboBox.valueProperty().addListener(new ComparisonComboBoxChangeListener(columnName, comparisonComboBox));
         hbox.getChildren().add(comparisonComboBox);
         // 検索条件VBoxに追加
-        this.vboxWhereSet.getChildren().add(hbox);
+        this.dialog.getVBoxWhereSet().getChildren().add(hbox);
         this.hboxToColumnNames.put(hbox, columnName);
         return hbox;
     }
@@ -530,8 +538,8 @@ class WhereSetDialogCore {
         public void handle(MouseEvent event) {
             if (event.getButton() == MouseButton.PRIMARY) {
                 TextField field = (TextField) event.getSource();
-                WhereSetDialogCore whereSetDialog = WhereSetDialogCore.this;
-                DatetimePickerPaneDialog dialog = new DatetimePickerPaneDialog(whereSetDialog.dialogPane);
+                WhereSetDialogCore core = WhereSetDialogCore.this;
+                DatetimePickerPaneDialog dialog = new DatetimePickerPaneDialog(core.dialog.getStackPane());
                 dialog.setTimeInput(this.isTimeInput);
                 dialog.setTitle("検索値の入力");
                 if (this.isTimeInput) {
@@ -757,5 +765,5 @@ class WhereSetDialogCore {
         }
         return controls.toArray(new Control[]{});
     }
-
+    
 }

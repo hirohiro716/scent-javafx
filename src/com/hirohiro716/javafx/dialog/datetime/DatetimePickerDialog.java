@@ -33,6 +33,9 @@ import javafx.stage.Stage;
 public class DatetimePickerDialog extends AbstractDialog<Date> {
 
     @FXML
+    private AnchorPane paneRoot;
+
+    @FXML
     private Label labelTitle;
 
     @FXML
@@ -72,6 +75,11 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
     }
 
     @Override
+    public AnchorPane getContentPane() {
+        return this.paneRoot;
+    }
+
+    @Override
     protected void preparationCallback() {
         DatetimePickerDialog dialog = DatetimePickerDialog.this;
         // タイトルのセット
@@ -99,7 +107,7 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
             this.limitTextFieldMinute.setText("0");;
             this.limitTextFieldSecond.setVisible(false);
             this.limitTextFieldSecond.setText("0");;
-            for (Node node: this.getDialogPane().lookupAll("#colon")) {
+            for (Node node: this.getStackPane().lookupAll("#colon")) {
                 node.setVisible(false);
             }
         } else {
@@ -149,7 +157,7 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
             LayoutHelper.setAnchor(this.buttonOk, null, 20d, 20d, null);
         }
         // キーボードイベント定義
-        this.getDialogPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+        this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 if (event.isAltDown() == false) {

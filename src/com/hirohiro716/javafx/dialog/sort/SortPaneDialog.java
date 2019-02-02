@@ -27,6 +27,9 @@ import javafx.scene.layout.VBox;
 public class SortPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<E, String>> {
 
     @FXML
+    private AnchorPane paneRoot;
+
+    @FXML
     private Label labelTitle;
 
     @FXML
@@ -55,6 +58,11 @@ public class SortPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<E, Strin
     }
 
     private LinkedHashMap<E, String> sortableItems;
+
+    @Override
+    public AnchorPane getContentPane() {
+        return this.paneRoot;
+    }
 
     @Override
     public void show() {
@@ -109,7 +117,7 @@ public class SortPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<E, Strin
             LayoutHelper.setAnchor(this.buttonOk, null, 20d, 20d, null);
         }
         // キーボードイベント定義
-        this.getDialogPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+        this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {

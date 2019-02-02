@@ -10,7 +10,7 @@ import com.hirohiro716.database.AbstractBindTable;
 import com.hirohiro716.database.AbstractDatabase;
 import com.hirohiro716.database.WhereSet;
 import com.hirohiro716.javafx.StageBuilder;
-import com.hirohiro716.javafx.dialog.AbstractDialog.CloseEventHandler;
+import com.hirohiro716.javafx.dialog.InterfaceDialog.CloseEventHandler;
 import com.hirohiro716.javafx.dialog.DialogResult;
 import com.hirohiro716.javafx.dialog.alert.AlertPane;
 import com.hirohiro716.javafx.dialog.confirm.ConfirmPane;

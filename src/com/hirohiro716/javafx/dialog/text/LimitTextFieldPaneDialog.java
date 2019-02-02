@@ -27,6 +27,9 @@ import javafx.scene.layout.Pane;
 public class LimitTextFieldPaneDialog extends AbstractPaneDialog<String> {
 
     @FXML
+    private AnchorPane paneRoot;
+
+    @FXML
     private Label labelTitle;
 
     @FXML
@@ -47,6 +50,11 @@ public class LimitTextFieldPaneDialog extends AbstractPaneDialog<String> {
      */
     public LimitTextFieldPaneDialog(Pane parentPane) {
         super(parentPane);
+    }
+
+    @Override
+    public AnchorPane getContentPane() {
+        return this.paneRoot;
     }
 
     @Override
@@ -110,7 +118,7 @@ public class LimitTextFieldPaneDialog extends AbstractPaneDialog<String> {
             LayoutHelper.setAnchor(this.buttonOk, null, 20d, 20d, null);
         }
         // キーボードイベント定義
-        this.getDialogPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+        this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 if (event.isAltDown() == false) {

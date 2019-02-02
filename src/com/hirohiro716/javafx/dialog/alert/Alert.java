@@ -23,6 +23,9 @@ import javafx.stage.Stage;
  * @author hiro
  */
 public class Alert extends AbstractDialog<DialogResult> {
+    
+    @FXML
+    private AnchorPane paneRoot;
 
     @FXML
     private Label labelTitle;
@@ -46,6 +49,11 @@ public class Alert extends AbstractDialog<DialogResult> {
      */
     public Alert(Stage parentStage) {
         super(parentStage);
+    }
+    
+    @Override
+    public AnchorPane getContentPane() {
+        return this.paneRoot;
     }
 
     @Override
@@ -74,7 +82,7 @@ public class Alert extends AbstractDialog<DialogResult> {
             }
         });
         // キーボードイベント定義
-        this.getDialogPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+        this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {

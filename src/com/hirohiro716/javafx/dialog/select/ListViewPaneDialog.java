@@ -27,6 +27,9 @@ import javafx.util.Callback;
 public class ListViewPaneDialog<E> extends AbstractPaneDialog<E> {
 
     @FXML
+    private AnchorPane paneRoot;
+
+    @FXML
     private Label labelTitle;
 
     @FXML
@@ -47,6 +50,11 @@ public class ListViewPaneDialog<E> extends AbstractPaneDialog<E> {
      */
     public ListViewPaneDialog(Pane parentPane) {
         super(parentPane);
+    }
+
+    @Override
+    public AnchorPane getContentPane() {
+        return this.paneRoot;
     }
 
     @Override
@@ -113,7 +121,7 @@ public class ListViewPaneDialog<E> extends AbstractPaneDialog<E> {
             LayoutHelper.setAnchor(this.buttonOk, null, 20d, 20d, null);
         }
         // キーボードイベント定義
-        this.getDialogPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+        this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {

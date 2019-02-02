@@ -31,6 +31,9 @@ import javafx.scene.layout.Pane;
 public class MonthSelectPaneDialog extends AbstractPaneDialog<MonthResult> {
 
     @FXML
+    private AnchorPane paneRoot;
+
+    @FXML
     private Label labelTitle;
 
     @FXML
@@ -80,7 +83,12 @@ public class MonthSelectPaneDialog extends AbstractPaneDialog<MonthResult> {
     }
 
     private List<Integer> selectableYears = null;
-    
+
+    @Override
+    public AnchorPane getContentPane() {
+        return this.paneRoot;
+    }
+
     @Override
     public void show() {
         MonthSelectPaneDialog dialog = MonthSelectPaneDialog.this;
@@ -129,7 +137,7 @@ public class MonthSelectPaneDialog extends AbstractPaneDialog<MonthResult> {
                     dialog.setResult(result);
                     dialog.close();
                 } catch (Exception exception) {
-                    InstantAlert.show(dialog.getDialogPane(), "正しく入力されていません。", Pos.CENTER, 3000);
+                    InstantAlert.show(dialog.getStackPane(), "正しく入力されていません。", Pos.CENTER, 3000);
                 }
             }
         });
@@ -146,7 +154,7 @@ public class MonthSelectPaneDialog extends AbstractPaneDialog<MonthResult> {
             LayoutHelper.setAnchor(this.buttonOk, null, 20d, 20d, null);
         }
         // キーボードイベント定義
-        this.getDialogPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+        this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 if (event.isAltDown() == false) {
