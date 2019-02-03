@@ -195,12 +195,12 @@ public class WebEngineFlow {
                     switch (state) {
                     case SUCCEEDED:
                     case READY:
-                    case CANCELLED:
-                    case FAILED:
                         flow.executeTaskToUntilReachTheAsyncTask();
                         break;
                     case RUNNING:
                     case SCHEDULED:
+                    case CANCELLED:
+                    case FAILED:
                         break;
                     }
                 }

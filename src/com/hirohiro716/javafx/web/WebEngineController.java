@@ -91,7 +91,10 @@ public class WebEngineController {
         if (this.isSelectedElement()) {
             return this.getSelectedElements();
         }
-        return new Element[] {this.webEngine.getDocument().getDocumentElement()};
+        if (this.webEngine.getDocument() != null) {
+            return new Element[] {this.webEngine.getDocument().getDocumentElement()};
+        }
+        return new Element[] {};
     }
     
     /**
