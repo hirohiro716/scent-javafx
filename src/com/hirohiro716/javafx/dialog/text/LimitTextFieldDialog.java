@@ -18,6 +18,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 /**
@@ -66,7 +67,7 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
 
     @Override
     protected void preparationCallback() {
-        LimitTextFieldDialog dialog = LimitTextFieldDialog.this;
+        LimitTextFieldDialog dialog = this;
         // タイトルのセット
         this.getStage().setTitle(this.title);
         this.labelTitle.setText(this.title);
@@ -114,8 +115,8 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
                 }
             });
         } else {
-            this.buttonCancel.setVisible(false);
-            LayoutHelper.setAnchor(this.buttonOk, null, 20d, 20d, null);
+            HBox hboxButton = (HBox) this.buttonCancel.getParent();
+            hboxButton.getChildren().remove(this.buttonCancel);
         }
         // キーボードイベント定義
         this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
@@ -215,7 +216,7 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
     private boolean isCancelable = true;
 
     /**
-     * キャンセル可能かを設定する.
+     * キャンセル可能かを設定する. 初期値はtrue.
      * @param isCancelable
      */
     public void setCancelable(boolean isCancelable) {
@@ -227,6 +228,11 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
      * @return キャンセル可能か
      */
     public boolean isCancelable() {
+        return this.isCancelable;
+    }
+
+    @Override
+    public boolean isClosableAtStackPaneClicked() {
         return this.isCancelable;
     }
 

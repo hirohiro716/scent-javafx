@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCharacterCombination;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
@@ -58,6 +59,7 @@ public abstract class AbstractDialog<T> implements InterfaceDialog<T> {
     }
 
     private void preparation(Pane dialogContentPane) {
+        AbstractDialog<T> dialog = this;
         // Stageを生成
         this.stage = new Stage();
         // StackPaneを設定
@@ -76,12 +78,27 @@ public abstract class AbstractDialog<T> implements InterfaceDialog<T> {
                 @Override
                 public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                     if (newValue) {
-                        AbstractDialog.this.stage.requestFocus();
+                        dialog.stage.requestFocus();
                     }
                 }
             });
         }
         this.dialogPane.setPrefSize(screen.getVisualBounds().getWidth(), screen.getVisualBounds().getHeight());
+        // StackPaneをクリックしたら閉じる処理
+        if (this.isClosableAtStackPaneClicked()) {
+            this.dialogPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    dialog.close();
+                }
+            });
+            dialogContentPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    event.consume();
+                }
+            });
+        }
         // ダイアログの拡大縮小
         dialogContentPane.setScaleX(this.scale);
         dialogContentPane.setScaleY(this.scale);

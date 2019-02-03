@@ -61,7 +61,7 @@ public class Question extends AbstractDialog<DialogResult> {
 
     @Override
     protected void preparationCallback() {
-        Question dialog = Question.this;
+        Question dialog = this;
         // タイトルのセット
         this.getStage().setTitle(this.title);
         this.labelTitle.setText(this.title);
@@ -182,6 +182,11 @@ public class Question extends AbstractDialog<DialogResult> {
      */
     public void setDefaultButton(DialogResult dialogResult) {
         this.defaultButton = dialogResult;
+    }
+
+    @Override
+    public boolean isClosableAtStackPaneClicked() {
+        return false;
     }
 
     /**

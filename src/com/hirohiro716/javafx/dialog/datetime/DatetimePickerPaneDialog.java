@@ -24,6 +24,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 /**
@@ -74,7 +75,7 @@ public class DatetimePickerPaneDialog extends AbstractPaneDialog<Date> {
 
     @Override
     public void show() {
-        DatetimePickerPaneDialog dialog = DatetimePickerPaneDialog.this;
+        DatetimePickerPaneDialog dialog = this;
         // ダイアログ表示
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(DatetimePickerDialog.class.getResource(DatetimePickerDialog.class.getSimpleName() + ".fxml"), this);
@@ -150,8 +151,8 @@ public class DatetimePickerPaneDialog extends AbstractPaneDialog<Date> {
                 }
             });
         } else {
-            this.buttonCancel.setVisible(false);
-            LayoutHelper.setAnchor(this.buttonOk, null, 20d, 20d, null);
+            HBox hboxButton = (HBox) this.buttonCancel.getParent();
+            hboxButton.getChildren().remove(this.buttonCancel);
         }
         // キーボードイベント定義
         this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
@@ -228,7 +229,7 @@ public class DatetimePickerPaneDialog extends AbstractPaneDialog<Date> {
     private boolean isCancelable = true;
 
     /**
-     * キャンセル可能かを設定する.
+     * キャンセル可能かを設定する. 初期値はtrue.
      * @param isCancelable
      */
     public void setCancelable(boolean isCancelable) {
@@ -259,6 +260,11 @@ public class DatetimePickerPaneDialog extends AbstractPaneDialog<Date> {
      */
     public boolean isTimeInput() {
         return this.isTimeInput;
+    }
+
+    @Override
+    public boolean isClosableAtStackPaneClicked() {
+        return this.isCancelable;
     }
 
 }

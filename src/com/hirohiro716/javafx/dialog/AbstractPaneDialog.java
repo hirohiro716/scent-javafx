@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import com.hirohiro716.javafx.CSSHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
@@ -53,7 +55,7 @@ public abstract class AbstractPaneDialog<T> implements InterfaceDialog<T> {
      * @param dialogContentPane ダイアログ内容
      */
     protected void show(Pane dialogContentPane) {
-        AbstractPaneDialog<T> dialog = AbstractPaneDialog.this;
+        AbstractPaneDialog<T> dialog = this;
         // 親Pane内の子をすべて使用不可にする
         for (Node node: this.disableChangeNodes) {
             node.setDisable(true);
@@ -61,6 +63,21 @@ public abstract class AbstractPaneDialog<T> implements InterfaceDialog<T> {
         // StackPaneを設定
         this.dialogPane.setPrefSize(this.parentPane.getWidth(), this.parentPane.getHeight());
         this.dialogPane.setStyle(CSSHelper.updateStyleValue(this.dialogPane.getStyle(), "-fx-background-color", "rgba(180,180,180,0.5)"));
+        // StackPaneをクリックしたら閉じる処理
+        if (this.isClosableAtStackPaneClicked()) {
+            this.dialogPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    dialog.close();
+                }
+            });
+            dialogContentPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    event.consume();
+                }
+            });
+        }
         // ダイアログの拡大縮小
         dialogContentPane.setScaleX(this.scale);
         dialogContentPane.setScaleY(this.scale);

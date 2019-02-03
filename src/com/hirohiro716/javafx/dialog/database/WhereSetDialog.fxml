@@ -46,6 +46,8 @@
             </padding>
         </VBox>
     </ScrollPane>
-    <EnterFireButton fx:id="buttonOk" prefHeight="40.0" prefWidth="80.0" text="OK" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="130.0" />
-    <EnterFireButton fx:id="buttonCancel" cancelButton="true" prefHeight="40.0" prefWidth="100.0" text="キャンセル" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+    <HBox spacing="10.0" alignment="CENTER_RIGHT" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+        <EnterFireButton fx:id="buttonOk" prefHeight="40.0" prefWidth="80.0" text="OK" />
+        <EnterFireButton fx:id="buttonCancel" cancelButton="true" prefHeight="40.0" prefWidth="100.0" text="キャンセル" />
+    </HBox>
 </AnchorPane>

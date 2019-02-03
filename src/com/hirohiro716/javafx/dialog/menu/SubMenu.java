@@ -52,7 +52,7 @@ public class SubMenu extends AbstractPaneDialog<Void> {
 
     @Override
     public void show() {
-        SubMenu dialog = SubMenu.this;
+        SubMenu dialog = this;
         // ダイアログ表示
         Pane pane;
         try {
@@ -98,13 +98,12 @@ public class SubMenu extends AbstractPaneDialog<Void> {
             sleepTime += 100;
         }
         // 閉じるイベント定義
-        EventHandler<MouseEvent> closeEvent = new EventHandler<MouseEvent>() {
+        this.labelClose.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 dialog.close();
             }
-        };
-        this.labelClose.setOnMouseClicked(closeEvent);
+        });
         this.labelClose.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -115,14 +114,6 @@ public class SubMenu extends AbstractPaneDialog<Void> {
             @Override
             public void handle(MouseEvent event) {
                 dialog.labelClose.setOpacity(1);
-            }
-        });
-        // StackPaneをクリックで閉じるようにしてダイアログのPaneをクリックしても閉じないようにする
-        this.getStackPane().setOnMouseClicked(closeEvent);
-        pane.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                event.consume();
             }
         });
     }
@@ -195,6 +186,11 @@ public class SubMenu extends AbstractPaneDialog<Void> {
      */
     public FlowPane getFlowPane() {
         return this.flowPaneNodes;
+    }
+
+    @Override
+    public boolean isClosableAtStackPaneClicked() {
+        return true;
     }
 
 }

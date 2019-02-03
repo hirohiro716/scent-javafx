@@ -16,6 +16,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -66,7 +67,7 @@ public class ListViewDialog<E> extends AbstractDialog<E> {
 
     @Override
     protected void preparationCallback() {
-        ListViewDialog<E> dialog = ListViewDialog.this;
+        ListViewDialog<E> dialog = this;
         // タイトルのセット
         this.getStage().setTitle(this.title);
         this.labelTitle.setText(this.title);
@@ -117,8 +118,8 @@ public class ListViewDialog<E> extends AbstractDialog<E> {
                 }
             });
         } else {
-            this.buttonCancel.setVisible(false);
-            LayoutHelper.setAnchor(this.buttonOk, null, 20d, 20d, null);
+            HBox hboxButton = (HBox) this.buttonCancel.getParent();
+            hboxButton.getChildren().remove(this.buttonCancel);
         }
         // キーボードイベント定義
         this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
@@ -210,7 +211,7 @@ public class ListViewDialog<E> extends AbstractDialog<E> {
     private boolean isCancelable = true;
 
     /**
-     * キャンセル可能かを設定する.
+     * キャンセル可能かを設定する. 初期値はtrue.
      * @param isCancelable
      */
     public void setCancelable(boolean isCancelable) {
@@ -222,6 +223,11 @@ public class ListViewDialog<E> extends AbstractDialog<E> {
      * @return キャンセル可能か
      */
     public boolean isCancelable() {
+        return this.isCancelable;
+    }
+
+    @Override
+    public boolean isClosableAtStackPaneClicked() {
         return this.isCancelable;
     }
 

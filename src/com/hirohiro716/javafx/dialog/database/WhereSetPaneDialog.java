@@ -24,6 +24,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -122,7 +123,7 @@ public class WhereSetPaneDialog extends AbstractPaneDialog<WhereSet[]> implement
 
     @Override
     public void show() {
-        WhereSetPaneDialog whereSetDialog = WhereSetPaneDialog.this;
+        WhereSetPaneDialog whereSetDialog = this;
         // ダイアログ表示
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(WhereSetDialog.class.getResource(WhereSetDialog.class.getSimpleName() + ".fxml"), this);
@@ -228,8 +229,8 @@ public class WhereSetPaneDialog extends AbstractPaneDialog<WhereSet[]> implement
                 }
             });
         } else {
-            this.buttonCancel.setVisible(false);
-            LayoutHelper.setAnchor(this.buttonOk, null, 20d, 20d, null);
+            HBox hboxButton = (HBox) this.buttonCancel.getParent();
+            hboxButton.getChildren().remove(this.buttonCancel);
         }
     }
 
@@ -266,7 +267,7 @@ public class WhereSetPaneDialog extends AbstractPaneDialog<WhereSet[]> implement
     private boolean isCancelable = true;
 
     /**
-     * キャンセル可能かを設定する.
+     * キャンセル可能かを設定する. 初期値はtrue.
      * @param isCancelable
      */
     public void setCancelable(boolean isCancelable) {
@@ -289,6 +290,11 @@ public class WhereSetPaneDialog extends AbstractPaneDialog<WhereSet[]> implement
      */
     public void setDefaultValue(WhereSet[] whereSets) {
         this.defaultValue = whereSets;
+    }
+
+    @Override
+    public boolean isClosableAtStackPaneClicked() {
+        return this.isCancelable;
     }
 
 }

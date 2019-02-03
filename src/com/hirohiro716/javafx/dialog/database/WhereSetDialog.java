@@ -23,6 +23,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -121,7 +122,7 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> implements Interf
 
     @Override
     protected void preparationCallback() {
-        WhereSetDialog whereSetDialog = WhereSetDialog.this;
+        WhereSetDialog whereSetDialog = this;
         // タイトルのセット
         this.getStage().setTitle(this.title);
         this.labelTitle.setText(this.title);
@@ -215,13 +216,13 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> implements Interf
             this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    WhereSetDialog.this.setResult(null);
-                    WhereSetDialog.this.close();
+                    whereSetDialog.setResult(null);
+                    whereSetDialog.close();
                 }
             });
         } else {
-            this.buttonCancel.setVisible(false);
-            LayoutHelper.setAnchor(this.buttonOk, null, 20d, 20d, null);
+            HBox hboxButton = (HBox) this.buttonCancel.getParent();
+            hboxButton.getChildren().remove(this.buttonCancel);
         }
     }
 
@@ -279,7 +280,7 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> implements Interf
     private boolean isCancelable = true;
 
     /**
-     * キャンセル可能かを設定する.
+     * キャンセル可能かを設定する. 初期値はtrue.
      * @param isCancelable
      */
     public void setCancelable(boolean isCancelable) {
@@ -302,6 +303,11 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> implements Interf
      */
     public void setDefaultValue(WhereSet[] whereSets) {
         this.defaultValue = whereSets;
+    }
+
+    @Override
+    public boolean isClosableAtStackPaneClicked() {
+        return this.isCancelable;
     }
 
 }

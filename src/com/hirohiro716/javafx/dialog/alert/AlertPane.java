@@ -51,7 +51,7 @@ public class AlertPane extends AbstractPaneDialog<DialogResult> {
 
     @Override
     public void show() {
-        AlertPane dialog = AlertPane.this;
+        AlertPane dialog = this;
         // ダイアログ表示
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Alert.class.getResource(Alert.class.getSimpleName() + ".fxml"), this);
@@ -75,10 +75,10 @@ public class AlertPane extends AbstractPaneDialog<DialogResult> {
             this.paneMessage.getChildren().add(this.messageNode);
         }
         // ボタンのイベント定義
+        this.setResult(DialogResult.OK);
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                dialog.setResult(DialogResult.OK);
                 dialog.close();
             }
         });
@@ -88,7 +88,7 @@ public class AlertPane extends AbstractPaneDialog<DialogResult> {
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
                 case O:
-                    dialog.buttonOk.fire();
+                    dialog.close();
                     break;
                 default:
                     break;
@@ -125,6 +125,11 @@ public class AlertPane extends AbstractPaneDialog<DialogResult> {
      */
     public void setMessageNode(Node node) {
         this.messageNode = node;
+    }
+
+    @Override
+    public boolean isClosableAtStackPaneClicked() {
+        return false;
     }
 
     /**

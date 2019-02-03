@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -66,7 +67,7 @@ public class SortPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<E, Strin
 
     @Override
     public void show() {
-        SortPaneDialog<E> dialog = SortPaneDialog.this;
+        SortPaneDialog<E> dialog = this;
         // ダイアログ表示
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(SortDialog.class.getResource(SortDialog.class.getSimpleName() + ".fxml"), this);
@@ -113,8 +114,8 @@ public class SortPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<E, Strin
                 }
             });
         } else {
-            this.buttonCancel.setVisible(false);
-            LayoutHelper.setAnchor(this.buttonOk, null, 20d, 20d, null);
+            HBox hboxButton = (HBox) this.buttonCancel.getParent();
+            hboxButton.getChildren().remove(this.buttonCancel);
         }
         // キーボードイベント定義
         this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
@@ -167,7 +168,7 @@ public class SortPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<E, Strin
     private boolean isCancelable = true;
 
     /**
-     * キャンセル可能かを設定する.
+     * キャンセル可能かを設定する. 初期値はtrue.
      * @param isCancelable
      */
     public void setCancelable(boolean isCancelable) {
@@ -179,6 +180,11 @@ public class SortPaneDialog<E> extends AbstractPaneDialog<LinkedHashMap<E, Strin
      * @return キャンセル可能か
      */
     public boolean isCancelable() {
+        return this.isCancelable;
+    }
+
+    @Override
+    public boolean isClosableAtStackPaneClicked() {
         return this.isCancelable;
     }
 

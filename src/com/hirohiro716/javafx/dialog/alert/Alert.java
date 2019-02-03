@@ -58,6 +58,7 @@ public class Alert extends AbstractDialog<DialogResult> {
 
     @Override
     protected void preparationCallback() {
+        Alert dialog = this;
         // タイトルのセット
         this.getStage().setTitle(this.title);
         this.labelTitle.setText(this.title);
@@ -74,11 +75,11 @@ public class Alert extends AbstractDialog<DialogResult> {
             this.paneMessage.getChildren().add(this.messageNode);
         }
         // ボタンのイベント定義
+        this.setResult(DialogResult.OK);
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Alert.this.setResult(DialogResult.OK);
-                Alert.this.close();
+                dialog.close();
             }
         });
         // キーボードイベント定義
@@ -87,7 +88,7 @@ public class Alert extends AbstractDialog<DialogResult> {
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
                 case O:
-                    Alert.this.buttonOk.fire();
+                    dialog.close();
                     break;
                 default:
                     break;
@@ -145,6 +146,11 @@ public class Alert extends AbstractDialog<DialogResult> {
      */
     public void setMessageNode(Node node) {
         this.messageNode = node;
+    }
+
+    @Override
+    public boolean isClosableAtStackPaneClicked() {
+        return false;
     }
 
     /**

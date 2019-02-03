@@ -16,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 /**
@@ -66,7 +67,7 @@ public class HashMapComboBoxDialog<K, V> extends AbstractDialog<K> {
 
     @Override
     protected void preparationCallback() {
-        HashMapComboBoxDialog<K, V> dialog = HashMapComboBoxDialog.this;
+        HashMapComboBoxDialog<K, V> dialog = this;
         // タイトルのセット
         this.getStage().setTitle(this.title);
         this.labelTitle.setText(this.title);
@@ -106,8 +107,8 @@ public class HashMapComboBoxDialog<K, V> extends AbstractDialog<K> {
                 }
             });
         } else {
-            this.buttonCancel.setVisible(false);
-            LayoutHelper.setAnchor(this.buttonOk, null, 20d, 20d, null);
+            HBox hboxButton = (HBox) this.buttonCancel.getParent();
+            hboxButton.getChildren().remove(this.buttonCancel);
         }
         // キーボードイベント定義
         this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
@@ -212,7 +213,7 @@ public class HashMapComboBoxDialog<K, V> extends AbstractDialog<K> {
     private boolean isCancelable = true;
 
     /**
-     * キャンセル可能かを設定する.
+     * キャンセル可能かを設定する. 初期値はtrue.
      * @param isCancelable
      */
     public void setCancelable(boolean isCancelable) {
@@ -224,6 +225,11 @@ public class HashMapComboBoxDialog<K, V> extends AbstractDialog<K> {
      * @return キャンセル可能か
      */
     public boolean isCancelable() {
+        return this.isCancelable;
+    }
+
+    @Override
+    public boolean isClosableAtStackPaneClicked() {
         return this.isCancelable;
     }
 

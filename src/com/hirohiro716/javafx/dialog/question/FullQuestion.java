@@ -64,7 +64,7 @@ public class FullQuestion extends AbstractDialog<DialogResult> {
 
     @Override
     protected void preparationCallback() {
-        FullQuestion dialog = FullQuestion.this;
+        FullQuestion dialog = this;
         // タイトルのセット
         this.getStage().setTitle(this.title);
         this.labelTitle.setText(this.title);
@@ -81,6 +81,7 @@ public class FullQuestion extends AbstractDialog<DialogResult> {
             this.paneMessage.getChildren().add(this.messageNode);
         }
         // ボタンのイベント定義
+        this.setResult(DialogResult.CANCEL);
         this.buttonYes.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -98,7 +99,6 @@ public class FullQuestion extends AbstractDialog<DialogResult> {
         this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                dialog.setResult(DialogResult.CANCEL);
                 dialog.close();
             }
         });
@@ -198,6 +198,11 @@ public class FullQuestion extends AbstractDialog<DialogResult> {
      */
     public void setDefaultButton(DialogResult dialogResult) {
         this.defaultButton = dialogResult;
+    }
+
+    @Override
+    public boolean isClosableAtStackPaneClicked() {
+        return true;
     }
 
     /**

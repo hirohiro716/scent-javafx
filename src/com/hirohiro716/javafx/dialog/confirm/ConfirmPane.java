@@ -54,7 +54,7 @@ public class ConfirmPane extends AbstractPaneDialog<DialogResult> {
 
     @Override
     public void show() {
-        ConfirmPane dialog = ConfirmPane.this;
+        ConfirmPane dialog = this;
         // ダイアログ表示
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Confirm.class.getResource(Confirm.class.getSimpleName() + ".fxml"), this);
@@ -78,6 +78,7 @@ public class ConfirmPane extends AbstractPaneDialog<DialogResult> {
             this.paneMessage.getChildren().add(this.messageNode);
         }
         // ボタンのイベント定義
+        this.setResult(DialogResult.CANCEL);
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -88,7 +89,6 @@ public class ConfirmPane extends AbstractPaneDialog<DialogResult> {
         this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                dialog.setResult(DialogResult.CANCEL);
                 dialog.close();
             }
         });
@@ -161,6 +161,11 @@ public class ConfirmPane extends AbstractPaneDialog<DialogResult> {
      */
     public void setDefaultButton(DialogResult dialogResult) {
         this.defaultButton = dialogResult;
+    }
+
+    @Override
+    public boolean isClosableAtStackPaneClicked() {
+        return true;
     }
 
     /**

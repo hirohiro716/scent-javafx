@@ -54,6 +54,7 @@ public class WaitDialog<T> extends AbstractDialog<T> {
 
     @Override
     protected void preparationCallback() {
+        WaitDialog<T> dialog = this;
         // タイトルのセット
         this.getStage().setTitle(this.title);
         this.labelTitle.setText(this.title);
@@ -77,7 +78,7 @@ public class WaitDialog<T> extends AbstractDialog<T> {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        WaitDialog.this.close();
+                        dialog.close();
                     }
                 });
             }
@@ -184,6 +185,11 @@ public class WaitDialog<T> extends AbstractDialog<T> {
      */
     public Exception getException() {
         return this.exception;
+    }
+
+    @Override
+    public boolean isClosableAtStackPaneClicked() {
+        return false;
     }
 
 }

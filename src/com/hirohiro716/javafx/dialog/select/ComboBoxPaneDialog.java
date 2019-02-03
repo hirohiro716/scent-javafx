@@ -16,6 +16,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 /**
@@ -58,7 +59,7 @@ public class ComboBoxPaneDialog<T> extends AbstractPaneDialog<T> {
 
     @Override
     public void show() {
-        ComboBoxPaneDialog<T> dialog = ComboBoxPaneDialog.this;
+        ComboBoxPaneDialog<T> dialog = this;
         // ダイアログ表示
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ComboBoxDialog.class.getResource(ComboBoxDialog.class.getSimpleName() + ".fxml"), this);
@@ -105,8 +106,8 @@ public class ComboBoxPaneDialog<T> extends AbstractPaneDialog<T> {
                 }
             });
         } else {
-            this.buttonCancel.setVisible(false);
-            LayoutHelper.setAnchor(this.buttonOk, null, 20d, 20d, null);
+            HBox hboxButton = (HBox) this.buttonCancel.getParent();
+            hboxButton.getChildren().remove(this.buttonCancel);
         }
         // キーボードイベント定義
         this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
@@ -190,7 +191,7 @@ public class ComboBoxPaneDialog<T> extends AbstractPaneDialog<T> {
     private boolean isCancelable = true;
 
     /**
-     * キャンセル可能かを設定する.
+     * キャンセル可能かを設定する. 初期値はtrue.
      * @param isCancelable
      */
     public void setCancelable(boolean isCancelable) {
@@ -202,6 +203,11 @@ public class ComboBoxPaneDialog<T> extends AbstractPaneDialog<T> {
      * @return キャンセル可能か
      */
     public boolean isCancelable() {
+        return this.isCancelable;
+    }
+
+    @Override
+    public boolean isClosableAtStackPaneClicked() {
         return this.isCancelable;
     }
 

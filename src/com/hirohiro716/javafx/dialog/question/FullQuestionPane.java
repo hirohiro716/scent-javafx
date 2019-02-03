@@ -57,7 +57,7 @@ public class FullQuestionPane extends AbstractPaneDialog<DialogResult> {
 
     @Override
     public void show() {
-        FullQuestionPane dialog = FullQuestionPane.this;
+        FullQuestionPane dialog = this;
         // ダイアログ表示
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(FullQuestion.class.getResource(FullQuestion.class.getSimpleName() + ".fxml"), this);
@@ -81,6 +81,7 @@ public class FullQuestionPane extends AbstractPaneDialog<DialogResult> {
             this.paneMessage.getChildren().add(this.messageNode);
         }
         // ボタンのイベント定義
+        this.setResult(DialogResult.CANCEL);
         this.buttonYes.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -98,7 +99,6 @@ public class FullQuestionPane extends AbstractPaneDialog<DialogResult> {
         this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                dialog.setResult(DialogResult.CANCEL);
                 dialog.close();
             }
         });
@@ -177,6 +177,11 @@ public class FullQuestionPane extends AbstractPaneDialog<DialogResult> {
      */
     public void setDefaultButton(DialogResult dialogResult) {
         this.defaultButton = dialogResult;
+    }
+
+    @Override
+    public boolean isClosableAtStackPaneClicked() {
+        return true;
     }
 
     /**

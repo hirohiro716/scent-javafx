@@ -44,6 +44,12 @@ public interface InterfaceDialog<T> {
      * ダイアログを表示する.
      */
     public abstract void show();
+    
+    /**
+     * ダイアログのStackPaneをクリックした場合に閉じることができるかどうか.
+     * @return 結果
+     */
+    public abstract boolean isClosableAtStackPaneClicked();
 
     /**
      * ダイアログを閉じる.

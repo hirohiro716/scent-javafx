@@ -54,7 +54,7 @@ public class QuestionPane extends AbstractPaneDialog<DialogResult> {
 
     @Override
     public void show() {
-        QuestionPane dialog = QuestionPane.this;
+        QuestionPane dialog = this;
         // ダイアログ表示
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Question.class.getResource(Question.class.getSimpleName() + ".fxml"), this);
@@ -161,6 +161,11 @@ public class QuestionPane extends AbstractPaneDialog<DialogResult> {
      */
     public void setDefaultButton(DialogResult dialogResult) {
         this.defaultButton = dialogResult;
+    }
+
+    @Override
+    public boolean isClosableAtStackPaneClicked() {
+        return false;
     }
 
     /**

@@ -47,6 +47,7 @@ public class WaitPaneDialog<T> extends AbstractPaneDialog<T> {
 
     @Override
     public void show() {
+        WaitPaneDialog<T> dialog = this;
         // ダイアログ表示
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(WaitDialog.class.getResource(WaitDialog.class.getSimpleName() + ".fxml"), this);
@@ -77,7 +78,7 @@ public class WaitPaneDialog<T> extends AbstractPaneDialog<T> {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        WaitPaneDialog.this.close();
+                        dialog.close();
                     }
                 });
             }
@@ -163,6 +164,11 @@ public class WaitPaneDialog<T> extends AbstractPaneDialog<T> {
      */
     public Exception getException() {
         return this.exception;
+    }
+
+    @Override
+    public boolean isClosableAtStackPaneClicked() {
+        return false;
     }
 
 }
