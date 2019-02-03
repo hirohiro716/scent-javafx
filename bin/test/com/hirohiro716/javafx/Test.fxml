@@ -8,7 +8,7 @@
 <?import com.hirohiro716.javafx.control.*?>
 <?import com.hirohiro716.javafx.control.table.*?>
 
-<AnchorPane fx:id="paneRoot" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color:#f00;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="test.com.hirohiro716.javafx.Test">
+<AnchorPane fx:id="paneRoot" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color:#fff;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="test.com.hirohiro716.javafx.Test">
     
       <Button fx:id="button" layoutX="100.0" layoutY="70.0" text="test_1" />
 
@@ -16,6 +16,4 @@
       <RudeDatePicker fx:id="rudeDatePicker" layoutX="63.0" layoutY="154.0" />
       <ComboBox fx:id="comboBox" layoutX="112.0" layoutY="281.0" prefWidth="150.0" />
       
-      <WebView fx:id="webView" />
-
 </AnchorPane>

@@ -62,8 +62,6 @@ public abstract class AbstractDialog<T> implements InterfaceDialog<T> {
         AbstractDialog<T> dialog = this;
         // Stageを生成
         this.stage = new Stage();
-        // StackPaneを設定
-        this.dialogPane.setStyle(CSSHelper.updateStyleValue(this.dialogPane.getStyle(), "-fx-background-color", "rgba(180,180,180,0.5)"));
         // 表示するScreenを計算
         Screen screen = Screen.getPrimary();
         if (this.parentStage != null) {
@@ -84,6 +82,8 @@ public abstract class AbstractDialog<T> implements InterfaceDialog<T> {
             });
         }
         this.dialogPane.setPrefSize(screen.getVisualBounds().getWidth(), screen.getVisualBounds().getHeight());
+        // StackPaneの背景セット（アルファ値が0.5以下だとクリックイベント拾わない）
+        this.dialogPane.setStyle(CSSHelper.updateStyleValue(this.dialogPane.getStyle(), "-fx-background-color", "rgba(180,180,180,0.51)"));
         // StackPaneをクリックしたら閉じる処理
         if (this.isClosableAtStackPaneClicked()) {
             this.dialogPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
