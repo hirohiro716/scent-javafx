@@ -118,7 +118,7 @@ public class WaitPaneDialog<T> extends AbstractPaneDialog<T> {
     private boolean isAutoClose = true;
     
     /**
-     * タスク終了後に自動的にダイアログを閉じるかどうかを指定する.
+     * タスク終了後に自動的にダイアログを閉じるかどうかを指定する. 初期値はtrue.
      * @param isAutoClose
      */
     public void setAutoClose(boolean isAutoClose) {
@@ -164,6 +164,14 @@ public class WaitPaneDialog<T> extends AbstractPaneDialog<T> {
      */
     public Exception getException() {
         return this.exception;
+    }
+    
+    /**
+     * 内部処理で発生した例外としてセットする.
+     * @param exception 例外
+     */
+    public void setException(Exception exception) {
+        this.exception = exception;
     }
 
     @Override
