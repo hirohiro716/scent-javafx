@@ -14,6 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.VPos;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,7 +25,6 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.transform.Scale;
 
 /**
  * JavaFXで印刷するために最適化されたPaneの抽象クラス.
@@ -592,7 +592,6 @@ public abstract class AbstractPrintingPaneBuilder {
         imageView.setLayoutX(millimeterToPoint(millimeterLayoutX));
         imageView.setLayoutY(millimeterToPoint(millimeterLayoutY));
         this.paneCanvas.getChildren().add(imageView);
-
     }
 
     /**
@@ -617,7 +616,6 @@ public abstract class AbstractPrintingPaneBuilder {
     public void printImageWithFitHeight(Image image, double millimeterHeight, double millimeterLayoutX, double millimeterLayoutY) {
         double rate = image.getHeight() / millimeterHeight;
         this.printImage(image, image.getWidth() / rate, millimeterHeight, millimeterLayoutX, millimeterLayoutY);
-
     }
 
     /**
@@ -626,14 +624,18 @@ public abstract class AbstractPrintingPaneBuilder {
      * @param millimeterHeight 高さ（mm）
      * @param millimeterLayoutX 左位置（mm）
      * @param millimeterLayoutY 上位置（mm）
+     * @param scale 画質（1.0が等倍）
      * @param canvasCallback 実際の描画処理コールバック
      */
-    public void printCanvas(double millimeterWidth, double millimeterHeight, double millimeterLayoutX, double millimeterLayoutY, CanvasCallback canvasCallback) {
-        Canvas canvas = new Canvas(millimeterToPoint(millimeterWidth), millimeterToPoint(millimeterHeight));
+    public void printCanvas(double millimeterWidth, double millimeterHeight, double millimeterLayoutX, double millimeterLayoutY, double scale, CanvasCallback canvasCallback) {
+        Canvas canvas = new Canvas(millimeterToPoint(millimeterWidth * scale), millimeterToPoint(millimeterHeight * scale));
         canvas.setLayoutX(millimeterToPoint(millimeterLayoutX));
         canvas.setLayoutY(millimeterToPoint(millimeterLayoutY));
         canvasCallback.call(canvas);
-        this.paneCanvas.getChildren().add(canvas);
+        SnapshotParameters params = new SnapshotParameters();
+        params.setFill(Color.TRANSPARENT);
+        Image image = canvas.snapshot(params, null);
+        this.printImage(image, millimeterWidth, millimeterHeight, millimeterLayoutX, millimeterLayoutY);
     }
 
     /**
@@ -646,12 +648,10 @@ public abstract class AbstractPrintingPaneBuilder {
      * @param scale 画質（1.0が等倍）
      */
     public void printNW7(String barcode, double millimeterWidth, double millimeterHeight, double millimeterLayoutX, double millimeterLayoutY, double scale) {
-        this.printCanvas(millimeterWidth * scale, millimeterHeight * scale, millimeterLayoutX, millimeterLayoutY, new CanvasCallback() {
+        this.printCanvas(millimeterWidth, millimeterHeight, millimeterLayoutX, millimeterLayoutY, scale, new CanvasCallback() {
             @Override
             public void call(Canvas canvas) {
                 NW7Helper.drawBarcode(barcode, millimeterToPoint(millimeterWidth * scale), millimeterToPoint(millimeterHeight * scale), 0, 0, canvas.getGraphicsContext2D());
-                double negativeScale = 1 / scale;
-                canvas.getTransforms().add(new Scale(negativeScale, negativeScale));
             }
         });
     }
@@ -666,12 +666,10 @@ public abstract class AbstractPrintingPaneBuilder {
      * @param scale 画質（1.0が等倍）
      */
     public void printJAN13(String barcode, double millimeterWidth, double millimeterHeight, double millimeterLayoutX, double millimeterLayoutY, double scale) {
-        this.printCanvas(millimeterWidth * scale, millimeterHeight * scale, millimeterLayoutX, millimeterLayoutY, new CanvasCallback() {
+        this.printCanvas(millimeterWidth, millimeterHeight, millimeterLayoutX, millimeterLayoutY, scale, new CanvasCallback() {
             @Override
             public void call(Canvas canvas) {
                 Jan13Helper.drawBarcode(barcode, millimeterToPoint(millimeterWidth * scale), millimeterToPoint(millimeterHeight * scale), 0, 0, canvas.getGraphicsContext2D());
-                double negativeScale = 1 / scale;
-                canvas.getTransforms().add(new Scale(negativeScale, negativeScale));
             }
         });
     }
