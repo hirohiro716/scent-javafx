@@ -587,7 +587,7 @@ public abstract class AbstractPrintingPaneBuilder {
      * @param millimeterLayoutY 上位置（mm）
      * @param millimeterWidth 幅（mm）
      */
-    public void printHorizonalLine(double millimeterLayoutX, double millimeterLayoutY, double millimeterWidth) {
+    public void printHorizontalLine(double millimeterLayoutX, double millimeterLayoutY, double millimeterWidth) {
         this.printLine(millimeterLayoutX, millimeterLayoutY, millimeterLayoutX + millimeterWidth, millimeterLayoutY);
     }
 
