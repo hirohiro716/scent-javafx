@@ -75,7 +75,7 @@ public class LayoutHelper {
         Font font = Font.font(fontFamilyName, defaultFontSize);
         text.setFont(font);
         text.setWrappingWidth(width);
-        while (text.getLayoutBounds().getHeight() > height) {
+        while (text.getLayoutBounds().getWidth() > width || text.getLayoutBounds().getHeight() > height) {
             font = new Font(fontFamilyName, font.getSize() - 0.5);
             text.setFont(font);
         }
