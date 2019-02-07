@@ -25,7 +25,6 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
 /**
  * JavaFXで印刷するために最適化されたPaneの抽象クラス.
@@ -102,6 +101,14 @@ public abstract class AbstractPrintingPaneBuilder {
     private Color color = Color.BLACK;
     
     /**
+     * 使用する色を取得する.
+     * @return Color
+     */
+    public Color getColor() {
+        return this.color;
+    }
+    
+    /**
      * 使用する色を指定する.
      * @param color
      */
@@ -158,24 +165,6 @@ public abstract class AbstractPrintingPaneBuilder {
         this.textOriginVPos = vPos;
     }
 
-    private TextAlignment textAlignment = TextAlignment.LEFT;
-
-    /**
-     * 文字列を描画する際のBaseLine（左右基準位置）を取得する.
-     * @return TextAlignment
-     */
-    public TextAlignment getTextAlignment() {
-        return this.textAlignment;
-    }
-
-    /**
-     * 文字列を描画する際のBaseLine（左右基準位置）を指定する.
-     * @param textAlignment
-     */
-    public void setTextAlignment(TextAlignment textAlignment) {
-        this.textAlignment = textAlignment;
-    }
-
     /**
      * 印刷処理.
      * @throws PrintException
@@ -196,7 +185,6 @@ public abstract class AbstractPrintingPaneBuilder {
         text.setX(millimeterToPoint(millimeterLayoutX));
         text.setY(millimeterToPoint(millimeterLayoutY));
         text.setTextOrigin(this.textOriginVPos);
-        text.setTextAlignment(this.textAlignment);
         text.setLineSpacing(text.getFont().getSize() * this.textLineSpacingRateToFontSize); // FIXME 公式によればピクセルで指定しないとダメらしいんだけど嘘臭い
         text.setStyle(style);
         text.setStyle(CSSHelper.updateStyleValue(text.getStyle(), "-fx-fill", CSSHelper.colorToRGBA(this.color)));
@@ -230,7 +218,6 @@ public abstract class AbstractPrintingPaneBuilder {
         text.setX(millimeterToPoint(millimeterLayoutX + millimeterWidth) - text.getLayoutBounds().getWidth());
         text.setY(millimeterToPoint(millimeterLayoutY));
         text.setTextOrigin(this.textOriginVPos);
-        text.setTextAlignment(this.textAlignment);
         text.setLineSpacing(text.getFont().getSize() * this.textLineSpacingRateToFontSize); // FIXME 公式によればピクセルで指定しないとダメらしいんだけど嘘臭い
         text.setStyle(style);
         text.setStyle(CSSHelper.updateStyleValue(text.getStyle(), "-fx-fill", CSSHelper.colorToRGBA(this.color)));
@@ -265,7 +252,6 @@ public abstract class AbstractPrintingPaneBuilder {
         text.setX(millimeterToPoint(millimeterLayoutX + millimeterWidth / 2) - text.getLayoutBounds().getWidth() / 2);
         text.setY(millimeterToPoint(millimeterLayoutY));
         text.setTextOrigin(this.textOriginVPos);
-        text.setTextAlignment(this.textAlignment);
         text.setLineSpacing(text.getFont().getSize() * this.textLineSpacingRateToFontSize); // FIXME 公式によればピクセルで指定しないとダメらしいんだけど嘘臭い
         text.setStyle(style);
         text.setStyle(CSSHelper.updateStyleValue(text.getStyle(), "-fx-fill", CSSHelper.colorToRGBA(this.color)));
@@ -301,7 +287,6 @@ public abstract class AbstractPrintingPaneBuilder {
         text.setX(millimeterToPoint(millimeterLayoutX));
         text.setY(millimeterToPoint(millimeterLayoutY));
         text.setTextOrigin(this.textOriginVPos);
-        text.setTextAlignment(this.textAlignment);
         text.setLineSpacing(text.getFont().getSize() * this.textLineSpacingRateToFontSize); // FIXME 公式によればピクセルで指定しないとダメらしいんだけど嘘臭い
         text.setStyle(style);
         text.setStyle(CSSHelper.updateStyleValue(text.getStyle(), "-fx-fill", CSSHelper.colorToRGBA(this.color)));
@@ -339,7 +324,6 @@ public abstract class AbstractPrintingPaneBuilder {
         text.setX(millimeterToPoint(millimeterLayoutX));
         text.setY(millimeterToPoint(millimeterLayoutY));
         text.setTextOrigin(this.textOriginVPos);
-        text.setTextAlignment(this.textAlignment);
         text.setLineSpacing(text.getFont().getSize() * this.textLineSpacingRateToFontSize); // FIXME 公式によればピクセルで指定しないとダメらしいんだけど嘘臭い
         text.setStyle(style);
         text.setStyle(CSSHelper.updateStyleValue(text.getStyle(), "-fx-fill", CSSHelper.colorToRGBA(this.color)));
