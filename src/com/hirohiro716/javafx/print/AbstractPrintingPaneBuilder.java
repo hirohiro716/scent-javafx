@@ -135,6 +135,14 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     private ObservableList<Double> strokeDashArray = FXCollections.observableArrayList();
+    
+    /**
+     * 線の印刷に使用する破線セグメントの長さを取得する.
+     * @return 破線セグメントの長さ（mm）の配列
+     */
+    public Double[] getStrokeDashArray() {
+        return this.strokeDashArray.toArray(new Double[] {});
+    }
 
     /**
      * 線の印刷に使用する破線セグメントの長さを指定する.
