@@ -148,17 +148,6 @@ public abstract class AbstractPrintingPaneBuilder {
      * 線の印刷に使用する破線セグメントの長さを指定する.
      * @param millimeterDashes 破線セグメントの長さ（mm）
      */
-    public void setStrokeDashArray(double... millimeterDashes) {
-        this.strokeDashArray.clear();
-        for (double dash: millimeterDashes) {
-            this.strokeDashArray.add(millimeterToPoint(dash));
-        }
-    }
-
-    /**
-     * 線の印刷に使用する破線セグメントの長さを指定する.
-     * @param millimeterDashes 破線セグメントの長さ（mm）
-     */
     public void setStrokeDashArray(Double... millimeterDashes) {
         this.strokeDashArray.clear();
         for (Double dash: millimeterDashes) {
