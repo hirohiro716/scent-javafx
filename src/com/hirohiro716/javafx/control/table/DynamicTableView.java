@@ -879,7 +879,7 @@ public class DynamicTableView extends TableView<RudeArray> {
      * @param callback ボタンに対する処理
      */
     public void addColumnButton(String columnName, String columnHeaderText, String buttonText, EventHandler<ActionEvent> actionEvent, NodeCallback<Button, Void> callback) {
-        this.addColumnButton(columnName, columnHeaderText, -1, buttonText, actionEvent);
+        this.addColumnButton(columnName, columnHeaderText, -1, buttonText, actionEvent, callback);
     }
 
     /**
