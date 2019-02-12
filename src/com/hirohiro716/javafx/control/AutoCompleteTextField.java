@@ -252,10 +252,10 @@ public class AutoCompleteTextField extends LimitTextField {
                 protected Void call() throws Exception {
                     this.items.clear();
                     StringConverter converter = new StringConverter();
-                    converter.appendLowerToUpper();
-                    converter.appendNarrowToWide();
-                    converter.appendKatakanaToHiragana();
-                    converter.appendReplaceWideSpace("");
+                    converter.addLowerToUpper();
+                    converter.addNarrowToWide();
+                    converter.addKatakanaToHiragana();
+                    converter.addReplaceWideSpace("");
                     int addedCount = 0;
                     for (String item: field.items) {
                         if (this.isCancelled()) {

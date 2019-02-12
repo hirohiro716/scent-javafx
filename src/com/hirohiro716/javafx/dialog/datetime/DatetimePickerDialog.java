@@ -114,7 +114,7 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
         } else {
             Datetime datetime = new Datetime(this.defaultValue);
             StringConverter converter = new StringConverter();
-            converter.appendIntegerString();
+            converter.addIntegerString();
             this.limitTextFieldHour.setMaxLength(2);
             this.limitTextFieldHour.addPermitRegex(RegexPattern.INTEGER_NARROW_ONLY.getPattern(), false);
             this.limitTextFieldHour.setText(String.valueOf(datetime.toHour()));

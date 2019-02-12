@@ -274,7 +274,7 @@ public class EditableTable<S> extends AnchorPane {
      * Rowを追加する.
      * @param item
      */
-    public void appendRow(S item) {
+    public void addRow(S item) {
         this.items.add(item);
     }
     
@@ -283,9 +283,9 @@ public class EditableTable<S> extends AnchorPane {
      * @param item
      * @param index
      */
-    public void appendRow(S item, int index) {
+    public void addRow(S item, int index) {
         if (this.items.size() <= index) {
-            this.appendRow(item);
+            this.addRow(item);
         }
         if (this.visibleRowsCount > index) {
             this.initializeRow(item);
@@ -300,7 +300,7 @@ public class EditableTable<S> extends AnchorPane {
      * Rowを追加する.
      * @param items
      */
-    public void appendRows(S[] items) {
+    public void addRows(S[] items) {
         for (S item: items) {
             this.items.add(item);
         }
@@ -310,7 +310,7 @@ public class EditableTable<S> extends AnchorPane {
      * Rowを追加する.
      * @param items
      */
-    public void appendRows(List<S> items) {
+    public void addRows(List<S> items) {
         for (S item: items) {
             this.items.add(item);
         }
@@ -805,7 +805,7 @@ public class EditableTable<S> extends AnchorPane {
      * @param columnType 種類
      * @param controlFactory コントロールを生成し値の受け渡しを行うCallback
      */
-    public void appendColumn(String id, String text, ColumnType columnType, ControlFactory<S, ?> controlFactory) {
+    public void addColumn(String id, String text, ColumnType columnType, ControlFactory<S, ?> controlFactory) {
         if (this.columnIds.contains(id)) {
             return;
         }
@@ -850,8 +850,8 @@ public class EditableTable<S> extends AnchorPane {
      * @param text ヘッダーテキスト
      * @param readOnlyControlFactory コントロールを生成し値の表示を行うCallback
      */
-    public <T extends Label> void appendColumnLabel(String id, String text, ReadOnlyControlFactory<S, T> readOnlyControlFactory) {
-        this.appendColumn(id, text, ColumnType.LABEL, readOnlyControlFactory);
+    public <T extends Label> void addColumnLabel(String id, String text, ReadOnlyControlFactory<S, T> readOnlyControlFactory) {
+        this.addColumn(id, text, ColumnType.LABEL, readOnlyControlFactory);
     }
     
     /**
@@ -861,8 +861,8 @@ public class EditableTable<S> extends AnchorPane {
      * @param text ヘッダーテキスト
      * @param controlFactory コントロールを生成し値の受け渡しを行うCallback
      */
-    public <T extends TextField> void appendColumnTextField(String id, String text, ControlFactory<S, T> controlFactory) {
-        this.appendColumn(id, text, ColumnType.TEXTFIELD, controlFactory);
+    public <T extends TextField> void addColumnTextField(String id, String text, ControlFactory<S, T> controlFactory) {
+        this.addColumn(id, text, ColumnType.TEXTFIELD, controlFactory);
     }
     
     /**
@@ -872,8 +872,8 @@ public class EditableTable<S> extends AnchorPane {
      * @param text ヘッダーテキスト
      * @param controlFactory コントロールを生成し値の受け渡しを行うCallback
      */
-    public <T extends PasswordField> void appendColumnPasswordField(String id, String text, ControlFactory<S, T> controlFactory) {
-        this.appendColumn(id, text, ColumnType.PASSWORD, controlFactory);
+    public <T extends PasswordField> void addColumnPasswordField(String id, String text, ControlFactory<S, T> controlFactory) {
+        this.addColumn(id, text, ColumnType.PASSWORD, controlFactory);
     }
     
     /**
@@ -884,8 +884,8 @@ public class EditableTable<S> extends AnchorPane {
      * @param text ヘッダーテキスト
      * @param controlFactory コントロールを生成し値の受け渡しを行うCallback
      */
-    public <T extends ComboBox<V>, V> void appendColumnComboBox(String id, String text, ControlFactory<S, T> controlFactory) {
-        this.appendColumn(id, text, ColumnType.COMBOBOX, controlFactory);
+    public <T extends ComboBox<V>, V> void addColumnComboBox(String id, String text, ControlFactory<S, T> controlFactory) {
+        this.addColumn(id, text, ColumnType.COMBOBOX, controlFactory);
     }
     
     /**
@@ -895,8 +895,8 @@ public class EditableTable<S> extends AnchorPane {
      * @param text ヘッダーテキスト
      * @param controlFactory コントロールを生成し値の受け渡しを行うCallback
      */
-    public <T extends DatePicker> void appendColumnDatePicker(String id, String text, ControlFactory<S, T> controlFactory) {
-        this.appendColumn(id, text, ColumnType.DATEPICKER, controlFactory);
+    public <T extends DatePicker> void addColumnDatePicker(String id, String text, ControlFactory<S, T> controlFactory) {
+        this.addColumn(id, text, ColumnType.DATEPICKER, controlFactory);
     }
     
     /**
@@ -906,8 +906,8 @@ public class EditableTable<S> extends AnchorPane {
      * @param text ヘッダーテキスト
      * @param controlFactory コントロールを生成し値の受け渡しを行うCallback
      */
-    public <T extends CheckBox> void appendColumnCheckBox(String id, String text, ControlFactory<S, T> controlFactory) {
-        this.appendColumn(id, text, ColumnType.CHECKBOX, controlFactory);
+    public <T extends CheckBox> void addColumnCheckBox(String id, String text, ControlFactory<S, T> controlFactory) {
+        this.addColumn(id, text, ColumnType.CHECKBOX, controlFactory);
     }
     
     /**
@@ -917,8 +917,8 @@ public class EditableTable<S> extends AnchorPane {
      * @param text ヘッダーテキスト
      * @param fixControlFactory コントロールを生成を行うCallback
      */
-    public <T extends Button> void appendColumnButton(String id, String text, FixControlFactory<S, T> fixControlFactory) {
-        this.appendColumn(id, text, ColumnType.BUTTON, fixControlFactory);
+    public <T extends Button> void addColumnButton(String id, String text, FixControlFactory<S, T> fixControlFactory) {
+        this.addColumn(id, text, ColumnType.BUTTON, fixControlFactory);
     }
     
     /**

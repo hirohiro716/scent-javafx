@@ -23,8 +23,8 @@ public class RudeArrayTable extends EditableTable<RudeArray> {
      * @param text ヘッダーテキスト
      * @param controlFactory コントロールを生成するCallback
      */
-    public <T extends Label> void appendColumnLabel(String id, String text, ControlFactory<T> controlFactory) {
-        this.appendColumnLabel(id, text, new ReadOnlyControlFactory<RudeArray, T>() {
+    public <T extends Label> void addColumnLabel(String id, String text, ControlFactory<T> controlFactory) {
+        this.addColumnLabel(id, text, new ReadOnlyControlFactory<RudeArray, T>() {
             @Override
             public T newInstance(RudeArray item) {
                 return controlFactory.newInstance(item);
@@ -43,8 +43,8 @@ public class RudeArrayTable extends EditableTable<RudeArray> {
      * @param text ヘッダーテキスト
      * @param controlFactory コントロールを生成するCallback
      */
-    public <T extends TextField> void appendColumnTextField(String id, String text, ControlFactory<T> controlFactory) {
-        super.appendColumnTextField(id, text, new EditableTable.ControlFactory<RudeArray, T>() {
+    public <T extends TextField> void addColumnTextField(String id, String text, ControlFactory<T> controlFactory) {
+        super.addColumnTextField(id, text, new EditableTable.ControlFactory<RudeArray, T>() {
             @Override
             public T newInstance(RudeArray item) {
                 return controlFactory.newInstance(item);
@@ -67,8 +67,8 @@ public class RudeArrayTable extends EditableTable<RudeArray> {
      * @param text ヘッダーテキスト
      * @param controlFactory コントロールを生成するCallback
      */
-    public <T extends PasswordField> void appendColumnPasswordField(String id, String text, ControlFactory<T> controlFactory) {
-        super.appendColumnPasswordField(id, text, new EditableTable.ControlFactory<RudeArray, T>() {
+    public <T extends PasswordField> void addColumnPasswordField(String id, String text, ControlFactory<T> controlFactory) {
+        super.addColumnPasswordField(id, text, new EditableTable.ControlFactory<RudeArray, T>() {
             @Override
             public T newInstance(RudeArray item) {
                 return controlFactory.newInstance(item);
@@ -92,8 +92,8 @@ public class RudeArrayTable extends EditableTable<RudeArray> {
      * @param text ヘッダーテキスト
      * @param controlFactory コントロールを生成するCallback
      */
-    public <T extends ComboBox<V>, V> void appendColumnComboBox(String id, String text, ControlFactory<T> controlFactory) {
-        super.appendColumnComboBox(id, text, new EditableTable.ControlFactory<RudeArray, T>() {
+    public <T extends ComboBox<V>, V> void addColumnComboBox(String id, String text, ControlFactory<T> controlFactory) {
+        super.addColumnComboBox(id, text, new EditableTable.ControlFactory<RudeArray, T>() {
             @Override
             public T newInstance(RudeArray item) {
                 return controlFactory.newInstance(item);
@@ -118,8 +118,8 @@ public class RudeArrayTable extends EditableTable<RudeArray> {
      * @param text ヘッダーテキスト
      * @param controlFactory コントロールを生成するCallback
      */
-    public <K, V> void appendColumnHashMapComboBox(String id, String text, ControlFactory<HashMapComboBox<K, V>> controlFactory) {
-        super.appendColumnComboBox(id, text, new EditableTable.ControlFactory<RudeArray, HashMapComboBox<K, V>>() {
+    public <K, V> void addColumnHashMapComboBox(String id, String text, ControlFactory<HashMapComboBox<K, V>> controlFactory) {
+        super.addColumnComboBox(id, text, new EditableTable.ControlFactory<RudeArray, HashMapComboBox<K, V>>() {
             @Override
             public HashMapComboBox<K, V> newInstance(RudeArray item) {
                 return controlFactory.newInstance(item);
@@ -142,8 +142,8 @@ public class RudeArrayTable extends EditableTable<RudeArray> {
      * @param text ヘッダーテキスト
      * @param controlFactory コントロールを生成するCallback
      */
-    public void appendColumnDatePicker(String id, String text, ControlFactory<RudeDatePicker> controlFactory) {
-        super.appendColumnDatePicker(id, text, new EditableTable.ControlFactory<RudeArray, RudeDatePicker>() {
+    public void addColumnDatePicker(String id, String text, ControlFactory<RudeDatePicker> controlFactory) {
+        super.addColumnDatePicker(id, text, new EditableTable.ControlFactory<RudeArray, RudeDatePicker>() {
             @Override
             public RudeDatePicker newInstance(RudeArray item) {
                 return controlFactory.newInstance(item);
@@ -166,8 +166,8 @@ public class RudeArrayTable extends EditableTable<RudeArray> {
      * @param text ヘッダーテキスト
      * @param controlFactory コントロールを生成するCallback
      */
-    public <T extends CheckBox> void appendColumnCheckBox(String id, String text, ControlFactory<T> controlFactory) {
-        super.appendColumnCheckBox(id, text, new EditableTable.ControlFactory<RudeArray, T>() {
+    public <T extends CheckBox> void addColumnCheckBox(String id, String text, ControlFactory<T> controlFactory) {
+        super.addColumnCheckBox(id, text, new EditableTable.ControlFactory<RudeArray, T>() {
             @Override
             public T newInstance(RudeArray item) {
                 return controlFactory.newInstance(item);

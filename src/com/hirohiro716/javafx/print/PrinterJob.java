@@ -112,7 +112,7 @@ public class PrinterJob {
      * 印刷するページを追加する.
      * @param pane
      */
-    public void appendPage(Pane pane) {
+    public void addPage(Pane pane) {
         this.printingPaneList.add(pane);
     }
 
@@ -121,7 +121,7 @@ public class PrinterJob {
      * @param page AbstractPrintingPaneBuilderを継承したクラスのインスタンス
      * @throws PrintException 
      */
-    public void appendPage(AbstractPrintingPaneBuilder page) throws PrintException {
+    public void addPage(AbstractPrintingPaneBuilder page) throws PrintException {
         page.build();
         this.printingPaneList.add(page.getPane());
     }
