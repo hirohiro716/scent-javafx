@@ -52,6 +52,22 @@ public class CSSHelper {
     }
 
     /**
+     * 定義されたスタイルの一部を削除する.
+     * @param originalStyle スタイル全体の文字列
+     * @param propertyName プロパティ
+     * @return 変更後のスタイル
+     */
+    public static String removeStyle(String originalStyle, String propertyName) {
+        String newStyle = StringConverter.nullReplace(originalStyle, "");
+        Pattern p = Pattern.compile(propertyName + ":.{1,}?;");
+        Matcher matcher = p.matcher(newStyle);
+        if (matcher.find()) {
+            newStyle = matcher.replaceAll("");
+        }
+        return newStyle;
+    }
+
+    /**
      * ColorからCSSで使用できる色文字列に変換する.
      * @param color
      * @return CSSで使用できる色文字列

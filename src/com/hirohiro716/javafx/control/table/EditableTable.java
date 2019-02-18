@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import com.hirohiro716.javafx.CSSHelper;
 import com.hirohiro716.javafx.LayoutHelper;
 import com.hirohiro716.javafx.PaneNodeFinder;
 import com.hirohiro716.javafx.control.ScrollToNodePane;
@@ -31,6 +32,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
@@ -66,6 +68,7 @@ public class EditableTable<S> extends AnchorPane {
         DATEPICKER,
         CHECKBOX,
         BUTTON,
+        HYPERLINK,
     }
     
     /**
@@ -97,6 +100,16 @@ public class EditableTable<S> extends AnchorPane {
             return "selected";
         }
     };
+
+    private String selectedRowColor = null;
+    
+    /**
+     * 選択状態の行の背景色を指定する.
+     * @param color CSSで使用可能な背景色
+     */
+    public void setSelectedRowColor(String color) {
+        this.selectedRowColor = color;
+    }
     
     /**
      * コンストラクタ.
@@ -142,6 +155,7 @@ public class EditableTable<S> extends AnchorPane {
                 HBox oldHBox = table.rowHBoxes.get(oldValue);
                 if (oldHBox != null) {
                     oldHBox.pseudoClassStateChanged(EditableTable.this.selectedPseudoClass, false);
+                    oldHBox.setStyle(CSSHelper.removeStyle(oldHBox.getStyle(), "-fx-background-color"));
                     if (table.isDisabled() == false) {
                         table.disableRowControlFocusTraversable(oldValue);
                     }
@@ -149,6 +163,9 @@ public class EditableTable<S> extends AnchorPane {
                 HBox newHBox = table.rowHBoxes.get(newValue);
                 if (newHBox != null) {
                     newHBox.pseudoClassStateChanged(EditableTable.this.selectedPseudoClass, true);
+                    if (table.selectedRowColor != null && table.selectedRowColor.length() > 0) {
+                        newHBox.setStyle(CSSHelper.updateStyleValue(newHBox.getStyle(), "-fx-background-color", table.selectedRowColor));
+                    }
                     table.rollbackRowControlFocusTraversable(newValue);
                 }
             }
@@ -396,7 +413,7 @@ public class EditableTable<S> extends AnchorPane {
                     break;
                 case DATEPICKER:
                     ControlFactory<S, DatePicker> datePickerFactory = (ControlFactory<S, DatePicker>) this.controlFactories.get(id);
-                    DatePicker datePicker = datePickerFactory.newInstance(item);
+                    DatePicker datePicker = paneNodeFinder.findDatePicker("#" + id);
                     datePickerFactory.setValueForControl(item, datePicker);
                     break;
                 case CHECKBOX:
@@ -404,11 +421,17 @@ public class EditableTable<S> extends AnchorPane {
                     CheckBox checkBox = paneNodeFinder.findCheckBox("#" + id);
                     checkBoxFactory.setValueForControl(item, checkBox);
                     break;
+                case HYPERLINK:
+                    ReadOnlyControlFactory<S, Hyperlink> hyperlinkFactory = (ReadOnlyControlFactory<S, Hyperlink>) this.controlFactories.get(id);
+                    Hyperlink hyperlink = paneNodeFinder.findHyperlink("#" + id);
+                    hyperlinkFactory.setValueForControl(item, hyperlink);
+                    break;
                 case BUTTON:
                     break;
                 }
             }
         } catch (Exception exception) {
+            exception.printStackTrace();
         }
     }
     
@@ -475,7 +498,6 @@ public class EditableTable<S> extends AnchorPane {
             case LABEL:
                 ReadOnlyControlFactory<S, Label> labelFactory = (ReadOnlyControlFactory<S, Label>) this.controlFactories.get(id);
                 Label label = labelFactory.newInstance(item);
-
                 labelFactory.setValueForControl(item, label);
                 label.prefWidthProperty().bind(headerLabel.widthProperty());
                 itemHBox.getChildren().add(label);
@@ -559,6 +581,14 @@ public class EditableTable<S> extends AnchorPane {
                 stackPaneButton.prefWidthProperty().bind(headerLabel.widthProperty());
                 itemHBox.getChildren().add(stackPaneButton);
                 addedControl = button;
+                break;
+            case HYPERLINK:
+                ReadOnlyControlFactory<S, Hyperlink> hyperlinkFactory = (ReadOnlyControlFactory<S, Hyperlink>) this.controlFactories.get(id);
+                Hyperlink hyperlink = hyperlinkFactory.newInstance(item);
+                hyperlinkFactory.setValueForControl(item, hyperlink);
+                hyperlink.prefWidthProperty().bind(headerLabel.widthProperty());
+                itemHBox.getChildren().add(hyperlink);
+                addedControl = hyperlink;
                 break;
             }
             // コントロール共通の設定
@@ -830,6 +860,8 @@ public class EditableTable<S> extends AnchorPane {
         case BUTTON:
             label.setMinWidth(45);
             break;
+        case HYPERLINK:
+            break;
         }
         this.columnIds.add(id);
         this.columnHeaderLabels.put(id, label);
@@ -919,6 +951,17 @@ public class EditableTable<S> extends AnchorPane {
      */
     public <T extends Button> void addColumnButton(String id, String text, FixControlFactory<S, T> fixControlFactory) {
         this.addColumn(id, text, ColumnType.BUTTON, fixControlFactory);
+    }
+
+    /**
+     * Hyperlinkを内包するセルを追加する.
+     * @param <T> コントロールの型
+     * @param id 任意のカラムID
+     * @param text ヘッダーテキスト
+     * @param readOnlyControlFactory コントロールを生成し値の表示を行うCallback
+     */
+    public <T extends Hyperlink> void addColumnHyperlink(String id, String text, ReadOnlyControlFactory<S, T> readOnlyControlFactory) {
+        this.addColumn(id, text, ColumnType.HYPERLINK, readOnlyControlFactory);
     }
     
     /**

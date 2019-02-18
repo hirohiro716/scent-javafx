@@ -6,6 +6,7 @@ import com.hirohiro716.javafx.control.RudeDatePicker;
 
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -181,6 +182,26 @@ public class RudeArrayTable extends EditableTable<RudeArray> {
             @Override
             public void setValueForItem(RudeArray item, T control) {
                 item.put(id, control.isSelected());
+            }
+        });
+    }
+
+    /**
+     * Hyperlinkを内包するセルを追加する.
+     * @param <T> コントロールの型
+     * @param id 任意のカラムID
+     * @param text ヘッダーテキスト
+     * @param controlFactory コントロールを生成するCallback
+     */
+    public <T extends Hyperlink> void addColumnHyperlink(String id, String text, ControlFactory<T> controlFactory) {
+        this.addColumnHyperlink(id, text, new ReadOnlyControlFactory<RudeArray, T>() {
+            @Override
+            public T newInstance(RudeArray item) {
+                return controlFactory.newInstance(item);
+            }
+            @Override
+            public void setValueForControl(RudeArray item, T control) {
+                control.setText(item.getString(id));
             }
         });
     }

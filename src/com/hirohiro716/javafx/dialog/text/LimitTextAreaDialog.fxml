@@ -18,8 +18,8 @@
     </effect>
     <LimitTextArea fx:id="limitTextArea" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="190.0" />
     <HBox spacing="10.0" alignment="CENTER_RIGHT" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
-        <EnterFireButton fx:id="buttonOk" prefHeight="40.0" prefWidth="80.0" text="OK" />
-        <EnterFireButton fx:id="buttonCancel" cancelButton="true" prefHeight="40.0" prefWidth="100.0" text="キャンセル" />
+        <EnterFireButton fx:id="buttonOk" minHeight="40.0" minWidth="80.0" text="OK" />
+        <EnterFireButton fx:id="buttonCancel" cancelButton="true" minHeight="40.0" minWidth="100.0" text="キャンセル" />
     </HBox>
     <Label fx:id="labelTitle" text="タイトル" AnchorPane.topAnchor="30.0" AnchorPane.rightAnchor="0.0" AnchorPane.leftAnchor="30.0" style="-fx-font-size:120%; -fx-font-weight:bold;">
         <padding>

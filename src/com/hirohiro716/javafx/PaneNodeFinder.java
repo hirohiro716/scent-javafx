@@ -18,6 +18,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableView;
@@ -259,6 +260,15 @@ public class PaneNodeFinder {
      */
     public ColorPicker findColorPicker(String selector) {
         return PaneHelper.findNode(this.pane, ColorPicker.class, selector);
+    }
+
+    /**
+     * セレクターを指定してコントロールを取得する.
+     * @param selector
+     * @return Hyperlink（該当するものがなければnull）
+     */
+    public Hyperlink findHyperlink(String selector) {
+        return PaneHelper.findNode(this.pane, Hyperlink.class, selector);
     }
 
 }

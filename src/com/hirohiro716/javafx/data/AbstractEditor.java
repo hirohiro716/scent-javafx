@@ -192,6 +192,16 @@ public abstract class AbstractEditor<T> {
             this.handleException(exception);
         }
     }
+
+    private boolean isCloseConfirmShowing = true;
+    
+    /**
+     * 閉じる確認を行うかどうかをセットする. 初期値はtrue.
+     * @param isCloseConfirmShowing
+     */
+    protected void setCloseConfirmShowing(boolean isCloseConfirmShowing) {
+        this.isCloseConfirmShowing = isCloseConfirmShowing;
+    }
     
     private boolean isCloseDialogShown = false;
 
@@ -215,19 +225,21 @@ public abstract class AbstractEditor<T> {
     private EventHandler<WindowEvent> closeEvent = new EventHandler<WindowEvent>() {
         @Override
         public void handle(WindowEvent event) {
-            event.consume();
             AbstractEditor<T> editor = AbstractEditor.this;
-            if (editor.isCloseAgree == false && editor.isCloseDialogShown == false) {
-                editor.beforeCloseConfirmDoPreparation();
-                ConfirmPane.show(CONFIRM_DIALOG_TITLE_CLOSE, "この画面を閉じます。", editor.stageBuilder.getPaneRoot(), new CloseEventHandler<DialogResult>() {
-                    @Override
-                    public void handle(DialogResult resultValue) {
-                        if (resultValue == DialogResult.OK) {
-                            editor.close();
+            if (editor.isCloseConfirmShowing) {
+                event.consume();
+                if (editor.isCloseAgree == false && editor.isCloseDialogShown == false) {
+                    editor.beforeCloseConfirmDoPreparation();
+                    ConfirmPane.show(CONFIRM_DIALOG_TITLE_CLOSE, "この画面を閉じます。", editor.stageBuilder.getPaneRoot(), new CloseEventHandler<DialogResult>() {
+                        @Override
+                        public void handle(DialogResult resultValue) {
+                            if (resultValue == DialogResult.OK) {
+                                editor.close();
+                            }
+                            editor.processAfterCloseConfirm();
                         }
-                        editor.processAfterCloseConfirm();
-                    }
-                });
+                    });
+                }
             }
         }
     };
