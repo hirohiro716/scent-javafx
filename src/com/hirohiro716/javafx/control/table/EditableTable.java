@@ -781,6 +781,8 @@ public class EditableTable<S> extends AnchorPane {
                     control.requestFocus();
                 }
             }
+        } else {
+            this.selectedItemProperty.setValue(null);
         }
     }
     
