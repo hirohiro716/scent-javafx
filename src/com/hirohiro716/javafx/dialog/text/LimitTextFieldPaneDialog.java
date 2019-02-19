@@ -14,6 +14,7 @@ import com.hirohiro716.javafx.dialog.AbstractPaneDialog;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
@@ -86,6 +87,8 @@ public class LimitTextFieldPaneDialog extends AbstractPaneDialog<String> {
         for (int index = 0; index < this.permitRegexPattern.size(); index++) {
             this.limitTextField.addPermitRegex(this.permitRegexPattern.get(index), this.permitRegexReverse.get(index));
         }
+        // 文字配置をセット
+        this.limitTextField.setAlignment(this.pos);
         // 初期値を入力
         this.limitTextField.setText(this.defaultValue);
         // テキストフィールドのイベント定義
@@ -182,10 +185,20 @@ public class LimitTextFieldPaneDialog extends AbstractPaneDialog<String> {
         this.permitRegexReverse.add(isReverse);
     }
 
+    private Pos pos = Pos.CENTER_LEFT;
+    
+    /**
+     * テキストフィールドの文字の配置をセットする.
+     * @param pos
+     */
+    public void setTextFieldAlignment(Pos pos) {
+        this.pos = pos;
+    }
+
     private String defaultValue;
 
     /**
-     * コンボボックスの初期値をセットする.
+     * テキストフィールドの初期値をセットする.
      * @param defaultValue
      */
     public void setDefaultValue(String defaultValue) {
