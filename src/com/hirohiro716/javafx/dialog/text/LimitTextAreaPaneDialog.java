@@ -190,7 +190,7 @@ public class LimitTextAreaPaneDialog extends AbstractPaneDialog<String> {
     private String defaultValue;
 
     /**
-     * コンボボックスの初期値をセットする.
+     * テキストフィールドの初期値をセットする.
      * @param defaultValue
      */
     public void setDefaultValue(String defaultValue) {
