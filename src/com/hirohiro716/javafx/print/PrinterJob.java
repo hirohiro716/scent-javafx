@@ -92,7 +92,7 @@ public class PrinterJob {
             }
         }
         if (this.printer == null) {
-            throw new NullPointerException("Printer is not found.");
+            throw new NullPointerException(printerName + ":Printer is not found.");
         }
     }
 
