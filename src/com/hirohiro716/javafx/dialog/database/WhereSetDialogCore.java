@@ -100,6 +100,7 @@ class WhereSetDialogCore {
 
     /**
      * 新しいWhereSetを追加する.
+     * @param isCopy 
      */
     protected void addWhereSet(boolean isCopy) {
         // 現在のWhereSetを保存して初期化
@@ -450,6 +451,7 @@ class WhereSetDialogCore {
     /**
      * カラム名を指定して検索値入力行を追加する.
      * @param columnName
+     * @return HBox
      */
     protected HBox addWhere(String columnName) {
         // 検索行を作成していく

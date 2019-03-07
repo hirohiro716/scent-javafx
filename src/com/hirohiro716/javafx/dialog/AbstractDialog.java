@@ -151,6 +151,7 @@ public abstract class AbstractDialog<T> implements InterfaceDialog<T> {
     /**
      * ダイアログを表示して終了まで待機する.
      * @param dialogContentPane
+     * @return 結果
      */
     protected T showAndWait(Pane dialogContentPane) {
         this.preparation(dialogContentPane);

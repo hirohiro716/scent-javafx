@@ -2,8 +2,6 @@ package com.hirohiro716.javafx.data;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
-
 import com.hirohiro716.javafx.StageBuilder;
 import com.hirohiro716.javafx.dialog.InterfaceDialog.CloseEventHandler;
 import com.hirohiro716.javafx.dialog.DialogResult;
@@ -131,7 +129,7 @@ public abstract class AbstractEditor<T> {
     /**
      * 編集するデータの読み込みや排他ロック処理.<br>
      * showまたはshowAndWaitメソッドを呼び出した際 beforeShowDoPreparationメソッドの前に自動実行される.
-     * @throws SQLException
+     * @throws Exception
      */
     protected abstract void editDataController() throws Exception;
     
@@ -177,6 +175,7 @@ public abstract class AbstractEditor<T> {
     
     /**
      * 閉じる直前に行う処理. closeメソッドを呼び出した際に自動実行される.
+     * @throws Exception 
      */
     protected abstract void beforeCloseDoPreparation() throws Exception;
 
