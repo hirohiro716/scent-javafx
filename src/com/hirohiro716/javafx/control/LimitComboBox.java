@@ -19,7 +19,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyEvent;
 
 /**
- * 入力制限機能を付けたComboBox
+ * 入力制限機能を付けたComboBox.
  * @author hiro
  * @param <T>
  */

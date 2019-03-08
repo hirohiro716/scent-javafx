@@ -13,7 +13,7 @@ import javafx.scene.control.PasswordField;
 import com.hirohiro716.StringConverter;
 
 /**
- * 入力制限機能を付けたPasswordField
+ * 入力制限機能を付けたPasswordField.
  * @author hiro
  */
 public class LimitPasswordField extends PasswordField {

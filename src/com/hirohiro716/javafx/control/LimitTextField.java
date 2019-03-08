@@ -13,7 +13,7 @@ import javafx.scene.control.TextField;
 import com.hirohiro716.StringConverter;
 
 /**
- * 入力制限機能を付けたTextField
+ * 入力制限機能を付けたTextField.
  * @author hiro
  */
 public class LimitTextField extends TextField {

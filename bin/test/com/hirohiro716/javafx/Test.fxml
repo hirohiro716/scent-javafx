@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.web.WebView?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import com.hirohiro716.*?>
 <?import com.hirohiro716.javafx.control.*?>
 <?import com.hirohiro716.javafx.control.table.*?>
 
-<AnchorPane fx:id="paneRoot" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color:#fff;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="test.com.hirohiro716.javafx.Test">
+<AnchorPane fx:id="paneRoot" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color:#fff;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
     
-      <Button fx:id="button" layoutX="100.0" layoutY="70.0" text="test_1" />
-
-      <Button fx:id="button2" layoutX="150.0" layoutY="70.0" text="test_2" />
-      <RudeDatePicker fx:id="rudeDatePicker" layoutX="63.0" layoutY="154.0" />
-      <ComboBox fx:id="comboBox" layoutX="112.0" layoutY="281.0" prefWidth="150.0" />
+      <MovableLabel fx:id="label" layoutX="50.0" layoutY="100.0" text="test" style="-fx-border-width:1px; -fx-border-style:solid; -fx-border-color:#000; -fx-padding:10;" />
       
 </AnchorPane>
