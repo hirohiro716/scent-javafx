@@ -8,7 +8,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCharacterCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -117,9 +116,6 @@ public abstract class AbstractDialog<T> implements InterfaceDialog<T> {
         // FullScreenで表示する
         this.stage.setX(screen.getVisualBounds().getMinX());
         this.stage.setY(screen.getVisualBounds().getMinY());
-        this.stage.setFullScreen(true);
-        this.stage.setFullScreenExitHint("");
-        this.stage.setFullScreenExitKeyCombination(new KeyCharacterCombination("disabled"));
         // アイコンセット
         if (this.parentStage == null || this.parentStage.getIcons().size() == 0) {
             this.stage.getIcons().add(new Image(AbstractDialog.class.getResourceAsStream("icon16.png")));
