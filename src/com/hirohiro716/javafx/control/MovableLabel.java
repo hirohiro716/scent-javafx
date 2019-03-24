@@ -44,7 +44,7 @@ public class MovableLabel extends Label {
 		this(null, null);
 	}
 	
-    private double edgeSize = 10;
+    private double edgeSize = 5;
     
     private ArrayList<Operation> operations = new ArrayList<>();
     

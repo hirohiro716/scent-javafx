@@ -5,6 +5,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.concurrent.Callable;
 
+import com.hirohiro716.LayoutSetting;
 import com.hirohiro716.RudeArray;
 import com.hirohiro716.database.AbstractBindTable;
 import com.hirohiro716.database.AbstractDatabase;
@@ -23,6 +24,7 @@ import javafx.scene.Node;
 import javafx.scene.control.TableView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -505,7 +507,51 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * Editorを閉じる.
+     * ウインドウが表示されている画面を取得する.
+     * @return Screen
+     */
+    public Screen getDisplayedScreen() {
+        return this.stageBuilder.getDisplayedScreen();
+    }
+    
+    /**
+     * 現在の画面サイズ・位置情報からLayoutSettingを作成する.
+     * @return LayoutSetting
+     */
+    protected LayoutSetting createWindowLayoutSetting() {
+        LayoutSetting layoutSetting = new LayoutSetting();
+        Stage stage = this.getStage();
+        layoutSetting.setAll(stage.getX(), stage.getY(), stage.getWidth(), stage.getHeight());
+        return layoutSetting;
+    }
+
+    /**
+     * 画面サイズ・位置情報にLayoutSettingを適用する.
+     * @param layoutSetting
+     */
+    protected void applyWindowLayoutSetting(LayoutSetting layoutSetting) {
+        this.applyWindowLayoutSetting(layoutSetting, this.getDisplayedScreen());
+    }
+    
+    /**
+     * 画面サイズ・位置情報にLayoutSettingを適用する.
+     * @param layoutSetting
+     * @param screen 表示対象画面
+     */
+    protected void applyWindowLayoutSetting(LayoutSetting layoutSetting, Screen screen) {
+        Stage stage = this.getStage();
+        if (screen.getVisualBounds().getWidth() <= layoutSetting.getWidth() && screen.getVisualBounds().getHeight() <= layoutSetting.getHeight()) {
+            stage.setMaximized(true);
+        } else {
+            stage.setX(layoutSetting.getLayoutX());
+            stage.setY(layoutSetting.getLayoutY());
+            stage.setWidth(layoutSetting.getWidth());
+            stage.setHeight(layoutSetting.getHeight());
+        }
+    }
+    
+    /**
+     * Searcherを閉じる.
      */
     public void close() {
         try {

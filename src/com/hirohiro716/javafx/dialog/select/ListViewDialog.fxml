@@ -11,14 +11,14 @@
 <?import com.hirohiro716.*?>
 <?import com.hirohiro716.javafx.control.*?>
 
-<AnchorPane fx:id="paneRoot" prefHeight="500.0" prefWidth="400.0" style="-fx-background-color:#fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="paneRoot" prefWidth="400.0" prefHeight="500.0" style="-fx-background-color:#fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <effect>
         <DropShadow height="60.0" radius="30.0" width="60.0" />
     </effect>
     <ListView fx:id="listView" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="140.0" />
     <HBox spacing="10.0" alignment="CENTER_RIGHT" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
-        <EnterFireButton fx:id="buttonOk" minHeight="40.0" minWidth="80.0" text="OK" />
-        <EnterFireButton fx:id="buttonCancel" cancelButton="true" minHeight="40.0" minWidth="100.0" text="キャンセル" />
+        <EnterFireButton fx:id="buttonOk" minWidth="80.0" minHeight="40.0" text="OK" />
+        <EnterFireButton fx:id="buttonCancel" cancelButton="true" minWidth="100.0" minHeight="40.0" text="キャンセル" />
     </HBox>
     <Label fx:id="labelTitle" text="タイトル" AnchorPane.topAnchor="30.0" AnchorPane.rightAnchor="0.0" AnchorPane.leftAnchor="30.0" style="-fx-font-size:120%; -fx-font-weight:bold;">
         <padding>

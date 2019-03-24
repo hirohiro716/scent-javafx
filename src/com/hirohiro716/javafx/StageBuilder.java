@@ -6,6 +6,7 @@ import java.net.URL;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
@@ -227,4 +228,17 @@ public class StageBuilder {
         }
     }
 
+    /**
+     * Stageが表示されている画面を取得する.
+     * @return Screen
+     */
+    public Screen getDisplayedScreen() {
+        Stage stage = this.stage;
+        Screen screen = Screen.getPrimary();
+        for (Screen loopScreen: Screen.getScreensForRectangle(stage.getX(), stage.getY(), stage.getWidth(), stage.getHeight())) {
+            screen = loopScreen;
+        }
+        return screen;
+    }
+    
 }

@@ -11,7 +11,7 @@
 <?import com.hirohiro716.*?>
 <?import com.hirohiro716.javafx.control.*?>
 
-<AnchorPane fx:id="paneRoot" prefHeight="320.0" prefWidth="400.0" style="-fx-background-color:#fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="paneRoot" prefWidth="400.0" prefHeight="320.0" style="-fx-background-color:#fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <effect>
         <DropShadow height="60.0" radius="30.0" width="60.0" />
     </effect>

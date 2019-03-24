@@ -80,7 +80,7 @@ public abstract class AbstractDialog<T> implements InterfaceDialog<T> {
                 }
             });
         }
-        this.dialogPane.setPrefSize(screen.getVisualBounds().getWidth(), screen.getVisualBounds().getHeight());
+        this.dialogPane.setPrefSize(screen.getBounds().getWidth(), screen.getBounds().getHeight());
         // StackPaneの背景セット（アルファ値が0.5以下だとクリックイベント拾わない）
         this.dialogPane.setStyle(CSSHelper.updateStyleValue(this.dialogPane.getStyle(), "-fx-background-color", "rgba(180,180,180,0.51)"));
         // StackPaneをクリックしたら閉じる処理
@@ -114,8 +114,8 @@ public abstract class AbstractDialog<T> implements InterfaceDialog<T> {
         this.stage.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this.nonCloseEvent);
         this.stage.initStyle(StageStyle.TRANSPARENT);
         // FullScreenで表示する
-        this.stage.setX(screen.getVisualBounds().getMinX());
-        this.stage.setY(screen.getVisualBounds().getMinY());
+        this.stage.setX(screen.getBounds().getMinX());
+        this.stage.setY(screen.getBounds().getMinY());
         // アイコンセット
         if (this.parentStage == null || this.parentStage.getIcons().size() == 0) {
             this.stage.getIcons().add(new Image(AbstractDialog.class.getResourceAsStream("icon16.png")));

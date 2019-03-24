@@ -2,12 +2,15 @@ package com.hirohiro716.javafx.data;
 
 import java.io.IOException;
 import java.net.URL;
+
+import com.hirohiro716.LayoutSetting;
 import com.hirohiro716.javafx.StageBuilder;
 import com.hirohiro716.javafx.dialog.InterfaceDialog.CloseEventHandler;
 import com.hirohiro716.javafx.dialog.DialogResult;
 import com.hirohiro716.javafx.dialog.confirm.ConfirmPane;
 
 import javafx.event.EventHandler;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
@@ -20,32 +23,32 @@ import javafx.stage.WindowEvent;
 public abstract class AbstractEditor<T> {
 
     /**
-     * "編集画面の表示失敗" というダイアログタイトル用の文字列
+     * "編集画面の表示失敗" というダイアログタイトル用の文字列.
      */
     public static final String ERROR_DIALOG_TITLE_OPEN_FAILURE = "編集画面の表示失敗";
 
     /**
-     * "データに問題" というダイアログタイトル用の文字列
+     * "データに問題" というダイアログタイトル用の文字列.
      */
     public static final String ERROR_DIALOG_TITLE_VALIDATION = "データに問題";
 
     /**
-     * "保存失敗" というダイアログタイトル用の文字列
+     * "保存失敗" というダイアログタイトル用の文字列.
      */
     public static final String ERROR_DIALOG_TITLE_SAVE = "保存失敗";
 
     /**
-     * "閉じる確認" というダイアログタイトル用の文字列
+     * "閉じる確認" というダイアログタイトル用の文字列.
      */
     public static final String CONFIRM_DIALOG_TITLE_CLOSE = "閉じる確認";
 
     /**
-     * "削除の確認" というダイアログタイトル用の文字列
+     * "削除の確認" というダイアログタイトル用の文字列.
      */
     public static final String CONFIRM_DIALOG_TITLE_DELETE = "削除の確認";
     
     /**
-     * "このデータは削除されているため上書きできませんでした。\n" というダイアログ用の文字列
+     * "このデータは削除されているため上書きできませんでした。\n" というダイアログ用の文字列.
      */
     public static final String ERROR_DIALOG_MESSAGE_SAVE_NOTFOUND = "このデータは削除されているため上書きできませんでした。\n";
 
@@ -217,9 +220,9 @@ public abstract class AbstractEditor<T> {
     protected void processAfterCloseConfirm() {
         this.isCloseDialogShown = false;
     }
-    
+
     /**
-     * 画面を閉じる際の確認
+     * 画面を閉じる際の確認.
      */
     private EventHandler<WindowEvent> closeEvent = new EventHandler<WindowEvent>() {
         @Override
@@ -242,8 +245,51 @@ public abstract class AbstractEditor<T> {
             }
         }
     };
-    
 
+    /**
+     * ウインドウが表示されている画面を取得する.
+     * @return Screen
+     */
+    public Screen getDisplayedScreen() {
+        return this.stageBuilder.getDisplayedScreen();
+    }
+    
+    /**
+     * 現在の画面サイズ・位置情報からLayoutSettingを作成する.
+     * @return LayoutSetting
+     */
+    protected LayoutSetting createWindowLayoutSetting() {
+        LayoutSetting layoutSetting = new LayoutSetting();
+        Stage stage = this.getStage();
+        layoutSetting.setAll(stage.getX(), stage.getY(), stage.getWidth(), stage.getHeight());
+        return layoutSetting;
+    }
+
+    /**
+     * 画面サイズ・位置情報にLayoutSettingを適用する.
+     * @param layoutSetting
+     */
+    protected void applyWindowLayoutSetting(LayoutSetting layoutSetting) {
+        this.applyWindowLayoutSetting(layoutSetting, this.getDisplayedScreen());
+    }
+    
+    /**
+     * 画面サイズ・位置情報にLayoutSettingを適用する.
+     * @param layoutSetting
+     * @param screen 表示対象画面
+     */
+    protected void applyWindowLayoutSetting(LayoutSetting layoutSetting, Screen screen) {
+        Stage stage = this.getStage();
+        if (screen.getVisualBounds().getWidth() <= layoutSetting.getWidth() && screen.getVisualBounds().getHeight() <= layoutSetting.getHeight()) {
+            stage.setMaximized(true);
+        } else {
+            stage.setX(layoutSetting.getLayoutX());
+            stage.setY(layoutSetting.getLayoutY());
+            stage.setWidth(layoutSetting.getWidth());
+            stage.setHeight(layoutSetting.getHeight());
+        }
+    }
+    
     /**
      * 内部の情報に対しての処理インターフェース.
      * @author hiro
