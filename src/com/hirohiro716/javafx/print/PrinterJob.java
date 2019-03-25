@@ -5,7 +5,7 @@ import java.util.Set;
 
 import javax.print.PrintException;
 
-import com.hirohiro716.PrintHelper;
+import com.hirohiro716.print.PrintHelper;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

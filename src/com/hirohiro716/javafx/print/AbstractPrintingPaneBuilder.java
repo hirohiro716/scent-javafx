@@ -1,6 +1,6 @@
 package com.hirohiro716.javafx.print;
 
-import static com.hirohiro716.PrintHelper.*;
+import static com.hirohiro716.print.PrintHelper.*;
 
 import javax.print.PrintException;
 
