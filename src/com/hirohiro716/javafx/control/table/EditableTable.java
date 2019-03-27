@@ -654,6 +654,7 @@ public class EditableTable<S> extends AnchorPane {
         if (this.getSelectedItem() == null && this.visibleRowsCount > 0) {
             this.setSelectedItem(this.items.get(0));
         }
+        this.requestLayout();
     }
     
     /**
