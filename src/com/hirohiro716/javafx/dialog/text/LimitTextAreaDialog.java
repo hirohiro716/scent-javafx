@@ -90,6 +90,7 @@ public class LimitTextAreaDialog extends AbstractDialog<String> {
         this.limitTextArea.setPermitTab(this.buttonOk);
         // 初期値を入力
         this.limitTextArea.setText(this.defaultValue);
+        this.limitTextArea.selectAll();
         // ボタンのイベント定義
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override

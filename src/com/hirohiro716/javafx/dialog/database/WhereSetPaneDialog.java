@@ -146,7 +146,7 @@ public class WhereSetPaneDialog extends AbstractPaneDialog<WhereSet[]> implement
             this.paneMessage.getChildren().add(this.messageNode);
         }
         // 初期値のセット
-        if (this.defaultValue == null) {
+        if (this.defaultValue == null || this.defaultValue.length == 0) {
             this.core.addWhereSet(false);
         } else {
             for (WhereSet whereSet: this.defaultValue) {

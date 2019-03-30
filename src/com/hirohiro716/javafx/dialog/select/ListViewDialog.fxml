@@ -15,7 +15,7 @@
     <effect>
         <DropShadow height="60.0" radius="30.0" width="60.0" />
     </effect>
-    <ListView fx:id="listView" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="140.0" />
+    <ListView fx:id="listView" AnchorPane.topAnchor="140.0" AnchorPane.rightAnchor="30.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="30.0" />
     <HBox spacing="10.0" alignment="CENTER_RIGHT" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
         <EnterFireButton fx:id="buttonOk" minWidth="80.0" minHeight="40.0" text="OK" />
         <EnterFireButton fx:id="buttonCancel" cancelButton="true" minWidth="100.0" minHeight="40.0" text="キャンセル" />
@@ -25,5 +25,5 @@
             <Insets top="10.0" right="10.0" bottom="10.0" />
         </padding>
     </Label>
-    <AnchorPane fx:id="paneMessage" AnchorPane.bottomAnchor="360.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="70.0" />
+    <AnchorPane fx:id="paneMessage" AnchorPane.topAnchor="70.0" AnchorPane.rightAnchor="30.0" AnchorPane.bottomAnchor="360.0" AnchorPane.leftAnchor="30.0" />
 </AnchorPane>

@@ -20,6 +20,6 @@
             <Insets top="10.0" right="10.0" bottom="10.0" />
         </padding>
     </Label>
-    <AnchorPane fx:id="paneMessage" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="70.0" />
+    <AnchorPane fx:id="paneMessage" AnchorPane.topAnchor="70.0" AnchorPane.rightAnchor="30.0" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="30.0" />
     <ProgressIndicator prefHeight="50.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="160.0" />
 </AnchorPane>

@@ -22,5 +22,5 @@
         </padding>
     </Label>
     <Label fx:id="labelClose" text="×" AnchorPane.topAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-    <FlowPane vgap="10.0" hgap="10.0" fx:id="flowPaneButtons" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="80.0" />
+    <FlowPane vgap="10.0" hgap="10.0" fx:id="flowPaneButtons" AnchorPane.topAnchor="80.0" AnchorPane.rightAnchor="30.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" />
 </AnchorPane>

@@ -27,7 +27,7 @@
         <padding>
             <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
         </padding></EnterFireButton>
-    <ScrollPane AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="165.0">
+    <ScrollPane AnchorPane.topAnchor="165.0" AnchorPane.rightAnchor="125.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="30.0">
         <VBox fx:id="vboxWhereSet" spacing="5.0">
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -39,7 +39,7 @@
             <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
         </padding>
     </EnterFireButton>
-    <ScrollPane AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="165.0">
+    <ScrollPane AnchorPane.topAnchor="165.0" AnchorPane.rightAnchor="30.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="480.0">
         <VBox fx:id="vboxWhereSetGroup" spacing="5.0">
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

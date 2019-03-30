@@ -91,6 +91,7 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
         this.limitTextField.setAlignment(this.pos);
         // 初期値を入力
         this.limitTextField.setText(this.defaultValue);
+        this.limitTextField.selectAll();
         // テキストフィールドのイベント定義
         this.limitTextField.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
             @Override
