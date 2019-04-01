@@ -274,7 +274,7 @@ public class DynamicTableView extends TableView<RudeArray> {
                         if (this.getTableRow() != null && this.getTableRow().getItem() != null) {
                             RudeArray row = (RudeArray) this.getTableRow().getItem();
                             if (row.get(columnName) != null) {
-                                this.setText(numberFormat.format(row.get(columnName)));
+                                this.setText(numberFormat.format(row.getDouble(columnName)));
                             }
                         }
                     }
