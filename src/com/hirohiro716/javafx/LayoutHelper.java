@@ -54,7 +54,7 @@ public class LayoutHelper {
         Text text = new Text(string);
         Font font = Font.font(fontFamilyName, defaultFontSize);
         text.setFont(font);
-        while (text.getLayoutBounds().getWidth() > width || text.getLayoutBounds().getHeight() > height) {
+        while (text.getLayoutBounds().getWidth() > width && 0 < width || text.getLayoutBounds().getHeight() > height && 0 < height) {
             font = new Font(fontFamilyName, font.getSize() - 0.5);
             text.setFont(font);
         }
@@ -77,7 +77,7 @@ public class LayoutHelper {
         text.setWrappingWidth(width);
         Text textOne = new Text("あ");
         textOne.setFont(font);
-        while (textOne.getLayoutBounds().getWidth() > width || text.getLayoutBounds().getHeight() > height) {
+        while (textOne.getLayoutBounds().getWidth() > width && 0 < width || text.getLayoutBounds().getHeight() > height && 0 < height) {
             font = new Font(fontFamilyName, font.getSize() - 0.5);
             text.setFont(font);
             textOne.setFont(font);
