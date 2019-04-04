@@ -286,7 +286,6 @@ class WhereSetDialogCore {
      * @param columnType
      * @return 検索値
      */
-    @SuppressWarnings("incomplete-switch")
     protected static Object getRowValue(Control control, ColumnType columnType) {
         // テキストフィールドの場合はかなり特殊
         if (control instanceof TextField) {
@@ -294,11 +293,14 @@ class WhereSetDialogCore {
             switch (columnType) {
             case STRING:
             case NUMBER_STRING:
-            case DATE:
-            case DATETIME:
                 return textField.getText(); // 文字列はそのまま
             case NUMBER:
                 return StringConverter.stringToDouble(textField.getText()); // 数値は変換
+            case DATE:
+            case DATETIME:
+                return Datetime.stringToDate(textField.getText()); // 日時は変換
+            case BOOLEAN:
+                break;
             }
         }
         if (control instanceof HashMapComboBox<?, ?>) {
@@ -325,15 +327,18 @@ class WhereSetDialogCore {
             switch (columnType) {
             case STRING:
             case NUMBER_STRING:
-            case DATE:
-            case DATETIME:
                 textField.setText((String) value);
                 break;
             case NUMBER:
                 textField.setText(StringConverter.tryNonFraction(String.valueOf(value))); // 数値は丸めて文字列へ
                 break;
-            default:
+            case DATE:
+                textField.setText(Datetime.dateToString((Date) value, "yyyy-MM-dd"));
                 break;
+            case DATETIME:
+                textField.setText(Datetime.dateToString((Date) value, "yyyy-MM-dd HH:mm:ss"));
+                break;
+            case BOOLEAN:
             }
         }
         if (control instanceof HashMapComboBox<?, ?>) {
