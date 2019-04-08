@@ -181,7 +181,7 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
                 @Override
                 public void handle(MouseEvent event) {
                     // カーソルを変えて半透明に
-                    label.setCursor(Cursor.CLOSED_HAND);
+                    label.setCursor(Cursor.MOVE);
                     label.setOpacity(0.5);
                     event.consume();
                 }
@@ -251,7 +251,7 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
                 public void handle(MouseEvent event) {
                     if (event.isPrimaryButtonDown() == false) {
                         // マウスカーソルで移動可能をアピール
-                        label.setCursor(Cursor.OPEN_HAND);
+                        label.setCursor(Cursor.V_RESIZE);
                     }
                 }
             });
