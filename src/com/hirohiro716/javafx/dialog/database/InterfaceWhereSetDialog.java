@@ -21,7 +21,7 @@ public interface InterfaceWhereSetDialog extends InterfaceDialog<WhereSet[]> {
          */
         STRING,
         /**
-         * 文字列（数字だけ）
+         * 文字列(数字だけ)
          */
         NUMBER_STRING,
         /**

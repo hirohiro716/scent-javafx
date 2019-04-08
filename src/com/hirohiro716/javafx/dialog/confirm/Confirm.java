@@ -19,7 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
- * 確認メッセージ（OK/Cancel）を表示するクラス.
+ * 確認メッセージ(OK/Cancel)を表示するクラス.
  * @author hiro
  */
 public class Confirm extends AbstractDialog<DialogResult> {

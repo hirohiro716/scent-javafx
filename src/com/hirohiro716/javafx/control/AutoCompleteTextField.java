@@ -126,7 +126,7 @@ public class AutoCompleteTextField extends LimitTextField {
     private double listItemHeightRate = 8;
 
     /**
-     * リストアイテムの高さをTextFieldの高さ何個分かで指定する.（初期値は8個分）
+     * リストアイテムの高さをTextFieldの高さ何個分かで指定する.(初期値は8個分)
      * @param rate TextFieldの高さ何個分にするか
      */
     public void setListItemHeightRate(double rate) {
@@ -144,7 +144,7 @@ public class AutoCompleteTextField extends LimitTextField {
     private int maxItemsCount = 100;
 
     /**
-     * リストアイテムの最大表示数を指定する.（初期値は100行）
+     * リストアイテムの最大表示数を指定する.(初期値は100行)
      * @param maxCount 最大表示数
      */
     public void setMaxItemsCount(int maxCount) {

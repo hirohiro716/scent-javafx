@@ -19,7 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 /**
- * 確認メッセージ（OK/Cancel）を表示するクラス.
+ * 確認メッセージ(OK/Cancel)を表示するクラス.
  * @author hiro
  */
 public class ConfirmPane extends AbstractPaneDialog<DialogResult> {

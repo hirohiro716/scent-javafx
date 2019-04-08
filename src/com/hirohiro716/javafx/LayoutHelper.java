@@ -44,8 +44,8 @@ public class LayoutHelper {
     /**
      * 幅と高さに収まるフォントを作成する.
      * @param string 文字列
-     * @param width 幅（point）
-     * @param height 高さ（point）
+     * @param width 幅(point)
+     * @param height 高さ(point)
      * @param fontFamilyName 初期フォントファミリー名
      * @param defaultFontSize 初期フォントサイズ
      * @return 調整されたフォント
@@ -64,8 +64,8 @@ public class LayoutHelper {
     /**
      * テキストの自動折り返しをしつつ幅と高さに収まるフォントを作成する.
      * @param string 文字列
-     * @param width 幅（point）
-     * @param height 高さ（point）
+     * @param width 幅(point)
+     * @param height 高さ(point)
      * @param fontFamilyName 初期フォントファミリー名
      * @param defaultFontSize 初期フォントサイズ
      * @return 調整されたフォント

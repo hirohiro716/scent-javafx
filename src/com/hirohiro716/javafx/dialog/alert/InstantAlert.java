@@ -127,7 +127,7 @@ public class InstantAlert {
      * @param text 表示文字
      * @param x 位置1
      * @param y 位置2
-     * @param millisecond 表示時間（ミリ秒）
+     * @param millisecond 表示時間(ミリ秒)
      */
     public static void show(Parent parent, String text, double x, double y, int millisecond) {
         InstantAlert instantAlert = new InstantAlert(parent);
@@ -143,7 +143,7 @@ public class InstantAlert {
      * @param parent 表示対象Pane
      * @param text 表示文字
      * @param pos 位置
-     * @param millisecond 表示時間（ミリ秒）
+     * @param millisecond 表示時間(ミリ秒)
      */
     public static void show(Parent parent, String text, Pos pos, int millisecond) {
         InstantAlert instantAlert = new InstantAlert(parent);

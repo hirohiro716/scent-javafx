@@ -54,7 +54,7 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     /**
      * 検索処理を行うコールバックメソッド. searchingWithWaitViewメソッドから自動的に呼び出される.
      * @param afterSQL WHERE句の後に付与するオプションSQL
-     * @param whereSets 検索条件（複数指定するとOR検索になる）
+     * @param whereSets 検索条件(複数指定するとOR検索になる)
      * @return 検索結果
      * @throws SQLException
      */
@@ -63,7 +63,7 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
      /**
       * 検索を待機画面を表示しながら実行する.
       * @param afterSQL WHERE句の後に付与するオプションSQL
-      * @param whereSets 検索条件（複数指定するとOR検索になる）
+      * @param whereSets 検索条件(複数指定するとOR検索になる)
       */
     protected void searchingWithWaitView(String afterSQL, WhereSet... whereSets) {
         AbstractDatabaseSearcher<T> searcher = AbstractDatabaseSearcher.this;

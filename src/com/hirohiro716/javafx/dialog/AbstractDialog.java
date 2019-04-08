@@ -81,7 +81,7 @@ public abstract class AbstractDialog<T> implements InterfaceDialog<T> {
             });
         }
         this.dialogPane.setPrefSize(screen.getBounds().getWidth(), screen.getBounds().getHeight());
-        // StackPaneの背景セット（アルファ値が0.5以下だとクリックイベント拾わない）
+        // StackPaneの背景セット(アルファ値が0.5以下だとクリックイベント拾わない)
         this.dialogPane.setStyle(CSSHelper.updateStyleValue(this.dialogPane.getStyle(), "-fx-background-color", "rgba(180,180,180,0.51)"));
         // StackPaneをクリックしたら閉じる処理
         if (this.isClosableAtStackPaneClicked()) {

@@ -70,7 +70,7 @@ public class DynamicTableView extends TableView<RudeArray> {
 
     /**
      * columnNameから対象カラムを取得する.
-     * @param id ID（columnName）
+     * @param id ID(columnName)
      * @return TableColumn
      */
     public TableColumn<RudeArray, ?> getColumn(String id) {

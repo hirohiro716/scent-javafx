@@ -21,7 +21,7 @@ public class PaneHelper {
      * @param <T> 検索するクラス
      * @param pane 検索対象
      * @param type 検索する型
-     * @return 検索結果（該当するものがなければnull）
+     * @return 検索結果(該当するものがなければnull)
      */
     public static <T> T findNode(Pane pane, Class<T> type) {
         applyCss(pane);
@@ -34,7 +34,7 @@ public class PaneHelper {
      * @param pane 検索対象
      * @param type 検索する型
      * @param selector セレクター
-     * @return 検索結果（該当するものがなければnull）
+     * @return 検索結果(該当するものがなければnull)
      */
     @SuppressWarnings("unchecked")
     public static <T> T findNode(Pane pane, Class<T> type, String selector) {

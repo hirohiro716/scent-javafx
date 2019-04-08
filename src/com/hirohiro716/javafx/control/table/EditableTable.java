@@ -49,7 +49,7 @@ import javafx.scene.layout.VBox;
 /**
  * ColumnとRowの概念があり 様々なコントロールを行として並べて表示し 複数のオブジェクトを編集するクラス.<br>
  * Ctrl+↑で行を上に移動し Ctrl+↓で行を下に移動する<br>
- * （スタイルクラス:"editable-table" ヘッダーHBoxのスタイルクラス:"header" 全行VBoxのスタイルクラス:"rows" 行HBoxのスタイルクラス:"row"）
+ * (スタイルクラス:"editable-table" ヘッダーHBoxのスタイルクラス:"header" 全行VBoxのスタイルクラス:"rows" 行HBoxのスタイルクラス:"row")
  * @author hiro
  * @param <S>
  */
@@ -611,7 +611,7 @@ public class EditableTable<S> extends AnchorPane {
     private SimpleIntegerProperty loadRowsCountProperty = new SimpleIntegerProperty(20);
     
     /**
-     * Rowを更に読み込む際の行数（初期値は20）.
+     * Rowを更に読み込む際の行数(初期値は20).
      * @return 読み込み行数
      */
     public int getLoadRowsCount() {
@@ -619,7 +619,7 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * Rowを更に読み込む際の行数をセットする（初期値は20）.
+     * Rowを更に読み込む際の行数をセットする(初期値は20).
      * @param loadRowsCount 読み込み行数
      */
     public void setLoadRowsCount(int loadRowsCount) {
@@ -660,7 +660,7 @@ public class EditableTable<S> extends AnchorPane {
     /**
      * コントロールに関連づいているitemを取得する.
      * @param control 対象Control
-     * @return item（取得できない場合はnull）
+     * @return item(取得できない場合はnull)
      */
     @SuppressWarnings("unchecked")
     public S findRelationalItem(Control control) {
@@ -677,7 +677,7 @@ public class EditableTable<S> extends AnchorPane {
      * @param <T>
      * @param item 対象のitem
      * @param id 対象のカラムID
-     * @return コントロール（表示されていない場合はnull）
+     * @return コントロール(表示されていない場合はnull)
      * @throws ClassCastException 取得しようとしているclassと内部コントロールのclassが不一致の場合
      */
     @SuppressWarnings("unchecked")
@@ -742,7 +742,7 @@ public class EditableTable<S> extends AnchorPane {
     /**
      * ColumnのHeaderに配置されているLabelコントロールを取得する.
      * @param id 対象のカラムID
-     * @return Label（存在しない場合はnull）
+     * @return Label(存在しない場合はnull)
      */
     public Label getHeaderLabel(String id) {
         return this.columnHeaderLabels.get(id);
@@ -822,12 +822,12 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * 各Column種類の連想配列（キーはID）.
+     * 各Column種類の連想配列(キーはID).
      */
     private HashMap<String, ColumnType> columnTypes = new HashMap<>();
     
     /**
-     * 各Columnのコントロールを生成するFactoryの連想配列（キーはID）.
+     * 各Columnのコントロールを生成するFactoryの連想配列(キーはID).
      */
     private HashMap<String, ControlFactory<S, ?>> controlFactories = new HashMap<>();
     

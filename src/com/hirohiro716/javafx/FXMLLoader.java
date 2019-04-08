@@ -29,7 +29,7 @@ public class FXMLLoader {
     }
 
     /**
-     * コンストラクタ.（予めコントローラーを指定）
+     * コンストラクタ.(予めコントローラーを指定)
      * @param fxmlURL FXMLのURL
      * @param controller コントローラー
      * @throws IOException

@@ -76,9 +76,9 @@ public class RudeDatePicker extends DatePicker {
     
     /**
      * 年月日をセットする.
-     * @param year 年（西暦）
-     * @param month 月（1～12）
-     * @param day 日（1～31）
+     * @param year 年(西暦)
+     * @param month 月(1～12)
+     * @param day 日(1～31)
      */
     public void setValue(int year, int month, int day) {
         this.setValue(LocalDate.of(year, month, day));
