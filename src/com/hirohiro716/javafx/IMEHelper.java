@@ -16,7 +16,7 @@ import javafx.scene.input.MouseEvent;
  * キーボードのショートカットキーをシミュレートしてIMEを制御しようとするクラス.
  * @author hiro
  */
-public class ImeHelper {
+public class IMEHelper {
     
     /**
      * コントロールにIME制御用のListenerを付与する.

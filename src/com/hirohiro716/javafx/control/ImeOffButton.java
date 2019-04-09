@@ -1,7 +1,7 @@
 package com.hirohiro716.javafx.control;
 
 import com.hirohiro716.InterfaceKeyInputRobotJapanese.ImeMode;
-import com.hirohiro716.javafx.ImeHelper;
+import com.hirohiro716.javafx.IMEHelper;
 
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -39,7 +39,7 @@ public class ImeOffButton extends Button {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                ImeHelper.apply(ImeOffButton.this, ImeMode.OFF);
+                IMEHelper.apply(ImeOffButton.this, ImeMode.OFF);
             }
         });
     }
