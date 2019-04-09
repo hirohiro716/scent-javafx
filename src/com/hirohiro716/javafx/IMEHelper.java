@@ -1,10 +1,9 @@
 package com.hirohiro716.javafx;
 
-import com.hirohiro716.javafx.RobotJapanese;
+import com.hirohiro716.javafx.robot.RobotJapanese;
+import com.hirohiro716.robot.InterfaceRobotJapanese.ImeMode;
 
 import java.lang.Thread.State;
-
-import com.hirohiro716.InterfaceRobotJapanese.ImeMode;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

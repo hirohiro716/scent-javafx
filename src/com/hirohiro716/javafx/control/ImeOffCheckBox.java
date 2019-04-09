@@ -1,7 +1,7 @@
 package com.hirohiro716.javafx.control;
 
-import com.hirohiro716.InterfaceRobotJapanese.ImeMode;
 import com.hirohiro716.javafx.IMEHelper;
+import com.hirohiro716.robot.InterfaceRobotJapanese.ImeMode;
 
 import javafx.application.Platform;
 import javafx.scene.control.CheckBox;

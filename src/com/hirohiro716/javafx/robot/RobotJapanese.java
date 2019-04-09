@@ -1,14 +1,14 @@
-package com.hirohiro716.javafx;
+package com.hirohiro716.javafx.robot;
 
 import java.awt.AWTException;
 
-import com.hirohiro716.InterfaceRobotJapanese;
+import com.hirohiro716.robot.InterfaceRobotJapanese;
 
 /**
  * JavaFXのRobotクラスに日本語用の機能を足したクラス. // TODO にする予定。JavaFXのRobotクラスが使えるようになったら変更する。
  * @author hiro
  */
-public class RobotJapanese implements InterfaceRobotJapanese {
+public class RobotJapanese implements InterfaceRobotJapanese<Integer> {
     
     /**
      * コンストラクタ.
@@ -23,7 +23,7 @@ public class RobotJapanese implements InterfaceRobotJapanese {
     private com.hirohiro716.awt.RobotJapanese awtRobot;
 
     @Override
-    public void keyType(int... keyCodes) {
+    public void keyType(Integer... keyCodes) {
         if (this.awtRobot == null) {
             return;
         }

@@ -8,7 +8,6 @@ import java.util.LinkedHashMap;
 
 import com.hirohiro716.StringConverter;
 import com.hirohiro716.RegexHelper.RegexPattern;
-import com.hirohiro716.InterfaceRobotJapanese.ImeMode;
 import com.hirohiro716.database.WhereSet;
 import com.hirohiro716.database.WhereSet.Comparison;
 import com.hirohiro716.database.WhereSet.Where;
@@ -23,6 +22,7 @@ import com.hirohiro716.javafx.dialog.InterfaceDialog.CloseEventHandler;
 import com.hirohiro716.javafx.dialog.confirm.ConfirmPane;
 import com.hirohiro716.javafx.dialog.database.InterfaceWhereSetDialog.ColumnType;
 import com.hirohiro716.javafx.dialog.datetime.DatetimePickerPaneDialog;
+import com.hirohiro716.robot.InterfaceRobotJapanese.ImeMode;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

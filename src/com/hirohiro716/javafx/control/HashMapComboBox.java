@@ -2,8 +2,8 @@ package com.hirohiro716.javafx.control;
 
 import java.util.HashMap;
 
-import com.hirohiro716.InterfaceRobotJapanese.ImeMode;
 import com.hirohiro716.javafx.IMEHelper;
+import com.hirohiro716.robot.InterfaceRobotJapanese.ImeMode;
 
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;

@@ -5,7 +5,6 @@ import java.util.Date;
 
 import com.hirohiro716.StringConverter;
 import com.hirohiro716.RegexHelper.RegexPattern;
-import com.hirohiro716.InterfaceRobotJapanese.ImeMode;
 import com.hirohiro716.datetime.Datetime;
 import com.hirohiro716.javafx.FXMLLoader;
 import com.hirohiro716.javafx.IMEHelper;
@@ -14,6 +13,7 @@ import com.hirohiro716.javafx.control.EnterFireButton;
 import com.hirohiro716.javafx.control.LimitTextField;
 import com.hirohiro716.javafx.control.RudeDatePicker;
 import com.hirohiro716.javafx.dialog.AbstractDialog;
+import com.hirohiro716.robot.InterfaceRobotJapanese.ImeMode;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
