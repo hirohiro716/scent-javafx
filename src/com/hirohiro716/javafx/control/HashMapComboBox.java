@@ -3,7 +3,7 @@ package com.hirohiro716.javafx.control;
 import java.util.HashMap;
 
 import com.hirohiro716.javafx.IMEHelper;
-import com.hirohiro716.robot.InterfaceRobotJapanese.ImeMode;
+import com.hirohiro716.robot.InterfaceTypingRobotJapanese.IMEMode;
 
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -45,7 +45,7 @@ public class HashMapComboBox<K, V> extends ComboBox<V> {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                IMEHelper.apply(HashMapComboBox.this, ImeMode.OFF);
+                IMEHelper.apply(HashMapComboBox.this, IMEMode.OFF);
             }
         });
     }

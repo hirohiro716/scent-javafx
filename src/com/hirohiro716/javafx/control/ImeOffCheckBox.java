@@ -1,7 +1,7 @@
 package com.hirohiro716.javafx.control;
 
 import com.hirohiro716.javafx.IMEHelper;
-import com.hirohiro716.robot.InterfaceRobotJapanese.ImeMode;
+import com.hirohiro716.robot.InterfaceTypingRobotJapanese.IMEMode;
 
 import javafx.application.Platform;
 import javafx.scene.control.CheckBox;
@@ -28,7 +28,7 @@ public class ImeOffCheckBox extends CheckBox {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                IMEHelper.apply(ImeOffCheckBox.this, ImeMode.OFF);
+                IMEHelper.apply(ImeOffCheckBox.this, IMEMode.OFF);
             }
         });
     }

@@ -13,7 +13,7 @@ import com.hirohiro716.javafx.control.EnterFireButton;
 import com.hirohiro716.javafx.control.LimitTextField;
 import com.hirohiro716.javafx.control.RudeDatePicker;
 import com.hirohiro716.javafx.dialog.AbstractPaneDialog;
-import com.hirohiro716.robot.InterfaceRobotJapanese.ImeMode;
+import com.hirohiro716.robot.InterfaceTypingRobotJapanese.IMEMode;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -118,15 +118,15 @@ public class DatetimePickerPaneDialog extends AbstractPaneDialog<Date> {
             this.limitTextFieldHour.setMaxLength(2);
             this.limitTextFieldHour.addPermitRegex(RegexPattern.INTEGER_NARROW_ONLY.getPattern(), false);
             this.limitTextFieldHour.setText(String.valueOf(datetime.toHour()));
-            IMEHelper.apply(this.limitTextFieldHour, ImeMode.OFF);
+            IMEHelper.apply(this.limitTextFieldHour, IMEMode.OFF);
             this.limitTextFieldMinute.setMaxLength(2);
             this.limitTextFieldMinute.addPermitRegex(RegexPattern.INTEGER_NARROW_ONLY.getPattern(), false);
             this.limitTextFieldMinute.setText(String.valueOf(datetime.toMinute()));
-            IMEHelper.apply(this.limitTextFieldMinute, ImeMode.OFF);
+            IMEHelper.apply(this.limitTextFieldMinute, IMEMode.OFF);
             this.limitTextFieldSecond.setMaxLength(2);
             this.limitTextFieldSecond.addPermitRegex(RegexPattern.INTEGER_NARROW_ONLY.getPattern(), false);
             this.limitTextFieldSecond.setText(String.valueOf(datetime.toSecond()));
-            IMEHelper.apply(this.limitTextFieldSecond, ImeMode.OFF);
+            IMEHelper.apply(this.limitTextFieldSecond, IMEMode.OFF);
         }
         // ボタンのイベント定義
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {

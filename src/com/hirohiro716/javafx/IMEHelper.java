@@ -1,7 +1,7 @@
 package com.hirohiro716.javafx;
 
 import com.hirohiro716.javafx.robot.RobotJapanese;
-import com.hirohiro716.robot.InterfaceRobotJapanese.ImeMode;
+import com.hirohiro716.robot.InterfaceTypingRobotJapanese.IMEMode;
 
 import java.lang.Thread.State;
 
@@ -17,13 +17,14 @@ import javafx.scene.input.MouseEvent;
  */
 public class IMEHelper {
     
+    
     /**
      * コントロールにIME制御用のListenerを付与する.
      * @param <T> javafx.scene.control.Controlを継承したクラスオブジェクト
      * @param control コントロール
      * @param imeMode IMEモード
      */
-    public static <T extends Control> void apply(T control, ImeMode imeMode) {
+    public static <T extends Control> void apply(T control, IMEMode imeMode) {
         ImeChangeRunnable imeChangeRunnable = new ImeChangeRunnable(imeMode);
         control.focusedProperty().addListener(new ImeChangeFocusedChangeListener(imeChangeRunnable));
         control.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -91,13 +92,13 @@ public class IMEHelper {
      */
     private static class ImeChangeRunnable implements Runnable {
 
-        private ImeMode imeMode;
+        private IMEMode imeMode;
         
         /**
          * コンストラクタ.
          * @param imeMode
          */
-        public ImeChangeRunnable(ImeMode imeMode) {
+        public ImeChangeRunnable(IMEMode imeMode) {
             this.imeMode = imeMode;
         }
         

@@ -22,7 +22,7 @@ import com.hirohiro716.javafx.dialog.InterfaceDialog.CloseEventHandler;
 import com.hirohiro716.javafx.dialog.confirm.ConfirmPane;
 import com.hirohiro716.javafx.dialog.database.InterfaceWhereSetDialog.ColumnType;
 import com.hirohiro716.javafx.dialog.datetime.DatetimePickerPaneDialog;
-import com.hirohiro716.robot.InterfaceRobotJapanese.ImeMode;
+import com.hirohiro716.robot.InterfaceTypingRobotJapanese.IMEMode;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -596,12 +596,12 @@ class WhereSetDialogCore {
                 case BETWEEN:
                     textField = new TextField();
                     textField.setPrefWidth(100);
-                    IMEHelper.apply(textField, ImeMode.HIRAGANA);
+                    IMEHelper.apply(textField, IMEMode.HIRAGANA);
                     controls.add(textField);
                     controls.add(new Label("～"));
                     textField = new TextField();
                     textField.setPrefWidth(100);
-                    IMEHelper.apply(textField, ImeMode.HIRAGANA);
+                    IMEHelper.apply(textField, IMEMode.HIRAGANA);
                     controls.add(textField);
                     break;
                 case EQUAL:
@@ -609,7 +609,7 @@ class WhereSetDialogCore {
                 default:
                     textField = new TextField();
                     textField.setPrefWidth(100);
-                    IMEHelper.apply(textField, ImeMode.HIRAGANA);
+                    IMEHelper.apply(textField, IMEMode.HIRAGANA);
                     controls.add(textField);
                     break;
                 }
@@ -620,27 +620,27 @@ class WhereSetDialogCore {
                     limitTextField = new LimitTextField();
                     limitTextField.setPrefWidth(100);
                     limitTextField.addPermitRegex(RegexPattern.INTEGER_NARROW_ONLY.getPattern(), false);
-                    IMEHelper.apply(limitTextField, ImeMode.OFF);
+                    IMEHelper.apply(limitTextField, IMEMode.OFF);
                     controls.add(limitTextField);
                     break;
                 case BETWEEN:
                     limitTextField = new LimitTextField();
                     limitTextField.setPrefWidth(100);
                     limitTextField.addPermitRegex(RegexPattern.INTEGER_NARROW_ONLY.getPattern(), false);
-                    IMEHelper.apply(limitTextField, ImeMode.OFF);
+                    IMEHelper.apply(limitTextField, IMEMode.OFF);
                     controls.add(limitTextField);
                     controls.add(new Label("～"));
                     limitTextField = new LimitTextField();
                     limitTextField.setPrefWidth(100);
                     limitTextField.addPermitRegex(RegexPattern.INTEGER_NARROW_ONLY.getPattern(), false);
-                    IMEHelper.apply(limitTextField, ImeMode.OFF);
+                    IMEHelper.apply(limitTextField, IMEMode.OFF);
                     controls.add(limitTextField);
                     break;
                 case LIKE:
                 default:
                     textField = new TextField();
                     textField.setPrefWidth(100);
-                    IMEHelper.apply(textField, ImeMode.OFF);
+                    IMEHelper.apply(textField, IMEMode.OFF);
                     controls.add(textField);
                     break;
                 }
@@ -651,26 +651,26 @@ class WhereSetDialogCore {
                     limitTextField = new LimitTextField();
                     limitTextField.setPrefWidth(75);
                     limitTextField.addPermitRegex(RegexPattern.DECIMAL_NEGATIVE.getPattern(), false);
-                    IMEHelper.apply(limitTextField, ImeMode.OFF);
+                    IMEHelper.apply(limitTextField, IMEMode.OFF);
                     controls.add(limitTextField);
                     break;
                 case BETWEEN:
                     limitTextField = new LimitTextField();
                     limitTextField.setPrefWidth(75);
                     limitTextField.addPermitRegex(RegexPattern.DECIMAL_NEGATIVE.getPattern(), false);
-                    IMEHelper.apply(limitTextField, ImeMode.OFF);
+                    IMEHelper.apply(limitTextField, IMEMode.OFF);
                     controls.add(limitTextField);
                     controls.add(new Label("～"));
                     limitTextField = new LimitTextField();
                     limitTextField.setPrefWidth(75);
                     limitTextField.addPermitRegex(RegexPattern.DECIMAL_NEGATIVE.getPattern(), false);
-                    IMEHelper.apply(limitTextField, ImeMode.OFF);
+                    IMEHelper.apply(limitTextField, IMEMode.OFF);
                     controls.add(limitTextField);
                     break;
                 default:
                     textField = new TextField();
                     textField.setPrefWidth(100);
-                    IMEHelper.apply(textField, ImeMode.OFF);
+                    IMEHelper.apply(textField, IMEMode.OFF);
                     controls.add(textField);
                     break;
                 }
