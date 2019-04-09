@@ -2,13 +2,13 @@ package com.hirohiro716.javafx;
 
 import java.awt.AWTException;
 
-import com.hirohiro716.InterfaceKeyInputRobotJapanese;
+import com.hirohiro716.InterfaceRobotJapanese;
 
 /**
  * JavaFXのRobotクラスに日本語用の機能を足したクラス. // TODO にする予定。JavaFXのRobotクラスが使えるようになったら変更する。
  * @author hiro
  */
-public class RobotJapanese implements InterfaceKeyInputRobotJapanese {
+public class RobotJapanese implements InterfaceRobotJapanese {
     
     /**
      * コンストラクタ.

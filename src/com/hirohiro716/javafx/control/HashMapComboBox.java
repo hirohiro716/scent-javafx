@@ -2,7 +2,7 @@ package com.hirohiro716.javafx.control;
 
 import java.util.HashMap;
 
-import com.hirohiro716.InterfaceKeyInputRobotJapanese.ImeMode;
+import com.hirohiro716.InterfaceRobotJapanese.ImeMode;
 import com.hirohiro716.javafx.IMEHelper;
 
 import javafx.application.Platform;

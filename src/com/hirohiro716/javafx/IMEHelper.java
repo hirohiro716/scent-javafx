@@ -4,7 +4,7 @@ import com.hirohiro716.javafx.RobotJapanese;
 
 import java.lang.Thread.State;
 
-import com.hirohiro716.InterfaceKeyInputRobotJapanese.ImeMode;
+import com.hirohiro716.InterfaceRobotJapanese.ImeMode;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

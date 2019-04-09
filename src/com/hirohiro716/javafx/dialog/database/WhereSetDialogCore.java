@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 
 import com.hirohiro716.StringConverter;
 import com.hirohiro716.RegexHelper.RegexPattern;
-import com.hirohiro716.InterfaceKeyInputRobotJapanese.ImeMode;
+import com.hirohiro716.InterfaceRobotJapanese.ImeMode;
 import com.hirohiro716.database.WhereSet;
 import com.hirohiro716.database.WhereSet.Comparison;
 import com.hirohiro716.database.WhereSet.Where;

@@ -5,7 +5,7 @@ import java.util.Date;
 
 import com.hirohiro716.StringConverter;
 import com.hirohiro716.RegexHelper.RegexPattern;
-import com.hirohiro716.InterfaceKeyInputRobotJapanese.ImeMode;
+import com.hirohiro716.InterfaceRobotJapanese.ImeMode;
 import com.hirohiro716.datetime.Datetime;
 import com.hirohiro716.javafx.FXMLLoader;
 import com.hirohiro716.javafx.IMEHelper;
