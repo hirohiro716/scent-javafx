@@ -9,7 +9,7 @@ import javafx.scene.input.KeyEvent;
  * EnterキーでActionイベントが発生するボタン.
  * @author hiro
  */
-public class EnterFireButton extends ImeOffButton {
+public class EnterFireButton extends IMEOffButton {
 
     /**
      * コンストラクタ.

@@ -3,7 +3,7 @@ package com.hirohiro716.javafx;
 import com.hirohiro716.javafx.control.AutoCompleteTextField;
 import com.hirohiro716.javafx.control.EnterFireButton;
 import com.hirohiro716.javafx.control.HashMapComboBox;
-import com.hirohiro716.javafx.control.ImeOffCheckBox;
+import com.hirohiro716.javafx.control.IMEOffCheckBox;
 import com.hirohiro716.javafx.control.LimitComboBox;
 import com.hirohiro716.javafx.control.LimitPasswordField;
 import com.hirohiro716.javafx.control.LimitTextArea;
@@ -183,7 +183,7 @@ public class PaneNodeFinder {
      * @return ImeOffCheckBox(該当するものがなければnull)
      */
     public CheckBox findImeOffCheckBox(String selector) {
-        return PaneHelper.findNode(this.pane, ImeOffCheckBox.class, selector);
+        return PaneHelper.findNode(this.pane, IMEOffCheckBox.class, selector);
     }
 
     /**

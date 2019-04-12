@@ -7,7 +7,7 @@ import javax.print.PrintException;
 import com.hirohiro716.StringConverter;
 import com.hirohiro716.javafx.CSSHelper;
 import com.hirohiro716.javafx.LayoutHelper;
-import com.hirohiro716.javafx.barcode.Jan13Helper;
+import com.hirohiro716.javafx.barcode.JAN13Helper;
 import com.hirohiro716.javafx.barcode.NW7Helper;
 
 import javafx.collections.FXCollections;
@@ -687,7 +687,7 @@ public abstract class AbstractPrintingPaneBuilder {
         this.printCanvas(millimeterWidth, millimeterHeight, millimeterLayoutX, millimeterLayoutY, scale, new CanvasCallback() {
             @Override
             public void call(Canvas canvas) {
-                Jan13Helper.drawBarcode(barcode, millimeterToPoint(millimeterWidth * scale), millimeterToPoint(millimeterHeight * scale), 0, 0, canvas.getGraphicsContext2D());
+                JAN13Helper.drawBarcode(barcode, millimeterToPoint(millimeterWidth * scale), millimeterToPoint(millimeterHeight * scale), 0, 0, canvas.getGraphicsContext2D());
             }
         });
     }

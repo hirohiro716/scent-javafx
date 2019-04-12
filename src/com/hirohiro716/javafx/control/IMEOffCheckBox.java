@@ -10,12 +10,12 @@ import javafx.scene.control.CheckBox;
  * フォーカスした際にIMEをOFFにするCheckBox.
  * @author hiro
  */
-public class ImeOffCheckBox extends CheckBox {
+public class IMEOffCheckBox extends CheckBox {
 
     /**
      * コンストラクタ.
      */
-    public ImeOffCheckBox() {
+    public IMEOffCheckBox() {
         this("");
     }
 
@@ -23,12 +23,12 @@ public class ImeOffCheckBox extends CheckBox {
      * コンストラクタ.
      * @param text ラベルテキスト
      */
-    public ImeOffCheckBox(String text) {
+    public IMEOffCheckBox(String text) {
         super(text);
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                IMEHelper.apply(ImeOffCheckBox.this, IMEMode.OFF);
+                IMEHelper.apply(IMEOffCheckBox.this, IMEMode.OFF);
             }
         });
     }

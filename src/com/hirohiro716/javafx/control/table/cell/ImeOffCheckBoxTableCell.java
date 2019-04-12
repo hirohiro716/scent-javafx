@@ -1,6 +1,6 @@
 package com.hirohiro716.javafx.control.table.cell;
 
-import com.hirohiro716.javafx.control.ImeOffCheckBox;
+import com.hirohiro716.javafx.control.IMEOffCheckBox;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -15,7 +15,7 @@ import javafx.scene.control.Control;
  */
 public abstract class ImeOffCheckBoxTableCell<S> extends AbstractLiveControlTableCell<S, Boolean> {
 
-    private ImeOffCheckBox checkBox;
+    private IMEOffCheckBox checkBox;
 
     /**
      * コンストラクタ.
@@ -39,7 +39,7 @@ public abstract class ImeOffCheckBoxTableCell<S> extends AbstractLiveControlTabl
     @Override
     protected void createControlCallback() {
         ImeOffCheckBoxTableCell<S> cell = this;
-        this.checkBox = new ImeOffCheckBox();
+        this.checkBox = new IMEOffCheckBox();
         this.checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
@@ -52,7 +52,7 @@ public abstract class ImeOffCheckBoxTableCell<S> extends AbstractLiveControlTabl
      * 内部のImeOffCheckBoxを取得する.
      * @return ImeOffCheckBox
      */
-    public ImeOffCheckBox getImeOffCheckBox() {
+    public IMEOffCheckBox getImeOffCheckBox() {
         return this.checkBox;
     }
 

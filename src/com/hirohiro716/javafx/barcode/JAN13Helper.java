@@ -8,7 +8,7 @@ import javafx.scene.canvas.GraphicsContext;
  * JavaFXでバーコードを生成するクラス.
  * @author hiro
  */
-public class Jan13Helper extends com.hirohiro716.barcode.JAN13Helper {
+public class JAN13Helper extends com.hirohiro716.barcode.JAN13Helper {
 
     /**
      * JAN13バーコードを描画します.

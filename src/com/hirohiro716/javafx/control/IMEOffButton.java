@@ -12,12 +12,12 @@ import javafx.scene.control.Button;
  * @author hiro
  *
  */
-public class ImeOffButton extends Button {
+public class IMEOffButton extends Button {
 
     /**
      * コンストラクタ.
      */
-    public ImeOffButton() {
+    public IMEOffButton() {
         this("", null);
     }
 
@@ -25,7 +25,7 @@ public class ImeOffButton extends Button {
      * コンストラクタ.
      * @param text
      */
-    public ImeOffButton(String text) {
+    public IMEOffButton(String text) {
         this(text, null);
     }
 
@@ -34,12 +34,12 @@ public class ImeOffButton extends Button {
      * @param text
      * @param graphic
      */
-    public ImeOffButton(String text, Node graphic) {
+    public IMEOffButton(String text, Node graphic) {
         super(text, graphic);
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                IMEHelper.apply(ImeOffButton.this, IMEMode.OFF);
+                IMEHelper.apply(IMEOffButton.this, IMEMode.OFF);
             }
         });
     }
