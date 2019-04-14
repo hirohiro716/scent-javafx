@@ -7,7 +7,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
 import javafx.concurrent.Worker.State;
-import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 
 /**
  * WebEngineの処理を順番に行うクラス.
@@ -17,11 +17,12 @@ public class WebEngineFlow {
     
     /**
      * コンストラクタ.
-     * @param engine
+     * @param webView
      */
-    public WebEngineFlow(WebEngine engine) {
-        this.controller = new WebEngineController(engine);
-        this.engine = engine;
+    public WebEngineFlow(WebView webView) {
+        this.controller = new WebEngineController(webView.getEngine());
+        this.webView = webView;
+        
     }
     
     private WebEngineController controller;
@@ -34,14 +35,14 @@ public class WebEngineFlow {
         return this.controller;
     }
     
-    private WebEngine engine;
+    private WebView webView;
     
     /**
-     * WebEngineインスタンスを取得する.
-     * @return WebEngine
+     * WebViewインスタンスを取得する.
+     * @return WebView
      */
-    public WebEngine getWebEngine() {
-        return this.engine;
+    public WebView getWebView() {
+        return this.webView;
     }
 
     private int sleepMillisecond = 200;
@@ -88,7 +89,7 @@ public class WebEngineFlow {
             public void execute(WebEngineController controller) {
                 controller.clearSelectedElements();
                 controller.selectElementById(id);
-                if (controller.isSelectedElement() == false) {
+                if (controller.isSelectedElement() == false && flow.webView.getScene().getWindow().isShowing()) {
                     flow.currentIndex--;
                 }
             }
@@ -106,7 +107,7 @@ public class WebEngineFlow {
             public void execute(WebEngineController controller) {
                 controller.clearSelectedElements();
                 controller.selectElementsByTagName(tagName);
-                if (controller.isSelectedElement() == false) {
+                if (controller.isSelectedElement() == false && flow.webView.getScene().getWindow().isShowing()) {
                     flow.currentIndex--;
                 }
             }
@@ -125,7 +126,7 @@ public class WebEngineFlow {
             public void execute(WebEngineController controller) {
                 controller.clearSelectedElements();
                 controller.selectElementsByTagName(tagName, textCompareRegex);
-                if (controller.isSelectedElement() == false) {
+                if (controller.isSelectedElement() == false && flow.webView.getScene().getWindow().isShowing()) {
                     flow.currentIndex--;
                 }
             }
@@ -144,7 +145,7 @@ public class WebEngineFlow {
             public void execute(WebEngineController controller) {
                 controller.clearSelectedElements();
                 controller.selectElementsByAttribute(attributeName, valueCompareRegex);
-                if (controller.isSelectedElement() == false) {
+                if (controller.isSelectedElement() == false && flow.webView.getScene().getWindow().isShowing()) {
                     flow.currentIndex--;
                 }
             }
@@ -158,7 +159,7 @@ public class WebEngineFlow {
      */
     public void execute() {
         WebEngineFlow flow = this;
-        this.engine.getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
+        this.webView.getEngine().getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
             @Override
             public void changed(ObservableValue<? extends State> observable, State oldValue, State newValue) {
                 if (newValue == State.SUCCEEDED) {
@@ -179,6 +180,9 @@ public class WebEngineFlow {
         } catch (InterruptedException exception) {
             exception.printStackTrace();
         }
+        if (this.webView.getScene().getWindow().isShowing() == false) {
+            return;
+        }
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -192,7 +196,7 @@ public class WebEngineFlow {
                         return;
                     }
                     flow.controller.clearSelectedElements();
-                    State state = flow.getWebEngine().getLoadWorker().getState();
+                    State state = flow.webView.getEngine().getLoadWorker().getState();
                     switch (state) {
                     case SUCCEEDED:
                     case READY:
