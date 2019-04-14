@@ -103,11 +103,11 @@ public class DatetimePickerPaneDialog extends AbstractPaneDialog<Date> {
         // 時刻
         if (this.isTimeInput == false) {
             this.limitTextFieldHour.setVisible(false);
-            this.limitTextFieldHour.setText("0");;
+            this.limitTextFieldHour.setText("0");
             this.limitTextFieldMinute.setVisible(false);
-            this.limitTextFieldMinute.setText("0");;
+            this.limitTextFieldMinute.setText("0");
             this.limitTextFieldSecond.setVisible(false);
-            this.limitTextFieldSecond.setText("0");;
+            this.limitTextFieldSecond.setText("0");
             for (Node node: this.getStackPane().lookupAll("#colon")) {
                 node.setVisible(false);
             }

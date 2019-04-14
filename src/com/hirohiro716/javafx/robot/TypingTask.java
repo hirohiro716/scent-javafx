@@ -24,6 +24,11 @@ public class TypingTask implements InterfaceTypingTask<Integer> {
     private com.hirohiro716.awt.TypingTask typingTask;
 
     @Override
+    public int getNumberOfTasks() {
+        return this.typingTask.getNumberOfTasks();
+    }
+
+    @Override
     public String makeTaskDefinitionString() {
         return this.typingTask.makeTaskDefinitionString();
     }

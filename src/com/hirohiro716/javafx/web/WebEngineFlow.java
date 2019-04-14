@@ -177,6 +177,7 @@ public class WebEngineFlow {
         try {
             Thread.sleep(flow.sleepMillisecond);
         } catch (InterruptedException exception) {
+            exception.printStackTrace();
         }
         Platform.runLater(new Runnable() {
             @Override

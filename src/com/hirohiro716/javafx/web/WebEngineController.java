@@ -227,6 +227,35 @@ public class WebEngineController {
         }
         return result.toArray(new Element[] {});
     }
+
+    /**
+     * JavaScriptを利用して選択されている最初のElementにフォーカスする.
+     */
+    public void focus() {
+        if (this.isSelectedElement()) {
+            focusElement(this.webEngine, this.selectedElementsList.get(0));
+        }
+    }
+    
+    /**
+     * JavaScriptを利用してElementをフォーカスする.
+     * @param webEngine WebEngineオブジェクト
+     * @param element 対象
+     */
+    public static void focusElement(WebEngine webEngine, Element element) {
+        if (element == null) {
+            return;
+        }
+        String backupClass = element.getAttribute("class");
+        String flagClass = WebEngineController.class.getName().replaceAll("\\.", "_").toUpperCase() + "_FLAG_FOR_FOCUS";
+        String newClass = StringConverter.join(backupClass, " ", flagClass);
+        element.setAttribute("class", newClass);
+        StringBuilder script = new StringBuilder("document.getElementsByClassName('");
+        script.append(flagClass);
+        script.append("')[0].focus();");
+        webEngine.executeScript(script.toString());
+        element.setAttribute("class", backupClass);
+    }
     
     /**
      * JavaScriptを利用して選択されている最初のElementをクリックする.
@@ -255,6 +284,35 @@ public class WebEngineController {
         script.append("')[0].click();");
         webEngine.executeScript(script.toString());
         element.setAttribute("class", backupClass);
+    }
+    
+    /**
+     * JavaScriptを利用して選択されている最初のOPTIONタグElementを選択状態にする.
+     */
+    public void setOptionElementSelect() {
+        if (this.isSelectedElement() && this.getSelectedElement().getTagName().toUpperCase().equals("OPTION")) {
+            setOptionElementSelect(this.webEngine, this.getSelectedElement());
+        }
+    }
+    
+    /**
+     * JavaScriptを利用してSELECTタグ内のオプションElementを選択状態にする.
+     * @param webEngine WebEngineオブジェクト
+     * @param optionElement 選択対象のOPTIONタグElement
+     */
+    public static void setOptionElementSelect(WebEngine webEngine, Element optionElement) {
+        if (optionElement == null) {
+            return;
+        }
+        String backupClass = optionElement.getAttribute("class");
+        String flagClass = WebEngineController.class.getName().replaceAll("\\.", "_").toUpperCase() + "_FLAG_FOR_SELECT";
+        String newClass = StringConverter.join(backupClass, " ", flagClass);
+        optionElement.setAttribute("class", newClass);
+        StringBuilder script = new StringBuilder("document.getElementsByClassName('");
+        script.append(flagClass);
+        script.append("')[0].selected = true;");
+        webEngine.executeScript(script.toString());
+        optionElement.setAttribute("class", backupClass);
     }
     
 }
