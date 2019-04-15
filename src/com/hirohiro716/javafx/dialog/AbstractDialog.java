@@ -175,21 +175,22 @@ public abstract class AbstractDialog<T> implements InterfaceDialog<T> {
 
     @Override
     public void close() {
-        if (this.parentStage != null) {
-            this.parentStage.getScene().getRoot().setDisable(false);
-            this.parentStage.removeEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this.nonCloseEvent);
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    AbstractDialog.this.parentStage.requestFocus();
+        AbstractDialog<T> dialog = this;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if (dialog.parentStage != null) {
+                    dialog.parentStage.getScene().getRoot().setDisable(false);
+                    dialog.parentStage.removeEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, dialog.nonCloseEvent);
+                    dialog.parentStage.requestFocus();
                 }
-            });
-        }
-        if (this.closeEvent != null) {
-            this.closeEvent.handle(this.getResult());
-        }
-        this.stage.removeEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this.nonCloseEvent);
-        this.stage.close();
+                if (dialog.closeEvent != null) {
+                    dialog.closeEvent.handle(dialog.getResult());
+                }
+                dialog.stage.removeEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, dialog.nonCloseEvent);
+                dialog.stage.close();
+            }
+        });
     }
 
     private CloseEventHandler<T> closeEvent;

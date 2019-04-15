@@ -8,7 +8,6 @@ import com.hirohiro716.javafx.LayoutHelper;
 import com.hirohiro716.javafx.dialog.AbstractPaneDialog;
 import com.hirohiro716.thread.Task;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -75,12 +74,7 @@ public class WaitPaneDialog<T> extends AbstractPaneDialog<T> {
             this.task.start();
         } else {
             if (this.isAutoClose) {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        dialog.close();
-                    }
-                });
+                dialog.close();
             }
         }
     }
@@ -144,12 +138,7 @@ public class WaitPaneDialog<T> extends AbstractPaneDialog<T> {
                     throw exception;
                 } finally {
                     if (dialog.isAutoClose) {
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                dialog.close();
-                            }
-                        });
+                        dialog.close();
                     }
                 }
             }

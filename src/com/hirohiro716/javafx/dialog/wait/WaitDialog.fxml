@@ -21,5 +21,7 @@
         </padding>
     </Label>
     <AnchorPane fx:id="paneMessage" AnchorPane.topAnchor="70.0" AnchorPane.rightAnchor="30.0" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="30.0" />
-    <ProgressIndicator prefHeight="50.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="160.0" />
+    <StackPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
+        <ProgressIndicator maxWidth="50.0" maxHeight="50.0" />
+    </StackPane>
 </AnchorPane>

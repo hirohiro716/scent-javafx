@@ -3,6 +3,8 @@ package com.hirohiro716.javafx.dialog;
 import java.util.ArrayList;
 
 import com.hirohiro716.javafx.CSSHelper;
+
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -108,13 +110,19 @@ public abstract class AbstractPaneDialog<T> implements InterfaceDialog<T> {
 
     @Override
     public void close() {
-        this.parentPane.getChildren().remove(this.dialogPane);
-        for (Node node: this.disableChangeNodes) {
-            node.setDisable(false);
-        }
-        if (this.closeEvent != null) {
-            this.closeEvent.handle(this.getResult());
-        }
+        AbstractPaneDialog<T> dialog = this;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                dialog.parentPane.getChildren().remove(dialog.dialogPane);
+                for (Node node: dialog.disableChangeNodes) {
+                    node.setDisable(false);
+                }
+                if (dialog.closeEvent != null) {
+                    dialog.closeEvent.handle(dialog.getResult());
+                }
+            }
+        });
     }
 
     private CloseEventHandler<T> closeEvent;

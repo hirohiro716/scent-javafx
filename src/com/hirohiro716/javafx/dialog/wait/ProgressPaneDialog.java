@@ -5,22 +5,27 @@ import java.util.concurrent.Callable;
 
 import com.hirohiro716.javafx.FXMLLoader;
 import com.hirohiro716.javafx.LayoutHelper;
-import com.hirohiro716.javafx.dialog.AbstractDialog;
+import com.hirohiro716.javafx.dialog.AbstractPaneDialog;
 import com.hirohiro716.thread.Task;
 
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
 
 /**
- * 待機画面を表示するクラス.
+ * 進捗状況の画面を表示するクラス.
  * @author hiro
  * @param <T>
  */
-public class WaitDialog<T> extends AbstractDialog<T> {
+public class ProgressPaneDialog<T> extends AbstractPaneDialog<T> {
 
     @FXML
     private AnchorPane paneRoot;
@@ -31,19 +36,18 @@ public class WaitDialog<T> extends AbstractDialog<T> {
     @FXML
     private AnchorPane paneMessage;
 
+    @FXML
+    private ProgressBar progressBar;
+    
+    @FXML
+    private Button buttonCancel;
+    
     /**
      * コンストラクタ.
+     * @param parentPane
      */
-    public WaitDialog() {
-        super();
-    }
-
-    /**
-     * コンストラクタ.
-     * @param parentStage
-     */
-    public WaitDialog(Stage parentStage) {
-        super(parentStage);
+    public ProgressPaneDialog(Pane parentPane) {
+        super(parentPane);
     }
 
     @Override
@@ -52,10 +56,17 @@ public class WaitDialog<T> extends AbstractDialog<T> {
     }
 
     @Override
-    protected void preparationCallback() {
-        WaitDialog<T> dialog = this;
+    public void show() {
+        ProgressPaneDialog<T> dialog = this;
+        // ダイアログ表示
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ProgressDialog.class.getResource(ProgressDialog.class.getSimpleName() + ".fxml"), this);
+            this.show(fxmlLoader.getPaneRoot());
+        } catch (IOException exception) {
+            exception.printStackTrace();
+            return;
+        }
         // タイトルのセット
-        this.getStage().setTitle(this.title);
         this.labelTitle.setText(this.title);
         // メッセージのセット
         if (this.message != null) {
@@ -69,34 +80,19 @@ public class WaitDialog<T> extends AbstractDialog<T> {
         if (this.messageNode != null) {
             this.paneMessage.getChildren().add(this.messageNode);
         }
+        // キャンセル処理
+        if (this.isCancelable) {
+            this.buttonCancel.setVisible(true);
+            this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    dialog.isCanceled = true;
+                }
+            });
+        }
         // タスクの実行
         if (this.task != null) {
             this.task.start();
-        } else {
-            if (this.isAutoClose) {
-                dialog.close();
-            }
-        }
-    }
-
-    @Override
-    public void show() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            this.show(fxmlLoader.getPaneRoot());
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
-    }
-
-    @Override
-    public T showAndWait() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            return this.showAndWait(fxmlLoader.getPaneRoot());
-        } catch (IOException exception) {
-            exception.printStackTrace();
-            return null;
         }
     }
 
@@ -129,15 +125,15 @@ public class WaitDialog<T> extends AbstractDialog<T> {
     public void setMessageNode(Node node) {
         this.messageNode = node;
     }
-    
-    private boolean isAutoClose = true;
+
+    boolean isCancelable = false;
     
     /**
-     * タスク終了後に自動的にダイアログを閉じるかどうかを指定する. 初期値はtrue.
-     * @param isAutoClose
+     * ダイアログがキャンセル可能かをセットする. 初期値はfalse.
+     * @param isCancelable キャンセル可能
      */
-    public void setAutoClose(boolean isAutoClose) {
-        this.isAutoClose = isAutoClose;
+    public void setCancelable(boolean isCancelable) {
+        this.isCancelable = isCancelable;
     }
 
     private Task<T> task;
@@ -147,7 +143,7 @@ public class WaitDialog<T> extends AbstractDialog<T> {
      * @param callable
      */
     public void setCallable(Callable<T> callable) {
-        WaitDialog<T> dialog = this;
+        ProgressPaneDialog<T> dialog = this;
         this.task = new Task<>(new Callable<T>() {
             @Override
             public T call() throws Exception {
@@ -157,15 +153,36 @@ public class WaitDialog<T> extends AbstractDialog<T> {
                 } catch (Exception exception) {
                     dialog.exception = exception;
                     throw exception;
-                } finally {
-                    if (dialog.isAutoClose) {
-                        dialog.close();
-                    }
                 }
             }
         });
     }
 
+    /**
+     * 進捗状況を更新する.
+     * @param progress 現在の進捗
+     * @param maxProgress 最大の進捗
+     */
+    public void updateProgress(double progress, double maxProgress) {
+        ProgressPaneDialog<T> dialog = this;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                dialog.progressBar.setProgress(progress / maxProgress);
+            }
+        });
+    }
+    
+    boolean isCanceled = false;
+    
+    /**
+     * ダイアログがキャンセルされているかどうかを取得する.
+     * @return キャンセルされているかどうか
+     */
+    public boolean isCanceled() {
+        return this.isCanceled;
+    }
+    
     private Exception exception;
 
     /**
@@ -175,7 +192,7 @@ public class WaitDialog<T> extends AbstractDialog<T> {
     public Exception getException() {
         return this.exception;
     }
-
+    
     /**
      * 内部処理で発生した例外としてセットする.
      * @param exception 例外

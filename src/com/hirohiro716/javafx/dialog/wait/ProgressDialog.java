@@ -8,19 +8,24 @@ import com.hirohiro716.javafx.LayoutHelper;
 import com.hirohiro716.javafx.dialog.AbstractDialog;
 import com.hirohiro716.thread.Task;
 
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
- * 待機画面を表示するクラス.
+ * 進捗状況の画面を表示するクラス.
  * @author hiro
  * @param <T>
  */
-public class WaitDialog<T> extends AbstractDialog<T> {
+public class ProgressDialog<T> extends AbstractDialog<T> {
 
     @FXML
     private AnchorPane paneRoot;
@@ -30,11 +35,17 @@ public class WaitDialog<T> extends AbstractDialog<T> {
 
     @FXML
     private AnchorPane paneMessage;
+    
+    @FXML
+    private ProgressBar progressBar;
+    
+    @FXML
+    private Button buttonCancel;
 
     /**
      * コンストラクタ.
      */
-    public WaitDialog() {
+    public ProgressDialog() {
         super();
     }
 
@@ -42,7 +53,7 @@ public class WaitDialog<T> extends AbstractDialog<T> {
      * コンストラクタ.
      * @param parentStage
      */
-    public WaitDialog(Stage parentStage) {
+    public ProgressDialog(Stage parentStage) {
         super(parentStage);
     }
 
@@ -53,7 +64,7 @@ public class WaitDialog<T> extends AbstractDialog<T> {
 
     @Override
     protected void preparationCallback() {
-        WaitDialog<T> dialog = this;
+        ProgressDialog<T> dialog = this;
         // タイトルのセット
         this.getStage().setTitle(this.title);
         this.labelTitle.setText(this.title);
@@ -69,13 +80,19 @@ public class WaitDialog<T> extends AbstractDialog<T> {
         if (this.messageNode != null) {
             this.paneMessage.getChildren().add(this.messageNode);
         }
+        // キャンセル処理
+        if (this.isCancelable) {
+            this.buttonCancel.setVisible(true);
+            this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    dialog.isCanceled = true;
+                }
+            });
+        }
         // タスクの実行
         if (this.task != null) {
             this.task.start();
-        } else {
-            if (this.isAutoClose) {
-                dialog.close();
-            }
         }
     }
 
@@ -129,17 +146,17 @@ public class WaitDialog<T> extends AbstractDialog<T> {
     public void setMessageNode(Node node) {
         this.messageNode = node;
     }
-    
-    private boolean isAutoClose = true;
+
+    boolean isCancelable = false;
     
     /**
-     * タスク終了後に自動的にダイアログを閉じるかどうかを指定する. 初期値はtrue.
-     * @param isAutoClose
+     * ダイアログがキャンセル可能かをセットする.
+     * @param isCancelable キャンセル可能
      */
-    public void setAutoClose(boolean isAutoClose) {
-        this.isAutoClose = isAutoClose;
+    public void setCancelable(boolean isCancelable) {
+        this.isCancelable = isCancelable;
     }
-
+    
     private Task<T> task;
 
     /**
@@ -147,7 +164,7 @@ public class WaitDialog<T> extends AbstractDialog<T> {
      * @param callable
      */
     public void setCallable(Callable<T> callable) {
-        WaitDialog<T> dialog = this;
+        ProgressDialog<T> dialog = this;
         this.task = new Task<>(new Callable<T>() {
             @Override
             public T call() throws Exception {
@@ -157,15 +174,36 @@ public class WaitDialog<T> extends AbstractDialog<T> {
                 } catch (Exception exception) {
                     dialog.exception = exception;
                     throw exception;
-                } finally {
-                    if (dialog.isAutoClose) {
-                        dialog.close();
-                    }
                 }
             }
         });
     }
-
+    
+    /**
+     * 進捗状況を更新する.
+     * @param progress 現在の進捗
+     * @param maxProgress 最大の進捗
+     */
+    public void updateProgress(double progress, double maxProgress) {
+        ProgressDialog<T> dialog = this;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                dialog.progressBar.setProgress(progress / maxProgress);
+            }
+        });
+    }
+    
+    boolean isCanceled = false;
+    
+    /**
+     * ダイアログがキャンセルされているかどうかを取得する.
+     * @return キャンセルされているかどうか
+     */
+    public boolean isCanceled() {
+        return this.isCanceled;
+    }
+    
     private Exception exception;
 
     /**
