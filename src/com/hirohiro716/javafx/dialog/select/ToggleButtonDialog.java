@@ -114,8 +114,10 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
         }
         // 初期値のセット
         if (this.defaultValue != null) {
-            for (E key: this.defaultValue.keySet()) {
-                buttonsHashMap.get(key).setSelected(true);
+            for (E key: this.defaultValue) {
+                if (buttonsHashMap.containsKey(key)) {
+                    buttonsHashMap.get(key).setSelected(true);
+                }
             }
         }
         // ボタンのイベント定義
@@ -214,13 +216,13 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
         this.messageNode = node;
     }
 
-    private HashMap<E, String> defaultValue;
+    private E[] defaultValue;
 
     /**
      * 選択状態の初期値をセットする.
      * @param defaultValue
      */
-    public void setDefaultValue(HashMap<E, String> defaultValue) {
+    public void setDefaultValue(E[] defaultValue) {
         this.defaultValue = defaultValue;
     }
 
