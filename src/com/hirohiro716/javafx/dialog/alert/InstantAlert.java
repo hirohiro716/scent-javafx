@@ -104,14 +104,17 @@ public class InstantAlert {
         vbox.setMouseTransparent(true);
         // ラベルに対するマウスイベントを透過
         this.label.setMouseTransparent(true);
-        // VBoxにラベルをセット
-        vbox.getChildren().add(this.label);
         // 配置
         if (this.alignment == null) {
+            Pane pane = new Pane();
+            pane.setPrefSize(this.parent.getWidth(), this.parent.getHeight());
+            vbox.getChildren().add(pane);
             this.label.setLayoutX(this.x);
             this.label.setLayoutY(this.y);
+            pane.getChildren().add(this.label);
         } else {
             vbox.setAlignment(this.alignment);
+            vbox.getChildren().add(this.label);
         }
         this.parent.getChildren().add(vbox);
         // 指定時間表示してフェードアウト
