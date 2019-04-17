@@ -22,7 +22,7 @@
         </padding>
     </Label>
     <AnchorPane fx:id="paneMessage" AnchorPane.topAnchor="70.0" AnchorPane.rightAnchor="30.0" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="30.0" />
-    <HashMapComboBox fx:id="comboBox" AnchorPane.topAnchor="190.0" AnchorPane.rightAnchor="30.0" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="30.0" />
+    <HashMapComboBox fx:id="comboBox" prefHeight="40.0" AnchorPane.rightAnchor="30.0" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="30.0" />
     <HBox spacing="10.0" alignment="CENTER_RIGHT" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
         <EnterFireButton fx:id="buttonOk" minWidth="80.0" minHeight="40.0" text="OK" />
         <EnterFireButton fx:id="buttonCancel" cancelButton="true" minWidth="100.0" minHeight="40.0" text="キャンセル" />

@@ -21,7 +21,7 @@
         </padding>
     </Label>
     <AnchorPane fx:id="paneMessage" AnchorPane.topAnchor="70.0" AnchorPane.rightAnchor="30.0" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="30.0" />
-    <ProgressBar fx:id="progressBar" prefHeight="30.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+    <ProgressBar fx:id="progressBar" prefHeight="30.0" AnchorPane.rightAnchor="20.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="20.0" />
     <HBox spacing="10.0" alignment="CENTER_RIGHT" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
         <IMEOffButton fx:id="buttonCancel" minWidth="100.0" minHeight="40.0" text="キャンセル" visible="false" />
     </HBox>
