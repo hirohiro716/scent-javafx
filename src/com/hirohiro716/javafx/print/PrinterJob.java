@@ -28,6 +28,11 @@ import javafx.scene.layout.Pane;
 public class PrinterJob {
 
     /**
+     * "印刷失敗" というダイアログタイトル用の文字列.
+     */
+    public static final String ERROR_DIALOG_TITLE_PRINT = "印刷失敗";
+
+    /**
      * すべてのプリンタを取得する.
      * @return すべてのプリンタ
      */
