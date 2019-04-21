@@ -1,9 +1,7 @@
 package com.hirohiro716.javafx;
 
 import com.hirohiro716.javafx.control.AutoCompleteTextField;
-import com.hirohiro716.javafx.control.EnterFireButton;
 import com.hirohiro716.javafx.control.HashMapComboBox;
-import com.hirohiro716.javafx.control.IMEOffCheckBox;
 import com.hirohiro716.javafx.control.LimitComboBox;
 import com.hirohiro716.javafx.control.LimitPasswordField;
 import com.hirohiro716.javafx.control.LimitTextArea;
@@ -25,7 +23,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 /**
  * Pnae内のコントロールを検索して取得するクラス.
@@ -42,6 +42,33 @@ public class PaneNodeFinder {
      */
     public <T extends Pane> PaneNodeFinder(T pane) {
         this.pane = pane;
+    }
+    
+    /**
+     * セレクターを指定してコントロールを取得する.
+     * @param selector
+     * @return Pane(該当するものがなければnull)
+     */
+    public Pane findPane(String selector) {
+        return PaneHelper.findNode(this.pane, Pane.class, selector);
+    }
+
+    /**
+     * セレクターを指定してコントロールを取得する.
+     * @param selector
+     * @return HBox(該当するものがなければnull)
+     */
+    public HBox findHBox(String selector) {
+        return PaneHelper.findNode(this.pane, HBox.class, selector);
+    }
+
+    /**
+     * セレクターを指定してコントロールを取得する.
+     * @param selector
+     * @return HBox(該当するものがなければnull)
+     */
+    public VBox findVBox(String selector) {
+        return PaneHelper.findNode(this.pane, VBox.class, selector);
     }
 
     /**
@@ -60,15 +87,6 @@ public class PaneNodeFinder {
      */
     public Button findButton(String selector) {
         return PaneHelper.findNode(this.pane, Button.class, selector);
-    }
-
-    /**
-     * セレクターを指定してコントロールを取得する.
-     * @param selector
-     * @return EnterFireButton(該当するものがなければnull)
-     */
-    public EnterFireButton findEnterFireButton(String selector) {
-        return PaneHelper.findNode(this.pane, EnterFireButton.class, selector);
     }
 
     /**
@@ -176,16 +194,7 @@ public class PaneNodeFinder {
     public CheckBox findCheckBox(String selector) {
         return PaneHelper.findNode(this.pane, CheckBox.class, selector);
     }
-
-    /**
-     * セレクターを指定してコントロールを取得する.
-     * @param selector
-     * @return ImeOffCheckBox(該当するものがなければnull)
-     */
-    public CheckBox findImeOffCheckBox(String selector) {
-        return PaneHelper.findNode(this.pane, IMEOffCheckBox.class, selector);
-    }
-
+    
     /**
      * セレクターを指定してコントロールを取得する.
      * @param selector
@@ -194,7 +203,7 @@ public class PaneNodeFinder {
     public ImageView findImageView(String selector) {
         return PaneHelper.findNode(this.pane, ImageView.class, selector);
     }
-
+    
     /**
      * セレクターを指定してコントロールを取得する.
      * @param <S> TableViewのitem型
