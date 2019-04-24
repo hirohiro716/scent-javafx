@@ -89,7 +89,7 @@ public class StageBuilder {
     }
 
     /**
-     * コンストラクタでFxmlHelperインスタンスからStageレイアウトを構成する.
+     * コンストラクタでFXMLLoaderインスタンスからStageレイアウトを構成する.
      * @param fxmlLoader
      * @throws IOException
      */
@@ -103,7 +103,7 @@ public class StageBuilder {
     }
 
     /**
-     * コンストラクタでFxmlHelperインスタンスからStageレイアウトを構成する.
+     * コンストラクタでFXMLLoaderインスタンスからStageレイアウトを構成する.
      * @param stage
      * @param fxmlLoader
      * @throws IOException

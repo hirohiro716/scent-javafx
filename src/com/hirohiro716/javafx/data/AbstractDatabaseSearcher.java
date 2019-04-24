@@ -505,7 +505,7 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     public void setBindTableInstance(T bindTableInstance) {
         this.bindTableInstance = bindTableInstance;
     }
-
+    
     /**
      * ウインドウが表示されている画面を取得する.
      * @return Screen
