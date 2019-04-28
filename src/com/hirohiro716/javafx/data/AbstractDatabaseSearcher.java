@@ -369,22 +369,6 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
                 searcher.search();
                 event.consume();
                 break;
-            case F12:
-                Node node = (Node) event.getSource();
-                ConfirmPane confirm = new ConfirmPane((Pane) node.getScene().getRoot());
-                confirm.setMessage("選択中のデータを削除します。");
-                confirm.setDefaultButton(DialogResult.CANCEL);
-                confirm.setCloseEvent(new CloseEventHandler<DialogResult>() {
-                    @Override
-                    public void handle(DialogResult resultValue) {
-                        if (resultValue == DialogResult.OK) {
-                            AbstractDatabaseSearcher.this.delete();
-                        }
-                    }
-                });
-                confirm.show();
-                event.consume();
-                break;
             default:
                 break;
             }
