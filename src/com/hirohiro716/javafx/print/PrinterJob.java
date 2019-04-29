@@ -1,6 +1,5 @@
 package com.hirohiro716.javafx.print;
 
-import java.util.ArrayList;
 import java.util.Set;
 
 import javax.print.PrintException;
@@ -110,27 +109,7 @@ public class PrinterJob {
     public void setJobName(String jobName) {
         this.jobName = jobName;
     }
-
-    private ArrayList<Pane> printingPaneList = new ArrayList<>();
-
-    /**
-     * 印刷するページを追加する.
-     * @param pane
-     */
-    public void addPage(Pane pane) {
-        this.printingPaneList.add(pane);
-    }
-
-    /**
-     * 印刷するページを追加する. このメソッド内でAbstractPrintingPaneBuilderのbuildが自動で呼ばれる.
-     * @param page AbstractPrintingPaneBuilderを継承したクラスのインスタンス
-     * @throws PrintException 
-     */
-    public void addPage(AbstractPrintingPaneBuilder page) throws PrintException {
-        page.build();
-        this.printingPaneList.add(page.getPane());
-    }
-
+    
     /**
      * プリンタでサポートしている用紙トレイを取得する.
      * @return サポートされている用紙トレイ
@@ -322,63 +301,89 @@ public class PrinterJob {
     public void setPrintSides(PrintSides printSides) {
         this.printSides = printSides;
     }
-
+    
+    private javafx.print.PrinterJob printerJob = null;
+    
     /**
-     * 印刷を実行する.
+     * 印刷ジョブを開始する.
      * @throws PrintException 印刷ジョブの作成に失敗した場合
      */
-    public void print() throws PrintException {
-        try {
-            javafx.print.PrinterJob printerJob = javafx.print.PrinterJob.createPrinterJob(this.printer);
-            JobSettings jobSettings = printerJob.getJobSettings();
-            jobSettings.setJobName(this.jobName);
-            jobSettings.setCopies(this.copies);
-            // 用紙
-            if (this.paper == null) {
-                this.paper = this.printer.getPrinterAttributes().getDefaultPaper();
+    public void start() throws PrintException {
+        this.printerJob = javafx.print.PrinterJob.createPrinterJob(this.printer);
+        JobSettings jobSettings = this.printerJob.getJobSettings();
+        jobSettings.setJobName(this.jobName);
+        jobSettings.setCopies(this.copies);
+        // 用紙
+        if (this.paper == null) {
+            this.paper = this.printer.getPrinterAttributes().getDefaultPaper();
+        }
+        if (this.pageOrientation == null) {
+            this.pageOrientation = this.printer.getPrinterAttributes().getDefaultPageOrientation();
+        }
+        if (this.marginType != null) {
+            jobSettings.setPageLayout(this.printer.createPageLayout(this.paper, this.pageOrientation, this.marginType));
+        }
+        if (this.leftMargin != null) {
+            // FIXME 用紙を回転すると余白指定が変になるので入れ替える。本来JavaFX側で処理するべきでは。
+            switch (this.pageOrientation) {
+            case PORTRAIT:
+                jobSettings.setPageLayout(this.printer.createPageLayout(this.paper, this.pageOrientation, this.leftMargin, this.rightMargin, this.topMargin, this.bottomMargin));
+                break;
+            case REVERSE_PORTRAIT:
+            case LANDSCAPE:
+            case REVERSE_LANDSCAPE:
+                jobSettings.setPageLayout(this.printer.createPageLayout(this.paper, this.pageOrientation, this.rightMargin, this.leftMargin, this.bottomMargin, this.topMargin));
+                break;
             }
-            if (this.pageOrientation == null) {
-                this.pageOrientation = this.printer.getPrinterAttributes().getDefaultPageOrientation();
-            }
-            if (this.marginType != null) {
-                jobSettings.setPageLayout(this.printer.createPageLayout(this.paper, this.pageOrientation, this.marginType));
-            }
-            if (this.leftMargin != null) {
-                // FIXME 用紙を回転すると余白指定が変になるので入れ替える。本来JavaFX側で処理するべきでは。
-                switch (this.pageOrientation) {
-                case PORTRAIT:
-                    jobSettings.setPageLayout(this.printer.createPageLayout(this.paper, this.pageOrientation, this.leftMargin, this.rightMargin, this.topMargin, this.bottomMargin));
-                    break;
-                case REVERSE_PORTRAIT:
-                case LANDSCAPE:
-                case REVERSE_LANDSCAPE:
-                    jobSettings.setPageLayout(this.printer.createPageLayout(this.paper, this.pageOrientation, this.rightMargin, this.leftMargin, this.bottomMargin, this.topMargin));
-                    break;
-                }
-            }
-            // トレイ
-            if (this.paperSource != null) {
-                jobSettings.setPaperSource(this.paperSource);
-            }
-            // カラーモード
-            if (this.printColor != null) {
-                jobSettings.setPrintColor(this.printColor);
-            }
-            // 品質
-            if (this.printQuality != null) {
-                jobSettings.setPrintQuality(this.printQuality);
-            }
-            // 両面印刷
-            if (this.printSides != null) {
-                jobSettings.setPrintSides(this.printSides);
-            }
-            for (Pane pane: this.printingPaneList) {
-                printerJob.printPage(pane);
-            }
-            printerJob.endJob();
-        } catch (Exception exception) {
-            throw new PrintException(exception);
+        }
+        // トレイ
+        if (this.paperSource != null) {
+            jobSettings.setPaperSource(this.paperSource);
+        }
+        // カラーモード
+        if (this.printColor != null) {
+            jobSettings.setPrintColor(this.printColor);
+        }
+        // 品質
+        if (this.printQuality != null) {
+            jobSettings.setPrintQuality(this.printQuality);
+        }
+        // 両面印刷
+        if (this.printSides != null) {
+            jobSettings.setPrintSides(this.printSides);
         }
     }
+    
+    /**
+     * ページを印刷する.
+     * @param pane
+     * @throws PrintException 印刷ジョブの作成に失敗した場合
+     */
+    public void print(Pane pane) throws PrintException {
+        if (this.printerJob == null) {
+            throw new PrintException("PrinterJob is not started.");
+        }
+        this.printerJob.printPage(pane);
+    }
 
+    /**
+     * ページを印刷する. このメソッド内でAbstractPrintingPaneBuilderのbuildが自動で呼ばれる.
+     * @param page AbstractPrintingPaneBuilderを継承したクラスのインスタンス
+     * @throws PrintException 印刷ジョブの作成に失敗した場合
+     */
+    public void print(AbstractPrintingPaneBuilder page) throws PrintException {
+        if (this.printerJob == null) {
+            throw new PrintException("PrinterJob is not started.");
+        }
+        page.build();
+        this.printerJob.printPage(page.getPane());
+    }
+    
+    /**
+     * 印刷ジョブを終了する.
+     */
+    public void end() {
+        this.printerJob.endJob();
+    }
+    
 }
