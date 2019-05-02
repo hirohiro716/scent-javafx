@@ -31,23 +31,23 @@ public class RobotJapanese implements InterfaceTypingRobotJapanese<Integer> {
     }
     
     @Override
-    public void changeImeOff() {
-        this.awtRobot.changeImeOff();
+    public void changeIMEOff() {
+        this.awtRobot.changeIMEOff();
     }
 
     @Override
-    public void changeImeHiragana() {
-        this.awtRobot.changeImeHiragana();
+    public void changeIMEHiragana() {
+        this.awtRobot.changeIMEHiragana();
     }
 
     @Override
-    public void changeImeKatakanaWide() {
-        this.awtRobot.changeImeKatakanaWide();
+    public void changeIMEKatakanaWide() {
+        this.awtRobot.changeIMEKatakanaWide();
     }
 
     @Override
-    public void changeImeKatakanaNarrow() {
-        this.awtRobot.changeImeKatakanaNarrow();
+    public void changeIMEKatakanaNarrow() {
+        this.awtRobot.changeIMEKatakanaNarrow();
     }
     
 }

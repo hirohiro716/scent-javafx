@@ -9,18 +9,18 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Control;
 
 /**
- * TableViewのImeOffCheckBoxセル
+ * TableViewのIMEOffCheckBoxセル
  * @author hiro
  * @param <S> TableViewの型
  */
-public abstract class ImeOffCheckBoxTableCell<S> extends AbstractLiveControlTableCell<S, Boolean> {
+public abstract class IMEOffCheckBoxTableCell<S> extends AbstractLiveControlTableCell<S, Boolean> {
 
     private IMEOffCheckBox checkBox;
 
     /**
      * コンストラクタ.
      */
-    public ImeOffCheckBoxTableCell() {
+    public IMEOffCheckBoxTableCell() {
         this.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
         this.setAlignment(Pos.CENTER);
     }
@@ -38,7 +38,7 @@ public abstract class ImeOffCheckBoxTableCell<S> extends AbstractLiveControlTabl
 
     @Override
     protected void createControlCallback() {
-        ImeOffCheckBoxTableCell<S> cell = this;
+        IMEOffCheckBoxTableCell<S> cell = this;
         this.checkBox = new IMEOffCheckBox();
         this.checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
@@ -49,10 +49,10 @@ public abstract class ImeOffCheckBoxTableCell<S> extends AbstractLiveControlTabl
     }
 
     /**
-     * 内部のImeOffCheckBoxを取得する.
-     * @return ImeOffCheckBox
+     * 内部のIMEOffCheckBoxを取得する.
+     * @return IMEOffCheckBox
      */
-    public IMEOffCheckBox getImeOffCheckBox() {
+    public IMEOffCheckBox getIMEOffCheckBox() {
         return this.checkBox;
     }
 

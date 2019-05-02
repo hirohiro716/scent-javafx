@@ -25,8 +25,8 @@ public class IMEHelper {
      * @param imeMode IMEモード
      */
     public static <T extends Control> void apply(T control, IMEMode imeMode) {
-        ImeChangeRunnable imeChangeRunnable = new ImeChangeRunnable(imeMode);
-        control.focusedProperty().addListener(new ImeChangeFocusedChangeListener(imeChangeRunnable));
+        IMEChangeRunnable imeChangeRunnable = new IMEChangeRunnable(imeMode);
+        control.focusedProperty().addListener(new IMEChangeFocusedChangeListener(imeChangeRunnable));
         control.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -48,49 +48,49 @@ public class IMEHelper {
         return ROBOT;
     }
     
-    private static long focusedImeChangeWaitTime = 700;
+    private static long focusedIMEChangeWaitTime = 700;
     
     /**
      * フォーカス取得時にIMEモード変更処理をするまでの時間をセットする. デフォルトは700ミリ秒.
      * @param waitTime
      */
-    public static void setFocusedImeChangeWaitTime(long waitTime) {
-        focusedImeChangeWaitTime = waitTime;
+    public static void setFocusedIMEChangeWaitTime(long waitTime) {
+        focusedIMEChangeWaitTime = waitTime;
     }
     
     /**
      * IMEをOFFにする.
      */
-    public static void changeImeOff() {
-        getRobotInstance().changeImeOff();
+    public static void changeIMEOff() {
+        getRobotInstance().changeIMEOff();
     }
 
     /**
      * IMEをひらがなにする.
      */
-    public static void changeImeHiragana() {
-        getRobotInstance().changeImeHiragana();
+    public static void changeIMEHiragana() {
+        getRobotInstance().changeIMEHiragana();
     }
 
     /**
      * IMEを全角カタカナにする.
      */
-    public static void changeImeKatakanaWide() {
-        getRobotInstance().changeImeKatakanaWide();
+    public static void changeIMEKatakanaWide() {
+        getRobotInstance().changeIMEKatakanaWide();
     }
 
     /**
      * IMEを半角ｶﾀｶﾅにする.
      */
-    public static void changeImeKatakanaNarrow() {
-        getRobotInstance().changeImeKatakanaNarrow();
+    public static void changeIMEKatakanaNarrow() {
+        getRobotInstance().changeIMEKatakanaNarrow();
     }
     
     /**
      * IMEの変更を試みる実行Runnableクラス.
      * @author hiro
      */
-    private static class ImeChangeRunnable implements Runnable {
+    private static class IMEChangeRunnable implements Runnable {
 
         private IMEMode imeMode;
         
@@ -98,7 +98,7 @@ public class IMEHelper {
          * コンストラクタ.
          * @param imeMode
          */
-        public ImeChangeRunnable(IMEMode imeMode) {
+        public IMEChangeRunnable(IMEMode imeMode) {
             this.imeMode = imeMode;
         }
         
@@ -109,16 +109,16 @@ public class IMEHelper {
             }
             switch (this.imeMode) {
             case OFF:
-                getRobotInstance().changeImeOff();
+                getRobotInstance().changeIMEOff();
                 break;
             case HIRAGANA:
-                getRobotInstance().changeImeHiragana();
+                getRobotInstance().changeIMEHiragana();
                 break;
             case KATAKANA_WIDE:
-                getRobotInstance().changeImeKatakanaWide();
+                getRobotInstance().changeIMEKatakanaWide();
                 break;
             case KATAKANA_NARROW:
-                getRobotInstance().changeImeKatakanaNarrow();
+                getRobotInstance().changeIMEKatakanaNarrow();
                 break;
             }
         }
@@ -129,17 +129,17 @@ public class IMEHelper {
      * フォーカス取得時にIMEモードを変更するクラス.
      * @author hiro
      */
-    private static class ImeChangeFocusedChangeListener implements ChangeListener<Boolean> {
+    private static class IMEChangeFocusedChangeListener implements ChangeListener<Boolean> {
         
         /**
          * コンストラクタ.
          * @param imeChangeRunnable
          */
-        public ImeChangeFocusedChangeListener(ImeChangeRunnable imeChangeRunnable) {
+        public IMEChangeFocusedChangeListener(IMEChangeRunnable imeChangeRunnable) {
             this.imeChangeRunnable = imeChangeRunnable;
         }
         
-        private ImeChangeRunnable imeChangeRunnable;
+        private IMEChangeRunnable imeChangeRunnable;
         
         private boolean isCanceled = false;
         
@@ -152,10 +152,10 @@ public class IMEHelper {
                     this.thread = new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            ImeChangeFocusedChangeListener listener = ImeChangeFocusedChangeListener.this;
+                            IMEChangeFocusedChangeListener listener = IMEChangeFocusedChangeListener.this;
                             try {
                                 listener.isCanceled = false;
-                                Thread.sleep(focusedImeChangeWaitTime);
+                                Thread.sleep(focusedIMEChangeWaitTime);
                                 if (listener.isCanceled == false) {
                                     listener.imeChangeRunnable.run();
                                 }
