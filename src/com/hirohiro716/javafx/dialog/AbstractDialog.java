@@ -57,7 +57,7 @@ public abstract class AbstractDialog<T> implements InterfaceDialog<T> {
         this.parentStage = parentStage;
     }
 
-    private void preparation(Pane dialogContentPane) {
+    private void prepare(Pane dialogContentPane) {
         AbstractDialog<T> dialog = this;
         // Stageを生成
         this.stage = new Stage();
@@ -139,7 +139,7 @@ public abstract class AbstractDialog<T> implements InterfaceDialog<T> {
      * @param dialogContentPane ダイアログ内容
      */
     protected void show(Pane dialogContentPane) {
-        this.preparation(dialogContentPane);
+        this.prepare(dialogContentPane);
         this.preparationCallback();
         this.stage.show();
     }
@@ -150,7 +150,7 @@ public abstract class AbstractDialog<T> implements InterfaceDialog<T> {
      * @return 結果
      */
     protected T showAndWait(Pane dialogContentPane) {
-        this.preparation(dialogContentPane);
+        this.prepare(dialogContentPane);
         this.preparationCallback();
         this.stage.showAndWait();
         return this.getResult();

@@ -67,7 +67,7 @@ public abstract class AbstractEditor<T> {
      */
     public void show(Window owner) throws Exception {
         this.editDataController();
-        this.beforeShowDoPreparation();
+        this.beforeShowPrepare();
         this.getStage().initOwner(owner);
         this.getStage().show();
     }
@@ -87,7 +87,7 @@ public abstract class AbstractEditor<T> {
      */
     public void showAndWait(Window owner) throws Exception {
         this.editDataController();
-        this.beforeShowDoPreparation();
+        this.beforeShowPrepare();
         this.getStage().initOwner(owner);
         this.getStage().showAndWait();
     }
@@ -159,7 +159,7 @@ public abstract class AbstractEditor<T> {
      * showまたはshowAndWaitメソッドを呼び出した際 dataControllerEditメソッドの後に自動実行される.
      * @throws Exception
      */
-    protected abstract void beforeShowDoPreparation() throws Exception;
+    protected abstract void beforeShowPrepare() throws Exception;
     
     /**
      * フォームからDataControllerに値を取り込む. このメソッドは自動では呼び出されない.
@@ -180,14 +180,14 @@ public abstract class AbstractEditor<T> {
      * 閉じる直前に行う処理. closeメソッドを呼び出した際に自動実行される.
      * @throws Exception 
      */
-    protected abstract void beforeCloseDoPreparation() throws Exception;
+    protected abstract void beforeClosePrepare() throws Exception;
 
     /**
      * Editorを閉じる.
      */
     public void close() {
         try {
-            this.beforeCloseDoPreparation();
+            this.beforeClosePrepare();
             this.isCloseAgree = true;
             this.stageBuilder.close();
         } catch (Exception exception) {
@@ -210,7 +210,7 @@ public abstract class AbstractEditor<T> {
     /**
      * 閉じる確認を行う直前の処理. closeメソッドを呼び出した際に自動実行される.
      */
-    protected void beforeCloseConfirmDoPreparation() {
+    protected void beforeCloseConfirmPrepare() {
         this.isCloseDialogShown = true;
     }
     
@@ -231,7 +231,7 @@ public abstract class AbstractEditor<T> {
             if (editor.isCloseConfirmShowing) {
                 event.consume();
                 if (editor.isCloseAgree == false && editor.isCloseDialogShown == false) {
-                    editor.beforeCloseConfirmDoPreparation();
+                    editor.beforeCloseConfirmPrepare();
                     ConfirmPane.show(CONFIRM_DIALOG_TITLE_CLOSE, "この画面を閉じます。", editor.stageBuilder.getPaneRoot(), new CloseEventHandler<DialogResult>() {
                         @Override
                         public void handle(DialogResult resultValue) {
