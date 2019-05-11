@@ -379,7 +379,7 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
      * 検索用フォーム表示前の準備処理. showまたはshowAndWaitメソッドを呼び出した際に自動実行される.
      * @throws Exception
      */
-    protected abstract void beforeShowDoPreparation() throws Exception;
+    protected abstract void beforeShowPrepare() throws Exception;
 
     /**
      * 初期表示されるデータをセットする.
@@ -412,7 +412,7 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
      * @throws Exception
      */
     public void show(Window owner) throws Exception {
-        this.beforeShowDoPreparation();
+        this.beforeShowPrepare();
         this.getStage().initOwner(owner);
         this.getStage().show();
     }
@@ -431,7 +431,7 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
      * @throws Exception
      */
     public void showAndWait(Window owner) throws Exception {
-        this.beforeShowDoPreparation();
+        this.beforeShowPrepare();
         this.getStage().initOwner(owner);
         this.getStage().showAndWait();
     }

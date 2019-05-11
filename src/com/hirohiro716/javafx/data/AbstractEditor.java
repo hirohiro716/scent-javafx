@@ -131,7 +131,7 @@ public abstract class AbstractEditor<T> {
 
     /**
      * 編集するデータの読み込みや排他ロック処理.<br>
-     * showまたはshowAndWaitメソッドを呼び出した際 beforeShowDoPreparationメソッドの前に自動実行される.
+     * showまたはshowAndWaitメソッドを呼び出した際 beforeShowPrepareメソッドの前に自動実行される.
      * @throws Exception
      */
     protected abstract void editDataController() throws Exception;
