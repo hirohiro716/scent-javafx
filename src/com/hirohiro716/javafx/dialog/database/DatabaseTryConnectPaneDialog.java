@@ -61,7 +61,9 @@ public class DatabaseTryConnectPaneDialog<D extends AbstractDatabase> implements
         DatabaseTryConnectPaneDialog<D> dialog = this;
         try {
             this.connectCallback.call(this.database);
-            this.successCallback.call();
+            if (this.successCallback != null) {
+                this.successCallback.call();
+            }
         } catch (SQLException exception) {
             QuestionPane question = new QuestionPane(this.parentPane);
             question.setTitle(AbstractDatabase.ERROR_DIALOG_TITLE);
@@ -73,12 +75,16 @@ public class DatabaseTryConnectPaneDialog<D extends AbstractDatabase> implements
                     if (resultValue == DialogResult.YES) {
                         dialog.connect();
                     } else {
-                        dialog.failureCallback.call();
+                        if (dialog.failureCallback != null) {
+                            dialog.failureCallback.call();
+                        }
                     }
                 }
             });
             question.show();
-            this.questionDialogCallback.call(question);
+            if (this.questionDialogCallback != null) {
+                this.questionDialogCallback.call(question);
+            }
         }
 
     }

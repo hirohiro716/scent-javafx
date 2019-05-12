@@ -66,7 +66,9 @@ public class DatabaseTryConnectDialog<D extends AbstractDatabase> implements Int
         DatabaseTryConnectDialog<D> dialog = this;
         try {
             this.connectCallback.call(this.database);
-            this.successCallback.call();
+            if (this.successCallback != null) {
+                this.successCallback.call();
+            }
         } catch (SQLException exception) {
             Question question = new Question(this.parentStage);
             question.setTitle(AbstractDatabase.ERROR_DIALOG_TITLE);
@@ -78,12 +80,16 @@ public class DatabaseTryConnectDialog<D extends AbstractDatabase> implements Int
                     if (resultValue == DialogResult.YES) {
                         dialog.connect();
                     } else {
-                        dialog.failureCallback.call();
+                        if (dialog.failureCallback != null) {
+                            dialog.failureCallback.call();
+                        }
                     }
                 }
             });
             question.show();
-            this.questionDialogCallback.call(question);
+            if (this.questionDialogCallback != null) {
+                this.questionDialogCallback.call(question);
+            }
         }
 
     }
@@ -97,12 +103,16 @@ public class DatabaseTryConnectDialog<D extends AbstractDatabase> implements Int
         while (state == false) {
             try {
                 this.connectCallback.call(this.database);
-                this.successCallback.call();
+                if (this.successCallback != null) {
+                    this.successCallback.call();
+                }
                 state = true;
             } catch (SQLException exception) {
                 String message = StringConverter.join("再試行しますか？", StringConverter.LINE_SEPARATOR, exception.getMessage());
                 if (Question.showAndWait(AbstractDatabase.ERROR_DIALOG_TITLE, message) == DialogResult.NO) {
-                    this.failureCallback.call();
+                    if (this.failureCallback != null) {
+                        this.failureCallback.call();
+                    }
                     throw exception;
                 }
             }
