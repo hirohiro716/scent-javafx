@@ -11,6 +11,7 @@ import com.hirohiro716.javafx.control.EnterFireButton;
 import com.hirohiro716.javafx.control.LimitTextField;
 import com.hirohiro716.javafx.dialog.AbstractDialog;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -93,13 +94,10 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
         this.limitTextField.setText(this.defaultValue);
         this.limitTextField.selectAll();
         // テキストフィールドのイベント定義
-        this.limitTextField.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+        this.limitTextField.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(KeyEvent event) {
-                String character = event.getCharacter();
-                if (character.equals("\n") || character.equals("\r")) {
-                    dialog.buttonOk.fire();
-                }
+            public void handle(ActionEvent event) {
+                dialog.buttonOk.fire();
             }
         });
         // ボタンのイベント定義
@@ -139,6 +137,19 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
                 default:
                     break;
                 }
+            }
+        });
+        // 初期フォーカス
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                dialog.buttonCancel.requestFocus();
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.limitTextField.requestFocus();
+                    }
+                });
             }
         });
     }

@@ -129,6 +129,7 @@ public class LimitTextAreaPaneDialog extends AbstractPaneDialog<String> {
                 }
             }
         });
+        // 初期フォーカス
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
