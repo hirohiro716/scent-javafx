@@ -11,6 +11,7 @@ import com.hirohiro716.database.AbstractBindTable;
 import com.hirohiro716.database.AbstractDatabase;
 import com.hirohiro716.database.WhereSet;
 import com.hirohiro716.javafx.StageBuilder;
+import com.hirohiro716.javafx.control.table.DynamicTableView;
 import com.hirohiro716.javafx.dialog.InterfaceDialog.CloseEventHandler;
 import com.hirohiro716.javafx.dialog.DialogResult;
 import com.hirohiro716.javafx.dialog.alert.AlertPane;
@@ -21,7 +22,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.TableView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
@@ -34,18 +34,18 @@ import javafx.stage.Window;
  * @param <T> 情報の検索処理を行うクラス
  */
 public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
-
+    
     /**
-     * 検索結果を表示するTableViewを取得する.
-     * @return TableView
+     * 検索結果を表示するDynamicTableViewを取得する.
+     * @return DynamicTableView
      */
-    protected abstract TableView<RudeArray> getTableView();
-
+    protected abstract DynamicTableView getDynamicTableView();
+    
     /**
      * 検索を実行する.
      */
     protected abstract void search();
-
+    
     /**
      * 詳細検索を実行する.
      */
@@ -68,7 +68,7 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     protected void searchingWithWaitView(String afterSQL, WhereSet... whereSets) {
         AbstractDatabaseSearcher<T> searcher = AbstractDatabaseSearcher.this;
         Pane parentPane = (Pane) searcher.getStage().getScene().getRoot();
-        searcher.getTableView().getItems().clear();
+        searcher.getDynamicTableView().getItems().clear();
         WaitPaneDialog<RudeArray[]> dialog = new WaitPaneDialog<>(parentPane);
         dialog.setTitle("検索処理中");
         dialog.setMessage("ただいま検索中です。しばらくお待ちください。");
@@ -82,8 +82,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
             @Override
             public void handle(RudeArray[] resultValue) {
                 if (resultValue != null) {
-                    searcher.getTableView().getItems().addAll(resultValue);
-                    searcher.getTableView().refresh();
+                    searcher.getDynamicTableView().getItems().addAll(resultValue);
+                    searcher.getDynamicTableView().refresh();
                     searcher.afterSearchProcessing();
                 } else {
                     AlertPane.show(AbstractDatabase.ERROR_DIALOG_TITLE, dialog.getException().getMessage(), parentPane);
@@ -391,8 +391,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
             public void run() {
                 for (RudeArray row: rows) {
                     AbstractDatabaseSearcher<?> searcher = AbstractDatabaseSearcher.this;
-                    searcher.getTableView().getItems().add(row);
-                    searcher.getTableView().refresh();
+                    searcher.getDynamicTableView().getItems().add(row);
+                    searcher.getDynamicTableView().refresh();
                 }
             }
         });
