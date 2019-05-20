@@ -13,6 +13,7 @@ import com.hirohiro716.database.WhereSet;
 import com.hirohiro716.javafx.StageBuilder;
 import com.hirohiro716.javafx.control.table.DynamicTableView;
 import com.hirohiro716.javafx.dialog.InterfaceDialog.CloseEventHandler;
+import com.hirohiro716.javafx.dialog.AbstractPaneDialog;
 import com.hirohiro716.javafx.dialog.DialogResult;
 import com.hirohiro716.javafx.dialog.alert.AlertPane;
 import com.hirohiro716.javafx.dialog.confirm.ConfirmPane;
@@ -58,14 +59,16 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
      * @return 検索結果
      * @throws SQLException
      */
-    protected abstract RudeArray[] searchExecute(String afterSQL, WhereSet... whereSets) throws SQLException;
+    protected RudeArray[] searchExecute(String afterSQL, WhereSet... whereSets) throws SQLException {
+        return this.getBindTableInstance().search(afterSQL, whereSets);
+    }
 
      /**
       * 検索を待機画面を表示しながら実行する.
       * @param afterSQL WHERE句の後に付与するオプションSQL
       * @param whereSets 検索条件(複数指定するとOR検索になる)
       */
-    protected void searchingWithWaitView(String afterSQL, WhereSet... whereSets) {
+    protected void searchWithWaitView(String afterSQL, WhereSet... whereSets) {
         AbstractDatabaseSearcher<T> searcher = AbstractDatabaseSearcher.this;
         Pane parentPane = (Pane) searcher.getStage().getScene().getRoot();
         searcher.getDynamicTableView().getItems().clear();
@@ -86,13 +89,24 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
                     searcher.getDynamicTableView().refresh();
                     searcher.afterSearchProcessing();
                 } else {
-                    AlertPane.show(AbstractDatabase.ERROR_DIALOG_TITLE, dialog.getException().getMessage(), parentPane);
+                    AlertPane alert = new AlertPane((Pane) searcher.getStage().getScene().getRoot());
+                    alert.setTitle(AbstractDatabase.ERROR_DIALOG_TITLE);
+                    alert.setMessage(dialog.getException().getMessage());
+                    alert.show();
+                    searcher.afterDialogShowing(alert);
                 }
             }
         });
         dialog.show();
+        this.afterDialogShowing(dialog);
     }
     
+    /**
+     * 検索待機ダイアログが表示された後の処理を行う.
+     * @param dialog 表示された検索待機ダイアログ
+     */
+    protected abstract void afterDialogShowing(AbstractPaneDialog<?> dialog);
+
     private EventHandler<ActionEvent> searchExecuteActionEventHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
@@ -304,6 +318,7 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     private EventHandler<ActionEvent> deleteActionEventHandler = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
+            AbstractDatabaseSearcher<T> searcher = AbstractDatabaseSearcher.this;
             Node node = (Node) event.getSource();
             ConfirmPane confirm = new ConfirmPane((Pane) node.getScene().getRoot());
             confirm.setTitle(AbstractEditor.CONFIRM_DIALOG_TITLE_DELETE);
@@ -318,6 +333,7 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
                 }
             });
             confirm.show();
+            searcher.afterDialogShowing(confirm);
         }
     };
 
