@@ -150,7 +150,7 @@ class WhereSetDialogCore {
                     if (core.whereSetGroup.size() == 1) {
                         return;
                     }
-                    ConfirmPane.show("削除の確認", "この検索条件セットを削除します。", core.dialog.getStackPane(), new CloseEventHandler<DialogResult>() {
+                    ConfirmPane.show("削除の確認", "この検索条件セットを削除します。", core.dialog.getContentPane(), new CloseEventHandler<DialogResult>() {
                         @Override
                         public void handle(DialogResult resultValue) {
                             if (resultValue == DialogResult.OK) {
@@ -546,7 +546,7 @@ class WhereSetDialogCore {
             if (event.getButton() == MouseButton.PRIMARY) {
                 TextField field = (TextField) event.getSource();
                 WhereSetDialogCore core = WhereSetDialogCore.this;
-                DatetimePickerPaneDialog dialog = new DatetimePickerPaneDialog(core.dialog.getStackPane());
+                DatetimePickerPaneDialog dialog = new DatetimePickerPaneDialog(core.dialog.getContentPane());
                 dialog.setTimeInput(this.isTimeInput);
                 dialog.setTitle("検索値の入力");
                 if (this.isTimeInput) {

@@ -155,7 +155,7 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> implements Interf
         this.buttonAddWhere.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                HashMapComboBoxPaneDialog<String, String> dialog = new HashMapComboBoxPaneDialog<>(whereSetDialog.getStackPane());
+                HashMapComboBoxPaneDialog<String, String> dialog = new HashMapComboBoxPaneDialog<>(whereSetDialog.getContentPane());
                 dialog.setTitle("検索項目の追加");
                 dialog.setMessage("追加する検索項目を選択してください。");
                 dialog.setHashMap(whereSetDialog.core.searchTableRowsableColumnDescriptions);
@@ -185,7 +185,7 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> implements Interf
                     }
                 }
                 QuestionPane.show("コピーの確認", StringConverter.join("現在の検索条件セットをコピーして条件セットを追加することができます。コピーしますか？",
-                        StringConverter.LINE_SEPARATOR, "空の条件セットを追加する場合は「いいえ」を選択してください。"), whereSetDialog.getStackPane(), new CloseEventHandler<DialogResult>() {
+                        StringConverter.LINE_SEPARATOR, "空の条件セットを追加する場合は「いいえ」を選択してください。"), whereSetDialog.getContentPane(), new CloseEventHandler<DialogResult>() {
                     @Override
                     public void handle(DialogResult resultValue) {
                         if (resultValue == DialogResult.YES) {
