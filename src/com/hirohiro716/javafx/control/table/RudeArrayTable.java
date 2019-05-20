@@ -9,6 +9,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 /**
@@ -46,6 +47,30 @@ public class RudeArrayTable extends EditableTable<RudeArray> {
      */
     public <T extends TextField> void addColumnTextField(String id, String text, ControlFactory<T> controlFactory) {
         super.addColumnTextField(id, text, new EditableTable.ControlFactory<RudeArray, T>() {
+            @Override
+            public T newInstance(RudeArray item) {
+                return controlFactory.newInstance(item);
+            }
+            @Override
+            public void setValueForControl(RudeArray item, T control) {
+                control.setText(item.getString(id));
+            }
+            @Override
+            public void setValueForItem(RudeArray item, T control) {
+                item.put(id, control.getText());
+            }
+        });
+    }
+
+    /**
+     * TextAreaを内包するセルを追加する.
+     * @param <T> コントロールの型
+     * @param id 任意のカラムID
+     * @param text ヘッダーテキスト
+     * @param controlFactory コントロールを生成するCallback
+     */
+    public <T extends TextArea> void addColumnTextArea(String id, String text, ControlFactory<T> controlFactory) {
+        super.addColumnTextArea(id, text, new EditableTable.ControlFactory<RudeArray, T>() {
             @Override
             public T newInstance(RudeArray item) {
                 return controlFactory.newInstance(item);

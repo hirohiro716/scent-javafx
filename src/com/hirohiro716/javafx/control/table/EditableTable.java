@@ -37,6 +37,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.input.KeyEvent;
@@ -63,6 +64,7 @@ public class EditableTable<S> extends AnchorPane {
     public enum ColumnType {
         LABEL,
         TEXTFIELD,
+        TEXTAREA,
         PASSWORD,
         COMBOBOX,
         DATEPICKER,
@@ -401,6 +403,11 @@ public class EditableTable<S> extends AnchorPane {
                     TextField textField = paneNodeFinder.findTextField("#" + id);
                     textFieldFactory.setValueForControl(item, textField);
                     break;
+                case TEXTAREA:
+                    ControlFactory<S, TextArea> textAreaFactory = (ControlFactory<S, TextArea>) this.controlFactories.get(id);
+                    TextArea textArea = paneNodeFinder.findTextArea("#" + id);
+                    textAreaFactory.setValueForControl(item, textArea);
+                    break;
                 case PASSWORD:
                     ControlFactory<S, PasswordField> passwordFieldFactory = (ControlFactory<S, PasswordField>) this.controlFactories.get(id);
                     PasswordField passwordField = paneNodeFinder.findPasswordField("#" + id);
@@ -516,6 +523,20 @@ public class EditableTable<S> extends AnchorPane {
                 textField.prefWidthProperty().bind(headerLabel.widthProperty());
                 itemHBox.getChildren().add(textField);
                 addedControl = textField;
+                break;
+            case TEXTAREA:
+                ControlFactory<S, TextArea> textAreaFactory = (ControlFactory<S, TextArea>) this.controlFactories.get(id);
+                TextArea textArea = textAreaFactory.newInstance(item);
+                textAreaFactory.setValueForControl(item, textArea);
+                textArea.textProperty().addListener(new ChangeListener<String>() {
+                    @Override
+                    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                        textAreaFactory.setValueForItem(item, textArea);
+                    }
+                });
+                textArea.prefWidthProperty().bind(headerLabel.widthProperty());
+                itemHBox.getChildren().add(textArea);
+                addedControl = textArea;
                 break;
             case PASSWORD:
                 ControlFactory<S, PasswordField> passwordFieldFactory = (ControlFactory<S, PasswordField>) this.controlFactories.get(id);
@@ -857,6 +878,9 @@ public class EditableTable<S> extends AnchorPane {
         case DATEPICKER:
             label.setMinWidth(60);
             break;
+        case TEXTAREA:
+            label.setMinWidth(100);
+            break;
         case CHECKBOX:
             label.setMinWidth(30);
             break;
@@ -898,6 +922,17 @@ public class EditableTable<S> extends AnchorPane {
      */
     public <T extends TextField> void addColumnTextField(String id, String text, ControlFactory<S, T> controlFactory) {
         this.addColumn(id, text, ColumnType.TEXTFIELD, controlFactory);
+    }
+
+    /**
+     * TextAreaを内包するセルを追加する.
+     * @param <T> コントロールの型
+     * @param id 任意のカラムID
+     * @param text ヘッダーテキスト
+     * @param controlFactory コントロールを生成し値の受け渡しを行うCallback
+     */
+    public <T extends TextArea> void addColumnTextArea(String id, String text, ControlFactory<S, T> controlFactory) {
+        this.addColumn(id, text, ColumnType.TEXTAREA, controlFactory);
     }
     
     /**
