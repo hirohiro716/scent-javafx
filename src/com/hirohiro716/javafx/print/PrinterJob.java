@@ -212,6 +212,31 @@ public class PrinterJob {
         this.pageOrientation = pageOrientation;
     }
 
+    /**
+     * 印刷に使用する用紙向きを指定する.
+     * @param pageOrientation 向き
+     */
+    public void setPageOrientation(com.hirohiro716.print.PageOrientation pageOrientation) {
+        if (pageOrientation == null) {
+            this.pageOrientation = null;
+            return;
+        }
+        switch (pageOrientation) {
+        case PORTRAIT:
+            this.pageOrientation = PageOrientation.PORTRAIT;
+            break;
+        case LANDSCAPE:
+            this.pageOrientation = PageOrientation.LANDSCAPE;
+            break;
+        case REVERSE_PORTRAIT:
+            this.pageOrientation = PageOrientation.REVERSE_PORTRAIT;
+            break;
+        case REVERSE_LANDSCAPE:
+            this.pageOrientation = PageOrientation.REVERSE_LANDSCAPE;
+            break;
+        }
+    }
+
     private MarginType marginType = null;
 
     /**

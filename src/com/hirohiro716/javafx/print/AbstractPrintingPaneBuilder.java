@@ -174,7 +174,7 @@ public abstract class AbstractPrintingPaneBuilder {
     public void setTextOriginVPos(VPos vPos) {
         this.textOriginVPos = vPos;
     }
-
+    
     /**
      * 印刷処理.
      * @throws PrintException
@@ -282,6 +282,27 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
+     * 文字列の描画サイズを計算する.
+     * @param string 対象文字列
+     * @param fontFamilyName フォントファミリー
+     * @param fontSize フォントサイズ
+     * @return 文字列の描画サイズ
+     */
+    public Dimension2D calculateStringSize(String string, String fontFamilyName, double fontSize) {
+        Dimension2D dimension2d = LayoutHelper.calculateStringSize(string, fontFamilyName, fontSize);
+        return new Dimension2D(pointToMillimeter(dimension2d.getWidth()), pointToMillimeter(dimension2d.getHeight()));
+    }
+    
+    /**
+     * 文字列の描画サイズを計算する.
+     * @param string 対象文字列
+     * @return 文字列の描画サイズ
+     */
+    public Dimension2D calculateStringSize(String string) {
+        return this.calculateStringSize(string, this.fontFamilyName, this.font.getSize());
+    }
+
+    /**
      * 文字列をフォントサイズを調整して描画する.
      * @param string 描画する文字列
      * @param millimeterWidth 幅(mm)
@@ -353,7 +374,7 @@ public abstract class AbstractPrintingPaneBuilder {
     public Dimension2D printWrapTextAccordingToFrame(String string, double millimeterWidth, double millimeterHeight, double millimeterLayoutX, double millimeterLayoutY) {
         return this.printWrapTextAccordingToFrame(string, millimeterWidth, millimeterHeight, millimeterLayoutX, millimeterLayoutY, null);
     }
-
+    
     /**
      * 幅と高さに収まるフォントを作成する.
      * @param string 文字列
