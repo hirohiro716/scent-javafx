@@ -1,5 +1,6 @@
 package com.hirohiro716.javafx;
 
+import javafx.geometry.Dimension2D;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
@@ -40,13 +41,27 @@ public class LayoutHelper {
         AnchorPane.setBottomAnchor(node, bottom);
         AnchorPane.setLeftAnchor(node, left);
     }
+    
+    /**
+     * 文字列の描画サイズを計算する.
+     * @param string 対象文字列
+     * @param fontFamilyName フォントファミリー
+     * @param fontSize フォントサイズ
+     * @return 文字列の描画サイズ
+     */
+    public static Dimension2D calculateStringSize(String string, String fontFamilyName, double fontSize) {
+        Text text = new Text(string);
+        Font font = Font.font(fontFamilyName, fontSize);
+        text.setFont(font);
+        return new Dimension2D(text.getLayoutBounds().getWidth(), text.getLayoutBounds().getHeight());
+    }
 
     /**
      * 幅と高さに収まるフォントを作成する.
      * @param string 文字列
      * @param width 幅(point)
      * @param height 高さ(point)
-     * @param fontFamilyName 初期フォントファミリー名
+     * @param fontFamilyName フォントファミリー
      * @param defaultFontSize 初期フォントサイズ
      * @return 調整されたフォント
      */
@@ -66,7 +81,7 @@ public class LayoutHelper {
      * @param string 文字列
      * @param width 幅(point)
      * @param height 高さ(point)
-     * @param fontFamilyName 初期フォントファミリー名
+     * @param fontFamilyName フォントファミリー
      * @param defaultFontSize 初期フォントサイズ
      * @return 調整されたフォント
      */
