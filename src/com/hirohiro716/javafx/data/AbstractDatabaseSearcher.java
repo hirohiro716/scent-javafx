@@ -63,11 +63,11 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
         return this.getBindTableInstance().search(afterSQL, whereSets);
     }
 
-     /**
-      * 検索を待機画面を表示しながら実行する.
-      * @param afterSQL WHERE句の後に付与するオプションSQL
-      * @param whereSets 検索条件(複数指定するとOR検索になる)
-      */
+    /**
+     * 検索を待機画面を表示しながら実行する.
+     * @param afterSQL WHERE句の後に付与するオプションSQL
+     * @param whereSets 検索条件(複数指定するとOR検索になる)
+     */
     protected void searchWithWaitView(String afterSQL, WhereSet... whereSets) {
         AbstractDatabaseSearcher<T> searcher = AbstractDatabaseSearcher.this;
         Pane parentPane = (Pane) searcher.getStage().getScene().getRoot();
