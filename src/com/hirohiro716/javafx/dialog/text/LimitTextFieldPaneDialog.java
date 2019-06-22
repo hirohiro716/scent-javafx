@@ -6,10 +6,12 @@ import java.util.regex.Pattern;
 
 import com.hirohiro716.StringConverter;
 import com.hirohiro716.javafx.FXMLLoader;
+import com.hirohiro716.javafx.IMEHelper;
 import com.hirohiro716.javafx.LayoutHelper;
 import com.hirohiro716.javafx.control.EnterFireButton;
 import com.hirohiro716.javafx.control.LimitTextField;
 import com.hirohiro716.javafx.dialog.AbstractPaneDialog;
+import com.hirohiro716.robot.InterfaceTypingRobotJapanese.IMEMode;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -88,6 +90,8 @@ public class LimitTextFieldPaneDialog extends AbstractPaneDialog<String> {
         for (int index = 0; index < this.permitRegexPattern.size(); index++) {
             this.limitTextField.addPermitRegex(this.permitRegexPattern.get(index), this.permitRegexReverse.get(index));
         }
+        // IMEモードをセットする
+        IMEHelper.apply(this.limitTextField, this.imeMode);
         // 文字配置をセット
         this.limitTextField.setAlignment(this.pos);
         // 初期値を入力
@@ -197,6 +201,16 @@ public class LimitTextFieldPaneDialog extends AbstractPaneDialog<String> {
         this.permitRegexReverse.add(isReverse);
     }
 
+    private IMEMode imeMode = null;
+    
+    /**
+     * IMEモードをセットする.
+     * @param imeMode
+     */
+    public void setIMEMode(IMEMode imeMode) {
+        this.imeMode = imeMode;
+    }
+    
     private Pos pos = Pos.CENTER_LEFT;
     
     /**
