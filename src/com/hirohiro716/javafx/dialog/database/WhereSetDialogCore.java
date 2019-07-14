@@ -1,5 +1,6 @@
 package com.hirohiro716.javafx.dialog.database;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -297,8 +298,9 @@ class WhereSetDialogCore {
             case NUMBER:
                 return StringConverter.stringToDouble(textField.getText()); // 数値は変換
             case DATE:
-            case DATETIME:
                 return Datetime.stringToDate(textField.getText()); // 日時は変換
+            case DATETIME:
+                return new Timestamp(Datetime.stringToDate(textField.getText()).getTime()); // 日時は変換
             case BOOLEAN:
                 break;
             }

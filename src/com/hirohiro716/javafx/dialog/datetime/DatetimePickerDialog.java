@@ -134,12 +134,10 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
             public void handle(ActionEvent event) {
                 if (dialog.datePicker.getValue() != null) {
                     Datetime datetime = new Datetime(dialog.datePicker.getDate());
-                    try {
-                        datetime.modifyHour(StringConverter.stringToInteger(dialog.limitTextFieldHour.getText()));
-                        datetime.modifyMinute(StringConverter.stringToInteger(dialog.limitTextFieldMinute.getText()));
-                        datetime.modifySecond(StringConverter.stringToInteger(dialog.limitTextFieldSecond.getText()));
-                    } catch (Exception exception) {
-                    }
+                    datetime.modifyHour(StringConverter.stringToInteger(dialog.limitTextFieldHour.getText()));
+                    datetime.modifyMinute(StringConverter.stringToInteger(dialog.limitTextFieldMinute.getText()));
+                    datetime.modifySecond(StringConverter.stringToInteger(dialog.limitTextFieldSecond.getText()));
+                    datetime.modifyMilliSecond(0);
                     dialog.setResult(datetime.getDate());
                     dialog.close();
                 }
