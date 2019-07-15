@@ -25,10 +25,6 @@ import javafx.scene.input.KeyEvent;
  */
 public class LimitComboBox<T> extends ComboBox<T> {
 
-    private final ArrayList<Pattern> permitRegexs = new ArrayList<>();
-    private final ArrayList<Boolean> permitRegexReverses = new ArrayList<>();
-    private StringConverter converter = null;
-
     /**
      * コンストラクタ.
      */
@@ -105,6 +101,8 @@ public class LimitComboBox<T> extends ComboBox<T> {
         this.maxLength.setValue(maxLength);
     }
 
+    private final ArrayList<Pattern> permitRegexs = new ArrayList<>();
+
     /**
      * 正規表現のパターン配列を取得する.
      * @return Patternの配列
@@ -112,6 +110,8 @@ public class LimitComboBox<T> extends ComboBox<T> {
     public Pattern[] getPermitRegexs() {
         return (Pattern[]) this.permitRegexs.toArray();
     }
+
+    private final ArrayList<Boolean> permitRegexReverses = new ArrayList<>();
 
     /**
      * 正規表現に一致した文字列を許可するように設定する. 複数の追加が可能.
@@ -130,6 +130,8 @@ public class LimitComboBox<T> extends ComboBox<T> {
     public Boolean[] getPermitRegexReverses() {
         return (Boolean[]) this.permitRegexReverses.toArray();
     }
+
+    private StringConverter converter = null;
 
     /**
      * フォーカス喪失時に値を変換するStringConverterインスタンスをセットする.

@@ -95,6 +95,17 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> implements Interf
     }
 
     /**
+     * 検索できるカラムを追加する.
+     * @param columnName カラム名
+     * @param description カラム説明
+     * @param columnType 種類
+     * @param stringConverter 値変換用のStringConverter
+     */
+    public void addSearchableColumn(String columnName, String description, ColumnType columnType, StringConverter stringConverter) {
+        this.core.addSearchableColumn(columnName, description, columnType, stringConverter);
+    }
+
+    /**
      * 検索できる選択可能なカラムを追加する.
      * @param columnName カラム名
      * @param description カラム説明
@@ -104,7 +115,7 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> implements Interf
     public void addSearchableColumn(String columnName, String description, ColumnType columnType, HashMap<?, ?> hashMap) {
         this.core.addSearchableColumn(columnName, description, columnType, hashMap);
     }
-
+    
     /**
      * 文字列の検索方法リストに新しい比較演算子を追加する.
      * @param columnType 対象カラムタイプ
@@ -158,15 +169,15 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> implements Interf
                 HashMapComboBoxPaneDialog<String, String> dialog = new HashMapComboBoxPaneDialog<>(whereSetDialog.getContentPane());
                 dialog.setTitle("検索項目の追加");
                 dialog.setMessage("追加する検索項目を選択してください。");
-                dialog.setHashMap(whereSetDialog.core.searchTableRowsableColumnDescriptions);
-                Iterator<String> iterator = whereSetDialog.core.searchTableRowsableColumnDescriptions.keySet().iterator();
+                dialog.setHashMap(whereSetDialog.core.searchableColumnDescriptions);
+                Iterator<String> iterator = whereSetDialog.core.searchableColumnDescriptions.keySet().iterator();
                 if (iterator.hasNext()) {
                     dialog.setDefaultValue(iterator.next());
                 }
                 dialog.setCloseEvent(new CloseEventHandler<String>() {
                     @Override
                     public void handle(String resultValue) {
-                        if (whereSetDialog.core.searchTableRowsableColumnDescriptions.containsKey(resultValue)) {
+                        if (whereSetDialog.core.searchableColumnDescriptions.containsKey(resultValue)) {
                             whereSetDialog.core.addWhere(resultValue);
                         }
                     }

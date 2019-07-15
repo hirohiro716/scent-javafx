@@ -188,7 +188,7 @@ class WhereSetDialogCore {
             // カラム名
             String columnName = this.hboxToColumnNames.get(hbox);
             // カラムタイプ
-            ColumnType columnType = this.searchTableRowsableColumnTypes.get(columnName);
+            ColumnType columnType = this.searchableColumnTypes.get(columnName);
             // 比較タイプ
             HashMapComboBox<?, ?> comparisonComboBox = (HashMapComboBox<?, ?>) hbox.lookup("#" + COMPARISON);
             Comparison comparison = (Comparison) comparisonComboBox.getKey();
@@ -240,11 +240,11 @@ class WhereSetDialogCore {
         }
         this.removeVBoxRowAll();
         for (Where where: this.displayedWhereSet.getWheres()) {
-            if (this.searchTableRowsableColumnDescriptions.get(where.getColumn()) == null) {
+            if (this.searchableColumnDescriptions.get(where.getColumn()) == null) {
                 break;
             }
             // カラムタイプを取得
-            ColumnType columnType = this.searchTableRowsableColumnTypes.get(where.getColumn());
+            ColumnType columnType = this.searchableColumnTypes.get(where.getColumn());
             // 検索カラムを追加
             HBox hbox = this.addWhere(where.getColumn());
             // Helper使う
@@ -294,6 +294,8 @@ class WhereSetDialogCore {
             switch (columnType) {
             case STRING:
             case NUMBER_STRING:
+            case DATE_STRING:
+            case DATETIME_STRING:
                 return textField.getText(); // 文字列はそのまま
             case NUMBER:
                 return StringConverter.stringToDouble(textField.getText()); // 数値は変換
@@ -329,6 +331,8 @@ class WhereSetDialogCore {
             switch (columnType) {
             case STRING:
             case NUMBER_STRING:
+            case DATE_STRING:
+            case DATETIME_STRING:
                 textField.setText((String) value);
                 break;
             case NUMBER:
@@ -363,9 +367,10 @@ class WhereSetDialogCore {
     }
 
     // ダイアログ作成時にユーザーから指定された検索に使えるカラムを保存
-    protected LinkedHashMap<String, String> searchTableRowsableColumnDescriptions = new LinkedHashMap<>();
-    protected LinkedHashMap<String, ColumnType> searchTableRowsableColumnTypes = new LinkedHashMap<>();
-    protected LinkedHashMap<String, HashMap<?, ?>> searchTableRowsableColumnHashMaps = new LinkedHashMap<>();
+    protected LinkedHashMap<String, String> searchableColumnDescriptions = new LinkedHashMap<>();
+    protected LinkedHashMap<String, ColumnType> searchableColumnTypes = new LinkedHashMap<>();
+    protected LinkedHashMap<String, HashMap<?, ?>> searchableColumnHashMaps = new LinkedHashMap<>();
+    protected LinkedHashMap<String, StringConverter> searchableColumnStringConverters = new LinkedHashMap<>();
 
     /**
      * 検索できるカラムを追加する.
@@ -374,8 +379,21 @@ class WhereSetDialogCore {
      * @param columnType 種類
      */
     public void addSearchableColumn(String columnName, String description, ColumnType columnType) {
-        this.searchTableRowsableColumnDescriptions.put(columnName, description);
-        this.searchTableRowsableColumnTypes.put(columnName, columnType);
+        this.searchableColumnDescriptions.put(columnName, description);
+        this.searchableColumnTypes.put(columnName, columnType);
+    }
+
+    /**
+     * 検索できるカラムを追加する.
+     * @param columnName カラム名
+     * @param description カラム説明
+     * @param columnType 種類
+     * @param stringConverter 文字列のコンバーター
+     */
+    public void addSearchableColumn(String columnName, String description, ColumnType columnType, StringConverter stringConverter) {
+        this.searchableColumnDescriptions.put(columnName, description);
+        this.searchableColumnTypes.put(columnName, columnType);
+        this.searchableColumnStringConverters.put(columnName, stringConverter);
     }
 
     /**
@@ -386,9 +404,9 @@ class WhereSetDialogCore {
      * @param hashMap 連想配列
      */
     public void addSearchableColumn(String columnName, String description, ColumnType columnType, HashMap<?, ?> hashMap) {
-        this.searchTableRowsableColumnDescriptions.put(columnName, description);
-        this.searchTableRowsableColumnTypes.put(columnName, columnType);
-        this.searchTableRowsableColumnHashMaps.put(columnName, hashMap);
+        this.searchableColumnDescriptions.put(columnName, description);
+        this.searchableColumnTypes.put(columnName, columnType);
+        this.searchableColumnHashMaps.put(columnName, hashMap);
     }
 
     private LinkedHashMap<String, ColumnType> userComparisonColumnTypes = new LinkedHashMap<>();
@@ -434,10 +452,12 @@ class WhereSetDialogCore {
             hashMap.put(Comparison.BETWEEN, "検索値１～検索値２の間");
             break;
         case DATE:
+        case DATE_STRING:
             hashMap.put(Comparison.EQUAL, "検索値と等しい");
             hashMap.put(Comparison.BETWEEN, "検索値１～検索値２の間");
             break;
         case DATETIME:
+        case DATETIME_STRING:
             hashMap.put(Comparison.BETWEEN, "検索値１～検索値２の間");
             break;
         case BOOLEAN:
@@ -476,12 +496,12 @@ class WhereSetDialogCore {
         });
         hbox.getChildren().add(button);
         // 検索カラムの説明ラベルを配置
-        String descriptionString = this.searchTableRowsableColumnDescriptions.get(columnName);
+        String descriptionString = this.searchableColumnDescriptions.get(columnName);
         Label descriptionLabel = new Label(descriptionString);
         descriptionLabel.setId(NAME);
         hbox.getChildren().add(descriptionLabel);
         // 検索方法コンボボックスを配置
-        ColumnType columnType = this.searchTableRowsableColumnTypes.get(columnName);
+        ColumnType columnType = this.searchableColumnTypes.get(columnName);
         HashMap<Comparison, String> comparisonItems  = this.getComparisonHashMap(columnType);
         HashMapComboBox<Comparison, String> comparisonComboBox = new HashMapComboBox<>(comparisonItems);
         comparisonComboBox.setId(COMPARISON);
@@ -533,21 +553,26 @@ class WhereSetDialogCore {
      */
     protected class DatetimeInputEventHander implements EventHandler<MouseEvent> {
 
-        protected boolean isTimeInput = true;
+        private boolean isTimeInput;
+        
+        private StringConverter stringConverter;
 
         /**
          * コンストラクタ.
-         * @param isTimeInput
+         * @param isTimeInput 時刻を入力させるかどうか
+         * @param stringConverter Dateを文字列に変換するStringConverter
          */
-        public DatetimeInputEventHander(boolean isTimeInput) {
+        public DatetimeInputEventHander(boolean isTimeInput, StringConverter stringConverter) {
                 this.isTimeInput = isTimeInput;
+                this.stringConverter = stringConverter;
         }
 
         @Override
         public void handle(MouseEvent event) {
+            DatetimeInputEventHander handler = this;
+            WhereSetDialogCore core = WhereSetDialogCore.this;
             if (event.getButton() == MouseButton.PRIMARY) {
                 TextField field = (TextField) event.getSource();
-                WhereSetDialogCore core = WhereSetDialogCore.this;
                 DatetimePickerPaneDialog dialog = new DatetimePickerPaneDialog(core.dialog.getContentPane());
                 dialog.setTimeInput(this.isTimeInput);
                 dialog.setTitle("検索値の入力");
@@ -562,10 +587,14 @@ class WhereSetDialogCore {
                     @Override
                     public void handle(Date resultValue) {
                         if (resultValue != null) {
-                            if (DatetimeInputEventHander.this.isTimeInput) {
-                                field.setText(Datetime.dateToString(resultValue));
+                            if (handler.stringConverter == null) {
+                                if (handler.isTimeInput) {
+                                    field.setText(Datetime.dateToString(resultValue));
+                                } else {
+                                    field.setText(Datetime.dateToString(resultValue, "yyyy-MM-dd"));
+                                }
                             } else {
-                                field.setText(Datetime.dateToString(resultValue, "yyyy-MM-dd"));
+                                field.setText(handler.stringConverter.execute(resultValue));
                             }
                         }
                     }
@@ -583,12 +612,12 @@ class WhereSetDialogCore {
      */
     protected Control[] createValueControl(String columnName, Comparison comparison) {
         // 必要な値を取得
-        ColumnType columnType = this.searchTableRowsableColumnTypes.get(columnName);
-        HashMap<?, ?> hashMap = this.searchTableRowsableColumnHashMaps.get(columnName);
+        ColumnType columnType = this.searchableColumnTypes.get(columnName);
+        HashMap<?, ?> hashMap = this.searchableColumnHashMaps.get(columnName);
+        StringConverter stringConverter = this.searchableColumnStringConverters.get(columnName);
         // コントロール配列を作成
         ArrayList<Control> controls = new ArrayList<>();
         LimitTextField limitTextField;
-        TextField textField;
         HashMapComboBox<?, ?> hashMapComboBox;
         CheckBox checkBox;
         if (hashMap == null) {
@@ -596,23 +625,26 @@ class WhereSetDialogCore {
             case STRING:
                 switch (comparison) {
                 case BETWEEN:
-                    textField = new TextField();
-                    textField.setPrefWidth(100);
-                    IMEHelper.apply(textField, IMEMode.HIRAGANA);
-                    controls.add(textField);
+                    limitTextField = new LimitTextField();
+                    limitTextField.setPrefWidth(100);
+                    limitTextField.setStringConverter(stringConverter);
+                    IMEHelper.apply(limitTextField, IMEMode.HIRAGANA);
+                    controls.add(limitTextField);
                     controls.add(new Label("～"));
-                    textField = new TextField();
-                    textField.setPrefWidth(100);
-                    IMEHelper.apply(textField, IMEMode.HIRAGANA);
-                    controls.add(textField);
+                    limitTextField = new LimitTextField();
+                    limitTextField.setPrefWidth(100);
+                    limitTextField.setStringConverter(stringConverter);
+                    IMEHelper.apply(limitTextField, IMEMode.HIRAGANA);
+                    controls.add(limitTextField);
                     break;
                 case EQUAL:
                 case LIKE:
                 default:
-                    textField = new TextField();
-                    textField.setPrefWidth(100);
-                    IMEHelper.apply(textField, IMEMode.HIRAGANA);
-                    controls.add(textField);
+                    limitTextField = new LimitTextField();
+                    limitTextField.setPrefWidth(100);
+                    limitTextField.setStringConverter(stringConverter);
+                    IMEHelper.apply(limitTextField, IMEMode.HIRAGANA);
+                    controls.add(limitTextField);
                     break;
                 }
                 break;
@@ -621,6 +653,7 @@ class WhereSetDialogCore {
                 case EQUAL:
                     limitTextField = new LimitTextField();
                     limitTextField.setPrefWidth(100);
+                    limitTextField.setStringConverter(stringConverter);
                     limitTextField.addPermitRegex(RegexPattern.INTEGER_NARROW_ONLY.getPattern(), false);
                     IMEHelper.apply(limitTextField, IMEMode.OFF);
                     controls.add(limitTextField);
@@ -628,22 +661,25 @@ class WhereSetDialogCore {
                 case BETWEEN:
                     limitTextField = new LimitTextField();
                     limitTextField.setPrefWidth(100);
+                    limitTextField.setStringConverter(stringConverter);
                     limitTextField.addPermitRegex(RegexPattern.INTEGER_NARROW_ONLY.getPattern(), false);
                     IMEHelper.apply(limitTextField, IMEMode.OFF);
                     controls.add(limitTextField);
                     controls.add(new Label("～"));
                     limitTextField = new LimitTextField();
                     limitTextField.setPrefWidth(100);
+                    limitTextField.setStringConverter(stringConverter);
                     limitTextField.addPermitRegex(RegexPattern.INTEGER_NARROW_ONLY.getPattern(), false);
                     IMEHelper.apply(limitTextField, IMEMode.OFF);
                     controls.add(limitTextField);
                     break;
                 case LIKE:
                 default:
-                    textField = new TextField();
-                    textField.setPrefWidth(100);
-                    IMEHelper.apply(textField, IMEMode.OFF);
-                    controls.add(textField);
+                    limitTextField = new LimitTextField();
+                    limitTextField.setPrefWidth(100);
+                    limitTextField.setStringConverter(stringConverter);
+                    IMEHelper.apply(limitTextField, IMEMode.OFF);
+                    controls.add(limitTextField);
                     break;
                 }
                 break;
@@ -652,6 +688,7 @@ class WhereSetDialogCore {
                 case EQUAL:
                     limitTextField = new LimitTextField();
                     limitTextField.setPrefWidth(75);
+                    limitTextField.setStringConverter(stringConverter);
                     limitTextField.addPermitRegex(RegexPattern.DECIMAL_NEGATIVE.getPattern(), false);
                     IMEHelper.apply(limitTextField, IMEMode.OFF);
                     controls.add(limitTextField);
@@ -659,71 +696,76 @@ class WhereSetDialogCore {
                 case BETWEEN:
                     limitTextField = new LimitTextField();
                     limitTextField.setPrefWidth(75);
+                    limitTextField.setStringConverter(stringConverter);
                     limitTextField.addPermitRegex(RegexPattern.DECIMAL_NEGATIVE.getPattern(), false);
                     IMEHelper.apply(limitTextField, IMEMode.OFF);
                     controls.add(limitTextField);
                     controls.add(new Label("～"));
                     limitTextField = new LimitTextField();
                     limitTextField.setPrefWidth(75);
+                    limitTextField.setStringConverter(stringConverter);
                     limitTextField.addPermitRegex(RegexPattern.DECIMAL_NEGATIVE.getPattern(), false);
                     IMEHelper.apply(limitTextField, IMEMode.OFF);
                     controls.add(limitTextField);
                     break;
                 default:
-                    textField = new TextField();
-                    textField.setPrefWidth(100);
-                    IMEHelper.apply(textField, IMEMode.OFF);
-                    controls.add(textField);
+                    limitTextField = new LimitTextField();
+                    limitTextField.setPrefWidth(100);
+                    limitTextField.setStringConverter(stringConverter);
+                    IMEHelper.apply(limitTextField, IMEMode.OFF);
+                    controls.add(limitTextField);
                     break;
                 }
                 break;
             case DATE:
+            case DATE_STRING:
                 switch (comparison) {
                 case EQUAL:
-                    textField = new TextField();
-                    textField.setPrefWidth(100);
-                    textField.setEditable(false);
-                    textField.setOnMouseClicked(new DatetimeInputEventHander(false));
-                    controls.add(textField);
+                    limitTextField = new LimitTextField();
+                    limitTextField.setPrefWidth(100);
+                    limitTextField.setEditable(false);
+                    limitTextField.setOnMouseClicked(new DatetimeInputEventHander(false, stringConverter));
+                    controls.add(limitTextField);
                     break;
                 case BETWEEN:
-                    textField = new TextField();
-                    textField.setEditable(false);
-                    textField.setPrefWidth(100);
-                    textField.setOnMouseClicked(new DatetimeInputEventHander(false));
-                    controls.add(textField);
+                    limitTextField = new LimitTextField();
+                    limitTextField.setPrefWidth(100);
+                    limitTextField.setEditable(false);
+                    limitTextField.setOnMouseClicked(new DatetimeInputEventHander(false, stringConverter));
+                    controls.add(limitTextField);
                     controls.add(new Label("～"));
-                    textField = new TextField();
-                    textField.setEditable(false);
-                    textField.setPrefWidth(100);
-                    textField.setOnMouseClicked(new DatetimeInputEventHander(false));
-                    controls.add(textField);
+                    limitTextField = new LimitTextField();
+                    limitTextField.setPrefWidth(100);
+                    limitTextField.setEditable(false);
+                    limitTextField.setOnMouseClicked(new DatetimeInputEventHander(false, stringConverter));
+                    controls.add(limitTextField);
                     break;
                 default:
                     break;
                 }
                 break;
             case DATETIME:
+            case DATETIME_STRING:
                 switch (comparison) {
                 case EQUAL:
-                    textField = new TextField();
-                    textField.setPrefWidth(160);
-                    textField.setEditable(false);
-                    textField.setOnMouseClicked(new DatetimeInputEventHander(true));
-                    controls.add(textField);
+                    limitTextField = new LimitTextField();
+                    limitTextField.setPrefWidth(160);
+                    limitTextField.setEditable(false);
+                    limitTextField.setOnMouseClicked(new DatetimeInputEventHander(true, stringConverter));
+                    controls.add(limitTextField);
                     break;
                 case BETWEEN:
-                    textField = new TextField();
-                    textField.setEditable(false);
-                    textField.setPrefWidth(160);
-                    textField.setOnMouseClicked(new DatetimeInputEventHander(true));
-                    controls.add(textField);
+                    limitTextField = new LimitTextField();
+                    limitTextField.setPrefWidth(160);
+                    limitTextField.setEditable(false);
+                    limitTextField.setOnMouseClicked(new DatetimeInputEventHander(true, stringConverter));
+                    controls.add(limitTextField);
                     controls.add(new Label("～"));
-                    textField = new TextField();
-                    textField.setEditable(false);
-                    textField.setPrefWidth(160);
-                    textField.setOnMouseClicked(new DatetimeInputEventHander(true));
-                    controls.add(textField);
+                    limitTextField = new LimitTextField();
+                    limitTextField.setPrefWidth(160);
+                    limitTextField.setEditable(false);
+                    limitTextField.setOnMouseClicked(new DatetimeInputEventHander(true, stringConverter));
+                    controls.add(limitTextField);
                     break;
                 default:
                     break;

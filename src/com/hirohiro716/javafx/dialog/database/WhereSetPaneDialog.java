@@ -166,15 +166,15 @@ public class WhereSetPaneDialog extends AbstractPaneDialog<WhereSet[]> implement
                 HashMapComboBoxPaneDialog<String, String> dialog = new HashMapComboBoxPaneDialog<>(whereSetDialog.getContentPane());
                 dialog.setTitle("検索項目の追加");
                 dialog.setMessage("追加する検索項目を選択してください。");
-                dialog.setHashMap(whereSetDialog.core.searchTableRowsableColumnDescriptions);
-                Iterator<String> iterator = whereSetDialog.core.searchTableRowsableColumnDescriptions.keySet().iterator();
+                dialog.setHashMap(whereSetDialog.core.searchableColumnDescriptions);
+                Iterator<String> iterator = whereSetDialog.core.searchableColumnDescriptions.keySet().iterator();
                 if (iterator.hasNext()) {
                     dialog.setDefaultValue(iterator.next());
                 }
                 dialog.setCloseEvent(new CloseEventHandler<String>() {
                     @Override
                     public void handle(String resultValue) {
-                        if (whereSetDialog.core.searchTableRowsableColumnDescriptions.containsKey(resultValue)) {
+                        if (whereSetDialog.core.searchableColumnDescriptions.containsKey(resultValue)) {
                             whereSetDialog.core.addWhere(resultValue);
                         }
                     }

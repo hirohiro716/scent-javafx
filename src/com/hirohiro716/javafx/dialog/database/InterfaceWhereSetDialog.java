@@ -33,9 +33,17 @@ public interface InterfaceWhereSetDialog extends InterfaceDialog<WhereSet[]> {
          */
         DATE,
         /**
+         * 日付(文字列)
+         */
+        DATE_STRING,
+        /**
          * 日付と時刻
          */
         DATETIME,
+        /**
+         * 日付と時刻(文字列)
+         */
+        DATETIME_STRING,
         /**
          * 真偽
          */
