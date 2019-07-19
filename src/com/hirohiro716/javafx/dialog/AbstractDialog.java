@@ -150,6 +150,7 @@ public abstract class AbstractDialog<T> {
         // stageを設定
         this.stage.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this.nonCloseEvent);
         this.stage.initStyle(StageStyle.TRANSPARENT);
+        this.stage.initOwner(owner);
         // FullScreenで表示する
         this.stage.setX(screen.getVisualBounds().getMinX());
         this.stage.setY(screen.getVisualBounds().getMinY());
