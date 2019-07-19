@@ -21,7 +21,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
 
 /**
  * HashMapの値をそれぞれToggleButtonで表示しユーザーにON/OFFを切り替えさせるダイアログを表示するクラス.
@@ -53,44 +53,65 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
      * @param selectableItems 選択できるItem
      */
     public ToggleButtonDialog(HashMap<E, String> selectableItems) {
-        super();
         this.selectableItems = selectableItems;
     }
-
-    /**
-     * コンストラクタ.
-     * @param selectableItems 選択できるItem
-     * @param parentStage
-     */
-    public ToggleButtonDialog(HashMap<E, String> selectableItems, Stage parentStage) {
-        super(parentStage);
-        this.selectableItems = selectableItems;
-    }
-
+    
     private HashMap<E, String> selectableItems;
-
+    
     @Override
-    public AnchorPane getContentPane() {
-        return this.paneRoot;
+    protected Label getLabelTitle() {
+        return this.labelTitle;
     }
 
     @Override
-    protected void preparationCallback() {
+    protected Pane createContentPane() {
         ToggleButtonDialog<E> dialog = this;
-        // タイトルのセット
-        this.getStage().setTitle(this.title);
-        this.labelTitle.setText(this.title);
-        // メッセージのセット
-        if (this.message != null) {
-            Label label = new Label(this.message);
-            label.setWrapText(true);
-            this.paneMessage.getChildren().add(label);
-            LayoutHelper.setAnchor(label, 0, 0, 0, 0);
+        // Paneの生成
+        FXMLLoader fxmlLoader;
+        try {
+            fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+            return null;
         }
-        // メッセージNodeのセット
-        if (this.messageNode != null) {
-            this.paneMessage.getChildren().add(this.messageNode);
-        }
+        // ボタンのイベント定義
+        this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
+            @SuppressWarnings("unchecked")
+            @Override
+            public void handle(ActionEvent event) {
+                LinkedHashMap<E, String> hashMap = new LinkedHashMap<>();
+                for (Node node: dialog.flowPane.getChildren()) {
+                    ToggleButton button = (ToggleButton) node;
+                    if (button.isSelected()) {
+                        hashMap.put((E) button.getUserData(), button.getText()); 
+                    }
+                }
+                dialog.setResult(hashMap);
+                dialog.close();
+            }
+        });
+        // キーボードイベント定義
+        this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()) {
+                case O:
+                    dialog.buttonOk.fire();
+                    break;
+                case C:
+                    dialog.buttonCancel.fire();
+                    break;
+                default:
+                    break;
+                }
+            }
+        });
+        return fxmlLoader.getPaneRoot();
+    }
+
+    @Override
+    public void breforeShowPrepare() {
+        ToggleButtonDialog<E> dialog = this;
         // 選択用のToggleButtonを作成
         HashMap<E, ToggleButton> buttonsHashMap = new HashMap<>();
         for (E key: this.selectableItems.keySet()) {
@@ -120,21 +141,7 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
                 }
             }
         }
-        // ボタンのイベント定義
-        this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
-            @SuppressWarnings("unchecked")
-            @Override
-            public void handle(ActionEvent event) {
-                LinkedHashMap<E, String> hashMap = new LinkedHashMap<>();
-                for (Node node: dialog.flowPane.getChildren()) {
-                    ToggleButton button = (ToggleButton) node;
-                    if (button.isSelected()) {
-                        hashMap.put((E) button.getUserData(), button.getText()); 
-                    }
-                }
-                dialog.setResult(hashMap);
-            }
-        });
+        // キャンセル可能かどうか
         if (this.isCancelable) {
             this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -146,74 +153,33 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
         } else {
             HBox hboxButton = (HBox) this.buttonCancel.getParent();
             hboxButton.getChildren().remove(this.buttonCancel);
-        }
-        // キーボードイベント定義
-        this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                switch (event.getCode()) {
-                case O:
-                    dialog.buttonOk.fire();
-                    break;
-                case C:
-                    dialog.buttonCancel.fire();
-                    break;
-                default:
-                    break;
-                }
-            }
-        });
+        }        
     }
 
     @Override
-    public void show() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            this.show(fxmlLoader.getPaneRoot());
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
+    public boolean isClosableAtStackPaneClicked() {
+        return this.isCancelable;
     }
-
-    @Override
-    public LinkedHashMap<E, String> showAndWait() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            return this.showAndWait(fxmlLoader.getPaneRoot());
-        } catch (IOException exception) {
-            exception.printStackTrace();
-            return null;
-        }
-    }
-
-    private String title;
-
-    /**
-     * タイトルをセットする.
-     * @param title
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    private String message;
 
     /**
      * メッセージ内容をセットする.
      * @param message
      */
     public void setMessage(String message) {
-        this.message = message;
+        this.paneMessage.getChildren().clear();
+        Label label = new Label(message);
+        label.setWrapText(true);
+        this.paneMessage.getChildren().add(label);
+        LayoutHelper.setAnchor(label, 0, 0, 0, 0);
     }
-
-    private Node messageNode;
 
     /**
      * メッセージに代わるNodeをセットする.
      * @param node
      */
     public void setMessageNode(Node node) {
-        this.messageNode = node;
+        this.paneMessage.getChildren().clear();
+        this.paneMessage.getChildren().add(node);
     }
 
     private E[] defaultValue;
@@ -241,11 +207,6 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
      * @return キャンセル可能か
      */
     public boolean isCancelable() {
-        return this.isCancelable;
-    }
-
-    @Override
-    public boolean isClosableAtStackPaneClicked() {
         return this.isCancelable;
     }
 

@@ -9,11 +9,10 @@ import com.hirohiro716.javafx.dialog.AbstractDialog;
 import com.hirohiro716.thread.Task;
 
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
 
 /**
  * 待機画面を表示するクラス.
@@ -31,44 +30,27 @@ public class WaitDialog<T> extends AbstractDialog<T> {
     @FXML
     private AnchorPane paneMessage;
 
-    /**
-     * コンストラクタ.
-     */
-    public WaitDialog() {
-        super();
-    }
-
-    /**
-     * コンストラクタ.
-     * @param parentStage
-     */
-    public WaitDialog(Stage parentStage) {
-        super(parentStage);
+    @Override
+    protected Label getLabelTitle() {
+        return this.labelTitle;
     }
 
     @Override
-    public AnchorPane getContentPane() {
-        return this.paneRoot;
+    protected Pane createContentPane() {
+        // Paneの生成
+        FXMLLoader fxmlLoader;
+        try {
+            fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+            return null;
+        }
+        return fxmlLoader.getPaneRoot();
     }
 
     @Override
-    protected void preparationCallback() {
+    public void breforeShowPrepare() {
         WaitDialog<T> dialog = this;
-        // タイトルのセット
-        this.getStage().setTitle(this.title);
-        this.labelTitle.setText(this.title);
-        // メッセージのセット
-        if (this.message != null) {
-            Label label = new Label(this.message);
-            label.setWrapText(true);
-            label.setAlignment(Pos.TOP_LEFT);
-            this.paneMessage.getChildren().add(label);
-            LayoutHelper.setAnchor(label, 30, 0, 0, 0);
-        }
-        // メッセージNodeのセット
-        if (this.messageNode != null) {
-            this.paneMessage.getChildren().add(this.messageNode);
-        }
         // タスクの実行
         if (this.task != null) {
             this.task.start();
@@ -80,56 +62,31 @@ public class WaitDialog<T> extends AbstractDialog<T> {
     }
 
     @Override
-    public void show() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            this.show(fxmlLoader.getPaneRoot());
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
+    public boolean isClosableAtStackPaneClicked() {
+        return false;
     }
-
-    @Override
-    public T showAndWait() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            return this.showAndWait(fxmlLoader.getPaneRoot());
-        } catch (IOException exception) {
-            exception.printStackTrace();
-            return null;
-        }
-    }
-
-    private String title;
-
-    /**
-     * タイトルをセットする.
-     * @param title
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    private String message;
 
     /**
      * メッセージ内容をセットする.
      * @param message
      */
     public void setMessage(String message) {
-        this.message = message;
+        this.paneMessage.getChildren().clear();
+        Label label = new Label(message);
+        label.setWrapText(true);
+        this.paneMessage.getChildren().add(label);
+        LayoutHelper.setAnchor(label, 0, 0, 0, 0);
     }
-
-    private Node messageNode;
 
     /**
      * メッセージに代わるNodeをセットする.
      * @param node
      */
     public void setMessageNode(Node node) {
-        this.messageNode = node;
+        this.paneMessage.getChildren().clear();
+        this.paneMessage.getChildren().add(node);
     }
-    
+
     private boolean isAutoClose = true;
     
     /**
@@ -182,11 +139,6 @@ public class WaitDialog<T> extends AbstractDialog<T> {
      */
     public void setException(Exception exception) {
         this.exception = exception;
-    }
-
-    @Override
-    public boolean isClosableAtStackPaneClicked() {
-        return false;
     }
 
 }

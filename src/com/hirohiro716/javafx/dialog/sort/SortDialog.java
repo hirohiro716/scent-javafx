@@ -25,8 +25,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 /**
  * LinkedHashMapの順番をユーザーに並び替えさせるダイアログを表示するクラス.
@@ -61,46 +61,27 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
      * @param sortableItems 並び替えるItem
      */
     public SortDialog(LinkedHashMap<E, String> sortableItems) {
-        super();
-        this.sortableItems = sortableItems;
-    }
-
-    /**
-     * コンストラクタ.
-     * @param sortableItems 並び替えるItems
-     * @param parentStage
-     */
-    public SortDialog(LinkedHashMap<E, String> sortableItems, Stage parentStage) {
-        super(parentStage);
         this.sortableItems = sortableItems;
     }
 
     private LinkedHashMap<E, String> sortableItems;
 
     @Override
-    public AnchorPane getContentPane() {
-        return this.paneRoot;
+    protected Label getLabelTitle() {
+        return this.labelTitle;
     }
 
     @Override
-    protected void preparationCallback() {
+    protected Pane createContentPane() {
         SortDialog<E> dialog = this;
-        // タイトルのセット
-        this.getStage().setTitle(this.title);
-        this.labelTitle.setText(this.title);
-        // メッセージのセット
-        if (this.message != null) {
-            Label label = new Label(this.message);
-            label.setWrapText(true);
-            this.paneMessage.getChildren().add(label);
-            LayoutHelper.setAnchor(label, 0, 0, 0, 0);
+        // Paneの生成
+        FXMLLoader fxmlLoader;
+        try {
+            fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+            return null;
         }
-        // メッセージNodeのセット
-        if (this.messageNode != null) {
-            this.paneMessage.getChildren().add(this.messageNode);
-        }
-        // 並べ替え用のVBoxを作成
-        createItems(this.scrollPane, this.vbox, this.sortableItems);
         // ボタンのイベント定義
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @SuppressWarnings("unchecked")
@@ -115,18 +96,6 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
                 dialog.close();
             }
         });
-        if (this.isCancelable) {
-            this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    dialog.setResult(null);
-                    dialog.close();
-                }
-            });
-        } else {
-            HBox hboxButton = (HBox) this.buttonCancel.getParent();
-            hboxButton.getChildren().remove(this.buttonCancel);
-        }
         // キーボードイベント定義
         this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             @Override
@@ -143,6 +112,71 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
                 }
             }
         });
+        return fxmlLoader.getPaneRoot();
+    }
+
+    @Override
+    public void breforeShowPrepare() {
+        SortDialog<E> dialog = this;
+        // 並べ替え用のVBoxを作成
+        createItems(this.scrollPane, this.vbox, this.sortableItems);
+        // キャンセル可能かどうか
+        if (this.isCancelable) {
+            this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    dialog.setResult(null);
+                    dialog.close();
+                }
+            });
+        } else {
+            HBox hboxButton = (HBox) this.buttonCancel.getParent();
+            hboxButton.getChildren().remove(this.buttonCancel);
+        }
+    }
+
+    @Override
+    public boolean isClosableAtStackPaneClicked() {
+        return this.isCancelable;
+    }
+
+    /**
+     * メッセージ内容をセットする.
+     * @param message
+     */
+    public void setMessage(String message) {
+        this.paneMessage.getChildren().clear();
+        Label label = new Label(message);
+        label.setWrapText(true);
+        this.paneMessage.getChildren().add(label);
+        LayoutHelper.setAnchor(label, 0, 0, 0, 0);
+    }
+
+    /**
+     * メッセージに代わるNodeをセットする.
+     * @param node
+     */
+    public void setMessageNode(Node node) {
+        this.paneMessage.getChildren().clear();
+        this.paneMessage.getChildren().add(node);
+    }
+
+    private boolean isCancelable = true;
+
+    /**
+     * キャンセル可能かを設定する. 初期値はtrue.
+     * @param isCancelable
+     */
+    public void setCancelable(boolean isCancelable) {
+        this.isCancelable = isCancelable;
+    }
+
+    /**
+     * キャンセル可能かを取得する.
+     * @return キャンセル可能か
+     */
+    public boolean isCancelable() {
+        return this.isCancelable;
     }
 
     /**
@@ -265,80 +299,6 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
                 }
             });
         }
-    }
-
-    @Override
-    public void show() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            this.show(fxmlLoader.getPaneRoot());
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
-    }
-
-    @Override
-    public LinkedHashMap<E, String> showAndWait() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            return this.showAndWait(fxmlLoader.getPaneRoot());
-        } catch (IOException exception) {
-            exception.printStackTrace();
-            return null;
-        }
-    }
-
-    private String title;
-
-    /**
-     * タイトルをセットする.
-     * @param title
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    private String message;
-
-    /**
-     * メッセージ内容をセットする.
-     * @param message
-     */
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    private Node messageNode;
-
-    /**
-     * メッセージに代わるNodeをセットする.
-     * @param node
-     */
-    public void setMessageNode(Node node) {
-        this.messageNode = node;
-    }
-
-    private boolean isCancelable = true;
-
-    /**
-     * キャンセル可能かを設定する. 初期値はtrue.
-     * @param isCancelable
-     */
-    public void setCancelable(boolean isCancelable) {
-        this.isCancelable = isCancelable;
-    }
-
-    /**
-     * キャンセル可能かを取得する.
-     * @return キャンセル可能か
-     */
-    public boolean isCancelable() {
-        return this.isCancelable;
-    }
-
-    @Override
-    public boolean isClosableAtStackPaneClicked() {
-        return this.isCancelable;
     }
 
 }

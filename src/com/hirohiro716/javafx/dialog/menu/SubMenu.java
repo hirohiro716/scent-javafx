@@ -6,8 +6,7 @@ import java.util.Collection;
 
 import com.hirohiro716.javafx.FXMLLoader;
 import com.hirohiro716.javafx.LayoutHelper;
-import com.hirohiro716.javafx.dialog.AbstractPaneDialog;
-
+import com.hirohiro716.javafx.dialog.AbstractDialog;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,7 +21,7 @@ import javafx.scene.layout.Pane;
  * サブメニューを表示するクラス.
  * @author hiro
  */
-public class SubMenu extends AbstractPaneDialog<Void> {
+public class SubMenu extends AbstractDialog<Void> {
 
     @FXML
     private AnchorPane paneRoot;
@@ -32,44 +31,59 @@ public class SubMenu extends AbstractPaneDialog<Void> {
 
     @FXML
     private Label labelClose;
-    
-    /**
-     * コンストラクタ.
-     * @param parentPane
-     */
-    public SubMenu(Pane parentPane) {
-        super(parentPane);
-        this.flowPaneNodes = new FlowPane();
-        this.flowPaneNodes.setVgap(10);
-        this.flowPaneNodes.setHgap(10);
-        LayoutHelper.setAnchor(this.flowPaneNodes, 90, 30, 30, 30);
+
+    @Override
+    protected Label getLabelTitle() {
+        return this.labelTitle;
     }
 
     @Override
-    public AnchorPane getContentPane() {
-        return this.paneRoot;
-    }
-
-    @Override
-    public void show() {
+    protected Pane createContentPane() {
         SubMenu dialog = this;
-        // ダイアログ表示
+        // Paneの生成
         Pane pane;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(SubMenu.class.getResource(SubMenu.class.getSimpleName() + ".fxml"), this);
             pane = fxmlLoader.getPaneRoot();
-            this.show(pane);
         } catch (IOException exception) {
             exception.printStackTrace();
-            return;
+            return null;
         }
-        // タイトルのセット
-        this.labelTitle.setText(this.title);
+        // FlowPane生成
+        this.flowPaneNodes = new FlowPane();
+        this.flowPaneNodes.setVgap(10);
+        this.flowPaneNodes.setHgap(10);
+        LayoutHelper.setAnchor(this.flowPaneNodes, 90, 30, 30, 30);
+        // 閉じるイベント定義
+        this.labelClose.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                dialog.close();
+            }
+        });
+        this.labelClose.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                dialog.labelClose.setOpacity(0.5);
+            }
+        });
+        this.labelClose.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                dialog.labelClose.setOpacity(1);
+            }
+        });
+        return pane;
+    }
+
+    @Override
+    public void breforeShowPrepare() {
         // 画面サイズ
-        pane.setMaxSize(this.width, this.height);
-        pane.setMinSize(this.width, this.height);
+        this.getContentPane().setPrefSize(this.width, this.height);
+        this.getContentPane().setMaxSize(this.width, this.height);
+        this.getContentPane().setMinSize(this.width, this.height);
         // Nodeの表示
-        pane.getChildren().add(this.flowPaneNodes);
+        this.getContentPane().getChildren().add(this.flowPaneNodes);
         long sleepTime = 100;
         for (Node node: this.nodes) {
             node.setOpacity(0);
@@ -97,37 +111,13 @@ public class SubMenu extends AbstractPaneDialog<Void> {
             thread.start();
             sleepTime += 100;
         }
-        // 閉じるイベント定義
-        this.labelClose.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                dialog.close();
-            }
-        });
-        this.labelClose.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                dialog.labelClose.setOpacity(0.5);
-            }
-        });
-        this.labelClose.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                dialog.labelClose.setOpacity(1);
-            }
-        });
     }
 
-    private String title;
-
-    /**
-     * タイトルをセットする.
-     * @param title
-     */
-    public void setTitle(String title) {
-        this.title = title;
+    @Override
+    public boolean isClosableAtStackPaneClicked() {
+        return true;
     }
-    
+
     private double width = 400;
     
     /**
@@ -186,11 +176,6 @@ public class SubMenu extends AbstractPaneDialog<Void> {
      */
     public FlowPane getFlowPane() {
         return this.flowPaneNodes;
-    }
-
-    @Override
-    public boolean isClosableAtStackPaneClicked() {
-        return true;
     }
 
 }

@@ -5,11 +5,11 @@ import java.sql.SQLException;
 import com.hirohiro716.database.AbstractBindTable;
 import com.hirohiro716.database.AbstractDatabase;
 import com.hirohiro716.database.DataNotFoundException;
-import com.hirohiro716.javafx.dialog.database.DatabaseTryConnectPaneDialog;
-import com.hirohiro716.javafx.dialog.database.InterfaceDatabaseTryConnectDialog.ConnectCallback;
-import com.hirohiro716.javafx.dialog.database.InterfaceDatabaseTryConnectDialog.FailureCallback;
-import com.hirohiro716.javafx.dialog.database.InterfaceDatabaseTryConnectDialog.QuestionDialogCallback;
-import com.hirohiro716.javafx.dialog.database.InterfaceDatabaseTryConnectDialog.SuccessCallback;
+import com.hirohiro716.javafx.dialog.database.DatabaseTryConnectDialog;
+import com.hirohiro716.javafx.dialog.database.DatabaseTryConnectDialog.ConnectCallback;
+import com.hirohiro716.javafx.dialog.database.DatabaseTryConnectDialog.FailureCallback;
+import com.hirohiro716.javafx.dialog.database.DatabaseTryConnectDialog.QuestionDialogCallback;
+import com.hirohiro716.javafx.dialog.database.DatabaseTryConnectDialog.SuccessCallback;
 
 import javafx.scene.layout.Pane;
 
@@ -57,12 +57,12 @@ public abstract class AbstractDatabaseEditor<D extends AbstractDatabase, T exten
      */
     public void tryConnectDatabaseWithDialog(D database, QuestionDialogCallback questionDialogCallback) {
         AbstractDatabaseEditor<D, T> editor = this;
-        DatabaseTryConnectPaneDialog<D> dialog = new DatabaseTryConnectPaneDialog<D>(database, new ConnectCallback<D>() {
+        DatabaseTryConnectDialog<D> dialog = new DatabaseTryConnectDialog<D>(database, new ConnectCallback<D>() {
             @Override
             public void call(D database) throws SQLException {
                 editor.connectDatabase(database);
             }
-        }, (Pane) this.getStage().getScene().getRoot());
+        });
         dialog.setQuestionDialogCallback(questionDialogCallback);
         dialog.setSuccessCallback(new SuccessCallback() {
             @Override
@@ -80,7 +80,7 @@ public abstract class AbstractDatabaseEditor<D extends AbstractDatabase, T exten
                 editor.close();
             }
         });
-        dialog.connect();
+        dialog.connect((Pane) this.getStage().getScene().getRoot());
     }
     
 }

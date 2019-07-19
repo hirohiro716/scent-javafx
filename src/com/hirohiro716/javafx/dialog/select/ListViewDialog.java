@@ -17,7 +17,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 
 /**
@@ -45,43 +45,54 @@ public class ListViewDialog<E> extends AbstractDialog<E> {
     @FXML
     private EnterFireButton buttonCancel;
 
-    /**
-     * コンストラクタ.
-     */
-    public ListViewDialog() {
-        super();
-    }
-
-    /**
-     * コンストラクタ.
-     * @param parentStage
-     */
-    public ListViewDialog(Stage parentStage) {
-        super(parentStage);
+    @Override
+    protected Label getLabelTitle() {
+        return this.labelTitle;
     }
 
     @Override
-    public AnchorPane getContentPane() {
-        return this.paneRoot;
-    }
-
-    @Override
-    protected void preparationCallback() {
+    protected Pane createContentPane() {
         ListViewDialog<E> dialog = this;
-        // タイトルのセット
-        this.getStage().setTitle(this.title);
-        this.labelTitle.setText(this.title);
-        // メッセージのセット
-        if (this.message != null) {
-            Label label = new Label(this.message);
-            label.setWrapText(true);
-            this.paneMessage.getChildren().add(label);
-            LayoutHelper.setAnchor(label, 0, 0, 0, 0);
+        // Paneの生成
+        FXMLLoader fxmlLoader;
+        try {
+            fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+            return null;
         }
-        // メッセージNodeのセット
-        if (this.messageNode != null) {
-            this.paneMessage.getChildren().add(this.messageNode);
-        }
+        // ボタンのイベント定義
+        this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (dialog.listView.getSelectionModel().getSelectedItem() != null) {
+                    dialog.setResult(dialog.listView.getSelectionModel().getSelectedItem());
+                    dialog.close();
+                }
+            }
+        });
+        // キーボードイベント定義
+        this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()) {
+                case O:
+                    dialog.buttonOk.fire();
+                    break;
+                case C:
+                    dialog.buttonCancel.fire();
+                    break;
+                default:
+                    break;
+                }
+            }
+        });
+        return fxmlLoader.getPaneRoot();
+    }
+
+    @Override
+    public void breforeShowPrepare() {
+        ListViewDialog<E> dialog = this;
         // 選択用のListViewを作成
         this.listView.setCellFactory(new Callback<ListView<E>, ListCell<E>>() {
             @Override
@@ -99,16 +110,7 @@ public class ListViewDialog<E> extends AbstractDialog<E> {
             this.listView.getItems().add(key);
         }
         this.listView.setPlaceholder(new Label("選択できるアイテムがありません"));
-        // ボタンのイベント定義
-        this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (dialog.listView.getSelectionModel().getSelectedItem() != null) {
-                    dialog.setResult(dialog.listView.getSelectionModel().getSelectedItem());
-                    dialog.close();
-                }
-            }
-        });
+        // キャンセル可能かどうか
         if (this.isCancelable) {
             this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -121,73 +123,32 @@ public class ListViewDialog<E> extends AbstractDialog<E> {
             HBox hboxButton = (HBox) this.buttonCancel.getParent();
             hboxButton.getChildren().remove(this.buttonCancel);
         }
-        // キーボードイベント定義
-        this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                switch (event.getCode()) {
-                case O:
-                    dialog.buttonOk.fire();
-                    break;
-                case C:
-                    dialog.buttonCancel.fire();
-                    break;
-                default:
-                    break;
-                }
-            }
-        });
     }
 
     @Override
-    public void show() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            this.show(fxmlLoader.getPaneRoot());
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
+    public boolean isClosableAtStackPaneClicked() {
+        return this.isCancelable;
     }
-
-    @Override
-    public E showAndWait() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            return this.showAndWait(fxmlLoader.getPaneRoot());
-        } catch (IOException exception) {
-            exception.printStackTrace();
-            return null;
-        }
-    }
-
-    private String title;
-
-    /**
-     * タイトルをセットする.
-     * @param title
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    private String message;
 
     /**
      * メッセージ内容をセットする.
      * @param message
      */
     public void setMessage(String message) {
-        this.message = message;
+        this.paneMessage.getChildren().clear();
+        Label label = new Label(message);
+        label.setWrapText(true);
+        this.paneMessage.getChildren().add(label);
+        LayoutHelper.setAnchor(label, 0, 0, 0, 0);
     }
-
-    private Node messageNode;
 
     /**
      * メッセージに代わるNodeをセットする.
      * @param node
      */
     public void setMessageNode(Node node) {
-        this.messageNode = node;
+        this.paneMessage.getChildren().clear();
+        this.paneMessage.getChildren().add(node);
     }
 
     private HashMap<E, String> items;
@@ -223,11 +184,6 @@ public class ListViewDialog<E> extends AbstractDialog<E> {
      * @return キャンセル可能か
      */
     public boolean isCancelable() {
-        return this.isCancelable;
-    }
-
-    @Override
-    public boolean isClosableAtStackPaneClicked() {
         return this.isCancelable;
     }
 

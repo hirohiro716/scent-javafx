@@ -12,12 +12,12 @@ import com.hirohiro716.database.AbstractDatabase;
 import com.hirohiro716.database.WhereSet;
 import com.hirohiro716.javafx.StageBuilder;
 import com.hirohiro716.javafx.control.table.DynamicTableView;
-import com.hirohiro716.javafx.dialog.InterfaceDialog.CloseEventHandler;
-import com.hirohiro716.javafx.dialog.AbstractPaneDialog;
+import com.hirohiro716.javafx.dialog.wait.WaitDialog;
+import com.hirohiro716.javafx.dialog.AbstractDialog;
+import com.hirohiro716.javafx.dialog.AbstractDialog.CloseEventHandler;
 import com.hirohiro716.javafx.dialog.DialogResult;
-import com.hirohiro716.javafx.dialog.alert.AlertPane;
-import com.hirohiro716.javafx.dialog.confirm.ConfirmPane;
-import com.hirohiro716.javafx.dialog.wait.WaitPaneDialog;
+import com.hirohiro716.javafx.dialog.alert.Alert;
+import com.hirohiro716.javafx.dialog.confirm.Confirm;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -72,7 +72,7 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
         AbstractDatabaseSearcher<T> searcher = AbstractDatabaseSearcher.this;
         Pane parentPane = (Pane) searcher.getStage().getScene().getRoot();
         searcher.getDynamicTableView().getItems().clear();
-        WaitPaneDialog<RudeArray[]> dialog = new WaitPaneDialog<>(parentPane);
+        WaitDialog<RudeArray[]> dialog = new WaitDialog<>();
         dialog.setTitle("検索処理中");
         dialog.setMessage("ただいま検索中です。しばらくお待ちください。");
         dialog.setCallable(new Callable<RudeArray[]>() {
@@ -89,15 +89,15 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
                     searcher.getDynamicTableView().refresh();
                     searcher.afterSearchProcessing();
                 } else {
-                    AlertPane alert = new AlertPane((Pane) searcher.getStage().getScene().getRoot());
+                    Alert alert = new Alert();
                     alert.setTitle(AbstractDatabase.ERROR_DIALOG_TITLE);
                     alert.setMessage(dialog.getException().getMessage());
-                    alert.show();
+                    alert.showOnPane((Pane) searcher.getStage().getScene().getRoot());
                     searcher.afterDialogShowing(alert);
                 }
             }
         });
-        dialog.show();
+        dialog.showOnPane(parentPane);
         this.afterDialogShowing(dialog);
     }
     
@@ -105,7 +105,7 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
      * 検索待機ダイアログが表示された後の処理を行う.
      * @param dialog 表示された検索待機ダイアログ
      */
-    protected abstract void afterDialogShowing(AbstractPaneDialog<?> dialog);
+    protected abstract void afterDialogShowing(AbstractDialog<?> dialog);
 
     private EventHandler<ActionEvent> searchExecuteActionEventHandler = new EventHandler<ActionEvent>() {
         @Override
@@ -320,7 +320,7 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
         public void handle(ActionEvent event) {
             AbstractDatabaseSearcher<T> searcher = AbstractDatabaseSearcher.this;
             Node node = (Node) event.getSource();
-            ConfirmPane confirm = new ConfirmPane((Pane) node.getScene().getRoot());
+            Confirm confirm = new Confirm();
             confirm.setTitle(AbstractEditor.CONFIRM_DIALOG_TITLE_DELETE);
             confirm.setMessage("選択中のデータを削除します。");
             confirm.setDefaultButton(DialogResult.CANCEL);
@@ -332,7 +332,7 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
                     }
                 }
             });
-            confirm.show();
+            confirm.showOnPane((Pane) node.getScene().getRoot());
             searcher.afterDialogShowing(confirm);
         }
     };

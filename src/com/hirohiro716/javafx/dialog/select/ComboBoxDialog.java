@@ -17,7 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
 
 /**
  * コンボボックス入力ダイアログを表示するクラス.
@@ -44,48 +44,21 @@ public class ComboBoxDialog<T> extends AbstractDialog<T> {
     @FXML
     private EnterFireButton buttonCancel;
 
-    /**
-     * コンストラクタ.
-     */
-    public ComboBoxDialog() {
-        super();
-    }
-
-    /**
-     * コンストラクタ.
-     * @param parentStage
-     */
-    public ComboBoxDialog(Stage parentStage) {
-        super(parentStage);
+    @Override
+    protected Label getLabelTitle() {
+        return this.labelTitle;
     }
 
     @Override
-    public AnchorPane getContentPane() {
-        return this.paneRoot;
-    }
-
-    @Override
-    protected void preparationCallback() {
+    protected Pane createContentPane() {
         ComboBoxDialog<T> dialog = this;
-        // タイトルのセット
-        this.getStage().setTitle(this.title);
-        this.labelTitle.setText(this.title);
-        // メッセージのセット
-        if (this.message != null) {
-            Label label = new Label(this.message);
-            label.setWrapText(true);
-            this.paneMessage.getChildren().add(label);
-            LayoutHelper.setAnchor(label, 0, 0, 0, 0);
-        }
-        // メッセージNodeのセット
-        if (this.messageNode != null) {
-            this.paneMessage.getChildren().add(this.messageNode);
-        }
-        // コンボボックスアイテムのセット
-        this.comboBox.setItems(this.items);
-        // コンボボックスの初期値をセット
-        if (this.defaultValue != null) {
-            this.comboBox.setValue(this.defaultValue);
+        // Paneの生成
+        FXMLLoader fxmlLoader;
+        try {
+            fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+            return null;
         }
         // ボタンのイベント定義
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
@@ -97,18 +70,6 @@ public class ComboBoxDialog<T> extends AbstractDialog<T> {
                 }
             }
         });
-        if (this.isCancelable) {
-            this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    dialog.setResult(null);
-                    dialog.close();
-                }
-            });
-        } else {
-            HBox hboxButton = (HBox) this.buttonCancel.getParent();
-            hboxButton.getChildren().remove(this.buttonCancel);
-        }
         // キーボードイベント定義
         this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             @Override
@@ -128,57 +89,57 @@ public class ComboBoxDialog<T> extends AbstractDialog<T> {
                 }
             }
         });
+        return fxmlLoader.getPaneRoot();
     }
 
     @Override
-    public void show() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            this.show(fxmlLoader.getPaneRoot());
-        } catch (IOException exception) {
-            exception.printStackTrace();
+    public void breforeShowPrepare() {
+        ComboBoxDialog<T> dialog = this;
+        // コンボボックスアイテムのセット
+        this.comboBox.setItems(this.items);
+        // コンボボックスの初期値をセット
+        if (this.defaultValue != null) {
+            this.comboBox.setValue(this.defaultValue);
+        }
+        // キャンセル可能かどうか
+        if (this.isCancelable) {
+            this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    dialog.setResult(null);
+                    dialog.close();
+                }
+            });
+        } else {
+            HBox hboxButton = (HBox) this.buttonCancel.getParent();
+            hboxButton.getChildren().remove(this.buttonCancel);
         }
     }
 
     @Override
-    public T showAndWait() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            return this.showAndWait(fxmlLoader.getPaneRoot());
-        } catch (IOException exception) {
-            exception.printStackTrace();
-            return null;
-        }
+    public boolean isClosableAtStackPaneClicked() {
+        return this.isCancelable;
     }
-
-    private String title;
-
-    /**
-     * タイトルをセットする.
-     * @param title
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    private String message;
 
     /**
      * メッセージ内容をセットする.
      * @param message
      */
     public void setMessage(String message) {
-        this.message = message;
+        this.paneMessage.getChildren().clear();
+        Label label = new Label(message);
+        label.setWrapText(true);
+        this.paneMessage.getChildren().add(label);
+        LayoutHelper.setAnchor(label, 0, 0, 0, 0);
     }
-
-    private Node messageNode;
 
     /**
      * メッセージに代わるNodeをセットする.
      * @param node
      */
     public void setMessageNode(Node node) {
-        this.messageNode = node;
+        this.paneMessage.getChildren().clear();
+        this.paneMessage.getChildren().add(node);
     }
 
     private ObservableList<T> items;
@@ -217,19 +178,6 @@ public class ComboBoxDialog<T> extends AbstractDialog<T> {
      */
     public void setCancelable(boolean isCancelable) {
         this.isCancelable = isCancelable;
-    }
-
-    /**
-     * キャンセル可能かを取得する.
-     * @return キャンセル可能か
-     */
-    public boolean isCancelable() {
-        return this.isCancelable;
-    }
-
-    @Override
-    public boolean isClosableAtStackPaneClicked() {
-        return this.isCancelable;
     }
 
 }

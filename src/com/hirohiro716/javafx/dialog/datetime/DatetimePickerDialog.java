@@ -25,7 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
 
 /**
  * 日時の入力ダイアログを表示するクラス.
@@ -60,43 +60,62 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
     @FXML
     private EnterFireButton buttonCancel;
 
-    /**
-     * コンストラクタ.
-     */
-    public DatetimePickerDialog() {
-        super();
-    }
-
-    /**
-     * コンストラクタ.
-     * @param parentStage
-     */
-    public DatetimePickerDialog(Stage parentStage) {
-        super(parentStage);
+    @Override
+    protected Label getLabelTitle() {
+        return this.labelTitle;
     }
 
     @Override
-    public AnchorPane getContentPane() {
-        return this.paneRoot;
-    }
-
-    @Override
-    protected void preparationCallback() {
+    protected Pane createContentPane() {
         DatetimePickerDialog dialog = this;
-        // タイトルのセット
-        this.getStage().setTitle(this.title);
-        this.labelTitle.setText(this.title);
-        // メッセージのセット
-        if (this.message != null) {
-            Label label = new Label(this.message);
-            label.setWrapText(true);
-            this.paneMessage.getChildren().add(label);
-            LayoutHelper.setAnchor(label, 0, 0, 0, 0);
+        // Paneの生成
+        FXMLLoader fxmlLoader;
+        try {
+            fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+            return null;
         }
-        // メッセージNodeのセット
-        if (this.messageNode != null) {
-            this.paneMessage.getChildren().add(this.messageNode);
-        }
+        // ボタンのイベント定義
+        this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (dialog.datePicker.getValue() != null) {
+                    Datetime datetime = new Datetime(dialog.datePicker.getDate());
+                    datetime.modifyHour(StringConverter.stringToInteger(dialog.limitTextFieldHour.getText()));
+                    datetime.modifyMinute(StringConverter.stringToInteger(dialog.limitTextFieldMinute.getText()));
+                    datetime.modifySecond(StringConverter.stringToInteger(dialog.limitTextFieldSecond.getText()));
+                    datetime.modifyMilliSecond(0);
+                    dialog.setResult(datetime.getDate());
+                    dialog.close();
+                }
+            }
+        });
+        // キーボードイベント定義
+        this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.isAltDown() == false) {
+                    return;
+                }
+                switch (event.getCode()) {
+                case O:
+                    dialog.buttonOk.fire();
+                    break;
+                case C:
+                    dialog.buttonCancel.fire();
+                    break;
+                default:
+                    break;
+                }
+            }
+        });
+        return fxmlLoader.getPaneRoot();
+    }
+
+    @Override
+    public void breforeShowPrepare() {
+        DatetimePickerDialog dialog = this;
         // 日付の初期値をセット
         this.datePicker.setValue(this.defaultValue);
         this.datePicker.getEditor().setAlignment(Pos.CENTER);
@@ -128,21 +147,7 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
             this.limitTextFieldSecond.setText(String.valueOf(datetime.toSecond()));
             IMEHelper.apply(this.limitTextFieldSecond, IMEMode.OFF);
         }
-        // ボタンのイベント定義
-        this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (dialog.datePicker.getValue() != null) {
-                    Datetime datetime = new Datetime(dialog.datePicker.getDate());
-                    datetime.modifyHour(StringConverter.stringToInteger(dialog.limitTextFieldHour.getText()));
-                    datetime.modifyMinute(StringConverter.stringToInteger(dialog.limitTextFieldMinute.getText()));
-                    datetime.modifySecond(StringConverter.stringToInteger(dialog.limitTextFieldSecond.getText()));
-                    datetime.modifyMilliSecond(0);
-                    dialog.setResult(datetime.getDate());
-                    dialog.close();
-                }
-            }
-        });
+        // キャンセル可能かどうか
         if (this.isCancelable) {
             this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -155,25 +160,6 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
             HBox hboxButton = (HBox) this.buttonCancel.getParent();
             hboxButton.getChildren().remove(this.buttonCancel);
         }
-        // キーボードイベント定義
-        this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.isAltDown() == false) {
-                    return;
-                }
-                switch (event.getCode()) {
-                case O:
-                    dialog.buttonOk.fire();
-                    break;
-                case C:
-                    dialog.buttonCancel.fire();
-                    break;
-                default:
-                    break;
-                }
-            }
-        });
         // FIXME DatePickerはバグなのか開いた瞬間はフォーカスを一度外さないと選択されない
         dialog.limitTextFieldHour.requestFocus();
         Platform.runLater(new Runnable() {
@@ -186,54 +172,29 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
     }
 
     @Override
-    public void show() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            this.show(fxmlLoader.getPaneRoot());
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
+    public boolean isClosableAtStackPaneClicked() {
+        return this.isCancelable;
     }
-
-    @Override
-    public Date showAndWait() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            return this.showAndWait(fxmlLoader.getPaneRoot());
-        } catch (IOException exception) {
-            exception.printStackTrace();
-            return null;
-        }
-    }
-
-    private String title;
-
-    /**
-     * タイトルをセットする.
-     * @param title
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    private String message;
 
     /**
      * メッセージ内容をセットする.
      * @param message
      */
     public void setMessage(String message) {
-        this.message = message;
+        this.paneMessage.getChildren().clear();
+        Label label = new Label(message);
+        label.setWrapText(true);
+        this.paneMessage.getChildren().add(label);
+        LayoutHelper.setAnchor(label, 0, 0, 0, 0);
     }
-
-    private Node messageNode;
 
     /**
      * メッセージに代わるNodeをセットする.
      * @param node
      */
     public void setMessageNode(Node node) {
-        this.messageNode = node;
+        this.paneMessage.getChildren().clear();
+        this.paneMessage.getChildren().add(node);
     }
 
     private Date defaultValue = new Date();
@@ -282,11 +243,6 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
      */
     public boolean isTimeInput() {
         return this.isTimeInput;
-    }
-
-    @Override
-    public boolean isClosableAtStackPaneClicked() {
-        return this.isCancelable;
     }
 
 }

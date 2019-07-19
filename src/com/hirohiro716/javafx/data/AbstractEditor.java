@@ -5,9 +5,9 @@ import java.net.URL;
 
 import com.hirohiro716.LayoutSetting;
 import com.hirohiro716.javafx.StageBuilder;
-import com.hirohiro716.javafx.dialog.InterfaceDialog.CloseEventHandler;
+import com.hirohiro716.javafx.dialog.AbstractDialog.CloseEventHandler;
 import com.hirohiro716.javafx.dialog.DialogResult;
-import com.hirohiro716.javafx.dialog.confirm.ConfirmPane;
+import com.hirohiro716.javafx.dialog.confirm.Confirm;
 
 import javafx.event.EventHandler;
 import javafx.stage.Screen;
@@ -232,7 +232,7 @@ public abstract class AbstractEditor<T> {
                 event.consume();
                 if (editor.isCloseAgree == false && editor.isCloseDialogShown == false) {
                     editor.beforeCloseConfirmPrepare();
-                    ConfirmPane.show(CONFIRM_DIALOG_TITLE_CLOSE, "この画面を閉じます。", editor.stageBuilder.getPaneRoot(), new CloseEventHandler<DialogResult>() {
+                    Confirm.showOnPane(CONFIRM_DIALOG_TITLE_CLOSE, "この画面を閉じます。", editor.stageBuilder.getPaneRoot(), new CloseEventHandler<DialogResult>() {
                         @Override
                         public void handle(DialogResult resultValue) {
                             if (resultValue == DialogResult.OK) {

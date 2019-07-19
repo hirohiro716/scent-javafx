@@ -23,7 +23,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
 
 /**
  * 月の入力ダイアログを表示するクラス.
@@ -68,75 +68,23 @@ public class MonthSelectDialog extends AbstractDialog<MonthResult> {
         this.selectableYears = selectableYears;
     }
 
-    /**
-     * コンストラクタ.
-     * @param parentStage
-     */
-    public MonthSelectDialog(Stage parentStage) {
-        super(parentStage);
-    }
-
-    /**
-     * コンストラクタ.
-     * @param parentStage
-     * @param selectableYears 選択可能な年
-     */
-    public MonthSelectDialog(Stage parentStage, List<Integer> selectableYears) {
-        super(parentStage);
-        this.selectableYears = selectableYears;
-    }
-
-    /**
-     * コンストラクタ.
-     * @param parentStage
-     * @param selectableYears 選択可能な年
-     */
-    public MonthSelectDialog(Stage parentStage, int... selectableYears) {
-        super(parentStage);
-        this.selectableYears = new ArrayList<>();
-        for (int year: selectableYears) {
-            this.selectableYears.add(year);
-        }
-    }
-
     private List<Integer> selectableYears = null;
 
     @Override
-    public AnchorPane getContentPane() {
-        return this.paneRoot;
+    protected Label getLabelTitle() {
+        return this.labelTitle;
     }
 
     @Override
-    protected void preparationCallback() {
+    protected Pane createContentPane() {
         MonthSelectDialog dialog = this;
-        // タイトルのセット
-        this.getStage().setTitle(this.title);
-        this.labelTitle.setText(this.title);
-        // メッセージのセット
-        if (this.message != null) {
-            Label label = new Label(this.message);
-            label.setWrapText(true);
-            this.paneMessage.getChildren().add(label);
-            LayoutHelper.setAnchor(label, 0, 0, 0, 0);
-        }
-        // メッセージNodeのセット
-        if (this.messageNode != null) {
-            this.paneMessage.getChildren().add(this.messageNode);
-        }
-        // コンボボックスのアイテムをセット
-        Datetime datetime = new Datetime();
-        if (this.selectableYears == null) {
-            this.selectableYears = new ArrayList<>();
-            this.selectableYears.add(datetime.toYear());
-        }
-        this.comboBoxYear.setItems(FXCollections.observableArrayList(this.selectableYears));
-        this.comboBoxMonth.setItems(FXCollections.observableArrayList(FiscalMonth.createLinkedHashMap().keySet()));
-        // 初期値をセット
-        if (this.defaultYear != null) {
-            this.comboBoxYear.setValue(this.defaultYear);
-        }
-        if (this.defaultMonth != null) {
-            this.comboBoxMonth.setValue(this.defaultMonth);
+        // Paneの生成
+        FXMLLoader fxmlLoader;
+        try {
+            fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+            return null;
         }
         // ボタンのイベント定義
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
@@ -151,18 +99,6 @@ public class MonthSelectDialog extends AbstractDialog<MonthResult> {
                 }
             }
         });
-        if (this.isCancelable) {
-            this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    dialog.setResult(null);
-                    dialog.close();
-                }
-            });
-        } else {
-            HBox hboxButton = (HBox) this.buttonCancel.getParent();
-            hboxButton.getChildren().remove(this.buttonCancel);
-        }
         // キーボードイベント定義
         this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             @Override
@@ -182,59 +118,68 @@ public class MonthSelectDialog extends AbstractDialog<MonthResult> {
                 }
             }
         });
+        return fxmlLoader.getPaneRoot();
     }
 
     @Override
-    public void show() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            this.show(fxmlLoader.getPaneRoot());
-        } catch (IOException exception) {
-            exception.printStackTrace();
+    public void breforeShowPrepare() {
+        MonthSelectDialog dialog = this;
+        // コンボボックスのアイテムをセット
+        Datetime datetime = new Datetime();
+        if (this.selectableYears == null) {
+            this.selectableYears = new ArrayList<>();
+            this.selectableYears.add(datetime.toYear());
+        }
+        this.comboBoxYear.setItems(FXCollections.observableArrayList(this.selectableYears));
+        this.comboBoxMonth.setItems(FXCollections.observableArrayList(FiscalMonth.createLinkedHashMap().keySet()));
+        // 初期値をセット
+        if (this.defaultYear != null) {
+            this.comboBoxYear.setValue(this.defaultYear);
+        }
+        if (this.defaultMonth != null) {
+            this.comboBoxMonth.setValue(this.defaultMonth);
+        }
+        // キャンセル可能かどうか
+        if (this.isCancelable) {
+            this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    dialog.setResult(null);
+                    dialog.close();
+                }
+            });
+        } else {
+            HBox hboxButton = (HBox) this.buttonCancel.getParent();
+            hboxButton.getChildren().remove(this.buttonCancel);
         }
     }
 
     @Override
-    public MonthResult showAndWait() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            return this.showAndWait(fxmlLoader.getPaneRoot());
-        } catch (IOException exception) {
-            exception.printStackTrace();
-            return null;
-        }
+    public boolean isClosableAtStackPaneClicked() {
+        return this.isCancelable;
     }
-
-    private String title;
-
-    /**
-     * タイトルをセットする.
-     * @param title
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    private String message;
 
     /**
      * メッセージ内容をセットする.
      * @param message
      */
     public void setMessage(String message) {
-        this.message = message;
+        this.paneMessage.getChildren().clear();
+        Label label = new Label(message);
+        label.setWrapText(true);
+        this.paneMessage.getChildren().add(label);
+        LayoutHelper.setAnchor(label, 0, 0, 0, 0);
     }
-
-    private Node messageNode;
 
     /**
      * メッセージに代わるNodeをセットする.
      * @param node
      */
     public void setMessageNode(Node node) {
-        this.messageNode = node;
+        this.paneMessage.getChildren().clear();
+        this.paneMessage.getChildren().add(node);
     }
-
+    
     private Integer defaultYear = null;
     
     /**
@@ -272,10 +217,5 @@ public class MonthSelectDialog extends AbstractDialog<MonthResult> {
     public boolean isCancelable() {
         return this.isCancelable;
     }
-
-    @Override
-    public boolean isClosableAtStackPaneClicked() {
-        return this.isCancelable;
-    }
-
+    
 }

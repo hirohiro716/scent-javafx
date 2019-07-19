@@ -22,7 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
 
 /**
  * TextArea入力ダイアログを表示するクラス.
@@ -48,52 +48,22 @@ public class LimitTextAreaDialog extends AbstractDialog<String> {
     @FXML
     private EnterFireButton buttonCancel;
 
-    /**
-     * コンストラクタ.
-     */
-    public LimitTextAreaDialog() {
-        super();
-    }
-
-    /**
-     * コンストラクタ.
-     * @param parentStage
-     */
-    public LimitTextAreaDialog(Stage parentStage) {
-        super(parentStage);
+    @Override
+    protected Label getLabelTitle() {
+        return this.labelTitle;
     }
 
     @Override
-    public AnchorPane getContentPane() {
-        return this.paneRoot;
-    }
-
-    @Override
-    protected void preparationCallback() {
+    protected Pane createContentPane() {
         LimitTextAreaDialog dialog = this;
-        // タイトルのセット
-        this.getStage().setTitle(this.title);
-        this.labelTitle.setText(this.title);
-        // メッセージのセット
-        if (this.message != null) {
-            Label label = new Label(this.message);
-            label.setWrapText(true);
-            this.paneMessage.getChildren().add(label);
-            LayoutHelper.setAnchor(label, 0, 0, 0, 0);
+        // Paneの生成
+        FXMLLoader fxmlLoader;
+        try {
+            fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+            return null;
         }
-        // メッセージNodeのセット
-        if (this.messageNode != null) {
-            this.paneMessage.getChildren().add(this.messageNode);
-        }
-        // テキストの入力制限を追加する
-        for (int index = 0; index < this.permitRegexPattern.size(); index++) {
-            this.limitTextArea.addPermitRegex(this.permitRegexPattern.get(index), this.permitRegexReverse.get(index));
-        }
-        this.limitTextArea.setPermitTab(this.buttonOk);
-        // IMEモードをセットする
-        IMEHelper.apply(this.limitTextArea, this.imeMode);
-        // 初期値を入力
-        this.limitTextArea.setText(this.defaultValue);
         // ボタンのイベント定義
         this.buttonOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -102,18 +72,6 @@ public class LimitTextAreaDialog extends AbstractDialog<String> {
                 dialog.close();
             }
         });
-        if (this.isCancelable) {
-            this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    dialog.setResult(null);
-                    dialog.close();
-                }
-            });
-        } else {
-            HBox hboxButton = (HBox) this.buttonCancel.getParent();
-            hboxButton.getChildren().remove(this.buttonCancel);
-        }
         // キーボードイベント定義
         this.getStackPane().addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             @Override
@@ -133,6 +91,33 @@ public class LimitTextAreaDialog extends AbstractDialog<String> {
                 }
             }
         });
+        return fxmlLoader.getPaneRoot();
+    }
+
+    @Override
+    public void breforeShowPrepare() {
+        LimitTextAreaDialog dialog = this;
+        // テキストの入力制限を追加する
+        for (int index = 0; index < this.permitRegexPattern.size(); index++) {
+            this.limitTextArea.addPermitRegex(this.permitRegexPattern.get(index), this.permitRegexReverse.get(index));
+        }
+        this.limitTextArea.setPermitTab(this.buttonOk);
+        // IMEモードをセットする
+        IMEHelper.apply(this.limitTextArea, this.imeMode);
+        // 初期値を入力
+        this.limitTextArea.setText(this.defaultValue);
+        if (this.isCancelable) {
+            this.buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    dialog.setResult(null);
+                    dialog.close();
+                }
+            });
+        } else {
+            HBox hboxButton = (HBox) this.buttonCancel.getParent();
+            hboxButton.getChildren().remove(this.buttonCancel);
+        }
         // 初期フォーカス
         Platform.runLater(new Runnable() {
             @Override
@@ -150,57 +135,33 @@ public class LimitTextAreaDialog extends AbstractDialog<String> {
     }
 
     @Override
-    public void show() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            this.show(fxmlLoader.getPaneRoot());
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
+    public boolean isClosableAtStackPaneClicked() {
+        return this.isCancelable;
     }
-
-    @Override
-    public String showAndWait() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            return this.showAndWait(fxmlLoader.getPaneRoot());
-        } catch (IOException exception) {
-            exception.printStackTrace();
-            return null;
-        }
-    }
-
-    private String title;
-
-    /**
-     * タイトルをセットする.
-     * @param title
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    private String message;
 
     /**
      * メッセージ内容をセットする.
      * @param message
      */
     public void setMessage(String message) {
-        this.message = message;
+        this.paneMessage.getChildren().clear();
+        Label label = new Label(message);
+        label.setWrapText(true);
+        this.paneMessage.getChildren().add(label);
+        LayoutHelper.setAnchor(label, 0, 0, 0, 0);
     }
-
-    private Node messageNode;
 
     /**
      * メッセージに代わるNodeをセットする.
      * @param node
      */
     public void setMessageNode(Node node) {
-        this.messageNode = node;
+        this.paneMessage.getChildren().clear();
+        this.paneMessage.getChildren().add(node);
     }
 
     private ArrayList<Pattern> permitRegexPattern = new ArrayList<>();
+    
     private ArrayList<Boolean> permitRegexReverse = new ArrayList<>();
 
     /**
@@ -248,11 +209,6 @@ public class LimitTextAreaDialog extends AbstractDialog<String> {
      * @return キャンセル可能か
      */
     public boolean isCancelable() {
-        return this.isCancelable;
-    }
-
-    @Override
-    public boolean isClosableAtStackPaneClicked() {
         return this.isCancelable;
     }
 

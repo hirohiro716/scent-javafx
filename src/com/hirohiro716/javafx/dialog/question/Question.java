@@ -8,6 +8,7 @@ import com.hirohiro716.javafx.control.EnterFireButton;
 import com.hirohiro716.javafx.dialog.AbstractDialog;
 import com.hirohiro716.javafx.dialog.DialogResult;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,6 +17,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -39,43 +41,21 @@ public class Question extends AbstractDialog<DialogResult> {
     @FXML
     private EnterFireButton buttonNo;
 
-    /**
-     * コンストラクタ.
-     */
-    public Question() {
-        super();
-    }
-
-    /**
-     * コンストラクタ.
-     * @param parentStage
-     */
-    public Question(Stage parentStage) {
-        super(parentStage);
+    @Override
+    protected Label getLabelTitle() {
+        return this.labelTitle;
     }
 
     @Override
-    public AnchorPane getContentPane() {
-        return this.paneRoot;
-    }
-
-    @Override
-    protected void preparationCallback() {
+    protected Pane createContentPane() {
         Question dialog = this;
-        // タイトルのセット
-        this.getStage().setTitle(this.title);
-        this.labelTitle.setText(this.title);
-        // メッセージのセット
-        if (this.message != null) {
-            Label label = new Label(this.message);
-            label.setWrapText(true);
-            label.setAlignment(Pos.TOP_LEFT);
-            this.paneMessage.getChildren().add(label);
-            LayoutHelper.setAnchor(label, 30, 0, 0, 0);
-        }
-        // メッセージNodeのセット
-        if (this.messageNode != null) {
-            this.paneMessage.getChildren().add(this.messageNode);
+        // Paneの生成
+        FXMLLoader fxmlLoader;
+        try {
+            fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+            return null;
         }
         // ボタンのイベント定義
         this.buttonYes.setOnAction(new EventHandler<ActionEvent>() {
@@ -121,57 +101,56 @@ public class Question extends AbstractDialog<DialogResult> {
                 break;
             }
         }
+        return fxmlLoader.getPaneRoot();
     }
 
     @Override
-    public void show() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            this.show(fxmlLoader.getPaneRoot());
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
+    public void breforeShowPrepare() {
+        Question dialog = this;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if (dialog.defaultButton != null) {
+                    switch (dialog.defaultButton) {
+                    case YES:
+                        dialog.buttonYes.requestFocus();
+                        break;
+                    case NO:
+                        dialog.buttonNo.requestFocus();
+                        break;
+                    default:
+                        break;
+                    }
+                }
+            }
+        });
     }
 
     @Override
-    public DialogResult showAndWait() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getClass().getSimpleName() + ".fxml"), this);
-            return this.showAndWait(fxmlLoader.getPaneRoot());
-        } catch (IOException exception) {
-            exception.printStackTrace();
-            return null;
-        }
+    public boolean isClosableAtStackPaneClicked() {
+        return false;
     }
-
-    private String title;
-
-    /**
-     * タイトルをセットする.
-     * @param title
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    private String message;
 
     /**
      * メッセージ内容をセットする.
      * @param message
      */
     public void setMessage(String message) {
-        this.message = message;
+        this.paneMessage.getChildren().clear();
+        Label label = new Label(message);
+        label.setWrapText(true);
+        label.setAlignment(Pos.TOP_LEFT);
+        this.paneMessage.getChildren().add(label);
+        LayoutHelper.setAnchor(label, 30, 0, 0, 0);
     }
-
-    private Node messageNode;
 
     /**
      * メッセージに代わるNodeをセットする.
      * @param node
      */
     public void setMessageNode(Node node) {
-        this.messageNode = node;
+        this.paneMessage.getChildren().clear();
+        this.paneMessage.getChildren().add(node);
     }
 
     private DialogResult defaultButton;
@@ -182,11 +161,6 @@ public class Question extends AbstractDialog<DialogResult> {
      */
     public void setDefaultButton(DialogResult dialogResult) {
         this.defaultButton = dialogResult;
-    }
-
-    @Override
-    public boolean isClosableAtStackPaneClicked() {
-        return false;
     }
 
     /**
@@ -200,22 +174,22 @@ public class Question extends AbstractDialog<DialogResult> {
         dialog.setTitle(title);
         dialog.setMessage(message);
         dialog.setCloseEvent(closeEvent);
-        dialog.show();
+        dialog.show(null);
     }
 
     /**
      * ダイアログを表示する.
      * @param title タイトル
      * @param message メッセージ
-     * @param parentStage 親Stage
+     * @param owner 親Stage
      * @param closeEvent 閉じる際の処理
      */
-    public static void show(String title, String message, Stage parentStage, CloseEventHandler<DialogResult> closeEvent) {
-        Question dialog = new Question(parentStage);
+    public static void show(String title, String message, Stage owner, CloseEventHandler<DialogResult> closeEvent) {
+        Question dialog = new Question();
         dialog.setTitle(title);
         dialog.setMessage(message);
         dialog.setCloseEvent(closeEvent);
-        dialog.show();
+        dialog.show(owner);
     }
 
     /**
@@ -228,21 +202,37 @@ public class Question extends AbstractDialog<DialogResult> {
         Question dialog = new Question();
         dialog.setTitle(title);
         dialog.setMessage(message);
-        return dialog.showAndWait();
+        return dialog.showAndWait(null);
     }
 
     /**
      * ダイアログを表示する.
      * @param title タイトル
      * @param message メッセージ
-     * @param parentStage 親Stage
+     * @param owner 親Stage
      * @return 結果
      */
-    public static DialogResult showAndWait(String title, String message, Stage parentStage) {
-        Question dialog = new Question(parentStage);
+    public static DialogResult showAndWait(String title, String message, Stage owner) {
+        Question dialog = new Question();
         dialog.setTitle(title);
         dialog.setMessage(message);
-        return dialog.showAndWait();
+        return dialog.showAndWait(owner);
+    }
+
+    /**
+     * ダイアログを表示する.
+     * @param <T> javafx.scene.layout.Paneを継承したクラスオブジェクト
+     * @param title タイトル
+     * @param message メッセージ
+     * @param parent 表示対象Pane
+     * @param closeEvent 閉じる際の処理
+     */
+    public static <T extends Pane> void showOnPane(String title, String message, T parent, CloseEventHandler<DialogResult> closeEvent) {
+        Question dialog = new Question();
+        dialog.setTitle(title);
+        dialog.setMessage(message);
+        dialog.setCloseEvent(closeEvent);
+        dialog.showOnPane(parent);
     }
 
 }
