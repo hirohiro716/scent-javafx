@@ -1,10 +1,13 @@
 package com.hirohiro716.javafx.print;
 
+import static com.hirohiro716.StringConverter.*;
+
 import java.util.Set;
 
 import javax.print.PrintException;
 
 import com.hirohiro716.print.PrintHelper;
+import com.sun.javafx.print.Units;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -192,6 +195,26 @@ public class PrinterJob {
                 this.paper = paper;
             }
         }
+    }
+    
+    /**
+     * 印刷に使用する用紙を設定する.
+     * @param millimeterWidth 用紙幅
+     * @param millimeterHeight 用紙高さ
+     */
+    public void setPaper(double millimeterWidth, double millimeterHeight) {
+        for (Paper paper: this.printer.getPrinterAttributes().getSupportedPapers()) {
+            double millimeterPaperWidth = PrintHelper.pointToMillimeter(paper.getWidth());
+            double millimeterPaperHeight = PrintHelper.pointToMillimeter(paper.getHeight());
+            double differenceWidth = Math.abs(millimeterPaperWidth - millimeterWidth);
+            double differenceHeight = Math.abs(millimeterPaperHeight - millimeterHeight);
+            if (differenceWidth <= 1 && differenceHeight <= 1) {
+                this.paper = paper;
+                return;
+            }
+        }
+        String paperName = join(tryNonFraction(millimeterWidth), "x", tryNonFraction(millimeterHeight), "mm");
+        this.paper = com.sun.javafx.print.PrintHelper.createPaper(paperName, millimeterWidth, millimeterHeight, Units.MM);
     }
 
     /**
