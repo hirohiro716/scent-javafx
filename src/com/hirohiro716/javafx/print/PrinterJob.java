@@ -2,6 +2,8 @@ package com.hirohiro716.javafx.print;
 
 import static com.hirohiro716.StringConverter.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Set;
 
 import javax.print.PrintException;
@@ -20,8 +22,10 @@ import javafx.print.PrintColor;
 import javafx.print.PrintQuality;
 import javafx.print.PrintSides;
 import javafx.print.Printer;
-import javafx.print.Printer.MarginType;
 import javafx.scene.layout.Pane;
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Transform;
+import javafx.scene.transform.Translate;
 
 /**
  * AbstractPrintingPaneBuilderを印刷するクラス.
@@ -159,8 +163,12 @@ public class PrinterJob {
      * プリンタでサポートしている用紙を取得する.
      * @return サポートされている用紙
      */
-    public Set<Paper> fetchSupportedPapers() {
-        return this.printer.getPrinterAttributes().getSupportedPapers();
+    public ObservableList<Paper> fetchSupportedPapers() {
+        ObservableList<Paper> list = FXCollections.observableArrayList();
+        for (Paper paper: this.printer.getPrinterAttributes().getSupportedPapers()) {
+            list.add(paper);
+        }
+        return list;
     }
 
     /**
@@ -199,24 +207,60 @@ public class PrinterJob {
     
     /**
      * 印刷に使用する用紙を設定する.
+     * @param width 用紙幅
+     * @param height 用紙高さ
+     */
+    public void setPaper(double width, double height) {
+        this.paper = this.createPaper(width, height);
+    }
+    
+    /**
+     * 指定サイズの用紙を作成する.
+     * @param width 用紙幅
+     * @param height 用紙高さ
+     * @return Paper
+     */
+    private Paper createPaper(double width, double height) {
+        for (Paper paper: this.fetchSupportedPapers()) {
+            if (paper.getWidth() == width && paper.getHeight() == height) {
+                return paper;
+            }
+        }
+        double millimeterWidth = PrintHelper.pointToMillimeter(width);
+        double millimeterHeight = PrintHelper.pointToMillimeter(height);
+        String paperName = join(Math.round(millimeterWidth), "x", Math.round(millimeterHeight), "mm");
+        return com.sun.javafx.print.PrintHelper.createPaper(paperName, width, height, Units.POINT);
+    }
+
+    /**
+     * 印刷に使用する用紙を設定する.
      * @param millimeterWidth 用紙幅
      * @param millimeterHeight 用紙高さ
      */
-    public void setPaper(double millimeterWidth, double millimeterHeight) {
-        for (Paper paper: this.printer.getPrinterAttributes().getSupportedPapers()) {
+    public void setPaperMillimeter(double millimeterWidth, double millimeterHeight) {
+        this.paper = this.createPaperMillimeter(millimeterWidth, millimeterHeight);
+    }
+
+    /**
+     * 指定サイズの用紙を作成する.
+     * @param millimeterWidth 用紙幅
+     * @param millimeterHeight 用紙高さ
+     * @return Paper
+     */
+    private Paper createPaperMillimeter(double millimeterWidth, double millimeterHeight) {
+        for (Paper paper: this.fetchSupportedPapers()) {
             double millimeterPaperWidth = PrintHelper.pointToMillimeter(paper.getWidth());
             double millimeterPaperHeight = PrintHelper.pointToMillimeter(paper.getHeight());
             double differenceWidth = Math.abs(millimeterPaperWidth - millimeterWidth);
             double differenceHeight = Math.abs(millimeterPaperHeight - millimeterHeight);
             if (differenceWidth <= 1 && differenceHeight <= 1) {
-                this.paper = paper;
-                return;
+                return paper;
             }
         }
-        String paperName = join(tryNonFraction(millimeterWidth), "x", tryNonFraction(millimeterHeight), "mm");
-        this.paper = com.sun.javafx.print.PrintHelper.createPaper(paperName, millimeterWidth, millimeterHeight, Units.MM);
+        String paperName = join(Math.round(millimeterWidth), "x", Math.round(millimeterHeight), "mm");
+        return com.sun.javafx.print.PrintHelper.createPaper(paperName, millimeterWidth, millimeterHeight, Units.MM);
     }
-
+    
     /**
      * プリンタでサポートしている用紙向きを取得する.
      * @return サポートされている用紙向き
@@ -259,55 +303,29 @@ public class PrinterJob {
             break;
         }
     }
-
-    private MarginType marginType = null;
-
-    /**
-     * 印刷に使用する余白タイプを指定する.
-     * @param marginType
-     */
-    public void setMarginType(MarginType marginType) {
-        if (marginType == null) {
-            return;
-        }
-        this.leftMargin = null;
-        this.rightMargin = null;
-        this.topMargin = null;
-        this.bottomMargin = null;
-        this.marginType = marginType;
-    }
-
-    private Double leftMargin = null;
-    private Double rightMargin = null;
-    private Double topMargin = null;
-    private Double bottomMargin = null;
+    
+    private double leftMargin = 0;
+    
+    private double topMargin = 0;
 
     /**
      * 印刷に使用する余白を指定する.
      * @param left
-     * @param right
      * @param top
-     * @param bottom
      */
-    public void setMargin(double left, double right, double top, double bottom) {
+    public void setMargin(double left, double top) {
         this.leftMargin = left;
-        this.rightMargin = right;
         this.topMargin = top;
-        this.bottomMargin = bottom;
     }
 
     /**
      * 印刷に使用する余白を指定する.
      * @param millimeterLeft
-     * @param millimeterRight
      * @param millimeterTop
-     * @param millimeterBottom
      */
-    public void setMarginMillimeter(double millimeterLeft, double millimeterRight, double millimeterTop, double millimeterBottom) {
+    public void setMarginMillimeter(double millimeterLeft, double millimeterTop) {
         this.leftMargin = PrintHelper.millimeterToPoint(millimeterLeft);
-        this.rightMargin = PrintHelper.millimeterToPoint(millimeterRight);
         this.topMargin = PrintHelper.millimeterToPoint(millimeterTop);
-        this.bottomMargin = PrintHelper.millimeterToPoint(millimeterBottom);
     }
 
     private int copies = 1;
@@ -357,6 +375,9 @@ public class PrinterJob {
      * @throws PrintException 印刷ジョブの作成に失敗した場合
      */
     public void start() throws PrintException {
+        if (this.printerJob != null) {
+            throw new PrintException("PrinterJob is already started. Create new instance please.");
+        }
         this.printerJob = javafx.print.PrinterJob.createPrinterJob(this.printer);
         JobSettings jobSettings = this.printerJob.getJobSettings();
         jobSettings.setJobName(this.jobName);
@@ -368,22 +389,16 @@ public class PrinterJob {
         if (this.pageOrientation == null) {
             this.pageOrientation = this.printer.getPrinterAttributes().getDefaultPageOrientation();
         }
-        if (this.marginType != null) {
-            jobSettings.setPageLayout(this.printer.createPageLayout(this.paper, this.pageOrientation, this.marginType));
+        switch (this.pageOrientation) {
+        case PORTRAIT:
+        case REVERSE_PORTRAIT:
+            break;
+        case LANDSCAPE:
+        case REVERSE_LANDSCAPE:
+            this.paper = this.createPaper(this.paper.getHeight(), this.paper.getWidth());
+            break;
         }
-        if (this.leftMargin != null) {
-            // FIXME 用紙を回転すると余白指定が変になるので入れ替える。本来JavaFX側で処理するべきでは。
-            switch (this.pageOrientation) {
-            case PORTRAIT:
-                jobSettings.setPageLayout(this.printer.createPageLayout(this.paper, this.pageOrientation, this.leftMargin, this.rightMargin, this.topMargin, this.bottomMargin));
-                break;
-            case REVERSE_PORTRAIT:
-            case LANDSCAPE:
-            case REVERSE_LANDSCAPE:
-                jobSettings.setPageLayout(this.printer.createPageLayout(this.paper, this.pageOrientation, this.rightMargin, this.leftMargin, this.bottomMargin, this.topMargin));
-                break;
-            }
-        }
+        jobSettings.setPageLayout(this.printer.createPageLayout(this.paper, PageOrientation.PORTRAIT, 0, 0, 0, 0));
         // トレイ
         if (this.paperSource != null) {
             jobSettings.setPaperSource(this.paperSource);
@@ -402,6 +417,54 @@ public class PrinterJob {
         }
     }
     
+    private HashMap<Pane, ArrayList<Transform>> hashMapBackupTransforms = new HashMap<>();
+    
+    /**
+     * 余白と用紙向きをTransformで実現する.
+     * @param pane 対象
+     */
+    private void applyMarginAndOrientation(Pane pane) {
+        ArrayList<Transform> transforms = new ArrayList<>();
+        transforms.addAll(pane.getTransforms());
+        this.hashMapBackupTransforms.put(pane, transforms);
+        
+        double paperWidth = this.paper.getWidth();
+        double paperHeight = this.paper.getHeight();
+        
+        Rotate rotate;
+        Translate translate;
+        switch (this.pageOrientation) {
+        case PORTRAIT:
+            translate = new Translate(this.leftMargin, this.topMargin);
+            pane.getTransforms().add(translate);
+            break;
+        case LANDSCAPE:
+            rotate = new Rotate(90, 0, 0);
+            translate = new Translate(0 + this.leftMargin, paperWidth * -1 + this.topMargin);
+            pane.getTransforms().addAll(rotate, translate);
+            break;
+        case REVERSE_PORTRAIT:
+            rotate = new Rotate(180, 0, 0);
+            translate = new Translate(paperWidth * -1 + this.leftMargin, paperHeight * -1 + this.topMargin);
+            pane.getTransforms().addAll(rotate, translate);
+            break;
+        case REVERSE_LANDSCAPE:
+            rotate = new Rotate(270, 0, 0);
+            translate = new Translate(paperHeight * -1 + this.leftMargin, 0 + this.topMargin);
+            pane.getTransforms().addAll(rotate, translate);
+            break;
+        }
+    }
+    
+    /**
+     * 余白と用紙向きのTransformを取り除く.
+     * @param pane 対象
+     */
+    private void removeMarginAndOrientation(Pane pane) {
+        pane.getTransforms().clear();
+        pane.getTransforms().addAll(this.hashMapBackupTransforms.get(pane));
+    }
+    
     /**
      * ページを印刷する.
      * @param pane
@@ -411,7 +474,9 @@ public class PrinterJob {
         if (this.printerJob == null) {
             throw new PrintException("PrinterJob is not started.");
         }
+        this.applyMarginAndOrientation(pane);
         this.printerJob.printPage(pane);
+        this.removeMarginAndOrientation(pane);
     }
 
     /**
@@ -424,7 +489,9 @@ public class PrinterJob {
             throw new PrintException("PrinterJob is not started.");
         }
         page.build();
+        this.applyMarginAndOrientation(page.getPane());
         this.printerJob.printPage(page.getPane());
+        this.removeMarginAndOrientation(page.getPane());
     }
     
     /**
