@@ -51,7 +51,7 @@ public abstract class AbstractEditor<T> {
      * "このデータは削除されているため上書きできませんでした。\n" というダイアログ用の文字列.
      */
     public static final String ERROR_DIALOG_MESSAGE_SAVE_NOTFOUND = "このデータは削除されているため上書きできませんでした。\n";
-
+    
     /**
      * 編集用フォームを表示する.
      * @throws Exception

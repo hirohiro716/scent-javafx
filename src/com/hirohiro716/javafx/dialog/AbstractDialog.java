@@ -366,8 +366,23 @@ public abstract class AbstractDialog<T> {
          * ダイアログを閉じる際の処理
          * @param resultValue
          */
-        public void handle(T resultValue);
+        public abstract void handle(T resultValue);
 
+    }
+    
+    /**
+     * ダイアログに対する処理を行うコールバック.
+     * @author hiro
+     * @param <D> ダイアログ型
+     */
+    public interface DialogCallback<D extends AbstractDialog<?>> {
+        
+        /**
+         * ダイアログに対する処理.
+         * @param dialog
+         */
+        public abstract void call(D dialog);
+        
     }
     
 }

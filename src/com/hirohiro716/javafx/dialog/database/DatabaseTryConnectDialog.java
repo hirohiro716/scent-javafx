@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import com.hirohiro716.StringConverter;
 import com.hirohiro716.database.AbstractDatabase;
 import com.hirohiro716.javafx.dialog.AbstractDialog.CloseEventHandler;
-import com.hirohiro716.javafx.dialog.AbstractDialog;
+import com.hirohiro716.javafx.dialog.AbstractDialog.DialogCallback;
 import com.hirohiro716.javafx.dialog.DialogResult;
 import com.hirohiro716.javafx.dialog.question.Question;
 
@@ -33,13 +33,13 @@ public class DatabaseTryConnectDialog<D extends AbstractDatabase> {
         this.connectCallback = connectCallback;
     }
     
-    private QuestionDialogCallback questionDialogCallback;
+    private DialogCallback<Question> questionDialogCallback;
 
     /**
      * 接続を再試行するかを確認するダイアログに対する処理を行うコールバックをセットする.
      * @param questionDialogCallback
      */
-    public void setQuestionDialogCallback(QuestionDialogCallback questionDialogCallback) {
+    public void setQuestionDialogCallback(DialogCallback<Question> questionDialogCallback) {
         this.questionDialogCallback = questionDialogCallback;
     }
     
@@ -174,20 +174,6 @@ public class DatabaseTryConnectDialog<D extends AbstractDatabase> {
          * @throws SQLException
          */
         public abstract void call(D database) throws SQLException;
-        
-    }
-    
-    /**
-     * 接続を再試行するかを確認するダイアログに対する処理を行うコールバック.
-     * @author hiro
-     */
-    public abstract static class QuestionDialogCallback {
-        
-        /**
-         * 接続を再試行するかを確認するダイアログに対する処理を行うコールバック関数.
-         * @param dialog 接続を再試行するかを確認するダイアログ
-         */
-        public abstract void call(AbstractDialog<?> dialog);
         
     }
     
