@@ -427,10 +427,8 @@ public class PrinterJob {
         ArrayList<Transform> transforms = new ArrayList<>();
         transforms.addAll(pane.getTransforms());
         this.hashMapBackupTransforms.put(pane, transforms);
-        
         double paperWidth = this.paper.getWidth();
         double paperHeight = this.paper.getHeight();
-        
         Rotate rotate;
         Translate translate;
         switch (this.pageOrientation) {
