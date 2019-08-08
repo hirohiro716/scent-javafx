@@ -172,7 +172,7 @@ public class LimitComboBox<T> extends ComboBox<T> {
                     for (int regexIndex = 0; regexIndex < combo.permitRegexs.size(); regexIndex++) {
                         Pattern pattern = combo.permitRegexs.get(regexIndex);
                         boolean reverse = combo.permitRegexReverses.get(regexIndex);
-                        if (pattern.matcher(checkChar).find() == reverse) {
+                        if (pattern.matcher(checkChar).matches() == reverse) {
                             regexCheck = false;
                         }
                     }

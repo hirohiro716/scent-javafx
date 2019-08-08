@@ -131,7 +131,7 @@ public class LimitTextField extends TextField {
                     for (int regexIndex = 0; regexIndex < this.permitRegexs.size(); regexIndex++) {
                         Pattern pattern = this.permitRegexs.get(regexIndex);
                         boolean reverse = this.permitRegexReverses.get(regexIndex);
-                        if (pattern.matcher(checkChar).find() == reverse) {
+                        if (pattern.matcher(checkChar).matches() == reverse) {
                             regexCheck = false;
                         }
                     }
@@ -173,7 +173,7 @@ public class LimitTextField extends TextField {
                     for (int regexIndex = 0; regexIndex < this.permitRegexs.size(); regexIndex++) {
                         Pattern pattern = this.permitRegexs.get(regexIndex);
                         boolean reverse = this.permitRegexReverses.get(regexIndex);
-                        if (pattern.matcher(checkChar).find() == reverse) {
+                        if (pattern.matcher(checkChar).matches() == reverse) {
                             regexCheck = false;
                         }
                     }
