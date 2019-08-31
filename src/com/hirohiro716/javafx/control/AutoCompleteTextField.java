@@ -72,9 +72,6 @@ public class AutoCompleteTextField extends LimitTextField {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 AutoCompleteTextField field = AutoCompleteTextField.this;
-                if (newValue == null || oldValue == null) {
-                    return;
-                }
                 field.createOnlyFirstItems();
                 field.itemAddService.cancel();
                 field.itemAddService.restart();
@@ -261,7 +258,7 @@ public class AutoCompleteTextField extends LimitTextField {
                         if (this.isCancelled()) {
                             break;
                         }
-                        if (field.getText().length() == 0 || converter.execute(item).indexOf(converter.execute(field.getText())) > -1) {
+                        if (StringConverter.nullReplace(field.getText(), "").length() == 0 || converter.execute(item).indexOf(converter.execute(field.getText())) > -1) {
                             this.items.add(item);
                             addedCount++;
                             if (addedCount == field.maxItemsCount) {
