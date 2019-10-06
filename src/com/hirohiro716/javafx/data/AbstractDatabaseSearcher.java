@@ -409,6 +409,7 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
                     AbstractDatabaseSearcher<?> searcher = AbstractDatabaseSearcher.this;
                     searcher.getDynamicTableView().getItems().add(row);
                     searcher.getDynamicTableView().refresh();
+                    searcher.afterSearchProcessing();
                 }
             }
         });
