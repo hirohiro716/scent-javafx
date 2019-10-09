@@ -15,6 +15,7 @@ import com.hirohiro716.javafx.control.table.cell.IMEOffCheckBoxTableCell;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -899,9 +900,17 @@ public class DynamicTableView extends TableView<RudeArray> {
             public TableCell<RudeArray, Void> call(TableColumn<RudeArray, Void> param) {
                 ButtonTableCell<RudeArray> cell = new ButtonTableCell<RudeArray>(buttonText, actionEvent);
                 Platform.runLater(new Runnable() {
-                    @Override
+                    @Override @SuppressWarnings("unchecked")
                     public void run() {
                         callback.call(cell.getButton(), cell);
+                        if (cell.getTableRow() != null) {
+                            cell.getTableRow().itemProperty().addListener(new ChangeListener<RudeArray>() {
+                                @Override
+                                public void changed(ObservableValue<? extends RudeArray> observable, RudeArray oldValue, RudeArray newValue) {
+                                    callback.call(cell.getButton(), cell);
+                                }
+                            });
+                        }
                     }
                 });
                 return cell;
@@ -977,9 +986,17 @@ public class DynamicTableView extends TableView<RudeArray> {
             public TableCell<RudeArray, Void> call(TableColumn<RudeArray, Void> param) {
                 EnterFireButtonTableCell<RudeArray> cell = new EnterFireButtonTableCell<RudeArray>(buttonText, actionEvent);
                 Platform.runLater(new Runnable() {
-                    @Override
+                    @Override @SuppressWarnings("unchecked")
                     public void run() {
                         callback.call(cell.getEnterFireButton(), cell);
+                        if (cell.getTableRow() != null) {
+                            cell.getTableRow().itemProperty().addListener(new ChangeListener<RudeArray>() {
+                                @Override
+                                public void changed(ObservableValue<? extends RudeArray> observable, RudeArray oldValue, RudeArray newValue) {
+                                    callback.call(cell.getEnterFireButton(), cell);
+                                }
+                            });
+                        }
                     }
                 });
                 return cell;
