@@ -291,9 +291,9 @@ public class WebEngineController {
      * 選択されている最初のSELECTタグ内の選択オプションの値を取得する.
      * @return 選択オプションの値
      */
-    public String getOptionElementSelect() {
+    public String getSelectedOptionValue() {
         if (this.isSelectedElement() && this.getSelectedElement().getTagName().toUpperCase().equals("OPTION")) {
-            return getOptionElementSelect(this.webEngine, this.getSelectedElement());
+            return getSelectedOptionValue(this.webEngine, this.getSelectedElement());
         }
         return null;
     }
@@ -304,7 +304,7 @@ public class WebEngineController {
      * @param selectElement 対象のSELECTタグElement
      * @return 選択オプションの値
      */
-    public static String getOptionElementSelect(WebEngine webEngine, Element selectElement) {
+    public static String getSelectedOptionValue(WebEngine webEngine, Element selectElement) {
         if (selectElement == null) {
             return null;
         }
