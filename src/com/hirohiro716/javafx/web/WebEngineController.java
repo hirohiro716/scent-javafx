@@ -7,6 +7,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.html.HTMLFrameElement;
+import org.w3c.dom.html.HTMLOptionElement;
 
 import com.hirohiro716.StringConverter;
 import javafx.scene.web.WebEngine;
@@ -284,6 +285,38 @@ public class WebEngineController {
         script.append("')[0].click();");
         webEngine.executeScript(script.toString());
         element.setAttribute("class", backupClass);
+    }
+
+    /**
+     * 選択されている最初のSELECTタグ内の選択オプションの値を取得する.
+     * @return 選択オプションの値
+     */
+    public String getOptionElementSelect() {
+        if (this.isSelectedElement() && this.getSelectedElement().getTagName().toUpperCase().equals("OPTION")) {
+            return getOptionElementSelect(this.webEngine, this.getSelectedElement());
+        }
+        return null;
+    }
+    
+    /**
+     * SELECTタグ内の選択オプションの値を取得する.
+     * @param webEngine WebEngineオブジェクト
+     * @param selectElement 対象のSELECTタグElement
+     * @return 選択オプションの値
+     */
+    public static String getOptionElementSelect(WebEngine webEngine, Element selectElement) {
+        if (selectElement == null) {
+            return null;
+        }
+        for (int index = 0; index < selectElement.getChildNodes().getLength(); index++) {
+            if (selectElement.getChildNodes().item(index) instanceof HTMLOptionElement) {
+                HTMLOptionElement option = (HTMLOptionElement) selectElement.getChildNodes().item(index);
+                if (option.getSelected()) {
+                    return option.getAttribute("value");
+                }
+            }
+        }
+        return null;
     }
     
     /**
