@@ -181,6 +181,7 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
 
     /**
      * マウスのドラッグアンドドロップで順番変更を可能にするイベントをセットする.
+     * @param <E> 
      * @param scrollPane
      * @param vbox
      * @param items
