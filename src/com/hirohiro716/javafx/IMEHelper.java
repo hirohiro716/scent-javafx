@@ -9,6 +9,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.control.Control;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -16,7 +17,6 @@ import javafx.scene.input.MouseEvent;
  * @author hiro
  */
 public class IMEHelper {
-    
     
     /**
      * コントロールにIME制御用のListenerを付与する.
@@ -27,15 +27,26 @@ public class IMEHelper {
     public static <T extends Control> void apply(T control, IMEMode imeMode) {
         IMEChangeRunnable imeChangeRunnable = new IMEChangeRunnable(imeMode);
         control.focusedProperty().addListener(new IMEChangeFocusedChangeListener(imeChangeRunnable));
-        control.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        control.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 imeChangeRunnable.run();
             }
         });
+        EventHandler<KeyEvent> keyEventHandler = new EventHandler<KeyEvent>() {
+
+            @Override
+            public void handle(KeyEvent event) {
+                IMEHelper.IS_SHIFT_DOWN = event.isShiftDown();
+            }
+        };
+        control.addEventHandler(KeyEvent.KEY_PRESSED, keyEventHandler);
+        control.addEventHandler(KeyEvent.KEY_RELEASED, keyEventHandler);
     }
     
     private static RobotJapanese ROBOT;
+    
+    private static boolean IS_SHIFT_DOWN = false;
     
     /**
      * 内部のRobotJapaneseインスタンスを取得する.
@@ -48,10 +59,10 @@ public class IMEHelper {
         return ROBOT;
     }
     
-    private static long focusedIMEChangeWaitTime = 700;
+    private static long focusedIMEChangeWaitTime = 0;
     
     /**
-     * フォーカス取得時にIMEモード変更処理をするまでの時間をセットする. デフォルトは700ミリ秒.
+     * フォーカス取得時にIMEモード変更処理をするまでの時間をセットする. デフォルトは0ミリ秒.
      * @param waitTime
      */
     public static void setFocusedIMEChangeWaitTime(long waitTime) {
@@ -147,7 +158,7 @@ public class IMEHelper {
         
         @Override
         public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-            if (newValue) {
+            if (newValue && IMEHelper.IS_SHIFT_DOWN == false) {
                 if (this.thread == null || this.thread.getState() == State.TERMINATED) {
                     this.thread = new Thread(new Runnable() {
                         @Override
