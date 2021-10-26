@@ -3,8 +3,6 @@ package com.hirohiro716.javafx;
 import com.hirohiro716.javafx.robot.RobotJapanese;
 import com.hirohiro716.robot.InterfaceTypingRobotJapanese.IMEMode;
 
-import java.lang.Thread.State;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -57,16 +55,6 @@ public class IMEHelper {
             ROBOT = new RobotJapanese();
         }
         return ROBOT;
-    }
-    
-    private static long focusedIMEChangeWaitTime = 0;
-    
-    /**
-     * フォーカス取得時にIMEモード変更処理をするまでの時間をセットする. デフォルトは0ミリ秒.
-     * @param waitTime
-     */
-    public static void setFocusedIMEChangeWaitTime(long waitTime) {
-        focusedIMEChangeWaitTime = waitTime;
     }
     
     /**
@@ -152,35 +140,12 @@ public class IMEHelper {
         
         private IMEChangeRunnable imeChangeRunnable;
         
-        private boolean isCanceled = false;
-        
-        private Thread thread;
-        
         @Override
         public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
             if (newValue && IMEHelper.IS_SHIFT_DOWN == false) {
-                if (this.thread == null || this.thread.getState() == State.TERMINATED) {
-                    this.thread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            IMEChangeFocusedChangeListener listener = IMEChangeFocusedChangeListener.this;
-                            try {
-                                listener.isCanceled = false;
-                                Thread.sleep(focusedIMEChangeWaitTime);
-                                if (listener.isCanceled == false) {
-                                    listener.imeChangeRunnable.run();
-                                }
-                            } catch (Exception exception) {
-                                exception.printStackTrace();
-                            }
-                        }
-                    });
-                    this.thread.start();
-                }
-            } else {
-                this.isCanceled = true;
+                IMEChangeFocusedChangeListener listener = IMEChangeFocusedChangeListener.this;
+                listener.imeChangeRunnable.run();
             }
-            
         }
         
     }
