@@ -362,6 +362,7 @@ public class EditableTable<S> extends AnchorPane {
         this.rowHBoxes.remove(item);
         this.items.remove(item);
         this.visibleRowsCount--;
+        this.loadMoreRows();
         this.requestFocus();
     }
     
