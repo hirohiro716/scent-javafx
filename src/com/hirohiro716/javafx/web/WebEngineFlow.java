@@ -180,9 +180,6 @@ public class WebEngineFlow {
         } catch (InterruptedException exception) {
             exception.printStackTrace();
         }
-        if (this.webView.getScene().getWindow().isShowing() == false) {
-            return;
-        }
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
