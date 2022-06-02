@@ -93,7 +93,7 @@ public class WaitDialog<T> extends AbstractDialog<T> {
     private boolean isAutoClose = true;
     
     /**
-     * タスク終了後に自動的にダイアログを閉じるかどうかを指定する. 初期値はtrue。
+     * タスク終了後に自動的にダイアログを閉じるかどうかを指定する。初期値はtrue。
      *
      * @param isAutoClose
      */

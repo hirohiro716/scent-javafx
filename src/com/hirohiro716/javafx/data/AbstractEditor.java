@@ -145,7 +145,7 @@ public abstract class AbstractEditor<T> {
     }
 
     /**
-     * 編集するデータの読み込みや排他ロック処理.<br>
+     * 編集するデータの読み込みや排他ロック処理。<br>
      * showまたはshowAndWaitメソッドを呼び出した際 beforeShowPrepareメソッドの前に自動実行される。
      *
      * @throws Exception
@@ -173,7 +173,7 @@ public abstract class AbstractEditor<T> {
     }
     
     /**
-     * 編集用フォーム表示前の準備処理.<br>
+     * 編集用フォーム表示前の準備処理。<br>
      * showまたはshowAndWaitメソッドを呼び出した際 dataControllerEditメソッドの後に自動実行される。
      *
      * @throws Exception
@@ -181,7 +181,7 @@ public abstract class AbstractEditor<T> {
     protected abstract void beforeShowPrepare() throws Exception;
     
     /**
-     * フォームからDataControllerに値を取り込む. このメソッドは自動では呼び出されない。
+     * フォームからDataControllerに値を取り込む。このメソッドは自動では呼び出されない。
      *
      */
     protected abstract void importDataFromForm();
@@ -198,7 +198,7 @@ public abstract class AbstractEditor<T> {
     private boolean isCloseAgree = false;
     
     /**
-     * 閉じる直前に行う処理. closeメソッドを呼び出した際に自動実行される。
+     * 閉じる直前に行う処理。closeメソッドを呼び出した際に自動実行される。
      *
      * @throws Exception 
      */
@@ -221,7 +221,7 @@ public abstract class AbstractEditor<T> {
     private boolean isCloseConfirmShowing = true;
     
     /**
-     * 閉じる確認を行うかどうかをセットする. 初期値はtrue。
+     * 閉じる確認を行うかどうかをセットする。初期値はtrue。
      *
      * @param isCloseConfirmShowing
      */
@@ -232,7 +232,7 @@ public abstract class AbstractEditor<T> {
     private boolean isCloseDialogShown = false;
 
     /**
-     * 閉じる確認を行う直前の処理. closeメソッドを呼び出した際に自動実行される。
+     * 閉じる確認を行う直前の処理。closeメソッドを呼び出した際に自動実行される。
      *
      */
     protected void beforeCloseConfirmPrepare() {
@@ -240,7 +240,7 @@ public abstract class AbstractEditor<T> {
     }
     
     /**
-     * 閉じる確認後の処理. 自動実行される。
+     * 閉じる確認後の処理。自動実行される。
      *
      */
     protected void processAfterCloseConfirm() {

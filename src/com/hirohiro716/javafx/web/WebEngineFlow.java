@@ -52,7 +52,7 @@ public class WebEngineFlow {
     private int sleepMillisecond = 200;
     
     /**
-     * 処理後の待機時間をセットする. 初期値は200ミリ秒。
+     * 処理後の待機時間をセットする。初期値は200ミリ秒。
      *
      * @param millisecond
      */

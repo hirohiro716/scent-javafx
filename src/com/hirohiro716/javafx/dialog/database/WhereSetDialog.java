@@ -234,7 +234,7 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     private boolean isCancelable = true;
 
     /**
-     * キャンセル可能かを設定する. 初期値はtrue。
+     * キャンセル可能かを設定する。初期値はtrue。
      *
      * @param isCancelable
      */
@@ -494,7 +494,7 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     }
 
     /**
-     * 検索値から値を取得する.(コントロール毎の値の取得方法の違いをカバーする)
+     * 検索値から値を取得する。(コントロール毎の値の取得方法の違いをカバーする)
      * @param control
      * @param columnType
      * @return 検索値
@@ -531,7 +531,7 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     }
 
     /**
-     * 値を検索コントロールにセットする.(コントロール毎の値のセット方法の違いをカバーする)
+     * 値を検索コントロールにセットする。(コントロール毎の値のセット方法の違いをカバーする)
      * @param control
      * @param value
      * @param columnType

@@ -195,7 +195,7 @@ public abstract class AbstractLiveControlTableCell<S, T> extends TableCell<S, T>
     };
 
     /**
-     * 内部に配置するコントロールを生成するコールバック関数. スーパークラスのコンストラクタで自動的に実行される。
+     * 内部に配置するコントロールを生成するコールバック関数。スーパークラスのコンストラクタで自動的に実行される。
      *
      */
     protected abstract void createControlCallback();

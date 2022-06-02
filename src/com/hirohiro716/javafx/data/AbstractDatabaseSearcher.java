@@ -57,7 +57,7 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     protected abstract void searchDetail();
     
     /**
-     * 検索処理を行うコールバックメソッド. searchingWithWaitViewメソッドから自動的に呼び出される。
+     * 検索処理を行うコールバックメソッド。searchingWithWaitViewメソッドから自動的に呼び出される。
      *
      * @param afterSQL WHERE句の後に付与するオプションSQL
      * @param whereSets 検索条件(複数指定するとOR検索になる)
@@ -226,7 +226,7 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * 選択行を指定する処理. この処理を行うと本画面も閉じる。
+     * 選択行を指定する処理。この処理を行うと本画面も閉じる。
      *
      */
     protected void selectRow() {
@@ -241,7 +241,7 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * 選択されている行を取得する. 未選択の場合はnullを返す。
+     * 選択されている行を取得する。未選択の場合はnullを返す。
      *
      * @return 現在選択されている行データ
      */
@@ -421,7 +421,7 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     };
 
     /**
-     * 検索用フォーム表示前の準備処理. showまたはshowAndWaitメソッドを呼び出した際に自動実行される。
+     * 検索用フォーム表示前の準備処理。showまたはshowAndWaitメソッドを呼び出した際に自動実行される。
      *
      * @throws Exception
      */

@@ -6,7 +6,7 @@ import java.util.Collection;
 import com.hirohiro716.robot.InterfaceTypingTask;
 
 /**
- * JavaFXで自動キー入力を行うクラス. // TODO にする予定
+ * JavaFXで自動キー入力を行うクラス。// TODO にする予定
  * @author hiro
  */
 public class TypingTask implements InterfaceTypingTask<Integer> {

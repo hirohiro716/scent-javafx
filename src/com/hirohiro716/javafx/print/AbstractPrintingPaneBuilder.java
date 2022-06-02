@@ -98,7 +98,7 @@ public abstract class AbstractPrintingPaneBuilder {
     private double textLineSpacingRateToFontSize = 0;
 
     /**
-     * テキストの行間をフォントサイズに対する比率で指定する. 初期値は0。
+     * テキストの行間をフォントサイズに対する比率で指定する。初期値は0。
      *
      * @param spacingRate フォントサイズに対する比率
      */

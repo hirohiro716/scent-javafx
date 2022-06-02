@@ -122,7 +122,7 @@ public class SubMenu extends AbstractDialog<Void> {
     private double width = 400;
     
     /**
-     * ダイアログの幅を指定する. 初期値は400。
+     * ダイアログの幅を指定する。初期値は400。
      *
      * @param width
      */
@@ -133,7 +133,7 @@ public class SubMenu extends AbstractDialog<Void> {
     private double height = 300;
     
     /**
-     * ダイアログの高さを指定する. 初期値は300。
+     * ダイアログの高さを指定する。初期値は300。
      *
      * @param height
      */
@@ -142,7 +142,7 @@ public class SubMenu extends AbstractDialog<Void> {
     }
     
     /**
-     * ダイアログのサイズを指定する. 初期値は幅400:高さ300。
+     * ダイアログのサイズを指定する。初期値は幅400:高さ300。
      *
      * @param width
      * @param height

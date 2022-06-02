@@ -125,7 +125,7 @@ public class LimitComboBox<T> extends ComboBox<T> {
     private final ArrayList<Boolean> permitRegexReverses = new ArrayList<>();
 
     /**
-     * 正規表現に一致した文字列を許可するように設定する. 複数の追加が可能。
+     * 正規表現に一致した文字列を許可するように設定する。複数の追加が可能。
      *
      * @param permitRegex 正規表現Pattern
      * @param reverse 条件を逆転するか

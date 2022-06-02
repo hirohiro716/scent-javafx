@@ -91,7 +91,7 @@ public abstract class AbstractDialog<T> {
     private boolean isShowed = false;
 
     /**
-     * ダイアログを表示するPaneを作成する. show()またはshowAndWait()を呼び出した際に自動実行される。
+     * ダイアログを表示するPaneを作成する。show()またはshowAndWait()を呼び出した際に自動実行される。
      *
      * @return 作成したPane
      */
@@ -190,7 +190,7 @@ public abstract class AbstractDialog<T> {
     public abstract void breforeShowPrepare(); 
     
     /**
-     * ダイアログを表示する. ダイアログを表示するとOwnerのStageは操作不可になる。
+     * ダイアログを表示する。ダイアログを表示するとOwnerのStageは操作不可になる。
      *
      * @param owner 親Stage
      */
@@ -235,7 +235,7 @@ public abstract class AbstractDialog<T> {
     }
     
     /**
-     * ダイアログを表示する. ダイアログを表示すると親Paneは操作不可になる。
+     * ダイアログを表示する。ダイアログを表示すると親Paneは操作不可になる。
      *
      * @param parent 親Pane
      */

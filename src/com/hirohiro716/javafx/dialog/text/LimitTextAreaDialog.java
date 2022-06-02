@@ -203,7 +203,7 @@ public class LimitTextAreaDialog extends AbstractDialog<String> {
     private boolean isCancelable = true;
 
     /**
-     * キャンセル可能かを設定する. 初期値はtrue。
+     * キャンセル可能かを設定する。初期値はtrue。
      *
      * @param isCancelable
      */

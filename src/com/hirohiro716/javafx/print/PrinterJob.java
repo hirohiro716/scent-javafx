@@ -512,7 +512,7 @@ public class PrinterJob {
     }
 
     /**
-     * ページを印刷する. このメソッド内でAbstractPrintingPaneBuilderのbuildが自動で呼ばれる。
+     * ページを印刷する。このメソッド内でAbstractPrintingPaneBuilderのbuildが自動で呼ばれる。
      *
      * @param page AbstractPrintingPaneBuilderを継承したクラスのインスタンス
      * @throws PrintException 印刷ジョブの作成に失敗した場合

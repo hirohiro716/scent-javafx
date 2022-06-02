@@ -18,7 +18,7 @@ import javafx.scene.input.MouseEvent;
 public class MovableLabel extends Label {
 	
 	/**
-	 * コンストラクタ.
+	 * コンストラクタ。
 	 * @param text
 	 * @param graphic
 	 */
@@ -31,7 +31,7 @@ public class MovableLabel extends Label {
 	}
 
 	/**
-	 * コンストラクタ.
+	 * コンストラクタ。
 	 * @param text
 	 */
 	public MovableLabel(String text) {
@@ -39,7 +39,7 @@ public class MovableLabel extends Label {
 	}
 	
 	/**
-	 * コンストラクタ.
+	 * コンストラクタ。
 	 */
 	public MovableLabel() {
 		this(null, null);
@@ -189,7 +189,7 @@ public class MovableLabel extends Label {
 	};
 
 	/**
-	 * 操作する種類の列挙型.
+	 * 操作する種類の列挙型。
 	 * @author hiro
 	 */
     private enum Operation {

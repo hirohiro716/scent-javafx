@@ -50,7 +50,7 @@ public class ScrollToNodePane extends ScrollPane {
     }
 
     /**
-     * 内包している指定Nodeまでスクロールする. すでに指定Nodeが表示されていれば処理しない。
+     * 内包している指定Nodeまでスクロールする。すでに指定Nodeが表示されていれば処理しない。
      *
      * @param node 対象
      */

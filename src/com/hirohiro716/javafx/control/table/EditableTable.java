@@ -48,7 +48,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
- * ColumnとRowの概念があり 様々なコントロールを行として並べて表示し 複数のオブジェクトを編集するクラス.<br>
+ * ColumnとRowの概念があり 様々なコントロールを行として並べて表示し 複数のオブジェクトを編集するクラス。<br>
  * Ctrl+↑で行を上に移動し Ctrl+↓で行を下に移動する<br>
  * (スタイルクラス:"editable-table" ヘッダーHBoxのスタイルクラス:"header" 全行VBoxのスタイルクラス:"rows" 行HBoxのスタイルクラス:"row")
  * @author hiro

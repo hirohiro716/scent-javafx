@@ -216,7 +216,7 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
     private boolean isCancelable = true;
 
     /**
-     * キャンセル可能かを設定する. 初期値はtrue。
+     * キャンセル可能かを設定する。初期値はtrue。
      *
      * @param isCancelable
      */
@@ -236,7 +236,7 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
     private boolean isTimeInput = true;
 
     /**
-     * 時刻も入力させるかどうか. 初期値はtrue。
+     * 時刻も入力させるかどうか。初期値はtrue。
      *
      * @param isTimeInput
      */

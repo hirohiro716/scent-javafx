@@ -168,7 +168,7 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
     private boolean isCancelable = true;
 
     /**
-     * キャンセル可能かを設定する. 初期値はtrue。
+     * キャンセル可能かを設定する。初期値はtrue。
      *
      * @param isCancelable
      */

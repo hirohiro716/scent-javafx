@@ -180,7 +180,7 @@ public class HashMapComboBoxDialog<K, V> extends AbstractDialog<K> {
     private boolean isCancelable = true;
 
     /**
-     * キャンセル可能かを設定する. 初期値はtrue。
+     * キャンセル可能かを設定する。初期値はtrue。
      *
      * @param isCancelable
      */

@@ -108,7 +108,7 @@ public class WebEngineController {
     }
     
     /**
-     * ElementをID属性を元に検索して選択する. すでに選択済みのElementがある場合はその内部から検索する。
+     * ElementをID属性を元に検索して選択する。すでに選択済みのElementがある場合はその内部から検索する。
      *
      * @param idCompareRegex IDと比較する正規表現
      */
@@ -117,7 +117,7 @@ public class WebEngineController {
     }
     
     /**
-     * Elementをタグ名を元に検索して選択する. すでに選択済みのElementがある場合はその内部から検索する。
+     * Elementをタグ名を元に検索して選択する。すでに選択済みのElementがある場合はその内部から検索する。
      *
      * @param tagName
      */
@@ -135,7 +135,7 @@ public class WebEngineController {
     }
     
     /**
-     * Elementのタグ名とテキストを元に正規表現で検索して選択する. すでに選択済みのElementがある場合はその内部から検索する。
+     * Elementのタグ名とテキストを元に正規表現で検索して選択する。すでに選択済みのElementがある場合はその内部から検索する。
      *
      * @param tagName
      * @param textCompareRegex テキストと比較する正規表現
@@ -159,7 +159,7 @@ public class WebEngineController {
     }
 
     /**
-     * Elementをタグ名と属性値を元に正規表現で検索して選択する. すでに選択済みのElementがある場合はその内部から検索する。
+     * Elementをタグ名と属性値を元に正規表現で検索して選択する。すでに選択済みのElementがある場合はその内部から検索する。
      *
      * @param tagName
      * @param valueCompareRegex 属性値と比較する正規表現
@@ -185,7 +185,7 @@ public class WebEngineController {
     }
     
     /**
-     * Elementを属性値を元に正規表現で検索して選択する. すでに選択済みのElementがある場合はその内部から検索する。
+     * Elementを属性値を元に正規表現で検索して選択する。すでに選択済みのElementがある場合はその内部から検索する。
      *
      * @param attributeName 属性名
      * @param valueCompareRegex 属性値と比較する正規表現

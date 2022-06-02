@@ -5,7 +5,7 @@ import java.awt.AWTException;
 import com.hirohiro716.robot.InterfaceTypingRobotJapanese;
 
 /**
- * JavaFXのRobotクラスに日本語用の機能を足したクラス. // TODO にする予定。JavaFXのRobotクラスが使えるようになったら変更する。
+ * JavaFXのRobotクラスに日本語用の機能を足したクラス。// TODO にする予定。JavaFXのRobotクラスが使えるようになったら変更する。
  * @author hiro
  */
 public class RobotJapanese implements InterfaceTypingRobotJapanese<Integer> {
