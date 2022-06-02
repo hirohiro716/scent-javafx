@@ -36,7 +36,6 @@ public class PrinterJob {
 
     /**
      * "印刷失敗" というダイアログタイトル用の文字列。
-     *
      */
     public static final String ERROR_DIALOG_TITLE_PRINT = "印刷失敗";
 
@@ -529,7 +528,6 @@ public class PrinterJob {
     
     /**
      * 印刷ジョブを終了する。
-     *
      */
     public void end() {
         this.printerJob.endJob();

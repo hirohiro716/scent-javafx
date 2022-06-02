@@ -20,7 +20,6 @@ public class StageBuilder {
 
     /**
      * コンストラクタで新規Stageを構築する。
-     *
      */
     public StageBuilder() {
         this.stage = new Stage();
@@ -183,7 +182,6 @@ public class StageBuilder {
 
     /**
      * Stageを表示する。
-     *
      */
     public void show() {
         this.stage.show();
@@ -191,7 +189,6 @@ public class StageBuilder {
 
     /**
      * Stageを表示する。
-     *
      */
     public void showAndWait() {
         this.stage.showAndWait();
@@ -211,7 +208,6 @@ public class StageBuilder {
      * Stageを表示する。
      *
      * @param owner 親
-     *
      */
     public void showAndWait(Window owner) {
         this.stage.initOwner(owner);
@@ -220,7 +216,6 @@ public class StageBuilder {
 
     /**
      * Stageを終了する。
-     *
      */
     public void close() {
         this.stage.close();

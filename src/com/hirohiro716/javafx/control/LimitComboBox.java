@@ -28,7 +28,6 @@ public class LimitComboBox<T> extends ComboBox<T> {
 
     /**
      * コンストラクタ。
-     *
      */
     public LimitComboBox() {
         this(FXCollections.observableArrayList());
@@ -49,7 +48,6 @@ public class LimitComboBox<T> extends ComboBox<T> {
 
     /**
      * 値をBSやDELキーで消す事ができるかどうかを示すプロパティ。
-     *
      */
     public final BooleanProperty clearable = new SimpleBooleanProperty(false);
 
@@ -166,7 +164,6 @@ public class LimitComboBox<T> extends ComboBox<T> {
 
     /**
      * テキストを精査して入力する。
-     *
      */
     private ChangeListener<String> textChangeListener = new ChangeListener<String>() {
         @Override
@@ -209,7 +206,6 @@ public class LimitComboBox<T> extends ComboBox<T> {
 
     /**
      * フォーカス喪失時に有効な文字列にフォーマットする。
-     *
      */
     private ChangeListener<Boolean> convertTextListener = new ChangeListener<Boolean>() {
         @Override
@@ -225,7 +221,6 @@ public class LimitComboBox<T> extends ComboBox<T> {
 
     /**
      * フォーカス取得時に文字列をすべて選択する。
-     *
      */
     private ChangeListener<Boolean> textSelectAllListener = new ChangeListener<Boolean>() {
         @Override
@@ -243,7 +238,6 @@ public class LimitComboBox<T> extends ComboBox<T> {
 
     /**
      * BSやDELキーで値にnullを入力する。
-     *
      */
     private EventHandler<KeyEvent> keyReleasedEventHanler = new EventHandler<KeyEvent>() {
         @Override

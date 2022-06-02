@@ -105,7 +105,6 @@ public class InstantAlert {
 
     /**
      * メッセージを表示する。
-     *
      */
     public void show() {
         // 親と同じサイズのVBoxを生成
@@ -170,7 +169,6 @@ public class InstantAlert {
 
     /**
      * メッセージをフェードアウトして破棄する。
-     *
      */
     private class FeadOut extends Task<Void> {
         @Override

@@ -25,7 +25,6 @@ public class AutoCompleteTextField extends LimitTextField {
 
     /**
      * コンストラクタ。
-     *
      */
     public AutoCompleteTextField() {
         this("", FXCollections.observableArrayList());
@@ -188,7 +187,6 @@ public class AutoCompleteTextField extends LimitTextField {
 
     /**
      * リストアイテムを非表示にする。
-     *
      */
     public void hideItems() {
         if (this.popup == null) {
@@ -199,7 +197,6 @@ public class AutoCompleteTextField extends LimitTextField {
 
     /**
      * リストアイテムを表示する。
-     *
      */
     public void showItems() {
         if (this.popup == null || this.isFocused() == false) {

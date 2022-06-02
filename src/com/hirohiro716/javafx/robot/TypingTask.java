@@ -13,7 +13,6 @@ public class TypingTask implements InterfaceTypingTask<Integer> {
     
     /**
      * コンストラクタ。
-     *
      */
     public TypingTask() {
         try {

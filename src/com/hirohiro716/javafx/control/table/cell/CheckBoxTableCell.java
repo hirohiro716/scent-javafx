@@ -18,7 +18,6 @@ public abstract class CheckBoxTableCell<S> extends AbstractLiveControlTableCell<
 
     /**
      * コンストラクタ。
-     *
      */
     public CheckBoxTableCell() {
         this.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);

@@ -115,7 +115,6 @@ public abstract class AbstractDatabaseEditor<D extends AbstractDatabase, T exten
 
     /**
      * "情報を再編集することができませんでした。再試行します。" というダイアログ用の文字列。
-     *
      */
     public static final String ERROR_DIALOG_MESSAGE_EDIT_AGAIN_FAILURE = "情報を再編集することができませんでした。再試行します。";
     

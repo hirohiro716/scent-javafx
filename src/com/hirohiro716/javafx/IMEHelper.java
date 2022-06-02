@@ -62,7 +62,6 @@ public class IMEHelper {
     
     /**
      * IMEをOFFにする。
-     *
      */
     public static void changeIMEOff() {
         getRobotInstance().changeIMEOff();
@@ -70,7 +69,6 @@ public class IMEHelper {
 
     /**
      * IMEをひらがなにする。
-     *
      */
     public static void changeIMEHiragana() {
         getRobotInstance().changeIMEHiragana();
@@ -78,7 +76,6 @@ public class IMEHelper {
 
     /**
      * IMEを全角カタカナにする。
-     *
      */
     public static void changeIMEKatakanaWide() {
         getRobotInstance().changeIMEKatakanaWide();
@@ -86,7 +83,6 @@ public class IMEHelper {
 
     /**
      * IMEを半角ｶﾀｶﾅにする。
-     *
      */
     public static void changeIMEKatakanaNarrow() {
         getRobotInstance().changeIMEKatakanaNarrow();

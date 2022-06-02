@@ -26,7 +26,6 @@ public class LimitTextArea extends TextArea {
 
     /**
      * コンストラクタ。
-     *
      */
     public LimitTextArea() {
         this("");

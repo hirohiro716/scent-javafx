@@ -76,31 +76,26 @@ public class EditableTable<S> extends AnchorPane {
     
     /**
      * Header用のScrollPane。
-     *
      */
     private ScrollPane headerScrollPane = new ScrollPane();
     
     /**
      * Header用のHBox。
-     *
      */
     private HBox headerHBox = new HBox();
 
     /**
      * Rowを追加していくためのVBox。
-     *
      */
     private VBox rowsVBox = new VBox();
     
     /**
      * itemとRowのHBoxを関連付ける連想配列。
-     *
      */
     private HashMap<S, HBox> rowHBoxes = new HashMap<>();
     
     /**
      * 選択状態の行HBoxを表す擬似CSSクラス。
-     *
      */
     private PseudoClass selectedPseudoClass = new PseudoClass() {
         @Override
@@ -122,7 +117,6 @@ public class EditableTable<S> extends AnchorPane {
     
     /**
      * コンストラクタ。
-     *
      */
     public EditableTable() {
         EditableTable<S> table = this;
@@ -278,7 +272,6 @@ public class EditableTable<S> extends AnchorPane {
     
     /**
      * RowをスクロールさせるためのScrollPane。
-     *
      */
     private ScrollToNodePane rowsScrollPane = new ScrollToNodePane();
     
@@ -388,7 +381,6 @@ public class EditableTable<S> extends AnchorPane {
     
     /**
      * Rowをすべて削除する。
-     *
      */
     public void clearRows() {
         this.rowsVBox.getChildren().clear();
@@ -688,7 +680,6 @@ public class EditableTable<S> extends AnchorPane {
     
     /**
      * Rowを更に読み込む。
-     *
      */
     public void loadMoreRows() {
         for (int index = this.visibleRowsCount; index < this.visibleRowsCount + this.loadRowsCountProperty.get(); index++) {
@@ -871,7 +862,6 @@ public class EditableTable<S> extends AnchorPane {
     
     /**
      * ColumnIDのList。
-     *
      */
     private List<String> columnIds = new ArrayList<>();
     
@@ -886,13 +876,11 @@ public class EditableTable<S> extends AnchorPane {
     
     /**
      * 各Column種類の連想配列(キーはID)。
-     *
      */
     private HashMap<String, ColumnType> columnTypes = new HashMap<>();
     
     /**
      * 各Columnのコントロールを生成するFactoryの連想配列(キーはID)。
-     *
      */
     private HashMap<String, ControlFactory<S, ?>> controlFactories = new HashMap<>();
     

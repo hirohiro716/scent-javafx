@@ -17,7 +17,6 @@ public class IMEOffToggleButton extends ToggleButton {
     
     /**
      * コンストラクタ。
-     *
      */
     public IMEOffToggleButton() {
         this("", null);

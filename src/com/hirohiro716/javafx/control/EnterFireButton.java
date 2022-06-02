@@ -14,7 +14,6 @@ public class EnterFireButton extends IMEOffButton {
 
     /**
      * コンストラクタ。
-     *
      */
     public EnterFireButton() {
         this("", null);

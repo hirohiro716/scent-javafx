@@ -17,7 +17,6 @@ public class IMEOffButton extends Button {
 
     /**
      * コンストラクタ。
-     *
      */
     public IMEOffButton() {
         this("", null);

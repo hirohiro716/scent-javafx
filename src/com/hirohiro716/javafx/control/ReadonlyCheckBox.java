@@ -17,7 +17,6 @@ public class ReadonlyCheckBox extends IMEOffCheckBox {
 
     /**
      * コンストラクタ。
-     *
      */
     public ReadonlyCheckBox() {
         this("");

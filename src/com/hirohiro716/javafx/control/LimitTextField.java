@@ -21,7 +21,6 @@ public class LimitTextField extends TextField {
 
     /**
      * コンストラクタ。
-     *
      */
     public LimitTextField() {
         this("");

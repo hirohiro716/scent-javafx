@@ -56,7 +56,6 @@ public class WebEngineController {
     
     /**
      * Elementsの選択状態をクリアする。
-     *
      */
     public void clearSelectedElements() {
         this.selectedElementsList.clear();
@@ -247,7 +246,6 @@ public class WebEngineController {
 
     /**
      * JavaScriptを利用して選択されている最初のElementにフォーカスする。
-     *
      */
     public void focus() {
         if (this.isSelectedElement()) {
@@ -278,7 +276,6 @@ public class WebEngineController {
     
     /**
      * JavaScriptを利用して選択されている最初のElementをクリックする。
-     *
      */
     public void click() {
         if (this.isSelectedElement()) {
@@ -343,7 +340,6 @@ public class WebEngineController {
     
     /**
      * JavaScriptを利用して選択されている最初のOPTIONタグElementを選択状態にする。
-     *
      */
     public void setOptionElementSelect() {
         if (this.isSelectedElement() && this.getSelectedElement().getTagName().toUpperCase().equals("OPTION")) {

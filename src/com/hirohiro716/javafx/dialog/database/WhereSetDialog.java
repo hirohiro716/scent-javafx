@@ -57,7 +57,6 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     
     /**
      * コンストラクタ。
-     *
      */
     public WhereSetDialog() {
         this.setTitle("検索条件の指定");
@@ -387,7 +386,6 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
 
     /**
      * VBoxの内容を取得してWhereSetを再構成する。
-     *
      */
     private void updateWhereSetFromVBox() {
         if (this.displayedWhereSet == null) {
@@ -444,7 +442,6 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
 
     /**
      * WhereSetの内容をVBoxに表示する。
-     *
      */
     private void updateVBoxFromWhereSet() {
         if (this.displayedWhereSet == null) {
@@ -572,7 +569,6 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
 
     /**
      * WhereSetVBoxを空にする。
-     *
      */
     private void removeVBoxRowAll() {
         this.vboxWhereSet.getChildren().clear();
@@ -775,7 +771,6 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
 
     /**
      * 日時検索値の入力ダイアログを表示して日時を入力させる。
-     *
      */
     private class DatetimeInputEventHander implements EventHandler<MouseEvent> {
 

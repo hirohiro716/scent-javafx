@@ -21,7 +21,6 @@ public class LimitPasswordField extends PasswordField {
 
     /**
      * コンストラクタ。
-     *
      */
     public LimitPasswordField() {
         this.focusedProperty().addListener(this.convertTextListener);

@@ -55,7 +55,6 @@ public class MonthSelectDialog extends AbstractDialog<MonthResult> {
 
     /**
      * コンストラクタ。
-     *
      */
     public MonthSelectDialog() {
         super();

@@ -27,7 +27,6 @@ public class RudeDatePicker extends DatePicker {
 
     /**
      * コンストラクタ。
-     *
      */
     public RudeDatePicker() {
         this(null);

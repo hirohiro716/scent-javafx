@@ -25,37 +25,31 @@ public abstract class AbstractEditor<T> {
 
     /**
      * "編集画面の表示失敗" というダイアログタイトル用の文字列。
-     *
      */
     public static final String ERROR_DIALOG_TITLE_OPEN_FAILURE = "編集画面の表示失敗";
 
     /**
      * "データに問題" というダイアログタイトル用の文字列。
-     *
      */
     public static final String ERROR_DIALOG_TITLE_VALIDATION = "データに問題";
 
     /**
      * "保存失敗" というダイアログタイトル用の文字列。
-     *
      */
     public static final String ERROR_DIALOG_TITLE_SAVE = "保存失敗";
 
     /**
      * "閉じる確認" というダイアログタイトル用の文字列。
-     *
      */
     public static final String CONFIRM_DIALOG_TITLE_CLOSE = "閉じる確認";
 
     /**
      * "削除の確認" というダイアログタイトル用の文字列。
-     *
      */
     public static final String CONFIRM_DIALOG_TITLE_DELETE = "削除の確認";
     
     /**
      * "このデータは削除されているため上書きできませんでした。\n" というダイアログ用の文字列。
-     *
      */
     public static final String ERROR_DIALOG_MESSAGE_SAVE_NOTFOUND = "このデータは削除されているため上書きできませんでした。\n";
     
@@ -182,7 +176,6 @@ public abstract class AbstractEditor<T> {
     
     /**
      * フォームからDataControllerに値を取り込む。このメソッドは自動では呼び出されない。
-     *
      */
     protected abstract void importDataFromForm();
     
@@ -206,7 +199,6 @@ public abstract class AbstractEditor<T> {
 
     /**
      * Editorを閉じる。
-     *
      */
     public void close() {
         try {
@@ -233,7 +225,6 @@ public abstract class AbstractEditor<T> {
 
     /**
      * 閉じる確認を行う直前の処理。closeメソッドを呼び出した際に自動実行される。
-     *
      */
     protected void beforeCloseConfirmPrepare() {
         this.isCloseDialogShown = true;
@@ -241,7 +232,6 @@ public abstract class AbstractEditor<T> {
     
     /**
      * 閉じる確認後の処理。自動実行される。
-     *
      */
     protected void processAfterCloseConfirm() {
         this.isCloseDialogShown = false;
@@ -249,7 +239,6 @@ public abstract class AbstractEditor<T> {
 
     /**
      * 画面を閉じる際の確認。
-     *
      */
     private EventHandler<WindowEvent> closeEvent = new EventHandler<WindowEvent>() {
         @Override

@@ -196,7 +196,6 @@ public abstract class AbstractLiveControlTableCell<S, T> extends TableCell<S, T>
 
     /**
      * 内部に配置するコントロールを生成するコールバック関数。スーパークラスのコンストラクタで自動的に実行される。
-     *
      */
     protected abstract void createControlCallback();
 
@@ -209,7 +208,6 @@ public abstract class AbstractLiveControlTableCell<S, T> extends TableCell<S, T>
 
     /**
      * 内部のコントロールにフォーカスする。
-     *
      */
     protected void focusControl() {
         if (this.getTableView().getSelectionModel().isCellSelectionEnabled() == false) {
@@ -257,7 +255,6 @@ public abstract class AbstractLiveControlTableCell<S, T> extends TableCell<S, T>
 
     /**
      * 内部のコントロールからセルに対して値を入れる処理。
-     *
      */
     public abstract void commitEdit();
 

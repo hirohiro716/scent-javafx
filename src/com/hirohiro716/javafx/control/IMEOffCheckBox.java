@@ -15,7 +15,6 @@ public class IMEOffCheckBox extends CheckBox {
 
     /**
      * コンストラクタ。
-     *
      */
     public IMEOffCheckBox() {
         this("");

@@ -29,7 +29,6 @@ public class HashMapComboBox<K, V> extends ComboBox<V> {
 
     /**
      * コンストラクタ。
-     *
      */
     public HashMapComboBox() {
         this(null);
@@ -55,7 +54,6 @@ public class HashMapComboBox<K, V> extends ComboBox<V> {
 
     /**
      * 値をBSやDELキーで消す事ができるかどうかを示すプロパティ。
-     *
      */
     private final BooleanProperty clearableProperty = new SimpleBooleanProperty(false);
 
@@ -99,7 +97,6 @@ public class HashMapComboBox<K, V> extends ComboBox<V> {
 
     /**
      * 連想配列をリセットする。
-     *
      */
     public void clearHashMap() {
         this.keys = new HashMap<>();
@@ -173,7 +170,6 @@ public class HashMapComboBox<K, V> extends ComboBox<V> {
     
     /**
      * 値が変更された場合にキーも変更するListener。
-     *
      */
     private ChangeListener<V> valueChangeListener = new ChangeListener<V>() {
         @Override
@@ -185,7 +181,6 @@ public class HashMapComboBox<K, V> extends ComboBox<V> {
 
     /**
      * BSやDELキーで値にnullを入力する。
-     *
      */
     private EventHandler<KeyEvent> keyReleasedEventHanler = new EventHandler<KeyEvent>() {
         @Override

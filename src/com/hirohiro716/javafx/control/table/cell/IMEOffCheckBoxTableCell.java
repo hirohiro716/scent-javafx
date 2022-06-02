@@ -19,7 +19,6 @@ public abstract class IMEOffCheckBoxTableCell<S> extends AbstractLiveControlTabl
 
     /**
      * コンストラクタ。
-     *
      */
     public IMEOffCheckBoxTableCell() {
         this.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);

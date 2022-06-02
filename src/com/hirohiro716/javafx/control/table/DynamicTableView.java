@@ -39,7 +39,6 @@ public class DynamicTableView extends TableView<RudeArray> {
 
     /**
      * コンストラクタ。
-     *
      */
     public DynamicTableView() {
         super();

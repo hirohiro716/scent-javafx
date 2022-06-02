@@ -30,7 +30,6 @@ public abstract class AbstractDialog<T> {
 
     /**
      * コンストラクタ。
-     *
      */
     public AbstractDialog() {
         this.contentPane = this.createContentPane();
@@ -185,7 +184,6 @@ public abstract class AbstractDialog<T> {
 
     /**
      * ダイアログを表示する前に行う処理。
-     *
      */
     public abstract void breforeShowPrepare(); 
     
@@ -297,7 +295,6 @@ public abstract class AbstractDialog<T> {
 
     /**
      * ダイアログを閉じる。
-     *
      */
     public void close() {
         AbstractDialog<T> dialog = this;

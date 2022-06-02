@@ -12,7 +12,6 @@ public class RobotJapanese implements InterfaceTypingRobotJapanese<Integer> {
     
     /**
      * コンストラクタ。
-     *
      */
     public RobotJapanese() {
         try {

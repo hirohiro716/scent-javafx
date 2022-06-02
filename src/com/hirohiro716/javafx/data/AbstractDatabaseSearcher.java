@@ -46,13 +46,11 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     
     /**
      * 検索を実行する。
-     *
      */
     protected abstract void search();
     
     /**
      * 詳細検索を実行する。
-     *
      */
     protected abstract void searchDetail();
     
@@ -148,7 +146,6 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
 
     /**
      * 検索条件と検索結果をクリアする。
-     *
      */
     protected abstract void clear();
 
@@ -227,7 +224,6 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
 
     /**
      * 選択行を指定する処理。この処理を行うと本画面も閉じる。
-     *
      */
     protected void selectRow() {
         if (this.isSelectMode == false) {
@@ -272,13 +268,11 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
 
     /**
      * 検索完了後の後処理を行う。
-     *
      */
     protected abstract void afterSearchProcessing();
 
     /**
      * 新しいデータを追加する。
-     *
      */
     protected abstract void add();
 
@@ -300,7 +294,6 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
 
     /**
      * 検索結果の選択されているデータを編集する。
-     *
      */
     protected abstract void edit();
 
@@ -338,7 +331,6 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
 
     /**
      * 検索結果の選択されているデータを削除する。
-     *
      */
     protected abstract void delete();
 
@@ -598,7 +590,6 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     
     /**
      * Searcherを閉じる。
-     *
      */
     public void close() {
         try {
