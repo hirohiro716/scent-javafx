@@ -6,20 +6,23 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 /**
- * EnterキーでActionイベントが発生するボタン.
+ * EnterキーでActionイベントが発生するボタン。
+ *
  * @author hiro
  */
 public class EnterFireButton extends IMEOffButton {
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      */
     public EnterFireButton() {
         this("", null);
     }
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param text
      */
     public EnterFireButton(String text) {
@@ -27,7 +30,8 @@ public class EnterFireButton extends IMEOffButton {
     }
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param text
      * @param graphic
      */

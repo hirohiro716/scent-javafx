@@ -5,13 +5,15 @@ import static com.hirohiro716.StringConverter.stringToInteger;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
- * JavaFXでバーコードを生成するクラス.
+ * JavaFXでバーコードを生成するクラス。
+ *
  * @author hiro
  */
 public class JAN13Helper extends com.hirohiro716.barcode.JAN13Helper {
 
     /**
-     * JAN13バーコードを描画します.
+     * JAN13バーコードを描画します。
+     *
      * @param barcode バーコード
      * @param width 描画幅
      * @param height 描画高さ

@@ -5,13 +5,15 @@ import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
 
 /**
- * 指定領域へスクロールすることができるScrollPaneコントロールクラス.
+ * 指定領域へスクロールすることができるScrollPaneコントロールクラス。
+ *
  * @author hiro
  */
 public class ScrollToNodePane extends ScrollPane {
     
     /**
-     * Viewport内での指定領域が現在表示されているかを判定する.
+     * Viewport内での指定領域が現在表示されているかを判定する。
+     *
      * @param layoutX 指定領域の開始横位置
      * @param layoutY 指定領域の開始縦位置
      * @param width 指定領域の幅
@@ -35,7 +37,8 @@ public class ScrollToNodePane extends ScrollPane {
     }
 
     /**
-     * 指定位置へのスクロール.
+     * 指定位置へのスクロール。
+     *
      * @param x
      * @param y
      */
@@ -47,7 +50,8 @@ public class ScrollToNodePane extends ScrollPane {
     }
 
     /**
-     * 内包している指定Nodeまでスクロールする. すでに指定Nodeが表示されていれば処理しない.
+     * 内包している指定Nodeまでスクロールする. すでに指定Nodeが表示されていれば処理しない。
+     *
      * @param node 対象
      */
     public void scroll(Node node) {
@@ -76,6 +80,4 @@ public class ScrollToNodePane extends ScrollPane {
             }
             this.setVvalue(vValue);
         }
-    }
-    
-}
+    }}

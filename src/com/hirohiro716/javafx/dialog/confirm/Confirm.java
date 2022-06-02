@@ -20,7 +20,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
- * 確認メッセージ(OK/Cancel)を表示するクラス.
+ * 確認メッセージ(OK/Cancel)を表示するクラス。
+ *
  * @author hiro
  */
 public class Confirm extends AbstractDialog<DialogResult> {
@@ -118,7 +119,8 @@ public class Confirm extends AbstractDialog<DialogResult> {
     }
 
     /**
-     * メッセージ内容をセットする.
+     * メッセージ内容をセットする。
+     *
      * @param message
      */
     public void setMessage(String message) {
@@ -131,7 +133,8 @@ public class Confirm extends AbstractDialog<DialogResult> {
     }
 
     /**
-     * メッセージに代わるNodeをセットする.
+     * メッセージに代わるNodeをセットする。
+     *
      * @param node
      */
     public void setMessageNode(Node node) {
@@ -142,7 +145,8 @@ public class Confirm extends AbstractDialog<DialogResult> {
     private DialogResult defaultButton;
 
     /**
-     * Enterキー押下時に作用するボタンを指定する.
+     * Enterキー押下時に作用するボタンを指定する。
+     *
      * @param dialogResult
      */
     public void setDefaultButton(DialogResult dialogResult) {
@@ -150,7 +154,8 @@ public class Confirm extends AbstractDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示する.
+     * ダイアログを表示する。
+     *
      * @param title タイトル
      * @param message メッセージ
      * @param closeEvent 閉じる際の処理
@@ -164,7 +169,8 @@ public class Confirm extends AbstractDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示する.
+     * ダイアログを表示する。
+     *
      * @param title タイトル
      * @param message メッセージ
      * @param owner 親Stage
@@ -179,7 +185,8 @@ public class Confirm extends AbstractDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示する.
+     * ダイアログを表示する。
+     *
      * @param title タイトル
      * @param message メッセージ
      * @return 結果
@@ -192,7 +199,8 @@ public class Confirm extends AbstractDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示する.
+     * ダイアログを表示する。
+     *
      * @param title タイトル
      * @param message メッセージ
      * @param owner 親Stage
@@ -206,7 +214,8 @@ public class Confirm extends AbstractDialog<DialogResult> {
     }
 
     /**
-     * ダイアログを表示する.
+     * ダイアログを表示する。
+     *
      * @param <T> javafx.scene.layout.Paneを継承したクラスオブジェクト
      * @param title タイトル
      * @param message メッセージ

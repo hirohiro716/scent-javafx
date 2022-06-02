@@ -19,7 +19,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyEvent;
 
 /**
- * 連想配列を使用できるComboBox. 値は通常のComboBoxと同じように取得できキーはgetKey()メソッドで取得する.
+ * 連想配列を使用できるComboBox. 値は通常のComboBoxと同じように取得できキーはgetKey()メソッドで取得する。
+ *
  * @author hiro
  * @param <K> キー
  * @param <V> 値
@@ -27,14 +28,16 @@ import javafx.scene.input.KeyEvent;
 public class HashMapComboBox<K, V> extends ComboBox<V> {
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      */
     public HashMapComboBox() {
         this(null);
     }
 
     /**
-     * コンストラクタで連想配列を指定する.
+     * コンストラクタで連想配列を指定する。
+     *
      * @param hashMap
      */
     public HashMapComboBox(HashMap<K, V> hashMap) {
@@ -51,12 +54,14 @@ public class HashMapComboBox<K, V> extends ComboBox<V> {
     }
 
     /**
-     * 値をBSやDELキーで消す事ができるかどうかを示すプロパティ.
+     * 値をBSやDELキーで消す事ができるかどうかを示すプロパティ。
+     *
      */
     private final BooleanProperty clearableProperty = new SimpleBooleanProperty(false);
 
     /**
-     * 値をBSやDELキーで消す事ができるかどうかを示すプロパティを取得する.
+     * 値をBSやDELキーで消す事ができるかどうかを示すプロパティを取得する。
+     *
      * @return BooleanProperty
      */
     public BooleanProperty clearbleProperty() {
@@ -64,14 +69,16 @@ public class HashMapComboBox<K, V> extends ComboBox<V> {
     }
 
     /**
-     * 値をBSやDELキーで消す事ができるようになる.
+     * 値をBSやDELキーで消す事ができるようになる。
+     *
      * @param isClearable
      */
     public void setClearable(boolean isClearable) {
         this.clearableProperty.set(isClearable);
     }
     /**
-     * 値をBSやDELキーで消すことができるかどうか.
+     * 値をBSやDELキーで消すことができるかどうか。
+     *
      * @return isClearable
      */
     public boolean getClearable() {
@@ -79,7 +86,8 @@ public class HashMapComboBox<K, V> extends ComboBox<V> {
     }
 
     /**
-     * 値をBSやDELキーで消すことができるかどうか.
+     * 値をBSやDELキーで消すことができるかどうか。
+     *
      * @return isClearable
      */
     public boolean isClearable() {
@@ -90,7 +98,8 @@ public class HashMapComboBox<K, V> extends ComboBox<V> {
     private HashMap<K, V> values;
 
     /**
-     * 連想配列をリセットする.
+     * 連想配列をリセットする。
+     *
      */
     public void clearHashMap() {
         this.keys = new HashMap<>();
@@ -99,7 +108,8 @@ public class HashMapComboBox<K, V> extends ComboBox<V> {
     }
 
     /**
-     * 連想配列をセットする.
+     * 連想配列をセットする。
+     *
      * @param hashMap
      */
     public void setHashMap(HashMap<K, V> hashMap) {
@@ -117,7 +127,8 @@ public class HashMapComboBox<K, V> extends ComboBox<V> {
     }
     
     /**
-     * 連想配列を取得する.
+     * 連想配列を取得する。
+     *
      * @return HashMap
      */
     public HashMap<K, V> getHashMap() {
@@ -127,7 +138,8 @@ public class HashMapComboBox<K, V> extends ComboBox<V> {
     private final ObjectProperty<K> keyProperty = new SimpleObjectProperty<>();
     
     /**
-     * 選択されるキープロパティを取得する.
+     * 選択されるキープロパティを取得する。
+     *
      * @return ObjectProperty
      */
     public ObjectProperty<K> keyProperty() {
@@ -135,7 +147,8 @@ public class HashMapComboBox<K, V> extends ComboBox<V> {
     }
     
     /**
-     * 選択された値のキーを取得する.
+     * 選択された値のキーを取得する。
+     *
      * @return キー
      */
     public K getKey() {
@@ -143,7 +156,8 @@ public class HashMapComboBox<K, V> extends ComboBox<V> {
     }
 
     /**
-     * キーを指定して値を入力する.
+     * キーを指定して値を入力する。
+     *
      * @param key キー
      */
     public void setKey(K key) {
@@ -158,7 +172,8 @@ public class HashMapComboBox<K, V> extends ComboBox<V> {
     }
     
     /**
-     * 値が変更された場合にキーも変更するListener.
+     * 値が変更された場合にキーも変更するListener。
+     *
      */
     private ChangeListener<V> valueChangeListener = new ChangeListener<V>() {
         @Override
@@ -169,7 +184,8 @@ public class HashMapComboBox<K, V> extends ComboBox<V> {
     };
 
     /**
-     * BSやDELキーで値にnullを入力する.
+     * BSやDELキーで値にnullを入力する。
+     *
      */
     private EventHandler<KeyEvent> keyReleasedEventHanler = new EventHandler<KeyEvent>() {
         @Override

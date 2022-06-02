@@ -13,13 +13,15 @@ import javafx.scene.control.PasswordField;
 import com.hirohiro716.StringConverter;
 
 /**
- * 入力制限機能を付けたPasswordField.
+ * 入力制限機能を付けたPasswordField。
+ *
  * @author hiro
  */
 public class LimitPasswordField extends PasswordField {
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      */
     public LimitPasswordField() {
         this.focusedProperty().addListener(this.convertTextListener);
@@ -31,7 +33,8 @@ public class LimitPasswordField extends PasswordField {
     public final IntegerProperty maxLength = new SimpleIntegerProperty(-1);
 
     /**
-     * 最大文字数プロパティを取得する.
+     * 最大文字数プロパティを取得する。
+     *
      * @return IntegerProperty
      */
     public IntegerProperty maxLengthProperty() {
@@ -39,7 +42,8 @@ public class LimitPasswordField extends PasswordField {
     }
 
     /**
-     * 最大文字数を取得する.
+     * 最大文字数を取得する。
+     *
      * @return 最大文字数
      */
     public int getMaxLength() {
@@ -47,7 +51,8 @@ public class LimitPasswordField extends PasswordField {
     }
 
     /**
-     * 最大文字数をセットする.
+     * 最大文字数をセットする。
+     *
      * @param maxLength 最大文字数
      */
     public void setMaxLength(int maxLength) {
@@ -57,7 +62,8 @@ public class LimitPasswordField extends PasswordField {
     private final ArrayList<Pattern> permitRegexs = new ArrayList<>();
 
     /**
-     * 正規表現のパターン配列を取得する.
+     * 正規表現のパターン配列を取得する。
+     *
      * @return Patternの配列
      */
     public Pattern[] getPermitRegexs() {
@@ -67,7 +73,8 @@ public class LimitPasswordField extends PasswordField {
     private final ArrayList<Boolean> permitRegexReverses = new ArrayList<>();
 
     /**
-     * 正規表現に一致した文字列を許可するように設定する. 複数の追加が可能.
+     * 正規表現に一致した文字列を許可するように設定する. 複数の追加が可能。
+     *
      * @param permitRegex 正規表現Pattern
      * @param reverse 条件を逆転するか
      */
@@ -77,7 +84,8 @@ public class LimitPasswordField extends PasswordField {
     }
 
     /**
-     * 正規表現を逆転するかの配列を取得します.
+     * 正規表現を逆転するかの配列を取得します。
+     *
      * @return 条件を逆転するかをbooleanで表した配列
      */
     public Boolean[] getPermitRegexReverses() {
@@ -87,7 +95,8 @@ public class LimitPasswordField extends PasswordField {
     private StringConverter converter = null;
 
     /**
-     * フォーカス喪失時に値を変換するStringConverterインスタンスをセットする.
+     * フォーカス喪失時に値を変換するStringConverterインスタンスをセットする。
+     *
      * @param converter コンバーターインスタンス
      */
     public void setStringConverter(StringConverter converter) {
@@ -95,7 +104,8 @@ public class LimitPasswordField extends PasswordField {
     }
 
     /**
-     * フォーカス喪失時に値を変換するStringConverterインスタンスを取得する.
+     * フォーカス喪失時に値を変換するStringConverterインスタンスを取得する。
+     *
      * @return converter コンバーターインスタンス
      */
     public StringConverter getStringConverter() {
@@ -103,7 +113,8 @@ public class LimitPasswordField extends PasswordField {
     }
 
     /**
-     * 文字列を入力する前にチェックして制御します.
+     * 文字列を入力する前にチェックして制御します。
+     *
      * @param start
      * @param end
      * @param text
@@ -139,7 +150,8 @@ public class LimitPasswordField extends PasswordField {
     }
 
     /**
-     * 文字列を入力する前にチェックして制御します.
+     * 文字列を入力する前にチェックして制御します。
+     *
      * @param text
      */
     @Override

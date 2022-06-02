@@ -18,20 +18,23 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 
 /**
- * 入力制限機能を付けたTextArea.
+ * 入力制限機能を付けたTextArea。
+ *
  * @author hiro
  */
 public class LimitTextArea extends TextArea {
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      */
     public LimitTextArea() {
         this("");
     }
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param text
      */
     public LimitTextArea(String text) {
@@ -45,7 +48,8 @@ public class LimitTextArea extends TextArea {
     public final IntegerProperty maxLength = new SimpleIntegerProperty(-1);
 
     /**
-     * 最大文字数プロパティを取得する.
+     * 最大文字数プロパティを取得する。
+     *
      * @return IntegerProperty
      */
     public IntegerProperty maxLengthProperty() {
@@ -53,7 +57,8 @@ public class LimitTextArea extends TextArea {
     }
 
     /**
-     * 最大文字数を取得する.
+     * 最大文字数を取得する。
+     *
      * @return 最大文字数
      */
     public int getMaxLength() {
@@ -61,7 +66,8 @@ public class LimitTextArea extends TextArea {
     }
 
     /**
-     * 最大文字数をセットする.
+     * 最大文字数をセットする。
+     *
      * @param maxLength 最大文字数
      */
     public void setMaxLength(int maxLength) {
@@ -71,7 +77,8 @@ public class LimitTextArea extends TextArea {
     private final ArrayList<Pattern> permitRegexs = new ArrayList<>();
 
     /**
-     * 正規表現のパターン配列を取得する.
+     * 正規表現のパターン配列を取得する。
+     *
      * @return Patternの配列
      */
     public Pattern[] getPermitRegexs() {
@@ -81,7 +88,8 @@ public class LimitTextArea extends TextArea {
     private final ArrayList<Boolean> permitRegexReverses = new ArrayList<>();
 
     /**
-     * 正規表現に一致した文字列を許可するように設定する. 複数の追加が可能.
+     * 正規表現に一致した文字列を許可するように設定する. 複数の追加が可能。
+     *
      * @param permitRegex 正規表現Pattern
      * @param reverse 条件を逆転するか
      */
@@ -91,7 +99,8 @@ public class LimitTextArea extends TextArea {
     }
 
     /**
-     * タブ文字を制限する. タブキー押下時は指定されたコントロールにフォーカスする.
+     * タブ文字を制限する. タブキー押下時は指定されたコントロールにフォーカスする。
+     *
      * @param nextFocusControl
      */
     public void setPermitTab(Region nextFocusControl) {
@@ -107,7 +116,8 @@ public class LimitTextArea extends TextArea {
     }
 
     /**
-     * 正規表現を逆転するかの配列を取得します.
+     * 正規表現を逆転するかの配列を取得します。
+     *
      * @return 条件を逆転するかをbooleanで表した配列
      */
     public Boolean[] getPermitRegexReverses() {
@@ -117,7 +127,8 @@ public class LimitTextArea extends TextArea {
     private StringConverter converter = null;
 
     /**
-     * フォーカス喪失時に値を変換するStringConverterインスタンスをセットする.
+     * フォーカス喪失時に値を変換するStringConverterインスタンスをセットする。
+     *
      * @param converter コンバーターインスタンス
      */
     public void setStringConverter(StringConverter converter) {
@@ -125,7 +136,8 @@ public class LimitTextArea extends TextArea {
     }
 
     /**
-     * フォーカス喪失時に値を変換するStringConverterインスタンスを取得する.
+     * フォーカス喪失時に値を変換するStringConverterインスタンスを取得する。
+     *
      * @return converter コンバーターインスタンス
      */
     public StringConverter getStringConverter() {
@@ -133,7 +145,8 @@ public class LimitTextArea extends TextArea {
     }
 
     /**
-     * 文字列を入力する前にチェックして制御します.
+     * 文字列を入力する前にチェックして制御します。
+     *
      * @param start
      * @param end
      * @param text
@@ -169,7 +182,8 @@ public class LimitTextArea extends TextArea {
     }
 
     /**
-     * 文字列を入力する前にチェックして制御します.
+     * 文字列を入力する前にチェックして制御します。
+     *
      * @param text
      */
     @Override

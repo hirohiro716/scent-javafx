@@ -27,7 +27,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
- * JavaFXで印刷するために最適化されたPaneの抽象クラス.
+ * JavaFXで印刷するために最適化されたPaneの抽象クラス。
+ *
  * @author hiro
  */
 public abstract class AbstractPrintingPaneBuilder {
@@ -35,7 +36,8 @@ public abstract class AbstractPrintingPaneBuilder {
     private Pane paneCanvas = new Pane();
 
     /**
-     * 内部で作成されたPaneを取得する.
+     * 内部で作成されたPaneを取得する。
+     *
      * @return Pane
      */
     public Pane getPane() {
@@ -46,7 +48,8 @@ public abstract class AbstractPrintingPaneBuilder {
     private String fontFamilyName = this.font.getFamily();
 
     /**
-     * 印刷に使用するフォントを取得する.
+     * 印刷に使用するフォントを取得する。
+     *
      * @return 印刷に使用するフォント
      */
     public Font getFont() {
@@ -54,7 +57,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 印刷に使用するフォントを指定する.
+     * 印刷に使用するフォントを指定する。
+     *
      * @param font
      */
     public void setFont(Font font) {
@@ -62,7 +66,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 印刷に使用するフォントを指定する.
+     * 印刷に使用するフォントを指定する。
+     *
      * @param familyName
      * @param fontSize
      */
@@ -72,7 +77,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 印刷に使用するフォントサイズを指定する.
+     * 印刷に使用するフォントサイズを指定する。
+     *
      * @param fontSize
      */
     public void setFontSize(double fontSize) {
@@ -80,7 +86,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 印刷に使用するフォント名を指定する.
+     * 印刷に使用するフォント名を指定する。
+     *
      * @param familyName
      */
     public void setFontFamilyName(String familyName) {
@@ -91,7 +98,8 @@ public abstract class AbstractPrintingPaneBuilder {
     private double textLineSpacingRateToFontSize = 0;
 
     /**
-     * テキストの行間をフォントサイズに対する比率で指定する. 初期値は0.
+     * テキストの行間をフォントサイズに対する比率で指定する. 初期値は0。
+     *
      * @param spacingRate フォントサイズに対する比率
      */
     public void setTextLineSpacingRateToFontSize(double spacingRate) {
@@ -101,7 +109,8 @@ public abstract class AbstractPrintingPaneBuilder {
     private Color color = Color.BLACK;
     
     /**
-     * 使用する色を取得する.
+     * 使用する色を取得する。
+     *
      * @return Color
      */
     public Color getColor() {
@@ -109,7 +118,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
     
     /**
-     * 使用する色を指定する.
+     * 使用する色を指定する。
+     *
      * @param color
      */
     public void setColor(Color color) {
@@ -117,7 +127,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 使用する色をカラーコードで指定する.
+     * 使用する色をカラーコードで指定する。
+     *
      * @param colorString HTMLまたはCSSで使用する16進数6桁カラーコード(#000000)
      */
     public void setColorString(String colorString) {
@@ -127,7 +138,8 @@ public abstract class AbstractPrintingPaneBuilder {
     private double strokeWidth = 1;
 
     /**
-     * 使用する線の太さを指定する.
+     * 使用する線の太さを指定する。
+     *
      * @param strokeWidth
      */
     public void setStrokeWidth(double strokeWidth) {
@@ -137,7 +149,8 @@ public abstract class AbstractPrintingPaneBuilder {
     private ObservableList<Double> strokeDashArray = FXCollections.observableArrayList();
     
     /**
-     * 線の印刷に使用する破線セグメントの長さを取得する.
+     * 線の印刷に使用する破線セグメントの長さを取得する。
+     *
      * @return 破線セグメントの長さ(mm)の配列
      */
     public Double[] getStrokeDashArray() {
@@ -145,7 +158,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 線の印刷に使用する破線セグメントの長さを指定する.
+     * 線の印刷に使用する破線セグメントの長さを指定する。
+     *
      * @param millimeterDashes 破線セグメントの長さ(mm)
      */
     public void setStrokeDashArray(Double... millimeterDashes) {
@@ -160,7 +174,8 @@ public abstract class AbstractPrintingPaneBuilder {
     private VPos textOriginVPos = VPos.BASELINE;
 
     /**
-     * 文字列を描画する際のBaseLine(上下基準位置)を取得する.
+     * 文字列を描画する際のBaseLine(上下基準位置)を取得する。
+     *
      * @return vPos
      */
     public VPos getTextOriginVPos() {
@@ -168,7 +183,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 文字列を描画する際のBaseLine(上下基準位置)を指定する.
+     * 文字列を描画する際のBaseLine(上下基準位置)を指定する。
+     *
      * @param vPos
      */
     public void setTextOriginVPos(VPos vPos) {
@@ -176,13 +192,15 @@ public abstract class AbstractPrintingPaneBuilder {
     }
     
     /**
-     * 印刷処理.
+     * 印刷処理。
+     *
      * @throws PrintException
      */
     protected abstract void build() throws PrintException;
 
     /**
-     * 文字列を描画する.
+     * 文字列を描画する。
+     *
      * @param string 描画する文字列
      * @param millimeterLayoutX 左位置(mm)
      * @param millimeterLayoutY 上位置(mm)
@@ -203,7 +221,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 文字列を描画する.
+     * 文字列を描画する。
+     *
      * @param string 描画する文字列
      * @param millimeterLayoutX 左位置(mm)
      * @param millimeterLayoutY 上位置(mm)
@@ -214,7 +233,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 文字列を描画する.
+     * 文字列を描画する。
+     *
      * @param string 描画する文字列
      * @param millimeterWidth 文字列を描画する幅(mm)
      * @param millimeterLayoutX 左位置(mm)
@@ -236,7 +256,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 文字列を右寄せで描画する.
+     * 文字列を右寄せで描画する。
+     *
      * @param string 描画する文字列
      * @param millimeterWidth 文字列を描画する幅(mm)
      * @param millimeterLayoutX 左位置(mm)
@@ -248,7 +269,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 文字列を中央寄せで描画する.
+     * 文字列を中央寄せで描画する。
+     *
      * @param string 描画する文字列
      * @param millimeterWidth 文字列を描画する幅(mm)
      * @param millimeterLayoutX 左位置(mm)
@@ -270,7 +292,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 文字列を中央寄せで描画する.
+     * 文字列を中央寄せで描画する。
+     *
      * @param string 描画する文字列
      * @param millimeterWidth 文字列を描画する幅(mm)
      * @param millimeterLayoutX 左位置(mm)
@@ -282,7 +305,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 文字列の描画サイズを計算する.
+     * 文字列の描画サイズを計算する。
+     *
      * @param string 対象文字列
      * @param fontFamilyName フォントファミリー
      * @param fontSize フォントサイズ
@@ -294,7 +318,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
     
     /**
-     * 文字列の描画サイズを計算する.
+     * 文字列の描画サイズを計算する。
+     *
      * @param string 対象文字列
      * @return 文字列の描画サイズ
      */
@@ -303,7 +328,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 文字列をフォントサイズを調整して描画する.
+     * 文字列をフォントサイズを調整して描画する。
+     *
      * @param string 描画する文字列
      * @param millimeterWidth 幅(mm)
      * @param millimeterHeight 高さ(mm)
@@ -326,7 +352,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 文字列をフォントサイズを調整して描画する.
+     * 文字列をフォントサイズを調整して描画する。
+     *
      * @param string 描画する文字列
      * @param millimeterWidth 幅(mm)
      * @param millimeterHeight 高さ(mm)
@@ -339,7 +366,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 文字列をフォントサイズを調整しつつ折り返して描画する.
+     * 文字列をフォントサイズを調整しつつ折り返して描画する。
+     *
      * @param string 描画する文字列
      * @param millimeterWidth 幅(mm)
      * @param millimeterHeight 高さ(mm)
@@ -363,7 +391,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 文字列をフォントサイズを調整しつつ折り返して描画する.
+     * 文字列をフォントサイズを調整しつつ折り返して描画する。
+     *
      * @param string 描画する文字列
      * @param millimeterWidth 幅(mm)
      * @param millimeterHeight 高さ(mm)
@@ -376,7 +405,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
     
     /**
-     * 幅と高さに収まるフォントを作成する.
+     * 幅と高さに収まるフォントを作成する。
+     *
      * @param string 文字列
      * @param millimeterWidth 幅(mm)
      * @param millimeterHeight 高さ(mm)
@@ -391,7 +421,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 幅と高さに収まるフォントを作成する.
+     * 幅と高さに収まるフォントを作成する。
+     *
      * @param string 文字列
      * @param millimeterWidth 幅(mm)
      * @param millimeterHeight 高さ(mm)
@@ -401,7 +432,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * テキストの自動折り返しをしつつ幅と高さに収まるフォントを作成する.
+     * テキストの自動折り返しをしつつ幅と高さに収まるフォントを作成する。
+     *
      * @param string 文字列
      * @param millimeterWidth 幅(mm)
      * @param millimeterHeight 高さ(mm)
@@ -416,7 +448,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * テキストの自動折り返しをしつつ幅と高さに収まるフォントに変更する.
+     * テキストの自動折り返しをしつつ幅と高さに収まるフォントに変更する。
+     *
      * @param string 文字列
      * @param millimeterWidth 幅(mm)
      * @param millimeterHeight 高さ(mm)
@@ -426,7 +459,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 四角の枠線を描画する.
+     * 四角の枠線を描画する。
+     *
      * @param millimeterWidth 幅(mm)
      * @param millimeterHeight 高さ(mm)
      * @param millimeterLayoutX 左位置(mm)
@@ -445,7 +479,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 四角の枠線を描画する.
+     * 四角の枠線を描画する。
+     *
      * @param millimeterWidth 幅(mm)
      * @param millimeterHeight 高さ(mm)
      * @param millimeterLayoutX 左位置(mm)
@@ -459,7 +494,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 四角の枠線を描画する.
+     * 四角の枠線を描画する。
+     *
      * @param millimeterWidth 幅(mm)
      * @param millimeterHeight 高さ(mm)
      * @param millimeterLayoutX 左位置(mm)
@@ -470,7 +506,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 四角を塗りつぶして描画する.
+     * 四角を塗りつぶして描画する。
+     *
      * @param millimeterWidth 幅(mm)
      * @param millimeterHeight 高さ(mm)
      * @param millimeterLayoutX 左位置(mm)
@@ -488,7 +525,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 四角を塗りつぶして描画する.
+     * 四角を塗りつぶして描画する。
+     *
      * @param millimeterWidth 幅(mm)
      * @param millimeterHeight 高さ(mm)
      * @param millimeterLayoutX 左位置(mm)
@@ -502,7 +540,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 四角を塗りつぶして描画する.
+     * 四角を塗りつぶして描画する。
+     *
      * @param millimeterWidth 幅(mm)
      * @param millimeterHeight 高さ(mm)
      * @param millimeterLayoutX 左位置(mm)
@@ -513,7 +552,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 楕円の枠線を描画する.
+     * 楕円の枠線を描画する。
+     *
      * @param millimeterWidth 幅(mm)
      * @param millimeterHeight 高さ(mm)
      * @param millimeterLayoutX 左位置(mm)
@@ -535,7 +575,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 楕円の枠線を描画する.
+     * 楕円の枠線を描画する。
+     *
      * @param millimeterWidth 幅(mm)
      * @param millimeterHeight 高さ(mm)
      * @param millimeterLayoutX 左位置(mm)
@@ -546,7 +587,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 楕円を塗りつぶして描画する.
+     * 楕円を塗りつぶして描画する。
+     *
      * @param millimeterWidth 幅(mm)
      * @param millimeterHeight 高さ(mm)
      * @param millimeterLayoutX 左位置(mm)
@@ -567,7 +609,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 楕円を塗りつぶして描画する.
+     * 楕円を塗りつぶして描画する。
+     *
      * @param millimeterWidth 幅(mm)
      * @param millimeterHeight 高さ(mm)
      * @param millimeterLayoutX 左位置(mm)
@@ -578,7 +621,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 線を描画する.
+     * 線を描画する。
+     *
      * @param millimeterStartX 始点X位置(mm)
      * @param millimeterStartY 始点Y位置(mm)
      * @param millimeterEndX 終点X位置(mm)
@@ -597,7 +641,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 横線を描画する.
+     * 横線を描画する。
+     *
      * @param millimeterLayoutX 左位置(mm)
      * @param millimeterLayoutY 上位置(mm)
      * @param millimeterWidth 幅(mm)
@@ -607,7 +652,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 縦線を描画する.
+     * 縦線を描画する。
+     *
      * @param millimeterLayoutX 左位置(mm)
      * @param millimeterLayoutY 上位置(mm)
      * @param millimeterHeight 高さ(mm)
@@ -617,7 +663,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 画像を印刷する.
+     * 画像を印刷する。
+     *
      * @param image
      * @param millimeterWidth 幅(mm)
      * @param millimeterHeight 高さ(mm)
@@ -634,7 +681,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 画像を横幅に合わせて印刷する.
+     * 画像を横幅に合わせて印刷する。
+     *
      * @param image
      * @param millimeterWidth 幅(mm)
      * @param millimeterLayoutX 左位置(mm)
@@ -646,7 +694,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * 画像を高さに合わせて印刷する.
+     * 画像を高さに合わせて印刷する。
+     *
      * @param image
      * @param millimeterHeight 高さ(mm)
      * @param millimeterLayoutX 左位置(mm)
@@ -658,7 +707,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * Canvasを描画する.
+     * Canvasを描画する。
+     *
      * @param millimeterWidth 幅(mm)
      * @param millimeterHeight 高さ(mm)
      * @param millimeterLayoutX 左位置(mm)
@@ -678,7 +728,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * NW7バーコードを描画する.
+     * NW7バーコードを描画する。
+     *
      * @param barcode 描画する情報
      * @param millimeterWidth 幅(mm)
      * @param millimeterHeight 高さ(mm)
@@ -696,7 +747,8 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * JAN13バーコードを描画する.
+     * JAN13バーコードを描画する。
+     *
      * @param barcode 描画する情報
      * @param millimeterWidth 幅(mm)
      * @param millimeterHeight 高さ(mm)
@@ -714,13 +766,15 @@ public abstract class AbstractPrintingPaneBuilder {
     }
 
     /**
-     * Canvasを作成した際の実際の描画処理を記述するコールバック.
+     * Canvasを作成した際の実際の描画処理を記述するコールバック。
+     *
      * @author hiro
      */
     public static interface CanvasCallback {
 
         /**
-         * Canvasに対して図形を描画するコールバック関数.
+         * Canvasに対して図形を描画するコールバック関数。
+         *
          * @param canvas
          */
         public void call(Canvas canvas);

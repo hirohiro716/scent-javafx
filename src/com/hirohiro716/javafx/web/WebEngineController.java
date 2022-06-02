@@ -13,13 +13,15 @@ import com.hirohiro716.StringConverter;
 import javafx.scene.web.WebEngine;
 
 /**
- * WebEngineの操作を補助するクラス.
+ * WebEngineの操作を補助するクラス。
+ *
  * @author hiro
  */
 public class WebEngineController {
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param webEngine
      */
     public WebEngineController(WebEngine webEngine) {
@@ -29,7 +31,8 @@ public class WebEngineController {
     private WebEngine webEngine;
     
     /**
-     * WebEngineインスタンスを取得する.
+     * WebEngineインスタンスを取得する。
+     *
      * @return WebEngine
      */
     public WebEngine getWebEngine() {
@@ -39,7 +42,8 @@ public class WebEngineController {
     private ArrayList<Element> selectedElementsList = new ArrayList<>();
     
     /**
-     * 指定のElementを選択状態にする.
+     * 指定のElementを選択状態にする。
+     *
      * @param element
      */
     public void addSelectedElement(Element element) {
@@ -51,14 +55,16 @@ public class WebEngineController {
     }
     
     /**
-     * Elementsの選択状態をクリアする.
+     * Elementsの選択状態をクリアする。
+     *
      */
     public void clearSelectedElements() {
         this.selectedElementsList.clear();
     }
     
     /**
-     * Elementが選択されているかを確認する.
+     * Elementが選択されているかを確認する。
+     *
      * @return boolean
      */
     public boolean isSelectedElement() {
@@ -66,7 +72,8 @@ public class WebEngineController {
     }
     
     /**
-     * 選択済みのElementsを取得する.
+     * 選択済みのElementsを取得する。
+     *
      * @return Element[]
      */
     public Element[] getSelectedElements() {
@@ -74,7 +81,8 @@ public class WebEngineController {
     }
     
     /**
-     * 選択済みのElementを取得する.
+     * 選択済みのElementを取得する。
+     *
      * @return Element
      */
     public Element getSelectedElement() {
@@ -85,7 +93,8 @@ public class WebEngineController {
     }
     
     /**
-     * 選択済みのElementsがあればそれを なければRootDocumentのElementを取得する.
+     * 選択済みのElementsがあればそれを なければRootDocumentのElementを取得する。
+     *
      * @return Element[]
      */
     private Element[] getSelectedElementOrRoot() {
@@ -99,7 +108,8 @@ public class WebEngineController {
     }
     
     /**
-     * ElementをID属性を元に検索して選択する. すでに選択済みのElementがある場合はその内部から検索する.
+     * ElementをID属性を元に検索して選択する. すでに選択済みのElementがある場合はその内部から検索する。
+     *
      * @param idCompareRegex IDと比較する正規表現
      */
     public void selectElementById(String idCompareRegex) {
@@ -107,7 +117,8 @@ public class WebEngineController {
     }
     
     /**
-     * Elementをタグ名を元に検索して選択する. すでに選択済みのElementがある場合はその内部から検索する.
+     * Elementをタグ名を元に検索して選択する. すでに選択済みのElementがある場合はその内部から検索する。
+     *
      * @param tagName
      */
     public void selectElementsByTagName(String tagName) {
@@ -124,7 +135,8 @@ public class WebEngineController {
     }
     
     /**
-     * Elementのタグ名とテキストを元に正規表現で検索して選択する. すでに選択済みのElementがある場合はその内部から検索する.
+     * Elementのタグ名とテキストを元に正規表現で検索して選択する. すでに選択済みのElementがある場合はその内部から検索する。
+     *
      * @param tagName
      * @param textCompareRegex テキストと比較する正規表現
      */
@@ -147,7 +159,8 @@ public class WebEngineController {
     }
 
     /**
-     * Elementをタグ名と属性値を元に正規表現で検索して選択する. すでに選択済みのElementがある場合はその内部から検索する.
+     * Elementをタグ名と属性値を元に正規表現で検索して選択する. すでに選択済みのElementがある場合はその内部から検索する。
+     *
      * @param tagName
      * @param valueCompareRegex 属性値と比較する正規表現
      */
@@ -172,7 +185,8 @@ public class WebEngineController {
     }
     
     /**
-     * Elementを属性値を元に正規表現で検索して選択する. すでに選択済みのElementがある場合はその内部から検索する.
+     * Elementを属性値を元に正規表現で検索して選択する. すでに選択済みのElementがある場合はその内部から検索する。
+     *
      * @param attributeName 属性名
      * @param valueCompareRegex 属性値と比較する正規表現
      */
@@ -194,7 +208,8 @@ public class WebEngineController {
     }
     
     /**
-     * 再帰的に子要素を取得する.
+     * 再帰的に子要素を取得する。
+     *
      * @param targetNode
      * @return ArrayList<Node>
      */
@@ -215,7 +230,8 @@ public class WebEngineController {
     }
 
     /**
-     * すべての子要素を取得する.
+     * すべての子要素を取得する。
+     *
      * @return Element[]
      */
     public Element[] getAllChildElements() {
@@ -230,7 +246,8 @@ public class WebEngineController {
     }
 
     /**
-     * JavaScriptを利用して選択されている最初のElementにフォーカスする.
+     * JavaScriptを利用して選択されている最初のElementにフォーカスする。
+     *
      */
     public void focus() {
         if (this.isSelectedElement()) {
@@ -239,7 +256,8 @@ public class WebEngineController {
     }
     
     /**
-     * JavaScriptを利用してElementをフォーカスする.
+     * JavaScriptを利用してElementをフォーカスする。
+     *
      * @param webEngine WebEngineオブジェクト
      * @param element 対象
      */
@@ -259,7 +277,8 @@ public class WebEngineController {
     }
     
     /**
-     * JavaScriptを利用して選択されている最初のElementをクリックする.
+     * JavaScriptを利用して選択されている最初のElementをクリックする。
+     *
      */
     public void click() {
         if (this.isSelectedElement()) {
@@ -268,7 +287,8 @@ public class WebEngineController {
     }
     
     /**
-     * JavaScriptを利用してElementをクリックする.
+     * JavaScriptを利用してElementをクリックする。
+     *
      * @param webEngine WebEngineオブジェクト
      * @param element クリック対象
      */
@@ -288,7 +308,8 @@ public class WebEngineController {
     }
 
     /**
-     * 選択されている最初のSELECTタグ内の選択オプションの値を取得する.
+     * 選択されている最初のSELECTタグ内の選択オプションの値を取得する。
+     *
      * @return 選択オプションの値
      */
     public String getSelectedOptionValue() {
@@ -299,7 +320,8 @@ public class WebEngineController {
     }
     
     /**
-     * SELECTタグ内の選択オプションの値を取得する.
+     * SELECTタグ内の選択オプションの値を取得する。
+     *
      * @param webEngine WebEngineオブジェクト
      * @param selectElement 対象のSELECTタグElement
      * @return 選択オプションの値
@@ -320,7 +342,8 @@ public class WebEngineController {
     }
     
     /**
-     * JavaScriptを利用して選択されている最初のOPTIONタグElementを選択状態にする.
+     * JavaScriptを利用して選択されている最初のOPTIONタグElementを選択状態にする。
+     *
      */
     public void setOptionElementSelect() {
         if (this.isSelectedElement() && this.getSelectedElement().getTagName().toUpperCase().equals("OPTION")) {
@@ -329,7 +352,8 @@ public class WebEngineController {
     }
     
     /**
-     * JavaScriptを利用してSELECTタグ内のオプションElementを選択状態にする.
+     * JavaScriptを利用してSELECTタグ内のオプションElementを選択状態にする。
+     *
      * @param webEngine WebEngineオブジェクト
      * @param optionElement 選択対象のOPTIONタグElement
      */
@@ -346,6 +370,4 @@ public class WebEngineController {
         script.append("')[0].selected = true;");
         webEngine.executeScript(script.toString());
         optionElement.setAttribute("class", backupClass);
-    }
-    
-}
+    }}

@@ -8,21 +8,24 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 
 /**
- * フォーカスした際にIMEをOFFにするボタン.
+ * フォーカスした際にIMEをOFFにするボタン。
+ *
  * @author hiro
  *
  */
 public class IMEOffButton extends Button {
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      */
     public IMEOffButton() {
         this("", null);
     }
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param text
      */
     public IMEOffButton(String text) {
@@ -30,7 +33,8 @@ public class IMEOffButton extends Button {
     }
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param text
      * @param graphic
      */

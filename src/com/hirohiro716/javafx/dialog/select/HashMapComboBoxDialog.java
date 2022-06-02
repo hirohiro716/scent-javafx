@@ -20,7 +20,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 /**
- * コンボボックス入力ダイアログを表示するクラス.
+ * コンボボックス入力ダイアログを表示するクラス。
+ *
  * @author hiro
  * @param <K> 連想配列のキー型
  * @param <V> 連想配列の値型
@@ -123,7 +124,8 @@ public class HashMapComboBoxDialog<K, V> extends AbstractDialog<K> {
     }
     
     /**
-     * メッセージ内容をセットする.
+     * メッセージ内容をセットする。
+     *
      * @param message
      */
     public void setMessage(String message) {
@@ -135,7 +137,8 @@ public class HashMapComboBoxDialog<K, V> extends AbstractDialog<K> {
     }
 
     /**
-     * メッセージに代わるNodeをセットする.
+     * メッセージに代わるNodeをセットする。
+     *
      * @param node
      */
     public void setMessageNode(Node node) {
@@ -146,7 +149,8 @@ public class HashMapComboBoxDialog<K, V> extends AbstractDialog<K> {
     private HashMap<K, V> hashMap;
 
     /**
-     * コンボボックスのアイテムを指定する.
+     * コンボボックスのアイテムを指定する。
+     *
      * @param hashMap
      */
     public void setHashMap(HashMap<K, V> hashMap) {
@@ -154,7 +158,8 @@ public class HashMapComboBoxDialog<K, V> extends AbstractDialog<K> {
     }
 
     /**
-     * コンボボックスのアイテムを取得する.
+     * コンボボックスのアイテムを取得する。
+     *
      * @return items
      */
     public HashMap<K, V> getItems() {
@@ -164,7 +169,8 @@ public class HashMapComboBoxDialog<K, V> extends AbstractDialog<K> {
     private K defaultValue;
 
     /**
-     * コンボボックスの初期値をセットする.
+     * コンボボックスの初期値をセットする。
+     *
      * @param defaultValue
      */
     public void setDefaultValue(K defaultValue) {
@@ -174,7 +180,8 @@ public class HashMapComboBoxDialog<K, V> extends AbstractDialog<K> {
     private boolean isCancelable = true;
 
     /**
-     * キャンセル可能かを設定する. 初期値はtrue.
+     * キャンセル可能かを設定する. 初期値はtrue。
+     *
      * @param isCancelable
      */
     public void setCancelable(boolean isCancelable) {
@@ -182,7 +189,8 @@ public class HashMapComboBoxDialog<K, V> extends AbstractDialog<K> {
     }
 
     /**
-     * キャンセル可能かを取得する.
+     * キャンセル可能かを取得する。
+     *
      * @return キャンセル可能か
      */
     public boolean isCancelable() {

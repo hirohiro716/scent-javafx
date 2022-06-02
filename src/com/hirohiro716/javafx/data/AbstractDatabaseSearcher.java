@@ -30,30 +30,35 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 /**
- * 情報をデータベースから検索するフォームの抽象クラス.
+ * 情報をデータベースから検索するフォームの抽象クラス。
+ *
  * @author hiro
  * @param <T> 情報の検索処理を行うクラス
  */
 public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     
     /**
-     * 検索結果を表示するDynamicTableViewを取得する.
+     * 検索結果を表示するDynamicTableViewを取得する。
+     *
      * @return DynamicTableView
      */
     protected abstract DynamicTableView getDynamicTableView();
     
     /**
-     * 検索を実行する.
+     * 検索を実行する。
+     *
      */
     protected abstract void search();
     
     /**
-     * 詳細検索を実行する.
+     * 詳細検索を実行する。
+     *
      */
     protected abstract void searchDetail();
     
     /**
-     * 検索処理を行うコールバックメソッド. searchingWithWaitViewメソッドから自動的に呼び出される.
+     * 検索処理を行うコールバックメソッド. searchingWithWaitViewメソッドから自動的に呼び出される。
+     *
      * @param afterSQL WHERE句の後に付与するオプションSQL
      * @param whereSets 検索条件(複数指定するとOR検索になる)
      * @return 検索結果
@@ -64,7 +69,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * 検索を待機画面を表示しながら実行する.
+     * 検索を待機画面を表示しながら実行する。
+     *
      * @param afterSQL WHERE句の後に付与するオプションSQL
      * @param whereSets 検索条件(複数指定するとOR検索になる)
      */
@@ -102,7 +108,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
     
     /**
-     * 検索待機ダイアログが表示された後の処理を行う.
+     * 検索待機ダイアログが表示された後の処理を行う。
+     *
      * @param dialog 表示された検索待機ダイアログ
      */
     protected abstract void afterDialogShowing(AbstractDialog<?> dialog);
@@ -115,7 +122,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     };
 
     /**
-     * 検索を実行するActionEventHandlerを取得する.
+     * 検索を実行するActionEventHandlerを取得する。
+     *
      * @return ActionEventHandler
      */
     public EventHandler<ActionEvent> getSearchExecuteActionEventHandler() {
@@ -130,7 +138,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     };
 
     /**
-     * 詳細検索を実行するActionEventHandlerを取得する.
+     * 詳細検索を実行するActionEventHandlerを取得する。
+     *
      * @return ActionEventHandler
      */
     public EventHandler<ActionEvent> getSearchDetailExecuteActionEventHandler() {
@@ -138,7 +147,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * 検索条件と検索結果をクリアする.
+     * 検索条件と検索結果をクリアする。
+     *
      */
     protected abstract void clear();
 
@@ -150,7 +160,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     };
 
     /**
-     * 検索をクリアするActionEventHandlerを取得する.
+     * 検索をクリアするActionEventHandlerを取得する。
+     *
      * @return ActionEventHandler
      */
     public EventHandler<ActionEvent> getClearActionEventHandler() {
@@ -163,7 +174,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     private boolean isSelectMode = false;
 
     /**
-     * 選択モードになっている場合はTrueを返す.
+     * 選択モードになっている場合はTrueを返す。
+     *
      * @return isSelectMode
      */
     protected boolean isSelectMode() {
@@ -173,7 +185,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     private SelectCallback selectCallback;
 
     /**
-     * 選択モードで検索画面を表示する.
+     * 選択モードで検索画面を表示する。
+     *
      * @param selectCallback 選択後の処理
      * @throws Exception
      */
@@ -184,7 +197,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * 選択モードで検索画面を表示する.
+     * 選択モードで検索画面を表示する。
+     *
      * @param selectCallback 選択後の処理
      * @param owner 親Stage
      * @throws Exception
@@ -196,13 +210,15 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * 検索結果内の行を選択するインターフェース.
+     * 検索結果内の行を選択するインターフェース。
+     *
      * @author hiro
      */
     public static interface SelectCallback {
 
         /**
-         * 実際に検索結果内の行が選択された場合の処理.
+         * 実際に検索結果内の行が選択された場合の処理。
+         *
          * @param selectedRow
          */
         public void select(RudeArray selectedRow);
@@ -210,7 +226,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * 選択行を指定する処理. この処理を行うと本画面も閉じる.
+     * 選択行を指定する処理. この処理を行うと本画面も閉じる。
+     *
      */
     protected void selectRow() {
         if (this.isSelectMode == false) {
@@ -224,7 +241,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * 選択されている行を取得する. 未選択の場合はnullを返す.
+     * 選択されている行を取得する. 未選択の場合はnullを返す。
+     *
      * @return 現在選択されている行データ
      */
     protected abstract RudeArray getSelectedRow();
@@ -235,7 +253,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     private WhereSet[] whereSetDetails;
 
     /**
-     * 詳細検索で作成した条件を内部にセットする.
+     * 詳細検索で作成した条件を内部にセットする。
+     *
      * @param whereSets
      */
     protected void setWhereSetDetails(WhereSet[] whereSets) {
@@ -243,7 +262,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * 前回詳細検索で作成した条件を取得する.
+     * 前回詳細検索で作成した条件を取得する。
+     *
      * @return WhereSet配列
      */
     protected WhereSet[] getWhereSetDetails() {
@@ -251,12 +271,14 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * 検索完了後の後処理を行う.
+     * 検索完了後の後処理を行う。
+     *
      */
     protected abstract void afterSearchProcessing();
 
     /**
-     * 新しいデータを追加する.
+     * 新しいデータを追加する。
+     *
      */
     protected abstract void add();
 
@@ -268,7 +290,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     };
 
     /**
-     * 新しいデータを追加するActionEventHandlerを取得する.
+     * 新しいデータを追加するActionEventHandlerを取得する。
+     *
      * @return ActionEventHandler
      */
     public EventHandler<ActionEvent> getAddActionEventHandler() {
@@ -276,7 +299,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * 検索結果の選択されているデータを編集する.
+     * 検索結果の選択されているデータを編集する。
+     *
      */
     protected abstract void edit();
 
@@ -288,7 +312,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     };
 
     /**
-     * 選択されているデータを編集するActionEventHandlerを取得する.
+     * 選択されているデータを編集するActionEventHandlerを取得する。
+     *
      * @return ActionEventHandler
      */
     public EventHandler<ActionEvent> getEditActionEventHandler() {
@@ -303,7 +328,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     };
 
     /**
-     * 選択されているデータを選択するActionEventHandlerを取得する.
+     * 選択されているデータを選択するActionEventHandlerを取得する。
+     *
      * @return ActionEventHandler
      */
     public EventHandler<ActionEvent> getSelectActionEventHandler() {
@@ -311,7 +337,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * 検索結果の選択されているデータを削除する.
+     * 検索結果の選択されているデータを削除する。
+     *
      */
     protected abstract void delete();
 
@@ -338,7 +365,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     };
 
     /**
-     * 選択されているデータを削除するActionEventHandlerを取得する.
+     * 選択されているデータを削除するActionEventHandlerを取得する。
+     *
      * @return ActionEventHandler
      */
     public EventHandler<ActionEvent> getDeleteActionEventHandler() {
@@ -346,7 +374,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * Nodeに対してショートカットキーイベントをセットする.
+     * Nodeに対してショートカットキーイベントをセットする。
+     *
      * @param nodes
      */
     protected void setShortcutKeyEventHandler(Node... nodes) {
@@ -392,13 +421,15 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     };
 
     /**
-     * 検索用フォーム表示前の準備処理. showまたはshowAndWaitメソッドを呼び出した際に自動実行される.
+     * 検索用フォーム表示前の準備処理. showまたはshowAndWaitメソッドを呼び出した際に自動実行される。
+     *
      * @throws Exception
      */
     protected abstract void beforeShowPrepare() throws Exception;
 
     /**
-     * 初期表示されるデータをセットする.
+     * 初期表示されるデータをセットする。
+     *
      * @param rows
      */
     public void setDefaultRows(RudeArray[] rows) {
@@ -416,7 +447,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * 検索用フォームを表示する.
+     * 検索用フォームを表示する。
+     *
      * @throws Exception
      */
     public void show() throws Exception {
@@ -424,7 +456,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * 検索用フォームを表示する.
+     * 検索用フォームを表示する。
+     *
      * @param owner 親Stage
      * @throws Exception
      */
@@ -435,7 +468,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * 検索用フォームを表示し閉じるまで待機する.
+     * 検索用フォームを表示し閉じるまで待機する。
+     *
      * @throws Exception
      */
     public void showAndWait() throws Exception {
@@ -443,7 +477,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * 検索用フォームを表示し閉じるまで待機する.
+     * 検索用フォームを表示し閉じるまで待機する。
+     *
      * @param owner 親Stage
      * @throws Exception
      */
@@ -456,7 +491,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     private StageBuilder stageBuilder;
 
     /**
-     * Stageを取得する.
+     * Stageを取得する。
+     *
      * @return Stage
      */
     public Stage getStage() {
@@ -464,7 +500,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * Stageを閉じる事ができるかどうかをセットする.
+     * Stageを閉じる事ができるかどうかをセットする。
+     *
      * @param isCloseable
      */
     public void setCloseable(boolean isCloseable) {
@@ -472,7 +509,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * フォームを操作不能にする.
+     * フォームを操作不能にする。
+     *
      * @param isDisable
      */
     public void setDisable(boolean isDisable) {
@@ -481,7 +519,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * FXMLをセットする.
+     * FXMLをセットする。
+     *
      * @param fxmlURL
      * @throws IOException
      */
@@ -492,7 +531,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     private T bindTableInstance;
 
     /**
-     * データ処理を行うインスタンスを取得する.
+     * データ処理を行うインスタンスを取得する。
+     *
      * @return データ処理を行うインスタンス
      */
     public T getBindTableInstance() {
@@ -500,7 +540,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * データ処理を行うインスタンスをセットする.
+     * データ処理を行うインスタンスをセットする。
+     *
      * @param bindTableInstance
      */
     public void setBindTableInstance(T bindTableInstance) {
@@ -508,7 +549,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
     
     /**
-     * ウインドウが表示されている画面を取得する.
+     * ウインドウが表示されている画面を取得する。
+     *
      * @return Screen
      */
     public Screen getDisplayedScreen() {
@@ -516,7 +558,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
     
     /**
-     * 現在の画面サイズ・位置情報からLayoutSettingを作成する.
+     * 現在の画面サイズ・位置情報からLayoutSettingを作成する。
+     *
      * @return LayoutSetting
      */
     protected LayoutSetting createWindowLayoutSetting() {
@@ -527,7 +570,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
 
     /**
-     * 画面サイズ・位置情報にLayoutSettingを適用する.
+     * 画面サイズ・位置情報にLayoutSettingを適用する。
+     *
      * @param layoutSetting
      */
     protected void applyWindowLayoutSetting(LayoutSetting layoutSetting) {
@@ -535,7 +579,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
     
     /**
-     * 画面サイズ・位置情報にLayoutSettingを適用する.
+     * 画面サイズ・位置情報にLayoutSettingを適用する。
+     *
      * @param layoutSetting
      * @param screen 表示対象画面
      */
@@ -552,7 +597,8 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
     }
     
     /**
-     * Searcherを閉じる.
+     * Searcherを閉じる。
+     *
      */
     public void close() {
         try {

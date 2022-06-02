@@ -11,13 +11,15 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
 /**
- * Paneを便利に扱う静的メソッドクラス.
+ * Paneを便利に扱う静的メソッドクラス。
+ *
  * @author hiro
  */
 public class PaneHelper {
 
     /**
-     * Pane内の指定された型のjavafxオブジェクトを取得する.
+     * Pane内の指定された型のjavafxオブジェクトを取得する。
+     *
      * @param <T> 検索するクラス
      * @param pane 検索対象
      * @param type 検索する型
@@ -29,7 +31,8 @@ public class PaneHelper {
     }
 
     /**
-     * Pane内の指定された型のjavafxオブジェクトを取得する.
+     * Pane内の指定された型のjavafxオブジェクトを取得する。
+     *
      * @param <T> 検索するクラス
      * @param pane 検索対象
      * @param type 検索する型
@@ -54,7 +57,8 @@ public class PaneHelper {
     }
 
     /**
-     * Pane上のフォーカス移動をEnterキーで行えるようにする.
+     * Pane上のフォーカス移動をEnterキーで行えるようにする。
+     *
      * @param <T> javafx.scene.layout.Paneを継承したクラスオブジェクト
      * @param pane 対象Pane
      */
@@ -125,7 +129,8 @@ public class PaneHelper {
     }
 
     /**
-     * ScrollPaneやTabPaneなどの中身をlookupAllする場合はこれをしないとできない.
+     * ScrollPaneやTabPaneなどの中身をlookupAllする場合はこれをしないとできない。
+     *
      * @param pane 対象Pane
      */
     private static void applyCss(Pane pane) {

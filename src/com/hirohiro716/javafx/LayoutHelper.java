@@ -7,13 +7,15 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
- * JavaFXのレイアウトを補助する.
+ * JavaFXのレイアウトを補助する。
+ *
  * @author hiro
  */
 public class LayoutHelper {
 
     /**
-     * AnchorPaneのアンカーを一括でセットする.
+     * AnchorPaneのアンカーを一括でセットする。
+     *
      * @param node 対象
      * @param top Topのオフセット
      * @param right Rightのオフセット
@@ -28,7 +30,8 @@ public class LayoutHelper {
     }
 
     /**
-     * AnchorPaneのアンカーを一括でセットする.
+     * AnchorPaneのアンカーを一括でセットする。
+     *
      * @param node 対象
      * @param top Topのオフセット
      * @param right Rightのオフセット
@@ -43,7 +46,8 @@ public class LayoutHelper {
     }
     
     /**
-     * 文字列の描画サイズを計算する.
+     * 文字列の描画サイズを計算する。
+     *
      * @param string 対象文字列
      * @param fontFamilyName フォントファミリー
      * @param fontSize フォントサイズ
@@ -57,7 +61,8 @@ public class LayoutHelper {
     }
 
     /**
-     * 幅と高さに収まるフォントを作成する.
+     * 幅と高さに収まるフォントを作成する。
+     *
      * @param string 文字列
      * @param width 幅(point)
      * @param height 高さ(point)
@@ -77,7 +82,8 @@ public class LayoutHelper {
     }
 
     /**
-     * テキストの自動折り返しをしつつ幅と高さに収まるフォントを作成する.
+     * テキストの自動折り返しをしつつ幅と高さに収まるフォントを作成する。
+     *
      * @param string 文字列
      * @param width 幅(point)
      * @param height 高さ(point)

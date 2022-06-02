@@ -14,7 +14,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 /**
- * コントロールを常に表示するセル抽象クラス.
+ * コントロールを常に表示するセル抽象クラス。
+ *
  * @author hiro
  *
  * @param <S> TableViewの型
@@ -108,7 +109,8 @@ public abstract class AbstractLiveControlTableCell<S, T> extends TableCell<S, T>
     }
     
     /**
-     * TableViewとTableRowとTableCellがすべて編集可能かどうかを取得する.
+     * TableViewとTableRowとTableCellがすべて編集可能かどうかを取得する。
+     *
      * @return 結果
      */
     public boolean isEditableAll() {
@@ -126,13 +128,15 @@ public abstract class AbstractLiveControlTableCell<S, T> extends TableCell<S, T>
     }
     
     /**
-     * セルが編集可能かどうかの設定値が変更された際の処理.
+     * セルが編集可能かどうかの設定値が変更された際の処理。
+     *
      * @param isEditable 
      */
     public abstract void processOfSetEditable(boolean isEditable);
 
     /**
-     * 内部のコントロールでTabかEnterが押された場合にセルを更新する処理とフォーカス移動を行うKeyEventを取得する.
+     * 内部のコントロールでTabかEnterが押された場合にセルを更新する処理とフォーカス移動を行うKeyEventを取得する。
+     *
      * @return KeyPressedEvent
      */
     protected EventHandler<KeyEvent> getKeyPressedEventAtControl() {
@@ -166,7 +170,8 @@ public abstract class AbstractLiveControlTableCell<S, T> extends TableCell<S, T>
     };
 
     /**
-     * 内部のコントロール直接クリックした際に行やセルを選択状態にするMouseEventを取得する.
+     * 内部のコントロール直接クリックした際に行やセルを選択状態にするMouseEventを取得する。
+     *
      * @return MousePressedEvent
      */
     protected EventHandler<MouseEvent> getMousePressedEventAtControl() {
@@ -190,18 +195,21 @@ public abstract class AbstractLiveControlTableCell<S, T> extends TableCell<S, T>
     };
 
     /**
-     * 内部に配置するコントロールを生成するコールバック関数. スーパークラスのコンストラクタで自動的に実行される.
+     * 内部に配置するコントロールを生成するコールバック関数. スーパークラスのコンストラクタで自動的に実行される。
+     *
      */
     protected abstract void createControlCallback();
 
     /**
-     * 内部のコントロールを取得する.
+     * 内部のコントロールを取得する。
+     *
      * @return Control
      */
     public abstract Control getControl();
 
     /**
-     * 内部のコントロールにフォーカスする.
+     * 内部のコントロールにフォーカスする。
+     *
      */
     protected void focusControl() {
         if (this.getTableView().getSelectionModel().isCellSelectionEnabled() == false) {
@@ -226,7 +234,8 @@ public abstract class AbstractLiveControlTableCell<S, T> extends TableCell<S, T>
     }
     
     /**
-     * 内部にコントロールを表示する.
+     * 内部にコントロールを表示する。
+     *
      * @param item
      * @param isEmpty
      */
@@ -247,7 +256,8 @@ public abstract class AbstractLiveControlTableCell<S, T> extends TableCell<S, T>
     }
 
     /**
-     * 内部のコントロールからセルに対して値を入れる処理.
+     * 内部のコントロールからセルに対して値を入れる処理。
+     *
      */
     public abstract void commitEdit();
 

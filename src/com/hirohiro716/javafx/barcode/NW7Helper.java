@@ -5,13 +5,15 @@ import com.hirohiro716.number.CalculationHelper;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
- * JavaFXでバーコードを生成するクラス.
+ * JavaFXでバーコードを生成するクラス。
+ *
  * @author hiro
  */
 public class NW7Helper extends com.hirohiro716.barcode.NW7Helper {
 
     /**
-     * NW7バーコードを描画します.
+     * NW7バーコードを描画します。
+     *
      * @param barcode バーコード
      * @param width 描画幅
      * @param height 描画高さ

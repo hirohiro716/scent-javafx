@@ -11,7 +11,8 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
 /**
- * 移動やリサイズ機能をつけたLabel.
+ * 移動やリサイズ機能をつけたLabel。
+ *
  * @author hiro
  */
 public class MovableLabel extends Label {
@@ -197,6 +198,4 @@ public class MovableLabel extends Label {
     	RESIZE_RIGHT,
     	RESIZE_BOTTOM,
     	RESIZE_LEFT,
-    }
-    
-}
+    }}

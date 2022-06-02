@@ -57,7 +57,8 @@ import javafx.scene.layout.VBox;
 public class EditableTable<S> extends AnchorPane {
 
     /**
-     * カラムの種類.
+     * カラムの種類。
+     *
      * @author hiro
      */
     @SuppressWarnings("javadoc")
@@ -74,27 +75,32 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * Header用のScrollPane.
+     * Header用のScrollPane。
+     *
      */
     private ScrollPane headerScrollPane = new ScrollPane();
     
     /**
-     * Header用のHBox.
+     * Header用のHBox。
+     *
      */
     private HBox headerHBox = new HBox();
 
     /**
-     * Rowを追加していくためのVBox.
+     * Rowを追加していくためのVBox。
+     *
      */
     private VBox rowsVBox = new VBox();
     
     /**
-     * itemとRowのHBoxを関連付ける連想配列.
+     * itemとRowのHBoxを関連付ける連想配列。
+     *
      */
     private HashMap<S, HBox> rowHBoxes = new HashMap<>();
     
     /**
-     * 選択状態の行HBoxを表す擬似CSSクラス.
+     * 選択状態の行HBoxを表す擬似CSSクラス。
+     *
      */
     private PseudoClass selectedPseudoClass = new PseudoClass() {
         @Override
@@ -106,7 +112,8 @@ public class EditableTable<S> extends AnchorPane {
     private String selectedRowColor = null;
     
     /**
-     * 選択状態の行の背景色を指定する.
+     * 選択状態の行の背景色を指定する。
+     *
      * @param color CSSで使用可能な背景色
      */
     public void setSelectedRowColor(String color) {
@@ -114,7 +121,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      */
     public EditableTable() {
         EditableTable<S> table = this;
@@ -249,7 +257,8 @@ public class EditableTable<S> extends AnchorPane {
     private CantMoveCallback<S> cantMoveUpAtFirstRowCallback = null;
     
     /**
-     * 最初の行でCtrl+↑が押された場合に発生するイベントをセットする.
+     * 最初の行でCtrl+↑が押された場合に発生するイベントをセットする。
+     *
      * @param cantMoveCallback
      */
     public void setCantMoveUpAtFirstRowCallback(CantMoveCallback<S> cantMoveCallback) {
@@ -259,7 +268,8 @@ public class EditableTable<S> extends AnchorPane {
     private CantMoveCallback<S> cantMoveDownAtLastRowCallback = null;
     
     /**
-     * 最後の行でCtrl+↓が押された場合に発生するイベントをセットする.
+     * 最後の行でCtrl+↓が押された場合に発生するイベントをセットする。
+     *
      * @param cantMoveCallback
      */
     public void setCantMoveDownAtLastRowCallback(CantMoveCallback<S> cantMoveCallback) {
@@ -267,12 +277,14 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * RowをスクロールさせるためのScrollPane.
+     * RowをスクロールさせるためのScrollPane。
+     *
      */
     private ScrollToNodePane rowsScrollPane = new ScrollToNodePane();
     
     /**
-     * RowをスクロールしているScrollPaneを取得する.
+     * RowをスクロールしているScrollPaneを取得する。
+     *
      * @return ScrollToNodePane
      */
     public ScrollToNodePane getRowsScrollPane() {
@@ -282,7 +294,8 @@ public class EditableTable<S> extends AnchorPane {
     private List<S> items = new ArrayList<>();
     
     /**
-     * 読み取り専用ですべてのitemを取得する.
+     * 読み取り専用ですべてのitemを取得する。
+     *
      * @return 読み取り専用のList<S>
      */
     public List<S> getItems() {
@@ -290,7 +303,8 @@ public class EditableTable<S> extends AnchorPane {
     }
 
     /**
-     * Rowを追加する.
+     * Rowを追加する。
+     *
      * @param item
      */
     public void addRow(S item) {
@@ -298,7 +312,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * Rowを追加する.
+     * Rowを追加する。
+     *
      * @param item
      * @param index
      */
@@ -316,7 +331,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * Rowを追加する.
+     * Rowを追加する。
+     *
      * @param items
      */
     public void addRows(S[] items) {
@@ -326,7 +342,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * Rowを追加する.
+     * Rowを追加する。
+     *
      * @param items
      */
     public void addRows(List<S> items) {
@@ -336,7 +353,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * 最初の行かどうかを判定する.
+     * 最初の行かどうかを判定する。
+     *
      * @param item
      * @return 結果
      */
@@ -345,7 +363,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * 最後の行かどうかを判定する.
+     * 最後の行かどうかを判定する。
+     *
      * @param item
      * @return 結果
      */
@@ -354,7 +373,8 @@ public class EditableTable<S> extends AnchorPane {
     }
 
     /**
-     * Rowを削除する.
+     * Rowを削除する。
+     *
      * @param item
      */
     public void removeRow(S item) {
@@ -367,7 +387,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * Rowをすべて削除する.
+     * Rowをすべて削除する。
+     *
      */
     public void clearRows() {
         this.rowsVBox.getChildren().clear();
@@ -378,7 +399,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * Rowの値をitemから再読み込みする.
+     * Rowの値をitemから再読み込みする。
+     *
      * @param item
      */
     @SuppressWarnings("unchecked")
@@ -446,7 +468,8 @@ public class EditableTable<S> extends AnchorPane {
     private SimpleDoubleProperty rowTopBottomPaddingProperty = new SimpleDoubleProperty(8);
     
     /**
-     * 行の上下余白を取得する.
+     * 行の上下余白を取得する。
+     *
      * @return TOP & Bottom padding
      */
     public double getRowTopBottomPadding() {
@@ -454,7 +477,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * 行の上下余白をセットする.
+     * 行の上下余白をセットする。
+     *
      * @param rowTopBottomPadding
      */
     public void setRowTopBottomPadding(double rowTopBottomPadding) {
@@ -470,7 +494,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * Rowを初期化する.
+     * Rowを初期化する。
+     *
      * @param item
      */
     @SuppressWarnings("unchecked")
@@ -633,7 +658,8 @@ public class EditableTable<S> extends AnchorPane {
     private SimpleIntegerProperty loadRowsCountProperty = new SimpleIntegerProperty(20);
     
     /**
-     * Rowを更に読み込む際の行数(初期値は20).
+     * Rowを更に読み込む際の行数(初期値は20)。
+     *
      * @return 読み込み行数
      */
     public int getLoadRowsCount() {
@@ -641,7 +667,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * Rowを更に読み込む際の行数をセットする(初期値は20).
+     * Rowを更に読み込む際の行数をセットする(初期値は20)。
+     *
      * @param loadRowsCount 読み込み行数
      */
     public void setLoadRowsCount(int loadRowsCount) {
@@ -651,7 +678,8 @@ public class EditableTable<S> extends AnchorPane {
     private int visibleRowsCount = 0;
     
     /**
-     * すでに表示されている行数を取得する.
+     * すでに表示されている行数を取得する。
+     *
      * @return 表示されている行数
      */
     public int getVisibleRowsCount() {
@@ -659,7 +687,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * Rowを更に読み込む.
+     * Rowを更に読み込む。
+     *
      */
     public void loadMoreRows() {
         for (int index = this.visibleRowsCount; index < this.visibleRowsCount + this.loadRowsCountProperty.get(); index++) {
@@ -680,7 +709,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * コントロールに関連づいているitemを取得する.
+     * コントロールに関連づいているitemを取得する。
+     *
      * @param control 対象Control
      * @return item(取得できない場合はnull)
      */
@@ -695,7 +725,8 @@ public class EditableTable<S> extends AnchorPane {
     }
 
     /**
-     * itemとカラムIDから内部のコントロールを取得する.
+     * itemとカラムIDから内部のコントロールを取得する。
+     *
      * @param <T>
      * @param item 対象のitem
      * @param id 対象のカラムID
@@ -717,7 +748,8 @@ public class EditableTable<S> extends AnchorPane {
     private HashMap<S, Boolean> isDisabledRowControlFocusTraversables = new HashMap<>();
     
     /**
-     * 指定された行のFocusTraversableを保存しておく.
+     * 指定された行のFocusTraversableを保存しておく。
+     *
      * @param item
      */
     private void disableRowControlFocusTraversable(S item) {
@@ -739,7 +771,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * 指定された行のFocusTraversableを保存している値に戻す.
+     * 指定された行のFocusTraversableを保存している値に戻す。
+     *
      * @param item
      */
     private void rollbackRowControlFocusTraversable(S item) {
@@ -762,7 +795,8 @@ public class EditableTable<S> extends AnchorPane {
     private HashMap<String, Label> columnHeaderLabels = new HashMap<>();
     
     /**
-     * ColumnのHeaderに配置されているLabelコントロールを取得する.
+     * ColumnのHeaderに配置されているLabelコントロールを取得する。
+     *
      * @param id 対象のカラムID
      * @return Label(存在しない場合はnull)
      */
@@ -773,7 +807,8 @@ public class EditableTable<S> extends AnchorPane {
     private SimpleObjectProperty<S> selectedItemProperty = new SimpleObjectProperty<>();
     
     /**
-     * 現在選択されているitemプロパティ.
+     * 現在選択されているitemプロパティ。
+     *
      * @return selectedItemProperty
      */
     public ReadOnlyProperty<S> selectedItemProperty() {
@@ -781,7 +816,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * 現在選択されているitemを取得する.
+     * 現在選択されているitemを取得する。
+     *
      * @return selectedItem
      */
     public S getSelectedItem() {
@@ -789,7 +825,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * 現在選択されているitemをセットする.
+     * 現在選択されているitemをセットする。
+     *
      * @param selectedItem
      */
     public void setSelectedItem(S selectedItem) {
@@ -812,7 +849,8 @@ public class EditableTable<S> extends AnchorPane {
     private SimpleObjectProperty<Control> focusedControlProperty = new SimpleObjectProperty<>();
     
     /**
-     * 現在フォーカスされているControlプロパティ.
+     * 現在フォーカスされているControlプロパティ。
+     *
      * @return focusedControlProperty
      */
     public ReadOnlyProperty<Control> focusedControlProperty() {
@@ -820,7 +858,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * 現在フォーカスされているControlを取得する.
+     * 現在フォーカスされているControlを取得する。
+     *
      * @param <T> 
      * @return フォーカスされているコントロール
      * @throws ClassCastException 取得しようとしているclassと内部コントロールのclassが不一致の場合
@@ -831,12 +870,14 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * ColumnIDのList.
+     * ColumnIDのList。
+     *
      */
     private List<String> columnIds = new ArrayList<>();
     
     /**
-     * 追加済みのColumnIDの読み取り専用Listを取得する.
+     * 追加済みのColumnIDの読み取り専用Listを取得する。
+     *
      * @return 読み取り専用のColumnIDリスト
      */
     public List<String> getColumnIds() {
@@ -844,17 +885,20 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * 各Column種類の連想配列(キーはID).
+     * 各Column種類の連想配列(キーはID)。
+     *
      */
     private HashMap<String, ColumnType> columnTypes = new HashMap<>();
     
     /**
-     * 各Columnのコントロールを生成するFactoryの連想配列(キーはID).
+     * 各Columnのコントロールを生成するFactoryの連想配列(キーはID)。
+     *
      */
     private HashMap<String, ControlFactory<S, ?>> controlFactories = new HashMap<>();
     
     /**
-     * カラムを追加する.
+     * カラムを追加する。
+     *
      * @param id 任意のカラムID
      * @param text ヘッダーテキスト
      * @param columnType 種類
@@ -904,7 +948,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * Labelを内包するセルを追加する.
+     * Labelを内包するセルを追加する。
+     *
      * @param <T> コントロールの型
      * @param id 任意のカラムID
      * @param text ヘッダーテキスト
@@ -915,7 +960,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * TextFieldを内包するセルを追加する.
+     * TextFieldを内包するセルを追加する。
+     *
      * @param <T> コントロールの型
      * @param id 任意のカラムID
      * @param text ヘッダーテキスト
@@ -926,7 +972,8 @@ public class EditableTable<S> extends AnchorPane {
     }
 
     /**
-     * TextAreaを内包するセルを追加する.
+     * TextAreaを内包するセルを追加する。
+     *
      * @param <T> コントロールの型
      * @param id 任意のカラムID
      * @param text ヘッダーテキスト
@@ -937,7 +984,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * PasswordFieldを内包するセルを追加する.
+     * PasswordFieldを内包するセルを追加する。
+     *
      * @param <T> コントロールの型
      * @param id 任意のカラムID
      * @param text ヘッダーテキスト
@@ -948,7 +996,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * ComboBoxを内包するセルを追加する.
+     * ComboBoxを内包するセルを追加する。
+     *
      * @param <T> コントロールの型
      * @param <V> コンボボックスの値型
      * @param id 任意のカラムID
@@ -960,7 +1009,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * DatePickerを内包するセルを追加する.
+     * DatePickerを内包するセルを追加する。
+     *
      * @param <T> コントロールの型
      * @param id 任意のカラムID
      * @param text ヘッダーテキスト
@@ -971,7 +1021,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * CheckBoxを内包するセルを追加する.
+     * CheckBoxを内包するセルを追加する。
+     *
      * @param <T> コントロールの型
      * @param id 任意のカラムID
      * @param text ヘッダーテキスト
@@ -982,7 +1033,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * Buttonを内包するセルを追加する.
+     * Buttonを内包するセルを追加する。
+     *
      * @param <T> コントロールの型
      * @param id 任意のカラムID
      * @param text ヘッダーテキスト
@@ -993,7 +1045,8 @@ public class EditableTable<S> extends AnchorPane {
     }
 
     /**
-     * Hyperlinkを内包するセルを追加する.
+     * Hyperlinkを内包するセルを追加する。
+     *
      * @param <T> コントロールの型
      * @param id 任意のカラムID
      * @param text ヘッダーテキスト
@@ -1004,7 +1057,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * ヘッダーLabelを生成する.
+     * ヘッダーLabelを生成する。
+     *
      * @param text ヘッダーテキスト
      * @return Label
      */
@@ -1022,7 +1076,8 @@ public class EditableTable<S> extends AnchorPane {
     private double headerResizeStartX;
 
     /**
-     * ヘッダーLabelのりサイズ機能を備えたSeparatorを生成する.
+     * ヘッダーLabelのりサイズ機能を備えたSeparatorを生成する。
+     *
      * @param columnHeaderLabel
      * @return Separator
      */
@@ -1065,14 +1120,16 @@ public class EditableTable<S> extends AnchorPane {
     }
 
     /**
-     * 最初の行でCtrl+↑が押された場合 または最終行でCtrl+↓が押された場合に発生するイベントクラス.
+     * 最初の行でCtrl+↑が押された場合 または最終行でCtrl+↓が押された場合に発生するイベントクラス。
+     *
      * @author hiro
      * @param <S>
      */
     public static abstract class CantMoveCallback<S> {
         
         /**
-         * 最初の行でCtrl+↑が押された場合 または最終行でCtrl+↓が押された場合に発生するイベント.
+         * 最初の行でCtrl+↑が押された場合 または最終行でCtrl+↓が押された場合に発生するイベント。
+         *
          * @param selectedItem イベントが発生した際に選択されているitem
          */
         public abstract void call(S selectedItem);
@@ -1080,7 +1137,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * 行のHBoxをクリックした場合にfocusedItemプロパティを選択させるEventHandlerクラス.
+     * 行のHBoxをクリックした場合にfocusedItemプロパティを選択させるEventHandlerクラス。
+     *
      * @author hiro
      */
     private class FocusingItemMouseEventHandler implements EventHandler<MouseEvent> {
@@ -1088,7 +1146,8 @@ public class EditableTable<S> extends AnchorPane {
         private S item;
         
         /**
-         * コンストラクタ.
+         * コンストラクタ。
+         *
          * @param item 発生元のitem
          */
         public FocusingItemMouseEventHandler(S item) {
@@ -1098,12 +1157,11 @@ public class EditableTable<S> extends AnchorPane {
         @Override
         public void handle(MouseEvent event) {
             EditableTable.this.selectedItemProperty.set(this.item);
-        }
-        
-    }
+        }    }
     
     /**
-     * セルに内包するコントロールのフォーカスのChangeListenerクラス.
+     * セルに内包するコントロールのフォーカスのChangeListenerクラス。
+     *
      * @author hiro
      */
     private class InnerControlFocusChangeListener implements ChangeListener<Boolean> {
@@ -1113,7 +1171,8 @@ public class EditableTable<S> extends AnchorPane {
         private Control control;
         
         /**
-         * コンストラクタ.
+         * コンストラクタ。
+         *
          * @param item 発生元のitem
          * @param control 発生元のcontrol
          */
@@ -1134,12 +1193,11 @@ public class EditableTable<S> extends AnchorPane {
             } else {
                 table.focusedControlProperty.set(null);
             }
-        }
-        
-    }
+        }    }
     
     /**
-     * セルに内包するコントロールを生成し値の受け渡しを行うCallbackクラス.
+     * セルに内包するコントロールを生成し値の受け渡しを行うCallbackクラス。
+     *
      * @author hiro
      * @param <S> LiveTableViewのitem型
      * @param <T> Control型
@@ -1147,21 +1205,24 @@ public class EditableTable<S> extends AnchorPane {
     public static abstract class ControlFactory<S, T> {
         
         /**
-         * コントロールのインスタンスを生成する処理.
+         * コントロールのインスタンスを生成する処理。
+         *
          * @param item 生成する行のitem
          * @return コントロールのインスタンス
          */
         public abstract T newInstance(S item);
 
         /**
-         * itemからコントロールに値をセットする.
+         * itemからコントロールに値をセットする。
+         *
          * @param item 行のitem
          * @param control コントロール
          */
         public abstract void setValueForControl(S item, T control);
         
         /**
-         * コントロールからitemに値をセットする.
+         * コントロールからitemに値をセットする。
+         *
          * @param item 行のitem
          * @param control コントロール
          */
@@ -1170,7 +1231,8 @@ public class EditableTable<S> extends AnchorPane {
     }
     
     /**
-     * セルに内包するコントロールを生成し値の表示を行うCallbackクラス.
+     * セルに内包するコントロールを生成し値の表示を行うCallbackクラス。
+     *
      * @author hiro
      * @param <S> LiveTableViewのitem型
      * @param <T> Control型
@@ -1179,12 +1241,11 @@ public class EditableTable<S> extends AnchorPane {
         
         @Override @Deprecated
         public final void setValueForItem(S item, T control) {
-        }
-        
-    }
+        }    }
     
     /**
-     * セルに内包するコントロール生成を行うCallbackクラス.
+     * セルに内包するコントロール生成を行うCallbackクラス。
+     *
      * @author hiro
      * @param <S> LiveTableViewのitem型
      * @param <T> Control型
@@ -1193,8 +1254,4 @@ public class EditableTable<S> extends AnchorPane {
 
         @Override @Deprecated
         public final void setValueForControl(S item, T control) {
-        }
-        
-    }
-    
-}
+        }    }}

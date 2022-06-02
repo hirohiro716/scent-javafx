@@ -49,13 +49,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 /**
- * WhereSet配列を作成するダイアログを表示するクラス.
+ * WhereSet配列を作成するダイアログを表示するクラス。
+ *
  * @author hiro
  */
 public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      */
     public WhereSetDialog() {
         this.setTitle("検索条件の指定");
@@ -207,7 +209,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     }
     
     /**
-     * メッセージ内容をセットする.
+     * メッセージ内容をセットする。
+     *
      * @param message
      */
     public void setMessage(String message) {
@@ -219,7 +222,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     }
 
     /**
-     * メッセージに代わるNodeをセットする.
+     * メッセージに代わるNodeをセットする。
+     *
      * @param node
      */
     public void setMessageNode(Node node) {
@@ -230,7 +234,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     private boolean isCancelable = true;
 
     /**
-     * キャンセル可能かを設定する. 初期値はtrue.
+     * キャンセル可能かを設定する. 初期値はtrue。
+     *
      * @param isCancelable
      */
     public void setCancelable(boolean isCancelable) {
@@ -238,7 +243,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     }
 
     /**
-     * キャンセル可能かを取得する.
+     * キャンセル可能かを取得する。
+     *
      * @return キャンセル可能か
      */
     public boolean isCancelable() {
@@ -248,7 +254,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     private WhereSet[] defaultValue;
 
     /**
-     * ダイアログに初期値を表示する.
+     * ダイアログに初期値を表示する。
+     *
      * @param whereSets
      */
     public void setDefaultValue(WhereSet[] whereSets) {
@@ -260,7 +267,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     private ArrayList<WhereSet> whereSetGroup = new ArrayList<>();
 
     /**
-     * すべてのWhereSetを取得する.
+     * すべてのWhereSetを取得する。
+     *
      * @return すべてのWhereSet
      */
     private ArrayList<WhereSet> getWhereSetGroup() {
@@ -270,7 +278,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     private WhereSet displayedWhereSet;
 
     /**
-     * 現在VBoxに表示されているWhereSetを取得する.
+     * 現在VBoxに表示されているWhereSetを取得する。
+     *
      * @return WhereSet
      */
     private WhereSet getDisplayedWhereSet() {
@@ -278,7 +287,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     }
     
     /**
-     * VBoxにWhereSetを表示する.
+     * VBoxにWhereSetを表示する。
+     *
      * @param whereSet
      */
     private void setDisplayWhereSet(WhereSet whereSet) {
@@ -298,7 +308,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     private static final String NOT = "not";
 
     /**
-     * 新しいWhereSetを追加する.
+     * 新しいWhereSetを追加する。
+     *
      * @param isCopy 
      */
     private void addWhereSet(boolean isCopy) {
@@ -326,7 +337,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     private int whereSetId = 1;
 
     /**
-     * WhereSetGroupに追加済みのWhereSetに対応したラジオボタンを作成する.
+     * WhereSetGroupに追加済みのWhereSetに対応したラジオボタンを作成する。
+     *
      * @param whereSet
      * @return 作成したラジオボタン
      */
@@ -374,7 +386,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     }
 
     /**
-     * VBoxの内容を取得してWhereSetを再構成する.
+     * VBoxの内容を取得してWhereSetを再構成する。
+     *
      */
     private void updateWhereSetFromVBox() {
         if (this.displayedWhereSet == null) {
@@ -430,7 +443,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     }
 
     /**
-     * WhereSetの内容をVBoxに表示する.
+     * WhereSetの内容をVBoxに表示する。
+     *
      */
     private void updateVBoxFromWhereSet() {
         if (this.displayedWhereSet == null) {
@@ -557,7 +571,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     }
 
     /**
-     * WhereSetVBoxを空にする.
+     * WhereSetVBoxを空にする。
+     *
      */
     private void removeVBoxRowAll() {
         this.vboxWhereSet.getChildren().clear();
@@ -571,7 +586,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     private LinkedHashMap<String, StringConverter> searchableColumnStringConverters = new LinkedHashMap<>();
 
     /**
-     * 検索できるカラムを追加する.
+     * 検索できるカラムを追加する。
+     *
      * @param columnName カラム名
      * @param description カラム説明
      * @param columnType 種類
@@ -582,7 +598,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     }
 
     /**
-     * 検索できるカラムを追加する.
+     * 検索できるカラムを追加する。
+     *
      * @param columnName カラム名
      * @param description カラム説明
      * @param columnType 種類
@@ -595,7 +612,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     }
 
     /**
-     * 検索できる選択可能なカラムを追加する.
+     * 検索できる選択可能なカラムを追加する。
+     *
      * @param columnName カラム名
      * @param description カラム説明
      * @param columnType 種類
@@ -611,7 +629,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     private LinkedHashMap<String, Comparison> userComparisons = new LinkedHashMap<>();
 
     /**
-     * 文字列の検索方法リストに新しい比較演算子を追加する.
+     * 文字列の検索方法リストに新しい比較演算子を追加する。
+     *
      * @param columnType 対象カラムタイプ
      * @param comparison 比較演算子
      * @param description 説明
@@ -629,7 +648,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     }
 
     /**
-     * カラムタイプに応じた検索方法リストを取得する.
+     * カラムタイプに応じた検索方法リストを取得する。
+     *
      * @param columnType
      * @return 選択可能な検索方法リスト
      */
@@ -674,7 +694,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     }
 
     /**
-     * カラム名を指定して検索値入力行を追加する.
+     * カラム名を指定して検索値入力行を追加する。
+     *
      * @param columnName
      * @return HBox
      */
@@ -713,7 +734,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     }
 
     /**
-     * 比較演算子のChangeListener.
+     * 比較演算子のChangeListener。
+     *
      * @author hiro
      */
     private class ComparisonComboBoxChangeListener implements ChangeListener<String> {
@@ -722,7 +744,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
         private HashMapComboBox<?, ?> hashMapComboBox;
 
         /**
-         * コンストラクタ.
+         * コンストラクタ。
+         *
          * @param columnName
          * @param hashMapComboBox
          */
@@ -752,7 +775,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     }
 
     /**
-     * 日時検索値の入力ダイアログを表示して日時を入力させる.
+     * 日時検索値の入力ダイアログを表示して日時を入力させる。
+     *
      */
     private class DatetimeInputEventHander implements EventHandler<MouseEvent> {
 
@@ -761,7 +785,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
         private StringConverter stringConverter;
 
         /**
-         * コンストラクタ.
+         * コンストラクタ。
+         *
          * @param isTimeInput 時刻を入力させるかどうか
          * @param stringConverter Dateを文字列に変換するStringConverter
          */
@@ -808,7 +833,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     }
 
     /**
-     * カラム名と検索タイプから検索値入力用のコントロールを生成する.
+     * カラム名と検索タイプから検索値入力用のコントロールを生成する。
+     *
      * @param columnName カラム名
      * @param comparison 検索タイプ
      * @return 作成されたコントロール配列
@@ -1021,7 +1047,8 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     }
     
     /**
-     * カラムのデータ型.
+     * カラムのデータ型。
+     *
      * @author hiro
      */
     public enum ColumnType {
@@ -1058,6 +1085,4 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
          */
         BOOLEAN,
         ;
-    }
-    
-}
+    }}

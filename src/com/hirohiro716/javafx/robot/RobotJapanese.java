@@ -11,7 +11,8 @@ import com.hirohiro716.robot.InterfaceTypingRobotJapanese;
 public class RobotJapanese implements InterfaceTypingRobotJapanese<Integer> {
     
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      */
     public RobotJapanese() {
         try {
@@ -48,6 +49,4 @@ public class RobotJapanese implements InterfaceTypingRobotJapanese<Integer> {
     @Override
     public void changeIMEKatakanaNarrow() {
         this.awtRobot.changeIMEKatakanaNarrow();
-    }
-    
-}
+    }}

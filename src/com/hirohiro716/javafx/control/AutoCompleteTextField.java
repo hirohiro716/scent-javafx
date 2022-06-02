@@ -17,20 +17,23 @@ import javafx.stage.Popup;
 import javafx.stage.Screen;
 
 /**
- * 自動補完機能付きのLimitTextField.
+ * 自動補完機能付きのLimitTextField。
+ *
  * @author hiro
  */
 public class AutoCompleteTextField extends LimitTextField {
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      */
     public AutoCompleteTextField() {
         this("", FXCollections.observableArrayList());
     }
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param text
      */
     public AutoCompleteTextField(String text) {
@@ -38,7 +41,8 @@ public class AutoCompleteTextField extends LimitTextField {
     }
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param items 自動補完候補リスト
      */
     public AutoCompleteTextField(ObservableList<String> items) {
@@ -46,7 +50,8 @@ public class AutoCompleteTextField extends LimitTextField {
     }
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param text
      * @param items 自動補完候補リスト
      */
@@ -131,7 +136,8 @@ public class AutoCompleteTextField extends LimitTextField {
     }
 
     /**
-     * リストアイテムの高さをTextFieldの高さ何個分かを取得する.
+     * リストアイテムの高さをTextFieldの高さ何個分かを取得する。
+     *
      * @return TextFieldの高さ何個分か
      */
     public double getListItemHeightRate() {
@@ -149,7 +155,8 @@ public class AutoCompleteTextField extends LimitTextField {
     }
 
     /**
-     * リストアイテムの最大表示数を取得する.
+     * リストアイテムの最大表示数を取得する。
+     *
      * @return 最大表示数
      */
     public int getMaxItemsCount() {
@@ -159,7 +166,8 @@ public class AutoCompleteTextField extends LimitTextField {
     private ObservableList<String> items;
 
     /**
-     * 内部のリストアイテムを取得する.
+     * 内部のリストアイテムを取得する。
+     *
      * @return リストアイテム
      */
     public ObservableList<String> getItems() {
@@ -167,7 +175,8 @@ public class AutoCompleteTextField extends LimitTextField {
     }
 
     /**
-     * リストアイテムをセットする.
+     * リストアイテムをセットする。
+     *
      * @param items
      */
     public void setItems(ObservableList<String> items) {
@@ -178,7 +187,8 @@ public class AutoCompleteTextField extends LimitTextField {
     }
 
     /**
-     * リストアイテムを非表示にする.
+     * リストアイテムを非表示にする。
+     *
      */
     public void hideItems() {
         if (this.popup == null) {
@@ -188,7 +198,8 @@ public class AutoCompleteTextField extends LimitTextField {
     }
 
     /**
-     * リストアイテムを表示する.
+     * リストアイテムを表示する。
+     *
      */
     public void showItems() {
         if (this.popup == null || this.isFocused() == false) {
@@ -208,7 +219,8 @@ public class AutoCompleteTextField extends LimitTextField {
     }
 
     /**
-     * リストアイテムの表示状況を取得する.
+     * リストアイテムの表示状況を取得する。
+     *
      * @return 表示されていればTrue
      */
     public boolean isVisibleItems() {
@@ -320,6 +332,4 @@ public class AutoCompleteTextField extends LimitTextField {
         // Popupを作成して表示
         this.popup = new Popup();
         this.popup.getContent().add(this.listView);
-    }
-    
-}
+    }}

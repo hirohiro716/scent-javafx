@@ -12,20 +12,23 @@ import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
 /**
- * JavaFXのStage構成を補助するクラス.
+ * JavaFXのStage構成を補助するクラス。
+ *
  * @author hiro
  */
 public class StageBuilder {
 
     /**
-     * コンストラクタで新規Stageを構築する.
+     * コンストラクタで新規Stageを構築する。
+     *
      */
     public StageBuilder() {
         this.stage = new Stage();
     }
 
     /**
-     * コンストラクタでFXMLを指定してStageレイアウトを構成する.
+     * コンストラクタでFXMLを指定してStageレイアウトを構成する。
+     *
      * @param fxmlURL
      * @throws IOException
      */
@@ -40,7 +43,8 @@ public class StageBuilder {
     }
 
     /**
-     * コンストラクタでFXMLを指定してStageレイアウトを構成する.
+     * コンストラクタでFXMLを指定してStageレイアウトを構成する。
+     *
      * @param stage
      * @param fxmlURL
      * @throws IOException
@@ -56,7 +60,8 @@ public class StageBuilder {
     }
 
     /**
-     * コンストラクタでFXMLとControllerを指定してStageレイアウトを構成する.
+     * コンストラクタでFXMLとControllerを指定してStageレイアウトを構成する。
+     *
      * @param fxmlURL
      * @param controller
      * @throws IOException
@@ -72,7 +77,8 @@ public class StageBuilder {
     }
 
     /**
-     * コンストラクタでFXMLとControllerを指定してStageレイアウトを構成する.
+     * コンストラクタでFXMLとControllerを指定してStageレイアウトを構成する。
+     *
      * @param stage
      * @param fxmlURL
      * @param controller
@@ -89,7 +95,8 @@ public class StageBuilder {
     }
 
     /**
-     * コンストラクタでFXMLLoaderインスタンスからStageレイアウトを構成する.
+     * コンストラクタでFXMLLoaderインスタンスからStageレイアウトを構成する。
+     *
      * @param fxmlLoader
      * @throws IOException
      */
@@ -103,7 +110,8 @@ public class StageBuilder {
     }
 
     /**
-     * コンストラクタでFXMLLoaderインスタンスからStageレイアウトを構成する.
+     * コンストラクタでFXMLLoaderインスタンスからStageレイアウトを構成する。
+     *
      * @param stage
      * @param fxmlLoader
      * @throws IOException
@@ -120,7 +128,8 @@ public class StageBuilder {
     private Stage stage;
 
     /**
-     * Stageを取得する.
+     * Stageを取得する。
+     *
      * @return Stage
      */
     public Stage getStage() {
@@ -130,7 +139,8 @@ public class StageBuilder {
     private Scene scene;
 
     /**
-     * Sceneを取得する.
+     * Sceneを取得する。
+     *
      * @return Scene
      */
     public Scene getScene() {
@@ -140,7 +150,8 @@ public class StageBuilder {
     Pane paneRoot;
 
     /**
-     * PaneインスタンスをStageに描画する.
+     * PaneインスタンスをStageに描画する。
+     *
      * @param pane
      */
     public void setPane(Pane pane) {
@@ -151,7 +162,8 @@ public class StageBuilder {
     }
 
     /**
-     * Parentインスタンスを取得する.
+     * Parentインスタンスを取得する。
+     *
      * @return parent
      */
     public Pane getPaneRoot() {
@@ -161,7 +173,8 @@ public class StageBuilder {
     private Object controller;
 
     /**
-     * FXMLを指定してStageレイアウトを構成した後にControllerインスタンスを取得する.
+     * FXMLを指定してStageレイアウトを構成した後にControllerインスタンスを取得する。
+     *
      * @return Controllerインスタンス
      */
     public Object getController() {
@@ -169,21 +182,24 @@ public class StageBuilder {
     }
 
     /**
-     * Stageを表示する.
+     * Stageを表示する。
+     *
      */
     public void show() {
         this.stage.show();
     }
 
     /**
-     * Stageを表示する.
+     * Stageを表示する。
+     *
      */
     public void showAndWait() {
         this.stage.showAndWait();
     }
 
     /**
-     * Stageを表示する.
+     * Stageを表示する。
+     *
      * @param owner 親
      */
     public void show(Window owner) {
@@ -192,7 +208,8 @@ public class StageBuilder {
     }
 
     /**
-     * Stageを表示する.
+     * Stageを表示する。
+     *
      * @param owner 親
      *
      */
@@ -202,7 +219,8 @@ public class StageBuilder {
     }
 
     /**
-     * Stageを終了する.
+     * Stageを終了する。
+     *
      */
     public void close() {
         this.stage.close();
@@ -217,7 +235,8 @@ public class StageBuilder {
     };
 
     /**
-     * Stageを閉じる事ができるかどうかをセットする.
+     * Stageを閉じる事ができるかどうかをセットする。
+     *
      * @param isCloseable
      */
     public void setCloseable(boolean isCloseable) {
@@ -229,7 +248,8 @@ public class StageBuilder {
     }
 
     /**
-     * Stageが表示されている画面を取得する.
+     * Stageが表示されている画面を取得する。
+     *
      * @return Screen
      */
     public Screen getDisplayedScreen() {
@@ -239,6 +259,4 @@ public class StageBuilder {
             screen = loopScreen;
         }
         return screen;
-    }
-    
-}
+    }}

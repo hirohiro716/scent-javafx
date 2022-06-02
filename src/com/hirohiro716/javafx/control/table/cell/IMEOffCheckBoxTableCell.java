@@ -18,7 +18,8 @@ public abstract class IMEOffCheckBoxTableCell<S> extends AbstractLiveControlTabl
     private IMEOffCheckBox checkBox;
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      */
     public IMEOffCheckBoxTableCell() {
         this.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
@@ -49,7 +50,8 @@ public abstract class IMEOffCheckBoxTableCell<S> extends AbstractLiveControlTabl
     }
 
     /**
-     * 内部のIMEOffCheckBoxを取得する.
+     * 内部のIMEOffCheckBoxを取得する。
+     *
      * @return IMEOffCheckBox
      */
     public IMEOffCheckBox getIMEOffCheckBox() {

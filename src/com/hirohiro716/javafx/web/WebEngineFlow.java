@@ -10,13 +10,15 @@ import javafx.concurrent.Worker.State;
 import javafx.scene.web.WebView;
 
 /**
- * WebEngineの処理を順番に行うクラス.
+ * WebEngineの処理を順番に行うクラス。
+ *
  * @author hiro
  */
 public class WebEngineFlow {
     
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param webView
      */
     public WebEngineFlow(WebView webView) {
@@ -28,7 +30,8 @@ public class WebEngineFlow {
     private WebEngineController controller;
     
     /**
-     * WebEngineのコントロールを補助するWebEngineControllerインスタンスを取得する.
+     * WebEngineのコントロールを補助するWebEngineControllerインスタンスを取得する。
+     *
      * @return Controller
      */
     public WebEngineController getWebEngineController() {
@@ -38,7 +41,8 @@ public class WebEngineFlow {
     private WebView webView;
     
     /**
-     * WebViewインスタンスを取得する.
+     * WebViewインスタンスを取得する。
+     *
      * @return WebView
      */
     public WebView getWebView() {
@@ -48,7 +52,8 @@ public class WebEngineFlow {
     private int sleepMillisecond = 200;
     
     /**
-     * 処理後の待機時間をセットする. 初期値は200ミリ秒.
+     * 処理後の待機時間をセットする. 初期値は200ミリ秒。
+     *
      * @param millisecond
      */
     public void setSleepMillisecond(int millisecond) {
@@ -58,7 +63,8 @@ public class WebEngineFlow {
     private ArrayList<Task> tasks = new ArrayList<>();
     
     /**
-     * 処理を追加する.
+     * 処理を追加する。
+     *
      * @param task
      */
     public void addTask(Task task) {
@@ -66,7 +72,8 @@ public class WebEngineFlow {
     }
     
     /**
-     * URLを読み込む処理を追加する.
+     * URLを読み込む処理を追加する。
+     *
      * @param url
      */
     public void addTaskLoadURL(String url) {
@@ -79,7 +86,8 @@ public class WebEngineFlow {
     }
     
     /**
-     * 指定のElementが読み込まれるまで待機する.
+     * 指定のElementが読み込まれるまで待機する。
+     *
      * @param id
      */
     public void addTaskWaitForLoadElementById(String id) {
@@ -97,7 +105,8 @@ public class WebEngineFlow {
     }
     
     /**
-     * 指定のElementが読み込まれるまで待機する.
+     * 指定のElementが読み込まれるまで待機する。
+     *
      * @param tagName
      */
     public void addTaskWaitForLoadElementByTagName(String tagName) {
@@ -115,7 +124,8 @@ public class WebEngineFlow {
     }
     
     /**
-     * 指定のElementが読み込まれるまで待機する.
+     * 指定のElementが読み込まれるまで待機する。
+     *
      * @param tagName
      * @param textCompareRegex テキストと比較する正規表現
      */
@@ -134,7 +144,8 @@ public class WebEngineFlow {
     }
     
     /**
-     * 指定のElementが読み込まれるまで待機する.
+     * 指定のElementが読み込まれるまで待機する。
+     *
      * @param attributeName 属性名
      * @param valueCompareRegex 属性値と比較する正規表現
      */
@@ -155,7 +166,8 @@ public class WebEngineFlow {
     private int currentIndex = -1;
     
     /**
-     * 処理を順番に実行する.
+     * 処理を順番に実行する。
+     *
      */
     public void execute() {
         WebEngineFlow flow = this;
@@ -171,7 +183,8 @@ public class WebEngineFlow {
     }
     
     /**
-     * 非同期タスクに到達するまでタスクを実行し続ける.
+     * 非同期タスクに到達するまでタスクを実行し続ける。
+     *
      */
     private void executeTaskToUntilReachTheAsyncTask() {
         WebEngineFlow flow = this;
@@ -211,7 +224,8 @@ public class WebEngineFlow {
     }
 
     /**
-     * 例外を処理する.
+     * 例外を処理する。
+     *
      * @param exception 発生例外
      */
     protected void handleException(Exception exception) {
@@ -219,14 +233,16 @@ public class WebEngineFlow {
     }
     
     /**
-     * 実行するタスクを１つ前に戻す.
+     * 実行するタスクを１つ前に戻す。
+     *
      */
     public void turnBack() {
         this.currentIndex--;
     }
     
     /**
-     * 実行するタスクを指定数前に戻す.
+     * 実行するタスクを指定数前に戻す。
+     *
      * @param numberOfTurnBack 戻す回数
      */
     public void turnBack(int numberOfTurnBack) {
@@ -234,14 +250,16 @@ public class WebEngineFlow {
     }
 
     /**
-     * 実行するタスクを１つスキップする.
+     * 実行するタスクを１つスキップする。
+     *
      */
     public void skip() {
         this.currentIndex++;
     }
     
     /**
-     * 実行するタスクを指定数スキップする.
+     * 実行するタスクを指定数スキップする。
+     *
      * @param numberOfSkip スキップする回数
      */
     public void skip(int numberOfSkip) {
@@ -249,18 +267,18 @@ public class WebEngineFlow {
     }
 
     /**
-     * WebEngineFlowの処理タスククラス.
+     * WebEngineFlowの処理タスククラス。
+     *
      * @author hiro
      */
     public abstract static class Task {
         
         /**
-         * 処理タスクを実行する.
+         * 処理タスクを実行する。
+         *
          * @param controller WebEngineのコントロールを補助するWebEngineControllerインスタンス
          * @throws Exception 
          */
         public abstract void execute(WebEngineController controller) throws Exception;
         
-    }
-    
-}
+    }}

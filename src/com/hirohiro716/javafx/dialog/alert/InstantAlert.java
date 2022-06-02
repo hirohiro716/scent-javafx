@@ -10,7 +10,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 /**
- * インスタントメッセージを表示するクラス.
+ * インスタントメッセージを表示するクラス。
+ *
  * @author hiro
  */
 public class InstantAlert {
@@ -18,7 +19,8 @@ public class InstantAlert {
     private final Pane parent;
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param parent
      */
     public InstantAlert(Parent parent) {
@@ -31,7 +33,8 @@ public class InstantAlert {
     private Label label;
 
     /**
-     * 表示するラベルを取得する.
+     * 表示するラベルを取得する。
+     *
      * @return メッセージLabel
      */
     public Label getLabel() {
@@ -39,7 +42,8 @@ public class InstantAlert {
     }
 
     /**
-     * 表示するメッセージをセットする.
+     * 表示するメッセージをセットする。
+     *
      * @param text
      */
     public void setText(String text) {
@@ -47,7 +51,8 @@ public class InstantAlert {
     }
 
     /**
-     * フォントサイズをセットする.
+     * フォントサイズをセットする。
+     *
      * @param size
      */
     public void setFontSize(double size) {
@@ -57,7 +62,8 @@ public class InstantAlert {
     private double x;
 
     /**
-     * 表示位置をセットする.
+     * 表示位置をセットする。
+     *
      * @param x
      */
     public void setX(double x) {
@@ -67,7 +73,8 @@ public class InstantAlert {
     private double y;
 
     /**
-     * 表示位置をセットする.
+     * 表示位置をセットする。
+     *
      * @param y
      */
     public void setY(double y) {
@@ -77,7 +84,8 @@ public class InstantAlert {
     private Pos alignment = null;
 
     /**
-     * 表示位置をセットする.
+     * 表示位置をセットする。
+     *
      * @param alignment
      */
     public void setAlignment(Pos alignment) {
@@ -87,7 +95,8 @@ public class InstantAlert {
     private int millisecond = 3000;
 
     /**
-     * 表示されている時間をミリ秒でセットする.
+     * 表示されている時間をミリ秒でセットする。
+     *
      * @param millisecond
      */
     public void setMillisecond(int millisecond) {
@@ -95,7 +104,8 @@ public class InstantAlert {
     }
 
     /**
-     * メッセージを表示する.
+     * メッセージを表示する。
+     *
      */
     public void show() {
         // 親と同じサイズのVBoxを生成
@@ -125,7 +135,8 @@ public class InstantAlert {
     }
 
     /**
-     * 簡易メッセージを表示する.
+     * 簡易メッセージを表示する。
+     *
      * @param parent 表示対象Pane
      * @param text 表示文字
      * @param x 位置1
@@ -142,7 +153,8 @@ public class InstantAlert {
     }
 
     /**
-     * 簡易メッセージを表示する.
+     * 簡易メッセージを表示する。
+     *
      * @param parent 表示対象Pane
      * @param text 表示文字
      * @param pos 位置
@@ -157,7 +169,8 @@ public class InstantAlert {
     }
 
     /**
-     * メッセージをフェードアウトして破棄する.
+     * メッセージをフェードアウトして破棄する。
+     *
      */
     private class FeadOut extends Task<Void> {
         @Override

@@ -18,7 +18,8 @@ public class EnterFireButtonTableCell<S> extends AbstractLiveControlTableCell<S,
     private EnterFireButton button;
 
     /**
-     * コンストラクタでボタン押下時のイベントを指定する.
+     * コンストラクタでボタン押下時のイベントを指定する。
+     *
      * @param buttonText
      * @param actionEvent
      */
@@ -44,7 +45,8 @@ public class EnterFireButtonTableCell<S> extends AbstractLiveControlTableCell<S,
     }
 
     /**
-     * 内部のボタンを取得する.
+     * 内部のボタンを取得する。
+     *
      * @return EnterFireButton
      */
     public EnterFireButton getEnterFireButton() {

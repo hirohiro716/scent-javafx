@@ -10,13 +10,15 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.paint.Color;
 
 /**
- * NodeのローカルCSSの扱いを補助するクラス.
+ * NodeのローカルCSSの扱いを補助するクラス。
+ *
  * @author hiro
  */
 public class CSSHelper {
     
     /**
-     * 定義されたスタイルから値を取得する.
+     * 定義されたスタイルから値を取得する。
+     *
      * @param originalStyle スタイル全体の文字列
      * @param propertyName プロパティ
      * @return プロパティ設定値
@@ -33,7 +35,8 @@ public class CSSHelper {
     }
 
     /**
-     * 定義されたスタイルの値を再設定する.
+     * 定義されたスタイルの値を再設定する。
+     *
      * @param originalStyle スタイル全体の文字列
      * @param propertyName プロパティ
      * @param value プロパティ変更値
@@ -52,7 +55,8 @@ public class CSSHelper {
     }
 
     /**
-     * 定義されたスタイルの一部を削除する.
+     * 定義されたスタイルの一部を削除する。
+     *
      * @param originalStyle スタイル全体の文字列
      * @param propertyName プロパティ
      * @return 変更後のスタイル
@@ -68,7 +72,8 @@ public class CSSHelper {
     }
 
     /**
-     * ColorからCSSで使用できる色文字列に変換する.
+     * ColorからCSSで使用できる色文字列に変換する。
+     *
      * @param color
      * @return CSSで使用できる色文字列
      */
@@ -89,7 +94,8 @@ public class CSSHelper {
     }
 
     /**
-     * BorderStrokeStyleから-fx-border-styleで使用できる値に変換する.
+     * BorderStrokeStyleから-fx-border-styleで使用できる値に変換する。
+     *
      * @param borderStrokeStyle
      * @return -fx-border-styleで使用できる値
      */
@@ -102,7 +108,8 @@ public class CSSHelper {
     }
 
     /**
-     * BorderWidthsから-fx-border-widthで使用できる値に変換する.
+     * BorderWidthsから-fx-border-widthで使用できる値に変換する。
+     *
      * @param borderWidths
      * @return -fx-border-widthで使用できる値
      */

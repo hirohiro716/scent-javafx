@@ -24,7 +24,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 /**
- * HashMapの値をそれぞれToggleButtonで表示しユーザーにON/OFFを切り替えさせるダイアログを表示するクラス.
+ * HashMapの値をそれぞれToggleButtonで表示しユーザーにON/OFFを切り替えさせるダイアログを表示するクラス。
+ *
  * @author hiro
  * @param <E> 選択できるItemの型
  */
@@ -49,7 +50,8 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
     private EnterFireButton buttonCancel;
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param selectableItems 選択できるItem
      */
     public ToggleButtonDialog(HashMap<E, String> selectableItems) {
@@ -162,7 +164,8 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
     }
 
     /**
-     * メッセージ内容をセットする.
+     * メッセージ内容をセットする。
+     *
      * @param message
      */
     public void setMessage(String message) {
@@ -174,7 +177,8 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
     }
 
     /**
-     * メッセージに代わるNodeをセットする.
+     * メッセージに代わるNodeをセットする。
+     *
      * @param node
      */
     public void setMessageNode(Node node) {
@@ -185,7 +189,8 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
     private E[] defaultValue;
 
     /**
-     * 選択状態の初期値をセットする.
+     * 選択状態の初期値をセットする。
+     *
      * @param defaultValue
      */
     public void setDefaultValue(E[] defaultValue) {
@@ -195,7 +200,8 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
     private boolean isCancelable = true;
 
     /**
-     * キャンセル可能かを設定する. 初期値はtrue.
+     * キャンセル可能かを設定する. 初期値はtrue。
+     *
      * @param isCancelable
      */
     public void setCancelable(boolean isCancelable) {
@@ -203,7 +209,8 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
     }
 
     /**
-     * キャンセル可能かを取得する.
+     * キャンセル可能かを取得する。
+     *
      * @return キャンセル可能か
      */
     public boolean isCancelable() {

@@ -1,7 +1,8 @@
 package com.hirohiro716.javafx.dialog;
 
 /**
- * ダイアログのボタン押下結果の列挙型.
+ * ダイアログのボタン押下結果の列挙型。
+ *
  * @author hiro
  */
 @SuppressWarnings("javadoc")

@@ -12,7 +12,8 @@ import com.hirohiro716.robot.InterfaceTypingTask;
 public class TypingTask implements InterfaceTypingTask<Integer> {
     
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      */
     public TypingTask() {
         try {

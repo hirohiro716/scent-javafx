@@ -18,7 +18,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 
 /**
- * サブメニューを表示するクラス.
+ * サブメニューを表示するクラス。
+ *
  * @author hiro
  */
 public class SubMenu extends AbstractDialog<Void> {
@@ -121,7 +122,8 @@ public class SubMenu extends AbstractDialog<Void> {
     private double width = 400;
     
     /**
-     * ダイアログの幅を指定する. 初期値は400.
+     * ダイアログの幅を指定する. 初期値は400。
+     *
      * @param width
      */
     public void setWidth(double width) {
@@ -131,7 +133,8 @@ public class SubMenu extends AbstractDialog<Void> {
     private double height = 300;
     
     /**
-     * ダイアログの高さを指定する. 初期値は300.
+     * ダイアログの高さを指定する. 初期値は300。
+     *
      * @param height
      */
     public void setHeight(double height) {
@@ -139,7 +142,8 @@ public class SubMenu extends AbstractDialog<Void> {
     }
     
     /**
-     * ダイアログのサイズを指定する. 初期値は幅400:高さ300.
+     * ダイアログのサイズを指定する. 初期値は幅400:高さ300。
+     *
      * @param width
      * @param height
      */
@@ -151,7 +155,8 @@ public class SubMenu extends AbstractDialog<Void> {
     private ArrayList<Node> nodes = new ArrayList<>();
     
     /**
-     * FlowPaneに表示するNodeを追加する.
+     * FlowPaneに表示するNodeを追加する。
+     *
      * @param nodes
      */
     public void addNodes(Node... nodes) {
@@ -161,7 +166,8 @@ public class SubMenu extends AbstractDialog<Void> {
     }
     
     /**
-     * FlowPaneに表示するNodeを追加する.
+     * FlowPaneに表示するNodeを追加する。
+     *
      * @param nodes
      */
     public void addNodes(Collection<Node> nodes) {
@@ -171,7 +177,8 @@ public class SubMenu extends AbstractDialog<Void> {
     private FlowPane flowPaneNodes;
     
     /**
-     * FlowPaneを取得する.
+     * FlowPaneを取得する。
+     *
      * @return FlowPane
      */
     public FlowPane getFlowPane() {

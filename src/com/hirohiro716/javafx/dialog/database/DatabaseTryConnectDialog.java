@@ -13,7 +13,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
- * データベース接続を繰り返すダイアログ.
+ * データベース接続を繰り返すダイアログ。
+ *
  * @author hiro
  * @param <D> データベースの型
  */
@@ -24,7 +25,8 @@ public class DatabaseTryConnectDialog<D extends AbstractDatabase> {
     private ConnectCallback<D> connectCallback;
     
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param database 接続対象Database
      * @param connectCallback 接続処理コールバック
      */
@@ -36,7 +38,8 @@ public class DatabaseTryConnectDialog<D extends AbstractDatabase> {
     private DialogCallback<Question> questionDialogCallback;
 
     /**
-     * 接続を再試行するかを確認するダイアログに対する処理を行うコールバックをセットする.
+     * 接続を再試行するかを確認するダイアログに対する処理を行うコールバックをセットする。
+     *
      * @param questionDialogCallback
      */
     public void setQuestionDialogCallback(DialogCallback<Question> questionDialogCallback) {
@@ -46,7 +49,8 @@ public class DatabaseTryConnectDialog<D extends AbstractDatabase> {
     private SuccessCallback successCallback;
 
     /**
-     * 接続が成功した場合の処理を行うコールバックをセットする.
+     * 接続が成功した場合の処理を行うコールバックをセットする。
+     *
      * @param successCallback
      */
     public void setSuccessCallback(SuccessCallback successCallback) {
@@ -56,7 +60,8 @@ public class DatabaseTryConnectDialog<D extends AbstractDatabase> {
     private FailureCallback failureCallback;
 
     /**
-     * 接続を諦めた場合に発生する例外を処理するコールバックをセットする.
+     * 接続を諦めた場合に発生する例外を処理するコールバックをセットする。
+     *
      * @param failureCallback
      */
     public void setFailureCallback(FailureCallback failureCallback) {
@@ -64,7 +69,8 @@ public class DatabaseTryConnectDialog<D extends AbstractDatabase> {
     }
 
     /**
-     * 接続が成功するまでダイアログを表示して試行する.
+     * 接続が成功するまでダイアログを表示して試行する。
+     *
      * @param owner 親Stage
      */
     public void connect(Stage owner) {
@@ -100,7 +106,8 @@ public class DatabaseTryConnectDialog<D extends AbstractDatabase> {
     }
     
     /**
-     * 接続が成功するまでダイアログを表示して試行する.
+     * 接続が成功するまでダイアログを表示して試行する。
+     *
      * @param owner 親Stage
      * @throws SQLException
      */
@@ -126,7 +133,8 @@ public class DatabaseTryConnectDialog<D extends AbstractDatabase> {
     }
 
     /**
-     * 接続が成功するまでダイアログを表示して試行する.
+     * 接続が成功するまでダイアログを表示して試行する。
+     *
      * @param parent 親Pane
      */
     public void connect(Pane parent) {
@@ -162,15 +170,18 @@ public class DatabaseTryConnectDialog<D extends AbstractDatabase> {
     }
 
     /**
-     * 接続処理を行うコールバッククラス.
+     * 接続処理を行うコールバッククラス。
+     *
      * @author hiro
      * @param <D> データベースの型
      */
     public abstract static class ConnectCallback<D extends AbstractDatabase> {
         
         /**
-         * 接続処理を行うコールバック関数.
-         * @param database 接続対象データベースクラス.
+         * 接続処理を行うコールバック関数。
+         *
+         * @param database 接続対象データベースクラス。
+         *
          * @throws SQLException
          */
         public abstract void call(D database) throws SQLException;
@@ -178,28 +189,30 @@ public class DatabaseTryConnectDialog<D extends AbstractDatabase> {
     }
     
     /**
-     * 接続が成功した場合の処理を行うコールバック.
+     * 接続が成功した場合の処理を行うコールバック。
+     *
      * @author hiro
      */
     public abstract static class SuccessCallback {
         
         /**
-         * 接続が成功した場合の処理を行うコールバック関数.
+         * 接続が成功した場合の処理を行うコールバック関数。
+         *
          */
         public abstract void call();
     }
 
     /**
-     * 接続を諦めた場合の処理を行うコールバッククラス.
+     * 接続を諦めた場合の処理を行うコールバッククラス。
+     *
      * @author hiro
      */
     public abstract static class FailureCallback {
         
         /**
-         * 接続を諦めた場合の処理を行うコールバック関数.
+         * 接続を諦めた場合の処理を行うコールバック関数。
+         *
          */
         public abstract void call();
         
-    }
-    
-}
+    }}

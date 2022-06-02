@@ -26,7 +26,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 /**
- * TextField入力ダイアログを表示するクラス.
+ * TextField入力ダイアログを表示するクラス。
+ *
  * @author hiro
  */
 public class LimitTextFieldDialog extends AbstractDialog<String> {
@@ -149,7 +150,8 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
     }
 
     /**
-     * メッセージ内容をセットする.
+     * メッセージ内容をセットする。
+     *
      * @param message
      */
     public void setMessage(String message) {
@@ -161,7 +163,8 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
     }
 
     /**
-     * メッセージに代わるNodeをセットする.
+     * メッセージに代わるNodeをセットする。
+     *
      * @param node
      */
     public void setMessageNode(Node node) {
@@ -174,7 +177,8 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
     private ArrayList<Boolean> permitRegexReverse = new ArrayList<>();
 
     /**
-     * テキストの入力制限定義を追加する.
+     * テキストの入力制限定義を追加する。
+     *
      * @param permitRegex 正規表現パターン
      * @param isReverse 条件を逆転するか
      */
@@ -186,7 +190,8 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
     private IMEMode imeMode = null;
     
     /**
-     * IMEモードをセットする.
+     * IMEモードをセットする。
+     *
      * @param imeMode
      */
     public void setIMEMode(IMEMode imeMode) {
@@ -196,7 +201,8 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
     private Pos pos = Pos.CENTER_LEFT;
     
     /**
-     * テキストフィールドの文字の配置をセットする.
+     * テキストフィールドの文字の配置をセットする。
+     *
      * @param pos
      */
     public void setTextFieldAlignment(Pos pos) {
@@ -206,7 +212,8 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
     private String defaultValue;
 
     /**
-     * テキストフィールドの初期値をセットする.
+     * テキストフィールドの初期値をセットする。
+     *
      * @param defaultValue
      */
     public void setDefaultValue(String defaultValue) {
@@ -216,7 +223,8 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
     private boolean isCancelable = true;
 
     /**
-     * キャンセル可能かを設定する. 初期値はtrue.
+     * キャンセル可能かを設定する. 初期値はtrue。
+     *
      * @param isCancelable
      */
     public void setCancelable(boolean isCancelable) {
@@ -224,7 +232,8 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
     }
 
     /**
-     * キャンセル可能かを取得する.
+     * キャンセル可能かを取得する。
+     *
      * @return キャンセル可能か
      */
     public boolean isCancelable() {

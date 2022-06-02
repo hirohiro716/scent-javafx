@@ -8,21 +8,24 @@ import javafx.scene.Node;
 import javafx.scene.control.ToggleButton;
 
 /**
- * フォーカスした際にIMEをOFFにするボタン.
+ * フォーカスした際にIMEをOFFにするボタン。
+ *
  * @author hiro
  *
  */
 public class IMEOffToggleButton extends ToggleButton {
     
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      */
     public IMEOffToggleButton() {
         this("", null);
     }
     
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param text
      */
     public IMEOffToggleButton(String text) {
@@ -30,7 +33,8 @@ public class IMEOffToggleButton extends ToggleButton {
     }
     
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param text
      * @param graphic
      */
@@ -42,6 +46,4 @@ public class IMEOffToggleButton extends ToggleButton {
                 IMEHelper.apply(IMEOffToggleButton.this, IMEMode.OFF);
             }
         });
-    }
-    
-}
+    }}

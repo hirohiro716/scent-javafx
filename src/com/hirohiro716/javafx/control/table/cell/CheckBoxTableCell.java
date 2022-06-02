@@ -17,7 +17,8 @@ public abstract class CheckBoxTableCell<S> extends AbstractLiveControlTableCell<
     private CheckBox checkBox;
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      */
     public CheckBoxTableCell() {
         this.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
@@ -48,7 +49,8 @@ public abstract class CheckBoxTableCell<S> extends AbstractLiveControlTableCell<
     }
 
     /**
-     * 内部のCheckBoxを取得する.
+     * 内部のCheckBoxを取得する。
+     *
      * @return CheckBox
      */
     public CheckBox getCheckBox() {

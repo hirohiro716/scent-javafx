@@ -21,14 +21,16 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 /**
- * ダイアログを表示するための抽象クラス.
+ * ダイアログを表示するための抽象クラス。
+ *
  * @author hiro
  * @param <T> ダイアログのResultタイプ
  */
 public abstract class AbstractDialog<T> {
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      */
     public AbstractDialog() {
         this.contentPane = this.createContentPane();
@@ -37,7 +39,8 @@ public abstract class AbstractDialog<T> {
     private String title;
     
     /**
-     * ダイアログのタイトルを取得する.
+     * ダイアログのタイトルを取得する。
+     *
      * @return タイトル
      */
     protected String getTitle() {
@@ -45,7 +48,8 @@ public abstract class AbstractDialog<T> {
     }
     
     /**
-     * ダイアログのタイトルをセットする.
+     * ダイアログのタイトルをセットする。
+     *
      * @param title タイトル
      */
     public void setTitle(String title) {
@@ -56,7 +60,8 @@ public abstract class AbstractDialog<T> {
     }
     
     /**
-     * タイトルを表示するLabelを取得する.
+     * タイトルを表示するLabelを取得する。
+     *
      * @return Label
      */
     protected abstract Label getLabelTitle();
@@ -64,7 +69,8 @@ public abstract class AbstractDialog<T> {
     private StackPane stackPane = new StackPane();
 
     /**
-     * ダイアログのStackPaneを取得する.
+     * ダイアログのStackPaneを取得する。
+     *
      * @return StackPane
      */
     public StackPane getStackPane() {
@@ -74,7 +80,8 @@ public abstract class AbstractDialog<T> {
     private Pane contentPane;
 
     /**
-     * ダイアログのPaneを取得する.
+     * ダイアログのPaneを取得する。
+     *
      * @return Pane
      */
     public Pane getContentPane() {
@@ -84,7 +91,8 @@ public abstract class AbstractDialog<T> {
     private boolean isShowed = false;
 
     /**
-     * ダイアログを表示するPaneを作成する. show()またはshowAndWait()を呼び出した際に自動実行される.
+     * ダイアログを表示するPaneを作成する. show()またはshowAndWait()を呼び出した際に自動実行される。
+     *
      * @return 作成したPane
      */
     protected abstract Pane createContentPane();
@@ -94,7 +102,8 @@ public abstract class AbstractDialog<T> {
     private Stage stage;
     
     /**
-     * ダイアログのStageを取得する.
+     * ダイアログのStageを取得する。
+     *
      * @return Stage
      */
     public Stage getStage() {
@@ -175,12 +184,14 @@ public abstract class AbstractDialog<T> {
     };
 
     /**
-     * ダイアログを表示する前に行う処理.
+     * ダイアログを表示する前に行う処理。
+     *
      */
     public abstract void breforeShowPrepare(); 
     
     /**
-     * ダイアログを表示する. ダイアログを表示するとOwnerのStageは操作不可になる.
+     * ダイアログを表示する. ダイアログを表示するとOwnerのStageは操作不可になる。
+     *
      * @param owner 親Stage
      */
     public void show(Stage owner) {
@@ -194,7 +205,8 @@ public abstract class AbstractDialog<T> {
     }
 
     /**
-     * ダイアログを表示して終了まで待機する.
+     * ダイアログを表示して終了まで待機する。
+     *
      * @param owner 親Stage
      * @return 結果
      */
@@ -214,7 +226,8 @@ public abstract class AbstractDialog<T> {
     private Pane parent;
     
     /**
-     * 親Paneを取得する.
+     * 親Paneを取得する。
+     *
      * @return 親Pane
      */
     public Pane getParentPane() {
@@ -222,7 +235,8 @@ public abstract class AbstractDialog<T> {
     }
     
     /**
-     * ダイアログを表示する. ダイアログを表示すると親Paneは操作不可になる.
+     * ダイアログを表示する. ダイアログを表示すると親Paneは操作不可になる。
+     *
      * @param parent 親Pane
      */
     public void showOnPane(Pane parent) {
@@ -282,7 +296,8 @@ public abstract class AbstractDialog<T> {
     }
 
     /**
-     * ダイアログを閉じる.
+     * ダイアログを閉じる。
+     *
      */
     public void close() {
         AbstractDialog<T> dialog = this;
@@ -322,7 +337,8 @@ public abstract class AbstractDialog<T> {
     }
 
     /**
-     * ダイアログのStackPaneをクリックした場合に閉じることができるかどうか.
+     * ダイアログのStackPaneをクリックした場合に閉じることができるかどうか。
+     *
      * @return 結果
      */
     public abstract boolean isClosableAtStackPaneClicked();
@@ -330,7 +346,8 @@ public abstract class AbstractDialog<T> {
     private CloseEventHandler<T> closeEvent;
 
     /**
-     * ダイアログを閉じた時のイベントをセットする.
+     * ダイアログを閉じた時のイベントをセットする。
+     *
      * @param closeEvent
      */
     public void setCloseEvent(CloseEventHandler<T> closeEvent) {
@@ -340,7 +357,8 @@ public abstract class AbstractDialog<T> {
     private T result;
 
     /**
-     * ダイアログの結果をセットする.
+     * ダイアログの結果をセットする。
+     *
      * @param resultValue
      */
     public void setResult(T resultValue) {
@@ -348,7 +366,8 @@ public abstract class AbstractDialog<T> {
     }
 
     /**
-     * ダイアログの結果を取得する.
+     * ダイアログの結果を取得する。
+     *
      * @return 結果
      */
     public T getResult() {
@@ -356,7 +375,8 @@ public abstract class AbstractDialog<T> {
     }
     
     /**
-     * 閉じる際の処理インターフェース.
+     * 閉じる際の処理インターフェース。
+     *
      * @author hiro
      * @param <T> ダイアログのResultタイプ
      */
@@ -371,18 +391,18 @@ public abstract class AbstractDialog<T> {
     }
     
     /**
-     * ダイアログに対する処理を行うコールバック.
+     * ダイアログに対する処理を行うコールバック。
+     *
      * @author hiro
      * @param <D> ダイアログ型
      */
     public interface DialogCallback<D extends AbstractDialog<?>> {
         
         /**
-         * ダイアログに対する処理.
+         * ダイアログに対する処理。
+         *
          * @param dialog
          */
         public abstract void call(D dialog);
         
-    }
-    
-}
+    }}

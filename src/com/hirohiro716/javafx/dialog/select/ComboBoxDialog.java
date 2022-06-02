@@ -20,7 +20,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 /**
- * コンボボックス入力ダイアログを表示するクラス.
+ * コンボボックス入力ダイアログを表示するクラス。
+ *
  * @author hiro
  * @param <T> コンボボックスの値型
  */
@@ -122,7 +123,8 @@ public class ComboBoxDialog<T> extends AbstractDialog<T> {
     }
 
     /**
-     * メッセージ内容をセットする.
+     * メッセージ内容をセットする。
+     *
      * @param message
      */
     public void setMessage(String message) {
@@ -134,7 +136,8 @@ public class ComboBoxDialog<T> extends AbstractDialog<T> {
     }
 
     /**
-     * メッセージに代わるNodeをセットする.
+     * メッセージに代わるNodeをセットする。
+     *
      * @param node
      */
     public void setMessageNode(Node node) {
@@ -145,7 +148,8 @@ public class ComboBoxDialog<T> extends AbstractDialog<T> {
     private ObservableList<T> items;
 
     /**
-     * コンボボックスのアイテムを指定する.
+     * コンボボックスのアイテムを指定する。
+     *
      * @param items
      */
     public void setItems(ObservableList<T> items) {
@@ -153,7 +157,8 @@ public class ComboBoxDialog<T> extends AbstractDialog<T> {
     }
 
     /**
-     * コンボボックスのアイテムを取得する.
+     * コンボボックスのアイテムを取得する。
+     *
      * @return items
      */
     public ObservableList<T> getItems() {
@@ -163,7 +168,8 @@ public class ComboBoxDialog<T> extends AbstractDialog<T> {
     private T defaultValue;
 
     /**
-     * コンボボックスの初期値をセットする.
+     * コンボボックスの初期値をセットする。
+     *
      * @param defaultValue
      */
     public void setDefaultValue(T defaultValue) {
@@ -173,7 +179,8 @@ public class ComboBoxDialog<T> extends AbstractDialog<T> {
     private boolean isCancelable = true;
 
     /**
-     * キャンセル可能かを設定する. 初期値はtrue.
+     * キャンセル可能かを設定する. 初期値はtrue。
+     *
      * @param isCancelable
      */
     public void setCancelable(boolean isCancelable) {

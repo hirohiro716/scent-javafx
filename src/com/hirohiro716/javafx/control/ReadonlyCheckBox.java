@@ -9,20 +9,23 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 /**
- * 読み取り専用にできるCheckBox.
+ * 読み取り専用にできるCheckBox。
+ *
  * @author hiro
  */
 public class ReadonlyCheckBox extends IMEOffCheckBox {
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      */
     public ReadonlyCheckBox() {
         this("");
     }
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param text ラベルテキスト
      */
     public ReadonlyCheckBox(String text) {
@@ -69,7 +72,8 @@ public class ReadonlyCheckBox extends IMEOffCheckBox {
     public final BooleanProperty readonly = new SimpleBooleanProperty();
 
     /**
-     * 読み取り専用プロパティを取得する.
+     * 読み取り専用プロパティを取得する。
+     *
      * @return BooleanProperty
      */
     public BooleanProperty readonlyProperty() {
@@ -77,7 +81,8 @@ public class ReadonlyCheckBox extends IMEOffCheckBox {
     }
 
     /**
-     * 読み取り専用プロパティに値をセットする.
+     * 読み取り専用プロパティに値をセットする。
+     *
      * @param isReadonly
      */
     public void setReadonly(boolean isReadonly) {
@@ -86,7 +91,8 @@ public class ReadonlyCheckBox extends IMEOffCheckBox {
     }
 
     /**
-     * 読み取り専用かを取得する.
+     * 読み取り専用かを取得する。
+     *
      * @return 読み取り専用かどうか
      */
     public boolean getReadonly() {
@@ -94,7 +100,8 @@ public class ReadonlyCheckBox extends IMEOffCheckBox {
     }
 
     /**
-     * 読み取り専用かを取得する.
+     * 読み取り専用かを取得する。
+     *
      * @return 読み取り専用かどうか
      */
     public boolean isReadonly() {

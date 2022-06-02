@@ -7,20 +7,23 @@ import javafx.application.Platform;
 import javafx.scene.control.CheckBox;
 
 /**
- * フォーカスした際にIMEをOFFにするCheckBox.
+ * フォーカスした際にIMEをOFFにするCheckBox。
+ *
  * @author hiro
  */
 public class IMEOffCheckBox extends CheckBox {
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      */
     public IMEOffCheckBox() {
         this("");
     }
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param text ラベルテキスト
      */
     public IMEOffCheckBox(String text) {

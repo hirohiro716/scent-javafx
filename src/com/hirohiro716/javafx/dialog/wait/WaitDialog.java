@@ -15,7 +15,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 /**
- * 待機画面を表示するクラス.
+ * 待機画面を表示するクラス。
+ *
  * @author hiro
  * @param <T>
  */
@@ -67,7 +68,8 @@ public class WaitDialog<T> extends AbstractDialog<T> {
     }
 
     /**
-     * メッセージ内容をセットする.
+     * メッセージ内容をセットする。
+     *
      * @param message
      */
     public void setMessage(String message) {
@@ -79,7 +81,8 @@ public class WaitDialog<T> extends AbstractDialog<T> {
     }
 
     /**
-     * メッセージに代わるNodeをセットする.
+     * メッセージに代わるNodeをセットする。
+     *
      * @param node
      */
     public void setMessageNode(Node node) {
@@ -90,7 +93,8 @@ public class WaitDialog<T> extends AbstractDialog<T> {
     private boolean isAutoClose = true;
     
     /**
-     * タスク終了後に自動的にダイアログを閉じるかどうかを指定する. 初期値はtrue.
+     * タスク終了後に自動的にダイアログを閉じるかどうかを指定する. 初期値はtrue。
+     *
      * @param isAutoClose
      */
     public void setAutoClose(boolean isAutoClose) {
@@ -100,7 +104,8 @@ public class WaitDialog<T> extends AbstractDialog<T> {
     private Task<T> task;
 
     /**
-     * 内部で実行する処理内容をセットする.
+     * 内部で実行する処理内容をセットする。
+     *
      * @param callable
      */
     public void setCallable(Callable<T> callable) {
@@ -126,7 +131,8 @@ public class WaitDialog<T> extends AbstractDialog<T> {
     private Exception exception;
 
     /**
-     * 内部処理で例外が発生した場合に取得できる.
+     * 内部処理で例外が発生した場合に取得できる。
+     *
      * @return Exception
      */
     public Exception getException() {
@@ -134,7 +140,8 @@ public class WaitDialog<T> extends AbstractDialog<T> {
     }
 
     /**
-     * 内部処理で発生した例外としてセットする.
+     * 内部処理で発生した例外としてセットする。
+     *
      * @param exception 例外
      */
     public void setException(Exception exception) {

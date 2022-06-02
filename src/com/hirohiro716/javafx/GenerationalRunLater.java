@@ -11,7 +11,8 @@ public class GenerationalRunLater {
     private int runGeneration;
     
     /**
-     * コンストラクタで実行世代を指定する.
+     * コンストラクタで実行世代を指定する。
+     *
      * @param runGeneration 1を指定すると通常のPlatform.runLaterと同じ動作
      */
     public GenerationalRunLater(int runGeneration) {
@@ -21,7 +22,8 @@ public class GenerationalRunLater {
     private int runNumber = 1;
     
     /**
-     * 実行世代までPlatform.runLaterを繰り返してから引数のRunnableを実行する.
+     * 実行世代までPlatform.runLaterを繰り返してから引数のRunnableを実行する。
+     *
      * @param runnable 実行する処理
      */
     public void runLater(Runnable runnable) {
@@ -40,12 +42,11 @@ public class GenerationalRunLater {
     }
     
     /**
-     * 実行世代までPlatform.runLaterを繰り返してから引数のRunnableを実行する.
+     * 実行世代までPlatform.runLaterを繰り返してから引数のRunnableを実行する。
+     *
      * @param runGeneration 実行世代
      * @param runnable 実行する処理
      */
     public static void runLater(int runGeneration, Runnable runnable) {
         new GenerationalRunLater(runGeneration).runLater(runnable);
-    }
-    
-}
+    }}

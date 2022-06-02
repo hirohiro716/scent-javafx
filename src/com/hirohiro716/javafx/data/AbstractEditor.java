@@ -16,44 +16,52 @@ import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
 /**
- * 情報を編集するエディターの抽象クラス.
+ * 情報を編集するエディターの抽象クラス。
+ *
  * @author hiro
  * @param <T> 編集する情報をコントロールするクラス
  */
 public abstract class AbstractEditor<T> {
 
     /**
-     * "編集画面の表示失敗" というダイアログタイトル用の文字列.
+     * "編集画面の表示失敗" というダイアログタイトル用の文字列。
+     *
      */
     public static final String ERROR_DIALOG_TITLE_OPEN_FAILURE = "編集画面の表示失敗";
 
     /**
-     * "データに問題" というダイアログタイトル用の文字列.
+     * "データに問題" というダイアログタイトル用の文字列。
+     *
      */
     public static final String ERROR_DIALOG_TITLE_VALIDATION = "データに問題";
 
     /**
-     * "保存失敗" というダイアログタイトル用の文字列.
+     * "保存失敗" というダイアログタイトル用の文字列。
+     *
      */
     public static final String ERROR_DIALOG_TITLE_SAVE = "保存失敗";
 
     /**
-     * "閉じる確認" というダイアログタイトル用の文字列.
+     * "閉じる確認" というダイアログタイトル用の文字列。
+     *
      */
     public static final String CONFIRM_DIALOG_TITLE_CLOSE = "閉じる確認";
 
     /**
-     * "削除の確認" というダイアログタイトル用の文字列.
+     * "削除の確認" というダイアログタイトル用の文字列。
+     *
      */
     public static final String CONFIRM_DIALOG_TITLE_DELETE = "削除の確認";
     
     /**
-     * "このデータは削除されているため上書きできませんでした。\n" というダイアログ用の文字列.
+     * "このデータは削除されているため上書きできませんでした。\n" というダイアログ用の文字列。
+     *
      */
     public static final String ERROR_DIALOG_MESSAGE_SAVE_NOTFOUND = "このデータは削除されているため上書きできませんでした。\n";
     
     /**
-     * 編集用フォームを表示する.
+     * 編集用フォームを表示する。
+     *
      * @throws Exception
      */
     public void show() throws Exception {
@@ -61,7 +69,8 @@ public abstract class AbstractEditor<T> {
     }
     
     /**
-     * 編集用フォームを表示する.
+     * 編集用フォームを表示する。
+     *
      * @param owner 親Stage
      * @throws Exception
      */
@@ -73,7 +82,8 @@ public abstract class AbstractEditor<T> {
     }
     
     /**
-     * 編集用フォームを表示し閉じるまで待機する.
+     * 編集用フォームを表示し閉じるまで待機する。
+     *
      * @throws Exception
      */
     public void showAndWait() throws Exception {
@@ -81,7 +91,8 @@ public abstract class AbstractEditor<T> {
     }
     
     /**
-     * 編集用フォームを表示し閉じるまで待機する.
+     * 編集用フォームを表示し閉じるまで待機する。
+     *
      * @param owner 親Stage
      * @throws Exception
      */
@@ -95,7 +106,8 @@ public abstract class AbstractEditor<T> {
     private StageBuilder stageBuilder;
     
     /**
-     * Stageを取得する.
+     * Stageを取得する。
+     *
      * @return Stage
      */
     public Stage getStage() {
@@ -103,7 +115,8 @@ public abstract class AbstractEditor<T> {
     }
     
     /**
-     * Stageを閉じる事ができるかどうかをセットする.
+     * Stageを閉じる事ができるかどうかをセットする。
+     *
      * @param isCloseable
      */
     public void setCloseable(boolean isCloseable) {
@@ -111,7 +124,8 @@ public abstract class AbstractEditor<T> {
     }
     
     /**
-     * フォームを操作不能にする.
+     * フォームを操作不能にする。
+     *
      * @param isDisable
      */
     public void setDisable(boolean isDisable) {
@@ -120,7 +134,8 @@ public abstract class AbstractEditor<T> {
     }
     
     /**
-     * FXMLをセットする.
+     * FXMLをセットする。
+     *
      * @param fxmlURL
      * @throws IOException
      */
@@ -131,7 +146,8 @@ public abstract class AbstractEditor<T> {
 
     /**
      * 編集するデータの読み込みや排他ロック処理.<br>
-     * showまたはshowAndWaitメソッドを呼び出した際 beforeShowPrepareメソッドの前に自動実行される.
+     * showまたはshowAndWaitメソッドを呼び出した際 beforeShowPrepareメソッドの前に自動実行される。
+     *
      * @throws Exception
      */
     protected abstract void editDataController() throws Exception;
@@ -139,7 +155,8 @@ public abstract class AbstractEditor<T> {
     private T dataController;
     
     /**
-     * データ処理を行うインスタンスを取得する.
+     * データ処理を行うインスタンスを取得する。
+     *
      * @return データ処理を行うインスタンス
      */
     public T getDataController() {
@@ -147,7 +164,8 @@ public abstract class AbstractEditor<T> {
     }
     
     /**
-     * データ処理を行うインスタンスをセットする.
+     * データ処理を行うインスタンスをセットする。
+     *
      * @param dataController
      */
     protected void setDataController(T dataController) {
@@ -156,18 +174,21 @@ public abstract class AbstractEditor<T> {
     
     /**
      * 編集用フォーム表示前の準備処理.<br>
-     * showまたはshowAndWaitメソッドを呼び出した際 dataControllerEditメソッドの後に自動実行される.
+     * showまたはshowAndWaitメソッドを呼び出した際 dataControllerEditメソッドの後に自動実行される。
+     *
      * @throws Exception
      */
     protected abstract void beforeShowPrepare() throws Exception;
     
     /**
-     * フォームからDataControllerに値を取り込む. このメソッドは自動では呼び出されない.
+     * フォームからDataControllerに値を取り込む. このメソッドは自動では呼び出されない。
+     *
      */
     protected abstract void importDataFromForm();
     
     /**
-     * 例外を処理する.
+     * 例外を処理する。
+     *
      * @param exception 発生例外
      */
     protected void handleException(Exception exception) {
@@ -177,13 +198,15 @@ public abstract class AbstractEditor<T> {
     private boolean isCloseAgree = false;
     
     /**
-     * 閉じる直前に行う処理. closeメソッドを呼び出した際に自動実行される.
+     * 閉じる直前に行う処理. closeメソッドを呼び出した際に自動実行される。
+     *
      * @throws Exception 
      */
     protected abstract void beforeClosePrepare() throws Exception;
 
     /**
-     * Editorを閉じる.
+     * Editorを閉じる。
+     *
      */
     public void close() {
         try {
@@ -198,7 +221,8 @@ public abstract class AbstractEditor<T> {
     private boolean isCloseConfirmShowing = true;
     
     /**
-     * 閉じる確認を行うかどうかをセットする. 初期値はtrue.
+     * 閉じる確認を行うかどうかをセットする. 初期値はtrue。
+     *
      * @param isCloseConfirmShowing
      */
     protected void setCloseConfirmShowing(boolean isCloseConfirmShowing) {
@@ -208,21 +232,24 @@ public abstract class AbstractEditor<T> {
     private boolean isCloseDialogShown = false;
 
     /**
-     * 閉じる確認を行う直前の処理. closeメソッドを呼び出した際に自動実行される.
+     * 閉じる確認を行う直前の処理. closeメソッドを呼び出した際に自動実行される。
+     *
      */
     protected void beforeCloseConfirmPrepare() {
         this.isCloseDialogShown = true;
     }
     
     /**
-     * 閉じる確認後の処理. 自動実行される.
+     * 閉じる確認後の処理. 自動実行される。
+     *
      */
     protected void processAfterCloseConfirm() {
         this.isCloseDialogShown = false;
     }
 
     /**
-     * 画面を閉じる際の確認.
+     * 画面を閉じる際の確認。
+     *
      */
     private EventHandler<WindowEvent> closeEvent = new EventHandler<WindowEvent>() {
         @Override
@@ -247,7 +274,8 @@ public abstract class AbstractEditor<T> {
     };
 
     /**
-     * ウインドウが表示されている画面を取得する.
+     * ウインドウが表示されている画面を取得する。
+     *
      * @return Screen
      */
     public Screen getDisplayedScreen() {
@@ -255,7 +283,8 @@ public abstract class AbstractEditor<T> {
     }
     
     /**
-     * 現在の画面サイズ・位置情報からLayoutSettingを作成する.
+     * 現在の画面サイズ・位置情報からLayoutSettingを作成する。
+     *
      * @return LayoutSetting
      */
     protected LayoutSetting createWindowLayoutSetting() {
@@ -266,7 +295,8 @@ public abstract class AbstractEditor<T> {
     }
 
     /**
-     * 画面サイズ・位置情報にLayoutSettingを適用する.
+     * 画面サイズ・位置情報にLayoutSettingを適用する。
+     *
      * @param layoutSetting
      */
     protected void applyWindowLayoutSetting(LayoutSetting layoutSetting) {
@@ -274,7 +304,8 @@ public abstract class AbstractEditor<T> {
     }
     
     /**
-     * 画面サイズ・位置情報にLayoutSettingを適用する.
+     * 画面サイズ・位置情報にLayoutSettingを適用する。
+     *
      * @param layoutSetting
      * @param screen 表示対象画面
      */
@@ -291,14 +322,16 @@ public abstract class AbstractEditor<T> {
     }
     
     /**
-     * 内部の情報に対しての処理インターフェース.
+     * 内部の情報に対しての処理インターフェース。
+     *
      * @author hiro
      * @param <T> 情報の型
      */
     public static interface Callback<T> {
 
         /**
-         * 内部の情報に対しての処理.
+         * 内部の情報に対しての処理。
+         *
          * @param data
          */
         public void call(T data);

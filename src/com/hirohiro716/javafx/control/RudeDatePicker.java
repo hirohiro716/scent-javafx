@@ -17,7 +17,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 /**
- * 少し乱暴な入力にも臨機応変に対応するDatePicker.
+ * 少し乱暴な入力にも臨機応変に対応するDatePicker。
+ *
  * @author hiro
  */
 public class RudeDatePicker extends DatePicker {
@@ -25,14 +26,16 @@ public class RudeDatePicker extends DatePicker {
     private String lastInputText;
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      */
     public RudeDatePicker() {
         this(null);
     }
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param localDate
      */
     public RudeDatePicker(LocalDate localDate) {
@@ -44,7 +47,8 @@ public class RudeDatePicker extends DatePicker {
     }
     
     /**
-     * Date型で値をセットする.
+     * Date型で値をセットする。
+     *
      * @param date
      */
     public void setValue(Date date) {
@@ -59,7 +63,8 @@ public class RudeDatePicker extends DatePicker {
     private final ObjectProperty<Date> dateProperty = new SimpleObjectProperty<>();
     
     /**
-     * 入力値をDate型で取得する.
+     * 入力値をDate型で取得する。
+     *
      * @return Date
      */
     public Date getDate() {
@@ -67,7 +72,8 @@ public class RudeDatePicker extends DatePicker {
     }
     
     /**
-     * Date型で値をセットする.
+     * Date型で値をセットする。
+     *
      * @param date
      */
     public void setDate(Date date) {
@@ -75,7 +81,8 @@ public class RudeDatePicker extends DatePicker {
     }
     
     /**
-     * 年月日をセットする.
+     * 年月日をセットする。
+     *
      * @param year 年(西暦)
      * @param month 月(1～12)
      * @param day 日(1～31)

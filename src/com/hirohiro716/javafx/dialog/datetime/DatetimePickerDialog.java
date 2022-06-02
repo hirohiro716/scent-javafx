@@ -28,7 +28,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 /**
- * 日時の入力ダイアログを表示するクラス.
+ * 日時の入力ダイアログを表示するクラス。
+ *
  * @author hiro
  */
 public class DatetimePickerDialog extends AbstractDialog<Date> {
@@ -177,7 +178,8 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
     }
 
     /**
-     * メッセージ内容をセットする.
+     * メッセージ内容をセットする。
+     *
      * @param message
      */
     public void setMessage(String message) {
@@ -189,7 +191,8 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
     }
 
     /**
-     * メッセージに代わるNodeをセットする.
+     * メッセージに代わるNodeをセットする。
+     *
      * @param node
      */
     public void setMessageNode(Node node) {
@@ -200,7 +203,8 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
     private Date defaultValue = new Date();
 
     /**
-     * 日時の初期値をセットする.
+     * 日時の初期値をセットする。
+     *
      * @param defaultValue
      */
     public void setDefaultValue(Date defaultValue) {
@@ -212,7 +216,8 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
     private boolean isCancelable = true;
 
     /**
-     * キャンセル可能かを設定する. 初期値はtrue.
+     * キャンセル可能かを設定する. 初期値はtrue。
+     *
      * @param isCancelable
      */
     public void setCancelable(boolean isCancelable) {
@@ -220,7 +225,8 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
     }
 
     /**
-     * キャンセル可能かを取得する.
+     * キャンセル可能かを取得する。
+     *
      * @return キャンセル可能か
      */
     public boolean isCancelable() {
@@ -230,7 +236,8 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
     private boolean isTimeInput = true;
 
     /**
-     * 時刻も入力させるかどうか. 初期値はtrue.
+     * 時刻も入力させるかどうか. 初期値はtrue。
+     *
      * @param isTimeInput
      */
     public void setTimeInput(boolean isTimeInput) {
@@ -238,7 +245,8 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
     }
 
     /**
-     * 時刻も入力させるかどうかを取得する.
+     * 時刻も入力させるかどうかを取得する。
+     *
      * @return isTimeInput
      */
     public boolean isTimeInput() {

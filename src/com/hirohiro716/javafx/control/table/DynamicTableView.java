@@ -31,13 +31,15 @@ import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
 /**
- * 動的にカラムを生成できるTableViewクラス.
+ * 動的にカラムを生成できるTableViewクラス。
+ *
  * @author hiro
  */
 public class DynamicTableView extends TableView<RudeArray> {
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      */
     public DynamicTableView() {
         super();
@@ -45,7 +47,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param items リストItems
      */
     public DynamicTableView(ObservableList<RudeArray> items) {
@@ -54,7 +57,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * TableViewのItemオブジェクトから行番号を取得する.
+     * TableViewのItemオブジェクトから行番号を取得する。
+     *
      * @param target 対象オブジェクト
      * @return 行インデックス
      */
@@ -70,7 +74,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * columnNameから対象カラムを取得する.
+     * columnNameから対象カラムを取得する。
+     *
      * @param id ID(columnName)
      * @return TableColumn
      */
@@ -84,7 +89,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * カラムを作成する.
+     * カラムを作成する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth カラム幅
@@ -103,7 +109,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * カラムを追加する.
+     * カラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param cellDataFeaturesCallback セルの値のプロパティを生成するコールバック
@@ -116,7 +123,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * カラムを追加する.
+     * カラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth 初期列幅
@@ -132,7 +140,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * String型を格納するカラムを作成する.
+     * String型を格納するカラムを作成する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth カラム幅
@@ -158,7 +167,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * String型のカラムを追加する.
+     * String型のカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param pos セルの文字配置
@@ -168,7 +178,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * String型のカラムを追加する.
+     * String型のカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth 初期列幅
@@ -208,7 +219,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Number型を格納するカラムを作成する.
+     * Number型を格納するカラムを作成する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth カラム幅
@@ -234,7 +246,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Number型のカラムを追加する.
+     * Number型のカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param pos セルの文字配置
@@ -245,7 +258,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Number型のカラムを追加する.
+     * Number型のカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth カラム幅
@@ -288,7 +302,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Integer型を格納するカラムを作成する.
+     * Integer型を格納するカラムを作成する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth カラム幅
@@ -314,7 +329,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Integer型のカラムを追加する.
+     * Integer型のカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param pos セルの文字配置
@@ -324,7 +340,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Integer型のカラムを追加する.
+     * Integer型のカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth カラム幅
@@ -366,7 +383,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Long型を格納するカラムを作成する.
+     * Long型を格納するカラムを作成する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth カラム幅
@@ -392,7 +410,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Long型のカラムを追加する.
+     * Long型のカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param pos セルの文字配置
@@ -402,7 +421,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Long型のカラムを追加する.
+     * Long型のカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth カラム幅
@@ -444,7 +464,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Double型を格納するカラムを作成する.
+     * Double型を格納するカラムを作成する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth カラム幅
@@ -470,7 +491,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Double型のカラムを追加する.
+     * Double型のカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param pos セルの文字配置
@@ -480,7 +502,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Double型のカラムを追加する.
+     * Double型のカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth カラム幅
@@ -522,7 +545,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Boolean型を格納するカラムを作成する.
+     * Boolean型を格納するカラムを作成する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth カラム幅
@@ -548,7 +572,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Boolean型のカラムを追加する.
+     * Boolean型のカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      */
@@ -557,7 +582,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Boolean型のカラムを追加する.
+     * Boolean型のカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth カラム幅
@@ -599,7 +625,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * CheckBoxカラムを追加する.
+     * CheckBoxカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth カラム幅
@@ -626,7 +653,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * IMEOffCheckBoxカラムを追加する.
+     * IMEOffCheckBoxカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth カラム幅
@@ -653,7 +681,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Date型を格納するカラムを作成する.
+     * Date型を格納するカラムを作成する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth カラム幅
@@ -679,7 +708,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Date型のカラムを追加する.
+     * Date型のカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param pos セルの文字配置
@@ -689,7 +719,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Date型のカラムを追加する.
+     * Date型のカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth カラム幅
@@ -731,7 +762,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Date型のカラムを追加する.
+     * Date型のカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param pos セルの文字配置
@@ -741,7 +773,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Date型のカラムを追加する.
+     * Date型のカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth カラム幅
@@ -783,7 +816,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Date型のカラムを追加する.
+     * Date型のカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param pos セルの文字配置
@@ -794,7 +828,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Date型のカラムを追加する.
+     * Date型のカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth カラム幅
@@ -837,7 +872,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Buttonカラムを追加する.
+     * Buttonカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param buttonText ボタンテキスト
@@ -848,7 +884,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Buttonカラムを追加する.
+     * Buttonカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth カラム幅
@@ -872,7 +909,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Buttonカラムを追加する.
+     * Buttonカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param buttonText ボタンテキスト
@@ -884,7 +922,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * Buttonカラムを追加する.
+     * Buttonカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth カラム幅
@@ -923,7 +962,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * EnterFireButtonカラムを追加する.
+     * EnterFireButtonカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param buttonText ボタンテキスト
@@ -934,7 +974,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * EnterFireButtonカラムを追加する.
+     * EnterFireButtonカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth カラム幅
@@ -958,7 +999,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * EnterFireButtonカラムを追加する.
+     * EnterFireButtonカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param buttonText ボタンテキスト
@@ -970,7 +1012,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * EnterFireButtonカラムを追加する.
+     * EnterFireButtonカラムを追加する。
+     *
      * @param columnName カラム名
      * @param columnHeaderText ヘッダーテキスト
      * @param prefWidth カラム幅
@@ -1009,7 +1052,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     }
 
     /**
-     * CellFactory内で生成されたCell内のNodeに対する処理を呼び出し元で定義させるクラス.
+     * CellFactory内で生成されたCell内のNodeに対する処理を呼び出し元で定義させるクラス。
+     *
      * @author hiro
      * @param <T> Nodeタイプ
      * @param <V> 値のタイプ
@@ -1017,7 +1061,8 @@ public class DynamicTableView extends TableView<RudeArray> {
     public static interface NodeCallback<T extends Node, V> {
 
         /**
-         * 呼び出し元で定義されたNodeに対する処理を実行する.
+         * 呼び出し元で定義されたNodeに対する処理を実行する。
+         *
          * @param node
          * @param cell
          */

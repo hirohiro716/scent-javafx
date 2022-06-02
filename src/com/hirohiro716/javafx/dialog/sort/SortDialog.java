@@ -29,7 +29,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 /**
- * LinkedHashMapの順番をユーザーに並び替えさせるダイアログを表示するクラス.
+ * LinkedHashMapの順番をユーザーに並び替えさせるダイアログを表示するクラス。
+ *
  * @author hiro
  * @param <E> ソートするItemの型
  */
@@ -57,7 +58,8 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
     private EnterFireButton buttonCancel;
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param sortableItems 並び替えるItem
      */
     public SortDialog(LinkedHashMap<E, String> sortableItems) {
@@ -141,7 +143,8 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
     }
 
     /**
-     * メッセージ内容をセットする.
+     * メッセージ内容をセットする。
+     *
      * @param message
      */
     public void setMessage(String message) {
@@ -153,7 +156,8 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
     }
 
     /**
-     * メッセージに代わるNodeをセットする.
+     * メッセージに代わるNodeをセットする。
+     *
      * @param node
      */
     public void setMessageNode(Node node) {
@@ -164,7 +168,8 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
     private boolean isCancelable = true;
 
     /**
-     * キャンセル可能かを設定する. 初期値はtrue.
+     * キャンセル可能かを設定する. 初期値はtrue。
+     *
      * @param isCancelable
      */
     public void setCancelable(boolean isCancelable) {
@@ -172,7 +177,8 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
     }
 
     /**
-     * キャンセル可能かを取得する.
+     * キャンセル可能かを取得する。
+     *
      * @return キャンセル可能か
      */
     public boolean isCancelable() {
@@ -180,7 +186,8 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
     }
 
     /**
-     * マウスのドラッグアンドドロップで順番変更を可能にするイベントをセットする.
+     * マウスのドラッグアンドドロップで順番変更を可能にするイベントをセットする。
+     *
      * @param <E> 
      * @param scrollPane
      * @param vbox

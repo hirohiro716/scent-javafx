@@ -17,7 +17,8 @@ public class ButtonTableCell<S> extends AbstractLiveControlTableCell<S, Void> {
     private Button button;
 
     /**
-     * コンストラクタでボタン押下時のイベントを指定する.
+     * コンストラクタでボタン押下時のイベントを指定する。
+     *
      * @param buttonText
      * @param actionEvent
      */
@@ -43,7 +44,8 @@ public class ButtonTableCell<S> extends AbstractLiveControlTableCell<S, Void> {
     }
 
     /**
-     * 内部のボタンを取得する.
+     * 内部のボタンを取得する。
+     *
      * @return Button
      */
     public Button getButton() {

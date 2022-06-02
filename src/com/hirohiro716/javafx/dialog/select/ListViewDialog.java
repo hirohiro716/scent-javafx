@@ -21,7 +21,8 @@ import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 
 /**
- * HashMapの値をユーザーに選択させるダイアログを表示するクラス.
+ * HashMapの値をユーザーに選択させるダイアログを表示するクラス。
+ *
  * @author hiro
  * @param <E> 選択するItemの型
  */
@@ -131,7 +132,8 @@ public class ListViewDialog<E> extends AbstractDialog<E> {
     }
 
     /**
-     * メッセージ内容をセットする.
+     * メッセージ内容をセットする。
+     *
      * @param message
      */
     public void setMessage(String message) {
@@ -143,7 +145,8 @@ public class ListViewDialog<E> extends AbstractDialog<E> {
     }
 
     /**
-     * メッセージに代わるNodeをセットする.
+     * メッセージに代わるNodeをセットする。
+     *
      * @param node
      */
     public void setMessageNode(Node node) {
@@ -154,7 +157,8 @@ public class ListViewDialog<E> extends AbstractDialog<E> {
     private HashMap<E, String> items;
 
     /**
-     * 並び替えるアイテムを指定する.
+     * 並び替えるアイテムを指定する。
+     *
      * @param items
      */
     public void setItems(HashMap<E, String> items) {
@@ -162,7 +166,8 @@ public class ListViewDialog<E> extends AbstractDialog<E> {
     }
 
     /**
-     * 並び替えるアイテムを取得する.
+     * 並び替えるアイテムを取得する。
+     *
      * @return items
      */
     public HashMap<E, String> getItems() {
@@ -172,7 +177,8 @@ public class ListViewDialog<E> extends AbstractDialog<E> {
     private boolean isCancelable = true;
 
     /**
-     * キャンセル可能かを設定する. 初期値はtrue.
+     * キャンセル可能かを設定する. 初期値はtrue。
+     *
      * @param isCancelable
      */
     public void setCancelable(boolean isCancelable) {
@@ -180,7 +186,8 @@ public class ListViewDialog<E> extends AbstractDialog<E> {
     }
 
     /**
-     * キャンセル可能かを取得する.
+     * キャンセル可能かを取得する。
+     *
      * @return キャンセル可能か
      */
     public boolean isCancelable() {

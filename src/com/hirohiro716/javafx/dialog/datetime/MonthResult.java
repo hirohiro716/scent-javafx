@@ -3,13 +3,15 @@ package com.hirohiro716.javafx.dialog.datetime;
 import com.hirohiro716.StringConverter;
 
 /**
- * 月の選択ダイアログの結果クラス.
+ * 月の選択ダイアログの結果クラス。
+ *
  * @author hiro
  */
 public class MonthResult {
     
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param year
      * @param month
      */
@@ -21,7 +23,8 @@ public class MonthResult {
     private int year;
     
     /**
-     * 年を取得する.
+     * 年を取得する。
+     *
      * @return 年
      */
     public int getYear() {
@@ -31,7 +34,8 @@ public class MonthResult {
     private int month;
     
     /**
-     * 月を取得する.
+     * 月を取得する。
+     *
      * @return 月
      */
     public int getMonth() {
@@ -41,6 +45,4 @@ public class MonthResult {
     @Override
     public String toString() {
         return StringConverter.join(this.year, "-", StringConverter.paddingLeft(String.valueOf(this.month), '0', 2));
-    }
-    
-}
+    }}

@@ -19,21 +19,24 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyEvent;
 
 /**
- * 入力制限機能を付けたComboBox.
+ * 入力制限機能を付けたComboBox。
+ *
  * @author hiro
  * @param <T>
  */
 public class LimitComboBox<T> extends ComboBox<T> {
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      */
     public LimitComboBox() {
         this(FXCollections.observableArrayList());
     }
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param items
      */
     public LimitComboBox(ObservableList<T> items) {
@@ -45,19 +48,22 @@ public class LimitComboBox<T> extends ComboBox<T> {
     }
 
     /**
-     * 値をBSやDELキーで消す事ができるかどうかを示すプロパティ.
+     * 値をBSやDELキーで消す事ができるかどうかを示すプロパティ。
+     *
      */
     public final BooleanProperty clearable = new SimpleBooleanProperty(false);
 
     /**
-     * 値をBSやDELキーで消す事ができるようになる.
+     * 値をBSやDELキーで消す事ができるようになる。
+     *
      * @param isClearable
      */
     public void setClearable(boolean isClearable) {
         this.clearable.set(isClearable);
     }
     /**
-     * 値をBSやDELキーで消すことができるかどうか.
+     * 値をBSやDELキーで消すことができるかどうか。
+     *
      * @return isClearable
      */
     public boolean getClearable() {
@@ -65,7 +71,8 @@ public class LimitComboBox<T> extends ComboBox<T> {
     }
 
     /**
-     * 値をBSやDELキーで消すことができるかどうか.
+     * 値をBSやDELキーで消すことができるかどうか。
+     *
      * @return isClearable
      */
     public boolean isClearable() {
@@ -78,7 +85,8 @@ public class LimitComboBox<T> extends ComboBox<T> {
     public final IntegerProperty maxLength = new SimpleIntegerProperty(-1);
 
     /**
-     * 最大文字数プロパティを取得する.
+     * 最大文字数プロパティを取得する。
+     *
      * @return IntegerProperty
      */
     public IntegerProperty maxLengthProperty() {
@@ -86,7 +94,8 @@ public class LimitComboBox<T> extends ComboBox<T> {
     }
 
     /**
-     * 最大文字数を取得する.
+     * 最大文字数を取得する。
+     *
      * @return 最大文字数
      */
     public int getMaxLength() {
@@ -94,7 +103,8 @@ public class LimitComboBox<T> extends ComboBox<T> {
     }
 
     /**
-     * 最大文字数をセットする.
+     * 最大文字数をセットする。
+     *
      * @param maxLength 最大文字数
      */
     public void setMaxLength(int maxLength) {
@@ -104,7 +114,8 @@ public class LimitComboBox<T> extends ComboBox<T> {
     private final ArrayList<Pattern> permitRegexs = new ArrayList<>();
 
     /**
-     * 正規表現のパターン配列を取得する.
+     * 正規表現のパターン配列を取得する。
+     *
      * @return Patternの配列
      */
     public Pattern[] getPermitRegexs() {
@@ -114,7 +125,8 @@ public class LimitComboBox<T> extends ComboBox<T> {
     private final ArrayList<Boolean> permitRegexReverses = new ArrayList<>();
 
     /**
-     * 正規表現に一致した文字列を許可するように設定する. 複数の追加が可能.
+     * 正規表現に一致した文字列を許可するように設定する. 複数の追加が可能。
+     *
      * @param permitRegex 正規表現Pattern
      * @param reverse 条件を逆転するか
      */
@@ -124,7 +136,8 @@ public class LimitComboBox<T> extends ComboBox<T> {
     }
 
     /**
-     * 正規表現を逆転するかの配列を取得します.
+     * 正規表現を逆転するかの配列を取得します。
+     *
      * @return 条件を逆転するかをbooleanで表した配列
      */
     public Boolean[] getPermitRegexReverses() {
@@ -134,7 +147,8 @@ public class LimitComboBox<T> extends ComboBox<T> {
     private StringConverter converter = null;
 
     /**
-     * フォーカス喪失時に値を変換するStringConverterインスタンスをセットする.
+     * フォーカス喪失時に値を変換するStringConverterインスタンスをセットする。
+     *
      * @param converter コンバーターインスタンス
      */
     public void setStringConverter(StringConverter converter) {
@@ -142,7 +156,8 @@ public class LimitComboBox<T> extends ComboBox<T> {
     }
 
     /**
-     * フォーカス喪失時に値を変換するStringConverterインスタンスを取得する.
+     * フォーカス喪失時に値を変換するStringConverterインスタンスを取得する。
+     *
      * @return converter コンバーターインスタンス
      */
     public StringConverter getStringConverter() {
@@ -150,7 +165,8 @@ public class LimitComboBox<T> extends ComboBox<T> {
     }
 
     /**
-     * テキストを精査して入力する.
+     * テキストを精査して入力する。
+     *
      */
     private ChangeListener<String> textChangeListener = new ChangeListener<String>() {
         @Override
@@ -193,7 +209,8 @@ public class LimitComboBox<T> extends ComboBox<T> {
     };
 
     /**
-     * フォーカス喪失時に有効な文字列にフォーマットする.
+     * フォーカス喪失時に有効な文字列にフォーマットする。
+     *
      */
     private ChangeListener<Boolean> convertTextListener = new ChangeListener<Boolean>() {
         @Override
@@ -208,7 +225,8 @@ public class LimitComboBox<T> extends ComboBox<T> {
     };
 
     /**
-     * フォーカス取得時に文字列をすべて選択する.
+     * フォーカス取得時に文字列をすべて選択する。
+     *
      */
     private ChangeListener<Boolean> textSelectAllListener = new ChangeListener<Boolean>() {
         @Override
@@ -225,7 +243,8 @@ public class LimitComboBox<T> extends ComboBox<T> {
     };
 
     /**
-     * BSやDELキーで値にnullを入力する.
+     * BSやDELキーで値にnullを入力する。
+     *
      */
     private EventHandler<KeyEvent> keyReleasedEventHanler = new EventHandler<KeyEvent>() {
         @Override

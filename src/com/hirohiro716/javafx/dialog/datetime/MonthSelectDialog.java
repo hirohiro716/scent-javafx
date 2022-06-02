@@ -26,7 +26,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 /**
- * 月の入力ダイアログを表示するクラス.
+ * 月の入力ダイアログを表示するクラス。
+ *
  * @author hiro
  */
 public class MonthSelectDialog extends AbstractDialog<MonthResult> {
@@ -53,14 +54,16 @@ public class MonthSelectDialog extends AbstractDialog<MonthResult> {
     private EnterFireButton buttonCancel;
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      */
     public MonthSelectDialog() {
         super();
     }
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param selectableYears 選択可能な年
      */
     public MonthSelectDialog(List<Integer> selectableYears) {
@@ -160,7 +163,8 @@ public class MonthSelectDialog extends AbstractDialog<MonthResult> {
     }
 
     /**
-     * メッセージ内容をセットする.
+     * メッセージ内容をセットする。
+     *
      * @param message
      */
     public void setMessage(String message) {
@@ -172,7 +176,8 @@ public class MonthSelectDialog extends AbstractDialog<MonthResult> {
     }
 
     /**
-     * メッセージに代わるNodeをセットする.
+     * メッセージに代わるNodeをセットする。
+     *
      * @param node
      */
     public void setMessageNode(Node node) {
@@ -183,7 +188,8 @@ public class MonthSelectDialog extends AbstractDialog<MonthResult> {
     private Integer defaultYear = null;
     
     /**
-     * 初期でセットする年をセットする.
+     * 初期でセットする年をセットする。
+     *
      * @param year
      */
     public void setDefaultYear(int year) {
@@ -193,7 +199,8 @@ public class MonthSelectDialog extends AbstractDialog<MonthResult> {
     private Integer defaultMonth = null;
     
     /**
-     * 初期でセットする月をセットする.
+     * 初期でセットする月をセットする。
+     *
      * @param month
      */
     public void setDefaultMonth(int month) {
@@ -203,7 +210,8 @@ public class MonthSelectDialog extends AbstractDialog<MonthResult> {
     private boolean isCancelable = true;
 
     /**
-     * キャンセル可能かを設定する. 初期値はtrue.
+     * キャンセル可能かを設定する. 初期値はtrue。
+     *
      * @param isCancelable
      */
     public void setCancelable(boolean isCancelable) {
@@ -211,11 +219,10 @@ public class MonthSelectDialog extends AbstractDialog<MonthResult> {
     }
 
     /**
-     * キャンセル可能かを取得する.
+     * キャンセル可能かを取得する。
+     *
      * @return キャンセル可能か
      */
     public boolean isCancelable() {
         return this.isCancelable;
-    }
-    
-}
+    }}

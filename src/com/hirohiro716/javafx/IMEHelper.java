@@ -11,13 +11,15 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 /**
- * キーボードのショートカットキーをシミュレートしてIMEを制御しようとするクラス.
+ * キーボードのショートカットキーをシミュレートしてIMEを制御しようとするクラス。
+ *
  * @author hiro
  */
 public class IMEHelper {
     
     /**
-     * コントロールにIME制御用のListenerを付与する.
+     * コントロールにIME制御用のListenerを付与する。
+     *
      * @param <T> javafx.scene.control.Controlを継承したクラスオブジェクト
      * @param control コントロール
      * @param imeMode IMEモード
@@ -47,7 +49,8 @@ public class IMEHelper {
     private static boolean IS_SHIFT_DOWN = false;
     
     /**
-     * 内部のRobotJapaneseインスタンスを取得する.
+     * 内部のRobotJapaneseインスタンスを取得する。
+     *
      * @return RobotJapanese
      */
     public static RobotJapanese getRobotInstance() {
@@ -58,35 +61,40 @@ public class IMEHelper {
     }
     
     /**
-     * IMEをOFFにする.
+     * IMEをOFFにする。
+     *
      */
     public static void changeIMEOff() {
         getRobotInstance().changeIMEOff();
     }
 
     /**
-     * IMEをひらがなにする.
+     * IMEをひらがなにする。
+     *
      */
     public static void changeIMEHiragana() {
         getRobotInstance().changeIMEHiragana();
     }
 
     /**
-     * IMEを全角カタカナにする.
+     * IMEを全角カタカナにする。
+     *
      */
     public static void changeIMEKatakanaWide() {
         getRobotInstance().changeIMEKatakanaWide();
     }
 
     /**
-     * IMEを半角ｶﾀｶﾅにする.
+     * IMEを半角ｶﾀｶﾅにする。
+     *
      */
     public static void changeIMEKatakanaNarrow() {
         getRobotInstance().changeIMEKatakanaNarrow();
     }
     
     /**
-     * IMEの変更を試みる実行Runnableクラス.
+     * IMEの変更を試みる実行Runnableクラス。
+     *
      * @author hiro
      */
     private static class IMEChangeRunnable implements Runnable {
@@ -94,7 +102,8 @@ public class IMEHelper {
         private IMEMode imeMode;
         
         /**
-         * コンストラクタ.
+         * コンストラクタ。
+         *
          * @param imeMode
          */
         public IMEChangeRunnable(IMEMode imeMode) {
@@ -120,18 +129,18 @@ public class IMEHelper {
                 getRobotInstance().changeIMEKatakanaNarrow();
                 break;
             }
-        }
-        
-    }
+        }    }
 
     /**
-     * フォーカス取得時にIMEモードを変更するクラス.
+     * フォーカス取得時にIMEモードを変更するクラス。
+     *
      * @author hiro
      */
     private static class IMEChangeFocusedChangeListener implements ChangeListener<Boolean> {
         
         /**
-         * コンストラクタ.
+         * コンストラクタ。
+         *
          * @param imeChangeRunnable
          */
         public IMEChangeFocusedChangeListener(IMEChangeRunnable imeChangeRunnable) {
@@ -146,8 +155,4 @@ public class IMEHelper {
                 IMEChangeFocusedChangeListener listener = IMEChangeFocusedChangeListener.this;
                 listener.imeChangeRunnable.run();
             }
-        }
-        
-    }
-    
-}
+        }    }}

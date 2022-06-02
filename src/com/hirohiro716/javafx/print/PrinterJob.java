@@ -28,18 +28,21 @@ import javafx.scene.transform.Transform;
 import javafx.scene.transform.Translate;
 
 /**
- * AbstractPrintingPaneBuilderを印刷するクラス.
+ * AbstractPrintingPaneBuilderを印刷するクラス。
+ *
  * @author hiro
  */
 public class PrinterJob {
 
     /**
-     * "印刷失敗" というダイアログタイトル用の文字列.
+     * "印刷失敗" というダイアログタイトル用の文字列。
+     *
      */
     public static final String ERROR_DIALOG_TITLE_PRINT = "印刷失敗";
 
     /**
-     * すべてのプリンタを取得する.
+     * すべてのプリンタを取得する。
+     *
      * @return すべてのプリンタ
      */
     public static ObservableSet<Printer> fetchAllPrinters() {
@@ -47,7 +50,8 @@ public class PrinterJob {
     }
     
     /**
-     * すべてのプリンタ名を取得する.
+     * すべてのプリンタ名を取得する。
+     *
      * @return すべてのプリンタの名前
      */
     public static ObservableList<String> fetchAllPrinterNames() {
@@ -61,7 +65,8 @@ public class PrinterJob {
     private Printer printer;
 
     /**
-     * 印刷に使用するプリンタを取得する.
+     * 印刷に使用するプリンタを取得する。
+     *
      * @return 印刷用プリンタ
      */
     public Printer getPrinter() {
@@ -69,7 +74,8 @@ public class PrinterJob {
     }
 
     /**
-     * コンストラクタ デフォルトプリンタを使用する.
+     * コンストラクタ デフォルトプリンタを使用する。
+     *
      * @throws NullPointerException デフォルトプリンタが設定されていない場合
      */
     public PrinterJob() throws NullPointerException {
@@ -80,7 +86,8 @@ public class PrinterJob {
     }
 
     /**
-     * コンストラクタ プリンタを指定する.
+     * コンストラクタ プリンタを指定する。
+     *
      * @param printer
      * @throws NullPointerException
      */
@@ -92,7 +99,8 @@ public class PrinterJob {
     }
 
     /**
-     * コンストラクタ 名前でプリンタを指定する.
+     * コンストラクタ 名前でプリンタを指定する。
+     *
      * @param printerName
      * @throws NullPointerException 指定されてプリンタが存在しない場合
      */
@@ -110,7 +118,8 @@ public class PrinterJob {
     private String jobName = "JavaFX print job";
 
     /**
-     * 印刷ジョブ名を指定する.
+     * 印刷ジョブ名を指定する。
+     *
      * @param jobName
      */
     public void setJobName(String jobName) {
@@ -118,7 +127,8 @@ public class PrinterJob {
     }
     
     /**
-     * プリンタでサポートしている用紙トレイを取得する.
+     * プリンタでサポートしている用紙トレイを取得する。
+     *
      * @return サポートされている用紙トレイ
      */
     public Set<PaperSource> fetchSupportedPaperSources() {
@@ -126,7 +136,8 @@ public class PrinterJob {
     }
 
     /**
-     * プリンタでサポートしている用紙トレイ名を取得する.
+     * プリンタでサポートしている用紙トレイ名を取得する。
+     *
      * @return サポートされている用紙トレイ名
      */
     public ObservableList<String> fetchSupportedPaperSourceNames() {
@@ -140,7 +151,8 @@ public class PrinterJob {
     private PaperSource paperSource = null;
 
     /**
-     * 印刷に使用する用紙トレイを指定する.
+     * 印刷に使用する用紙トレイを指定する。
+     *
      * @param paperSource
      */
     public void setPaperSource(PaperSource paperSource) {
@@ -148,7 +160,8 @@ public class PrinterJob {
     }
 
     /**
-     * 印刷に使用する用紙トレイを指定する.
+     * 印刷に使用する用紙トレイを指定する。
+     *
      * @param paperSourceName
      */
     public void setPaperSource(String paperSourceName) {
@@ -160,7 +173,8 @@ public class PrinterJob {
     }
 
     /**
-     * プリンタでサポートしている用紙を取得する.
+     * プリンタでサポートしている用紙を取得する。
+     *
      * @return サポートされている用紙
      */
     public ObservableList<Paper> fetchSupportedPapers() {
@@ -172,7 +186,8 @@ public class PrinterJob {
     }
 
     /**
-     * プリンタでサポートしている用紙名を取得する.
+     * プリンタでサポートしている用紙名を取得する。
+     *
      * @return サポートされている用紙名
      */
     public ObservableList<String> fetchSupportedPaperNames() {
@@ -186,7 +201,8 @@ public class PrinterJob {
     private Paper paper = null;
 
     /**
-     * 印刷に使用する用紙を指定する.
+     * 印刷に使用する用紙を指定する。
+     *
      * @param paper 用紙種類
      */
     public void setPaper(Paper paper) {
@@ -194,7 +210,8 @@ public class PrinterJob {
     }
 
     /**
-     * 印刷に使用する用紙を設定する.
+     * 印刷に使用する用紙を設定する。
+     *
      * @param paperName 用紙名
      */
     public void setPaper(String paperName) {
@@ -206,7 +223,8 @@ public class PrinterJob {
     }
     
     /**
-     * 印刷に使用する用紙を設定する.
+     * 印刷に使用する用紙を設定する。
+     *
      * @param width 用紙幅
      * @param height 用紙高さ
      */
@@ -215,7 +233,8 @@ public class PrinterJob {
     }
     
     /**
-     * 指定サイズの用紙を作成する.
+     * 指定サイズの用紙を作成する。
+     *
      * @param width 用紙幅
      * @param height 用紙高さ
      * @return Paper
@@ -233,7 +252,8 @@ public class PrinterJob {
     }
 
     /**
-     * 印刷に使用する用紙を設定する.
+     * 印刷に使用する用紙を設定する。
+     *
      * @param millimeterWidth 用紙幅
      * @param millimeterHeight 用紙高さ
      */
@@ -242,7 +262,8 @@ public class PrinterJob {
     }
 
     /**
-     * 指定サイズの用紙を作成する.
+     * 指定サイズの用紙を作成する。
+     *
      * @param millimeterWidth 用紙幅
      * @param millimeterHeight 用紙高さ
      * @return Paper
@@ -262,7 +283,8 @@ public class PrinterJob {
     }
     
     /**
-     * プリンタでサポートしている用紙向きを取得する.
+     * プリンタでサポートしている用紙向きを取得する。
+     *
      * @return サポートされている用紙向き
      */
     public Set<PageOrientation> fetchSupportedPageOrientations() {
@@ -272,7 +294,8 @@ public class PrinterJob {
     private PageOrientation pageOrientation = null;
 
     /**
-     * 印刷に使用する用紙向きを指定する.
+     * 印刷に使用する用紙向きを指定する。
+     *
      * @param pageOrientation 向き
      */
     public void setPageOrientation(PageOrientation pageOrientation) {
@@ -280,7 +303,8 @@ public class PrinterJob {
     }
 
     /**
-     * 印刷に使用する用紙向きを指定する.
+     * 印刷に使用する用紙向きを指定する。
+     *
      * @param pageOrientation 向き
      */
     public void setPageOrientation(com.hirohiro716.print.PageOrientation pageOrientation) {
@@ -309,7 +333,8 @@ public class PrinterJob {
     private double topMargin = 0;
 
     /**
-     * 印刷に使用する余白を指定する.
+     * 印刷に使用する余白を指定する。
+     *
      * @param left
      * @param top
      */
@@ -319,7 +344,8 @@ public class PrinterJob {
     }
 
     /**
-     * 印刷に使用する余白を指定する.
+     * 印刷に使用する余白を指定する。
+     *
      * @param millimeterLeft
      * @param millimeterTop
      */
@@ -331,7 +357,8 @@ public class PrinterJob {
     private int copies = 1;
 
     /**
-     * 印刷部数を指定する.
+     * 印刷部数を指定する。
+     *
      * @param copies
      */
     public void setCopies(int copies) {
@@ -341,7 +368,8 @@ public class PrinterJob {
     private PrintColor printColor = null;
 
     /**
-     * カラーモードを指定する.
+     * カラーモードを指定する。
+     *
      * @param printColor
      */
     public void setPrintColor(PrintColor printColor) {
@@ -351,7 +379,8 @@ public class PrinterJob {
     private PrintQuality printQuality = null;
 
     /**
-     * 印刷品質を指定する.
+     * 印刷品質を指定する。
+     *
      * @param printQuality
      */
     public void setPrintQuality(PrintQuality printQuality) {
@@ -361,7 +390,8 @@ public class PrinterJob {
     private PrintSides printSides = null;
 
     /**
-     * 両面印刷モードを指定する.
+     * 両面印刷モードを指定する。
+     *
      * @param printSides
      */
     public void setPrintSides(PrintSides printSides) {
@@ -371,7 +401,8 @@ public class PrinterJob {
     private javafx.print.PrinterJob printerJob = null;
     
     /**
-     * 印刷ジョブを開始する.
+     * 印刷ジョブを開始する。
+     *
      * @throws PrintException 印刷ジョブの作成に失敗した場合
      */
     public void start() throws PrintException {
@@ -420,7 +451,8 @@ public class PrinterJob {
     private HashMap<Pane, ArrayList<Transform>> hashMapBackupTransforms = new HashMap<>();
     
     /**
-     * 余白と用紙向きをTransformで実現する.
+     * 余白と用紙向きをTransformで実現する。
+     *
      * @param pane 対象
      */
     private void applyMarginAndOrientation(Pane pane) {
@@ -455,7 +487,8 @@ public class PrinterJob {
     }
     
     /**
-     * 余白と用紙向きのTransformを取り除く.
+     * 余白と用紙向きのTransformを取り除く。
+     *
      * @param pane 対象
      */
     private void removeMarginAndOrientation(Pane pane) {
@@ -464,7 +497,8 @@ public class PrinterJob {
     }
     
     /**
-     * ページを印刷する.
+     * ページを印刷する。
+     *
      * @param pane
      * @throws PrintException 印刷ジョブの作成に失敗した場合
      */
@@ -478,7 +512,8 @@ public class PrinterJob {
     }
 
     /**
-     * ページを印刷する. このメソッド内でAbstractPrintingPaneBuilderのbuildが自動で呼ばれる.
+     * ページを印刷する. このメソッド内でAbstractPrintingPaneBuilderのbuildが自動で呼ばれる。
+     *
      * @param page AbstractPrintingPaneBuilderを継承したクラスのインスタンス
      * @throws PrintException 印刷ジョブの作成に失敗した場合
      */
@@ -493,10 +528,9 @@ public class PrinterJob {
     }
     
     /**
-     * 印刷ジョブを終了する.
+     * 印刷ジョブを終了する。
+     *
      */
     public void end() {
         this.printerJob.endJob();
-    }
-    
-}
+    }}

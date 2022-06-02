@@ -13,13 +13,15 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 /**
- * ColumnとRowの概念があり 様々なコントロールを行として並べて表示し 複数のRudeArrayオブジェクトを編集するクラス.
+ * ColumnとRowの概念があり 様々なコントロールを行として並べて表示し 複数のRudeArrayオブジェクトを編集するクラス。
+ *
  * @author hiro
  */
 public class RudeArrayTable extends EditableTable<RudeArray> {
 
     /**
-     * Labelを内包するセルを追加する.
+     * Labelを内包するセルを追加する。
+     *
      * @param <T> コントロールの型
      * @param id 任意のカラムID
      * @param text ヘッダーテキスト
@@ -39,7 +41,8 @@ public class RudeArrayTable extends EditableTable<RudeArray> {
     }
 
     /**
-     * TextFieldを内包するセルを追加する.
+     * TextFieldを内包するセルを追加する。
+     *
      * @param <T> コントロールの型
      * @param id 任意のカラムID
      * @param text ヘッダーテキスト
@@ -63,7 +66,8 @@ public class RudeArrayTable extends EditableTable<RudeArray> {
     }
 
     /**
-     * TextAreaを内包するセルを追加する.
+     * TextAreaを内包するセルを追加する。
+     *
      * @param <T> コントロールの型
      * @param id 任意のカラムID
      * @param text ヘッダーテキスト
@@ -87,7 +91,8 @@ public class RudeArrayTable extends EditableTable<RudeArray> {
     }
 
     /**
-     * PasswordFieldを内包するセルを追加する.
+     * PasswordFieldを内包するセルを追加する。
+     *
      * @param <T> コントロールの型
      * @param id 任意のカラムID
      * @param text ヘッダーテキスト
@@ -111,7 +116,8 @@ public class RudeArrayTable extends EditableTable<RudeArray> {
     }
 
     /**
-     * ComboBoxを内包するセルを追加する.
+     * ComboBoxを内包するセルを追加する。
+     *
      * @param <T> コントロールの型
      * @param <V> コンボボックスの値型
      * @param id 任意のカラムID
@@ -137,7 +143,8 @@ public class RudeArrayTable extends EditableTable<RudeArray> {
     }
 
     /**
-     * HashMapComboBoxを内包するセルを追加する.
+     * HashMapComboBoxを内包するセルを追加する。
+     *
      * @param <K> HashMapComboBoxのキー型
      * @param <V> HashMapComboBoxの値型
      * @param id 任意のカラムID
@@ -163,7 +170,8 @@ public class RudeArrayTable extends EditableTable<RudeArray> {
     }
     
     /**
-     * RudeDatePickerを内包するセルを追加する.
+     * RudeDatePickerを内包するセルを追加する。
+     *
      * @param id 任意のカラムID
      * @param text ヘッダーテキスト
      * @param controlFactory コントロールを生成するCallback
@@ -186,7 +194,8 @@ public class RudeArrayTable extends EditableTable<RudeArray> {
     }
 
     /**
-     * CheckBoxを内包するセルを追加する.
+     * CheckBoxを内包するセルを追加する。
+     *
      * @param <T> コントロールの型
      * @param id 任意のカラムID
      * @param text ヘッダーテキスト
@@ -212,7 +221,8 @@ public class RudeArrayTable extends EditableTable<RudeArray> {
     }
 
     /**
-     * Hyperlinkを内包するセルを追加する.
+     * Hyperlinkを内包するセルを追加する。
+     *
      * @param <T> コントロールの型
      * @param id 任意のカラムID
      * @param text ヘッダーテキスト
@@ -232,7 +242,8 @@ public class RudeArrayTable extends EditableTable<RudeArray> {
     }
 
     /**
-     * セルに内包するコントロールを生成し値の受け渡しを行うCallbackクラス.
+     * セルに内包するコントロールを生成し値の受け渡しを行うCallbackクラス。
+     *
      * @author hiro
      * @param <T> Control型
      */
@@ -246,8 +257,4 @@ public class RudeArrayTable extends EditableTable<RudeArray> {
         @Override
         public final void setValueForItem(RudeArray item, T control) {
             // nop 上でそれぞれOverrideする
-        }
-        
-    }
-    
-}
+        }    }}

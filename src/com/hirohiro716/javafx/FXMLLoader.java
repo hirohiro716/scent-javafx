@@ -6,13 +6,15 @@ import java.net.URL;
 import javafx.scene.layout.Pane;
 
 /**
- * FXMLからPaneとControllerを生成する.
+ * FXMLからPaneとControllerを生成する。
+ *
  * @author hiro
  */
 public class FXMLLoader {
 
     /**
-     * コンストラクタ.
+     * コンストラクタ。
+     *
      * @param fxmlURL FXMLのURL
      * @throws IOException
      */
@@ -50,7 +52,8 @@ public class FXMLLoader {
     private Pane paneRoot;
 
     /**
-     * 生成されたPaneを取得する.
+     * 生成されたPaneを取得する。
+     *
      * @return Paneインスタンス
      */
     public Pane getPaneRoot() {
@@ -60,7 +63,8 @@ public class FXMLLoader {
     private Object controller;
 
     /**
-     * 生成されたControllerを取得する.
+     * 生成されたControllerを取得する。
+     *
      * @return Controllerインスタンス
      */
     public Object getController() {
@@ -68,7 +72,8 @@ public class FXMLLoader {
     }
 
     /**
-     * FXMLをロードしコントローラーインスタンスと関連付ける.
+     * FXMLをロードしコントローラーインスタンスと関連付ける。
+     *
      * @param fxmlURL FXMLのURL
      * @param controller コントローラー
      * @return 生成されたPaneインスタンス
