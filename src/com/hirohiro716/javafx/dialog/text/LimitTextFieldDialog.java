@@ -239,5 +239,4 @@ public class LimitTextFieldDialog extends AbstractDialog<String> {
     public boolean isCancelable() {
         return this.isCancelable;
     }
-
 }

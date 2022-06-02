@@ -107,5 +107,4 @@ public class ReadonlyCheckBox extends IMEOffCheckBox {
     public boolean isReadonly() {
         return this.readonly.getValue();
     }
-
 }

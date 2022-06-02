@@ -230,5 +230,4 @@ public class Alert extends AbstractDialog<DialogResult> {
         dialog.setCloseEvent(closeEvent);
         dialog.showOnPane(parent);
     }
-
 }

@@ -140,5 +140,4 @@ public class PaneHelper {
             pane.getStyleClass().add(id);
         }
     }
-
 }

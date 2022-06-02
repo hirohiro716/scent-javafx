@@ -186,5 +186,4 @@ public class ComboBoxDialog<T> extends AbstractDialog<T> {
     public void setCancelable(boolean isCancelable) {
         this.isCancelable = isCancelable;
     }
-
 }

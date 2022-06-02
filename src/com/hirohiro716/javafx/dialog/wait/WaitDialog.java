@@ -147,5 +147,4 @@ public class WaitDialog<T> extends AbstractDialog<T> {
     public void setException(Exception exception) {
         this.exception = exception;
     }
-
 }

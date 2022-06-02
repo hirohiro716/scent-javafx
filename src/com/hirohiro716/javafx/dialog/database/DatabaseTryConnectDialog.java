@@ -102,7 +102,6 @@ public class DatabaseTryConnectDialog<D extends AbstractDatabase> {
                 this.questionDialogCallback.call(question);
             }
         }
-
     }
     
     /**
@@ -166,7 +165,6 @@ public class DatabaseTryConnectDialog<D extends AbstractDatabase> {
                 this.questionDialogCallback.call(question);
             }
         }
-
     }
 
     /**

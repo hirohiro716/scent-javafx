@@ -216,5 +216,4 @@ public class ToggleButtonDialog<E> extends AbstractDialog<LinkedHashMap<E, Strin
     public boolean isCancelable() {
         return this.isCancelable;
     }
-
 }

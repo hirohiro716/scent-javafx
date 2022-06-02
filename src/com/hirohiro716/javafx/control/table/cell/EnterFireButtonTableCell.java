@@ -65,5 +65,4 @@ public class EnterFireButtonTableCell<S> extends AbstractLiveControlTableCell<S,
     @Override
     public void commitEdit() {
     }
-
 }

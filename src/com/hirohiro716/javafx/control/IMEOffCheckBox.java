@@ -35,5 +35,4 @@ public class IMEOffCheckBox extends CheckBox {
             }
         });
     }
-
 }

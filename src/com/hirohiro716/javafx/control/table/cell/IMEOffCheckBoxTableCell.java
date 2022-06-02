@@ -67,5 +67,4 @@ public abstract class IMEOffCheckBoxTableCell<S> extends AbstractLiveControlTabl
     public void processOfSetEditable(boolean isEditable) {
         this.checkBox.setDisable(isEditable == false);
     }
-
 }

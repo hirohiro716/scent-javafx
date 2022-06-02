@@ -68,5 +68,4 @@ public class TypingTask implements InterfaceTypingTask<Integer> {
     public void execute() {
         this.typingTask.execute();
     }
-
 }

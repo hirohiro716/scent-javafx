@@ -306,5 +306,4 @@ public class PaneNodeFinder {
     public Hyperlink findHyperlink(String selector) {
         return PaneHelper.findNode(this.pane, Hyperlink.class, selector);
     }
-
 }

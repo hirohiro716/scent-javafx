@@ -105,5 +105,4 @@ public class LayoutHelper {
         }
         return font;
     }
-
 }

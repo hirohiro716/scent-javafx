@@ -252,5 +252,4 @@ public class DatetimePickerDialog extends AbstractDialog<Date> {
     public boolean isTimeInput() {
         return this.isTimeInput;
     }
-
 }

@@ -187,5 +187,4 @@ public class ProgressDialog<T> extends AbstractDialog<T> {
     public void setException(Exception exception) {
         this.exception = exception;
     }
-
 }

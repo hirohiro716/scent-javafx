@@ -204,7 +204,6 @@ public class LimitComboBox<T> extends ComboBox<T> {
                 }
             } catch (Exception exception) {
             }
-
         }
     };
 

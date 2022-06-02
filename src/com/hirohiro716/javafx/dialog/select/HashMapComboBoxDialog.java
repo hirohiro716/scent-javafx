@@ -196,5 +196,4 @@ public class HashMapComboBoxDialog<K, V> extends AbstractDialog<K> {
     public boolean isCancelable() {
         return this.isCancelable;
     }
-
 }

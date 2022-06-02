@@ -780,5 +780,4 @@ public abstract class AbstractPrintingPaneBuilder {
         public void call(Canvas canvas);
 
     }
-
 }

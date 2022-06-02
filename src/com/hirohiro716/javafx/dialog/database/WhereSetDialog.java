@@ -771,7 +771,6 @@ public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
             Control[] controls = dialog.createValueControl(this.columnName, comparison);
             hbox.getChildren().addAll(controls);
         }
-
     }
 
     /**

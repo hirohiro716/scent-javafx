@@ -308,5 +308,4 @@ public class SortDialog<E> extends AbstractDialog<LinkedHashMap<E, String>> {
             });
         }
     }
-
 }

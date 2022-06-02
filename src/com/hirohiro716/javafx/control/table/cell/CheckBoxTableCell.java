@@ -66,5 +66,4 @@ public abstract class CheckBoxTableCell<S> extends AbstractLiveControlTableCell<
     public void processOfSetEditable(boolean isEditable) {
         this.checkBox.setDisable(isEditable == false);
     }
-
 }

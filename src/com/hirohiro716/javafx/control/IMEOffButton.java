@@ -47,5 +47,4 @@ public class IMEOffButton extends Button {
             }
         });
     }
-
 }

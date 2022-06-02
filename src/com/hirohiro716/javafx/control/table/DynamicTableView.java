@@ -1069,5 +1069,4 @@ public class DynamicTableView extends TableView<RudeArray> {
         public void call(T node, TableCell<RudeArray, V> cell);
 
     }
-
 }

@@ -608,5 +608,4 @@ public abstract class AbstractDatabaseSearcher<T extends AbstractBindTable> {
         }
         this.stageBuilder.close();
     }
-
 }

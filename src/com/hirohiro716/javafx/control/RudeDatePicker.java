@@ -159,7 +159,6 @@ public class RudeDatePicker extends DatePicker {
                 RudeDatePicker picker = RudeDatePicker.this;
                 picker.convertDateString();
             }
-
         }
     };
     

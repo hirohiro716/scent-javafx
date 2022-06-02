@@ -243,5 +243,4 @@ public class FullQuestion extends AbstractDialog<DialogResult> {
         dialog.setCloseEvent(closeEvent);
         dialog.showOnPane(parent);
     }
-
 }

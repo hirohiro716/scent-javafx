@@ -77,5 +77,4 @@ public class JAN13Helper extends com.hirohiro716.barcode.JAN13Helper {
         drawingX += (moduleOne * 2);
         graphicsContext.fillRect(drawingX, y, moduleOne, height);
     }
-
 }

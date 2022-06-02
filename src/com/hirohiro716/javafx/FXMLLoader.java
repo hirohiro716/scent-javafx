@@ -83,5 +83,4 @@ public class FXMLLoader {
         FXMLLoader instance = new FXMLLoader(fxmlURL, controller);
         return instance.getPaneRoot();
     }
-
 }

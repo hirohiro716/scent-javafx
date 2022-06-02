@@ -193,5 +193,4 @@ public class ListViewDialog<E> extends AbstractDialog<E> {
     public boolean isCancelable() {
         return this.isCancelable;
     }
-
 }

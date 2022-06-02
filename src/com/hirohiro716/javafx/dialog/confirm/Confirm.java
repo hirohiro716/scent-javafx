@@ -229,5 +229,4 @@ public class Confirm extends AbstractDialog<DialogResult> {
         dialog.setCloseEvent(closeEvent);
         dialog.showOnPane(parent);
     }
-
 }

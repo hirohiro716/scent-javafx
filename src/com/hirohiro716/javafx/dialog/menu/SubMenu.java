@@ -184,5 +184,4 @@ public class SubMenu extends AbstractDialog<Void> {
     public FlowPane getFlowPane() {
         return this.flowPaneNodes;
     }
-
 }

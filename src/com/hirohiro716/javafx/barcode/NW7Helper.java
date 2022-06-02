@@ -51,5 +51,4 @@ public class NW7Helper extends com.hirohiro716.barcode.NW7Helper {
             printX += characterBase * gap;
         }
     }
-
 }

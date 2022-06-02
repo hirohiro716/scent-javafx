@@ -64,5 +64,4 @@ public class ButtonTableCell<S> extends AbstractLiveControlTableCell<S, Void> {
     @Override
     public void commitEdit() {
     }
-
 }
