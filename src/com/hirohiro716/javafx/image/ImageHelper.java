@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
  * Imageの扱いを補助するクラス。
  *
  * @author hiro
+ *
  */
 public class ImageHelper {
     

@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
  * インスタントメッセージを表示するクラス。
  *
  * @author hiro
+ *
  */
 public class InstantAlert {
 

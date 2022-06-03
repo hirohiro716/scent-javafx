@@ -21,6 +21,7 @@ import javafx.scene.layout.Region;
  * 入力制限機能を付けたTextArea。
  *
  * @author hiro
+ *
  */
 public class LimitTextArea extends TextArea {
 

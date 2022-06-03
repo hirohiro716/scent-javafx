@@ -20,6 +20,7 @@ import javafx.scene.input.KeyEvent;
  * 少し乱暴な入力にも臨機応変に対応するDatePicker。
  *
  * @author hiro
+ *
  */
 public class RudeDatePicker extends DatePicker {
 

@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
  * NodeのローカルCSSの扱いを補助するクラス。
  *
  * @author hiro
+ *
  */
 public class CSSHelper {
     

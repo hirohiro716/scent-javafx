@@ -52,6 +52,7 @@ import javafx.scene.layout.VBox;
  * WhereSet配列を作成するダイアログを表示するクラス。
  *
  * @author hiro
+ *
  */
 public class WhereSetDialog extends AbstractDialog<WhereSet[]> {
     

@@ -29,6 +29,7 @@ import javafx.scene.layout.Pane;
  * 月の入力ダイアログを表示するクラス。
  *
  * @author hiro
+ *
  */
 public class MonthSelectDialog extends AbstractDialog<MonthResult> {
 

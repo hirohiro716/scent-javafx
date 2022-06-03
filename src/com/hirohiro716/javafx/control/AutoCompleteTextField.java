@@ -20,6 +20,7 @@ import javafx.stage.Screen;
  * 自動補完機能付きのLimitTextField。
  *
  * @author hiro
+ *
  */
 public class AutoCompleteTextField extends LimitTextField {
 

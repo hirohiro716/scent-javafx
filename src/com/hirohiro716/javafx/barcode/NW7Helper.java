@@ -8,6 +8,7 @@ import javafx.scene.canvas.GraphicsContext;
  * JavaFXでバーコードを生成するクラス。
  *
  * @author hiro
+ *
  */
 public class NW7Helper extends com.hirohiro716.barcode.NW7Helper {
 

@@ -6,6 +6,7 @@ import com.hirohiro716.StringConverter;
  * 月の選択ダイアログの結果クラス。
  *
  * @author hiro
+ *
  */
 public class MonthResult {
     

@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
  * FXMLからPaneとControllerを生成する。
  *
  * @author hiro
+ *
  */
 public class FXMLLoader {
 

@@ -30,6 +30,7 @@ import javafx.scene.text.Text;
  * JavaFXで印刷するために最適化されたPaneの抽象クラス。
  *
  * @author hiro
+ *
  */
 public abstract class AbstractPrintingPaneBuilder {
 

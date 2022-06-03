@@ -29,6 +29,7 @@ import javafx.scene.layout.Pane;
  * TextField入力ダイアログを表示するクラス。
  *
  * @author hiro
+ *
  */
 public class LimitTextFieldDialog extends AbstractDialog<String> {
 

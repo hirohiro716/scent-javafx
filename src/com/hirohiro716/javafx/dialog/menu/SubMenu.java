@@ -21,6 +21,7 @@ import javafx.scene.layout.Pane;
  * サブメニューを表示するクラス。
  *
  * @author hiro
+ *
  */
 public class SubMenu extends AbstractDialog<Void> {
 

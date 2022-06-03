@@ -31,6 +31,7 @@ import javafx.scene.layout.VBox;
  * Pnae内のコントロールを検索して取得するクラス。
  *
  * @author hiro
+ *
  */
 public class PaneNodeFinder {
 

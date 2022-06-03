@@ -31,6 +31,7 @@ import javafx.scene.transform.Translate;
  * AbstractPrintingPaneBuilderを印刷するクラス。
  *
  * @author hiro
+ *
  */
 public class PrinterJob {
 

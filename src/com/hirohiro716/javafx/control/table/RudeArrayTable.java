@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
  * ColumnとRowの概念があり 様々なコントロールを行として並べて表示し 複数のRudeArrayオブジェクトを編集するクラス。
  *
  * @author hiro
+ *
  */
 public class RudeArrayTable extends EditableTable<RudeArray> {
 

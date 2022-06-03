@@ -15,6 +15,7 @@ import javafx.stage.WindowEvent;
  * JavaFXのStage構成を補助するクラス。
  *
  * @author hiro
+ *
  */
 public class StageBuilder {
 

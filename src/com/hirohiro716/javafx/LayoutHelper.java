@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
  * JavaFXのレイアウトを補助する。
  *
  * @author hiro
+ *
  */
 public class LayoutHelper {
 

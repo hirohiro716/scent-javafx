@@ -23,6 +23,7 @@ import javafx.stage.Stage;
  * 確認メッセージ(OK/Cancel)を表示するクラス。
  *
  * @author hiro
+ *
  */
 public class Confirm extends AbstractDialog<DialogResult> {
 

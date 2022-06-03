@@ -5,6 +5,7 @@ import javafx.application.Platform;
 /**
  * Platform.runLaterを繰り返して指定された実行世代のrunLaterになったら処理を行うクラス。
  * @author hiro
+ *
  */
 public class GenerationalRunLater {
     

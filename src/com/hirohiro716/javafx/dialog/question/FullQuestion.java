@@ -22,6 +22,7 @@ import javafx.stage.Stage;
  * 確認メッセージを表示するクラス。
  *
  * @author hiro
+ *
  */
 public class FullQuestion extends AbstractDialog<DialogResult> {
 

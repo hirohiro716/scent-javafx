@@ -8,6 +8,7 @@ import javafx.scene.control.ScrollPane;
  * 指定領域へスクロールすることができるScrollPaneコントロールクラス。
  *
  * @author hiro
+ *
  */
 public class ScrollToNodePane extends ScrollPane {
     

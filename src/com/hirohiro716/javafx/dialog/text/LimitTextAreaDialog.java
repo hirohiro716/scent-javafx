@@ -28,6 +28,7 @@ import javafx.scene.layout.Pane;
  * TextArea入力ダイアログを表示するクラス。
  *
  * @author hiro
+ *
  */
 public class LimitTextAreaDialog extends AbstractDialog<String> {
 

@@ -16,6 +16,7 @@ import javafx.scene.web.WebEngine;
  * WebEngineの操作を補助するクラス。
  *
  * @author hiro
+ *
  */
 public class WebEngineController {
 

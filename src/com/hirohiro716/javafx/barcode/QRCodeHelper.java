@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
  *
  * 
  * @author hiro
+ *
  */
 public class QRCodeHelper extends com.hirohiro716.awt.QRCodeHelper {
     

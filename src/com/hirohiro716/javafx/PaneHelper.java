@@ -14,6 +14,7 @@ import javafx.scene.layout.Pane;
  * Paneを便利に扱う静的メソッドクラス。
  *
  * @author hiro
+ *
  */
 public class PaneHelper {
 

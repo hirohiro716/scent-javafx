@@ -22,6 +22,7 @@ import javafx.stage.Stage;
  * メッセージを表示するクラス。
  *
  * @author hiro
+ *
  */
 public class Alert extends AbstractDialog<DialogResult> {
 

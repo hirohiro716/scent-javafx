@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
  * 読み取り専用にできるCheckBox。
  *
  * @author hiro
+ *
  */
 public class ReadonlyCheckBox extends IMEOffCheckBox {
 

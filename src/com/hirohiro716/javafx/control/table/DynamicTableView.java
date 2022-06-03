@@ -34,6 +34,7 @@ import javafx.util.Callback;
  * 動的にカラムを生成できるTableViewクラス。
  *
  * @author hiro
+ *
  */
 public class DynamicTableView extends TableView<RudeArray> {
 
