@@ -1121,7 +1121,6 @@ public class EditableTable<S> extends AnchorPane {
          * @param selectedItem イベントが発生した際に選択されているitem
          */
         public abstract void call(S selectedItem);
-        
     }
     
     /**
@@ -1215,7 +1214,6 @@ public class EditableTable<S> extends AnchorPane {
          * @param control コントロール
          */
         public abstract void setValueForItem(S item, T control);
-        
     }
     
     /**

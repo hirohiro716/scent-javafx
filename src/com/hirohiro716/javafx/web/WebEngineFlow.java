@@ -25,7 +25,6 @@ public class WebEngineFlow {
     public WebEngineFlow(WebView webView) {
         this.controller = new WebEngineController(webView.getEngine());
         this.webView = webView;
-        
     }
     
     private WebEngineController controller;
@@ -277,5 +276,4 @@ public class WebEngineFlow {
          * @throws Exception 
          */
         public abstract void execute(WebEngineController controller) throws Exception;
-        
     }}

@@ -183,7 +183,6 @@ public class DatabaseTryConnectDialog<D extends AbstractDatabase> {
          * @throws SQLException
          */
         public abstract void call(D database) throws SQLException;
-        
     }
     
     /**
@@ -212,5 +211,4 @@ public class DatabaseTryConnectDialog<D extends AbstractDatabase> {
          *
          */
         public abstract void call();
-        
     }}

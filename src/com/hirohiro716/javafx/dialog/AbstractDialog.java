@@ -401,5 +401,4 @@ public abstract class AbstractDialog<T> {
          * @param dialog
          */
         public abstract void call(D dialog);
-        
     }}
