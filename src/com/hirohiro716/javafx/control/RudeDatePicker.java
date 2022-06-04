@@ -178,5 +178,4 @@ public class RudeDatePicker extends DatePicker {
             }
         }
     };
-    
 }
